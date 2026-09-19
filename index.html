@@ -1,39 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EXPORT ZONE Co., Ltd. | Japan Vehicle & Material Export</title>
+<title>EXPORT ZONE Co., Ltd. | 日本の車両・重機・素材輸出</title>
 
-<meta name="description" content="EXPORT ZONE Co., Ltd. — Japan-based vehicle, machinery, auto parts and stock material sourcing and export.">
-<meta name="theme-color" content="#071018">
+<meta name="description"
+content="EXPORT ZONE Co., Ltd. 日本の中古車、トラック、建設機械、農業機械、自動車部品、PVC・合皮・生地などの仕入れ・輸出。">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+
 /* =========================================================
-   EXPORT ZONE — PREMIUM WEBSITE
-   ========================================================= */
+   基本設定
+========================================================= */
 
 :root{
     --bg:#05090d;
-    --bg2:#081118;
-    --panel:rgba(255,255,255,.055);
-    --panel2:rgba(255,255,255,.08);
-    --border:rgba(255,255,255,.12);
-    --text:#f5f8fb;
-    --muted:#98a7b5;
-    --blue:#28a9ff;
-    --cyan:#36e0ff;
-    --violet:#765cff;
-    --green:#39e6a3;
-    --orange:#ff9d45;
+    --bg2:#081119;
+
+    --white:#f7fbff;
+    --text:#eaf2f7;
+    --muted:#8d9eaa;
+
+    --blue:#27b4ff;
+    --cyan:#43e4ff;
+    --purple:#765cff;
+    --green:#35e0a0;
+
+    --border:rgba(255,255,255,.11);
+
     --max:1240px;
-    --radius:26px;
-    --shadow:0 25px 80px rgba(0,0,0,.45);
 }
 
 *{
@@ -47,27 +49,59 @@ html{
 }
 
 body{
-    font-family:"Inter","Plus Jakarta Sans",Arial,sans-serif;
+    font-family:
+        "Noto Sans JP",
+        Arial,
+        sans-serif;
+
     background:
-        radial-gradient(circle at 15% 15%,rgba(40,169,255,.10),transparent 30%),
-        radial-gradient(circle at 85% 25%,rgba(118,92,255,.10),transparent 28%),
-        linear-gradient(180deg,#05090d,#071018 45%,#05090d);
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(39,180,255,.10),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 30%,
+            rgba(118,92,255,.10),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #05090d 0%,
+            #081119 50%,
+            #05090d 100%
+        );
+
     color:var(--text);
+
     overflow-x:hidden;
 }
 
 body::before{
     content:"";
+
     position:fixed;
+
     inset:0;
+
     pointer-events:none;
-    z-index:9998;
-    opacity:.045;
+
+    z-index:9997;
+
+    opacity:.035;
+
     background-image:
-        linear-gradient(rgba(255,255,255,.7) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.7) 1px,transparent 1px);
+        linear-gradient(
+            rgba(255,255,255,.7) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.7) 1px,
+            transparent 1px
+        );
+
     background-size:70px 70px;
-    mask-image:linear-gradient(to bottom,black,transparent 90%);
 }
 
 a{
@@ -76,1222 +110,2244 @@ a{
 }
 
 button{
-    font:inherit;
+    font-family:inherit;
 }
 
-img{
-    max-width:100%;
-    display:block;
-}
 
 /* =========================================================
-   LOADER
-   ========================================================= */
+   LOADING
+========================================================= */
 
 #loader{
+
     position:fixed;
+
     inset:0;
-    z-index:10000;
-    background:#05090d;
+
+    z-index:99999;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    transition:opacity .7s ease,visibility .7s ease;
+
+    background:#04080c;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
 }
 
 #loader.hide{
+
     opacity:0;
+
     visibility:hidden;
 }
 
-.loader-inner{
+.loader-box{
+
     text-align:center;
+
+    animation:
+        loaderAppear
+        1.2s
+        ease
+        both;
+}
+
+@keyframes loaderAppear{
+
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
 }
 
 .loader-logo{
-    width:130px;
-    height:130px;
-    margin:auto;
+
+    width:125px;
+
+    height:125px;
+
     object-fit:contain;
+
+    animation:
+        loaderPulse
+        2s
+        ease-in-out
+        infinite;
+
     filter:
-        drop-shadow(0 0 15px rgba(54,224,255,.5))
-        drop-shadow(0 0 35px rgba(40,169,255,.25));
-    animation:loaderLogo 2s ease-in-out infinite;
+        drop-shadow(
+            0 0 15px
+            rgba(67,228,255,.55)
+        )
+        drop-shadow(
+            0 0 40px
+            rgba(39,180,255,.25)
+        );
+}
+
+@keyframes loaderPulse{
+
+    0%,100%{
+        transform:scale(.96);
+    }
+
+    50%{
+        transform:scale(1.06);
+    }
 }
 
 .loader-fallback{
+
     display:none;
+
     width:120px;
+
     height:120px;
+
     margin:auto;
-    border:1px solid rgba(54,224,255,.4);
-    border-radius:30px;
+
+    border-radius:28px;
+
     align-items:center;
+
     justify-content:center;
-    background:linear-gradient(145deg,#10202c,#071017);
+
+    border:1px solid rgba(67,228,255,.3);
+
+    background:
+        linear-gradient(
+            145deg,
+            #102431,
+            #071017
+        );
+
     box-shadow:
-        0 0 35px rgba(54,224,255,.2),
-        inset 0 0 35px rgba(40,169,255,.08);
+        0 0 50px
+        rgba(39,180,255,.15);
 }
 
-.loader-fallback span{
-    font-size:34px;
-    font-weight:900;
-    letter-spacing:-3px;
-    background:linear-gradient(90deg,#fff,#36e0ff,#765cff);
+.loader-fallback strong{
+
+    font-size:38px;
+
+    letter-spacing:-4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #43e4ff,
+            #765cff
+        );
+
     -webkit-background-clip:text;
     background-clip:text;
+
     color:transparent;
 }
 
 .loader-line{
-    width:170px;
+
+    width:180px;
+
     height:2px;
-    margin:28px auto 0;
+
+    margin:25px auto 0;
+
+    background:rgba(255,255,255,.08);
+
     overflow:hidden;
-    background:rgba(255,255,255,.1);
 }
 
 .loader-line::after{
+
     content:"";
+
     display:block;
+
     width:45%;
+
     height:100%;
-    background:linear-gradient(90deg,transparent,#36e0ff,transparent);
-    animation:loaderLine 1.2s infinite;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #43e4ff,
+            transparent
+        );
+
+    animation:
+        loadingLine
+        1.3s
+        infinite;
 }
 
-@keyframes loaderLogo{
-    0%,100%{transform:scale(.96);opacity:.75}
-    50%{transform:scale(1.04);opacity:1}
+@keyframes loadingLine{
+
+    from{
+        transform:translateX(-160%);
+    }
+
+    to{
+        transform:translateX(350%);
+    }
 }
 
-@keyframes loaderLine{
-    from{transform:translateX(-150%)}
-    to{transform:translateX(350%)}
-}
 
 /* =========================================================
    HEADER
-   ========================================================= */
+========================================================= */
 
 .header{
+
     position:fixed;
+
     top:0;
     left:0;
+
     width:100%;
+
     z-index:5000;
+
     padding:18px 24px;
+
     transition:.35s ease;
 }
 
 .header.scrolled{
-    padding:10px 24px;
+
+    padding:9px 24px;
 }
 
 .navbar{
-    max-width:var(--max);
-    margin:auto;
-    min-height:76px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:10px 15px 10px 18px;
 
-    background:rgba(5,10,15,.70);
-    border:1px solid rgba(255,255,255,.11);
+    max-width:var(--max);
+
+    min-height:76px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        10px
+        15px
+        10px
+        18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.11);
+
     border-radius:22px;
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
+
+    background:
+        rgba(5,10,15,.72);
+
+    backdrop-filter:blur(25px);
+
+    -webkit-backdrop-filter:blur(25px);
 
     box-shadow:
-        0 20px 70px rgba(0,0,0,.3),
-        inset 0 1px 0 rgba(255,255,255,.05);
+        0 20px 70px
+        rgba(0,0,0,.35),
+
+        inset 0 1px 0
+        rgba(255,255,255,.05);
 
     transition:.35s ease;
 }
 
 .header.scrolled .navbar{
-    background:rgba(5,10,15,.88);
-    border-color:rgba(54,224,255,.15);
+
+    background:
+        rgba(4,9,14,.92);
+
+    border-color:
+        rgba(67,228,255,.16);
 }
+
 
 /* =========================================================
    LOGO
-   ========================================================= */
+========================================================= */
 
 .logo{
+
     display:flex;
+
     align-items:center;
+
     gap:12px;
-    min-width:210px;
 }
 
 .logo-image-wrap{
+
     width:54px;
+
     height:54px;
+
     position:relative;
-    flex-shrink:0;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 }
 
 .logo-image-wrap::before{
+
     content:"";
+
     position:absolute;
-    inset:-5px;
-    border-radius:16px;
-    background:conic-gradient(
-        from 0deg,
-        transparent,
-        rgba(54,224,255,.8),
-        transparent,
-        rgba(118,92,255,.8),
-        transparent
-    );
+
+    inset:-6px;
+
+    border-radius:17px;
+
+    background:
+        conic-gradient(
+            from 0deg,
+            transparent,
+            #43e4ff,
+            transparent,
+            #765cff,
+            transparent
+        );
+
     filter:blur(7px);
+
     opacity:.65;
-    animation:logoOrbit 5s linear infinite;
+
+    animation:
+        logoRotate
+        5s
+        linear
+        infinite;
+}
+
+@keyframes logoRotate{
+
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 .logo-image-wrap::after{
+
     content:"";
+
     position:absolute;
+
     inset:0;
+
     border-radius:15px;
-    border:1px solid rgba(255,255,255,.15);
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
     box-shadow:
-        inset 0 0 18px rgba(54,224,255,.12),
-        0 0 25px rgba(40,169,255,.14);
+        inset 0 0 18px
+        rgba(67,228,255,.12);
 }
 
 .logo-img{
+
     width:50px;
+
     height:50px;
+
     object-fit:contain;
+
     position:relative;
+
     z-index:2;
+
     border-radius:13px;
-    animation:logoFloat 4s ease-in-out infinite;
+
+    animation:
+        logoFloat
+        4s
+        ease-in-out
+        infinite;
+}
+
+@keyframes logoFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-3px);
+    }
 }
 
 .logo-fallback{
+
     display:none;
+
     position:relative;
+
     z-index:2;
+
     width:50px;
+
     height:50px;
+
     border-radius:13px;
+
     align-items:center;
+
     justify-content:center;
-    background:linear-gradient(145deg,#122431,#071017);
-    border:1px solid rgba(54,224,255,.28);
-    box-shadow:inset 0 0 20px rgba(54,224,255,.08);
+
+    background:
+        linear-gradient(
+            145deg,
+            #122633,
+            #071017
+        );
+
+    border:
+        1px solid
+        rgba(67,228,255,.3);
 }
 
 .logo-fallback strong{
-    font-size:20px;
+
+    font-size:21px;
+
     font-weight:900;
-    letter-spacing:-2px;
-    background:linear-gradient(90deg,#fff,#36e0ff,#765cff);
+
+    letter-spacing:-3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #43e4ff,
+            #765cff
+        );
+
     -webkit-background-clip:text;
+
     background-clip:text;
+
     color:transparent;
 }
 
 .logo-copy{
+
     display:flex;
+
     flex-direction:column;
+
     line-height:1.05;
 }
 
 .logo-title{
+
     font-size:16px;
+
     font-weight:900;
+
     letter-spacing:1.8px;
 }
 
 .logo-sub{
+
     margin-top:5px;
-    font-size:9px;
-    letter-spacing:2px;
-    color:#7f92a1;
+
+    font-size:8px;
+
+    color:#7f929f;
+
+    letter-spacing:1.8px;
+
     font-weight:700;
 }
 
-@keyframes logoOrbit{
-    to{transform:rotate(360deg)}
-}
-
-@keyframes logoFloat{
-    0%,100%{transform:translateY(0) rotate(0)}
-    50%{transform:translateY(-2px) rotate(.7deg)}
-}
 
 /* =========================================================
-   NAV
-   ========================================================= */
+   NAVIGATION
+========================================================= */
 
 .nav-links{
+
     display:flex;
+
     align-items:center;
+
     gap:4px;
 }
 
 .nav-links a{
+
     padding:12px 14px;
-    color:#aab8c4;
-    font-size:13px;
-    font-weight:600;
+
     border-radius:12px;
+
+    color:#aab9c4;
+
+    font-size:12px;
+
+    font-weight:600;
+
     transition:.25s ease;
 }
 
 .nav-links a:hover{
+
     color:#fff;
-    background:rgba(255,255,255,.06);
+
+    background:
+        rgba(255,255,255,.06);
 }
 
-.nav-cta{
+.nav-contact{
+
     margin-left:8px;
-    padding:12px 18px!important;
-    color:#fff!important;
-    background:linear-gradient(135deg,#168dd9,#765cff);
-    box-shadow:0 10px 30px rgba(40,169,255,.18);
-}
 
-.lang-btn{
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.04);
-    color:#fff;
-    padding:10px 12px;
-    border-radius:11px;
-    cursor:pointer;
-    font-size:12px;
-    margin-left:6px;
+    color:#fff!important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #168edb,
+            #765cff
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(39,180,255,.18);
 }
 
 .menu-btn{
+
     display:none;
+
     width:44px;
+
     height:44px;
-    border:1px solid rgba(255,255,255,.12);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
     border-radius:12px;
-    background:rgba(255,255,255,.05);
-    color:#fff;
+
+    background:
+        rgba(255,255,255,.04);
+
     cursor:pointer;
 }
 
 .menu-btn span{
+
     display:block;
+
     width:20px;
+
     height:2px;
-    background:#fff;
+
     margin:4px auto;
+
+    background:#fff;
 }
+
 
 /* =========================================================
    HERO
-   ========================================================= */
+========================================================= */
 
 .hero{
+
     min-height:100vh;
+
     position:relative;
+
     display:flex;
+
     align-items:center;
+
+    padding:
+        150px
+        24px
+        80px;
+
     overflow:hidden;
-    padding:150px 24px 80px;
 }
 
 .hero-container{
-    width:100%;
+
     max-width:var(--max);
+
+    width:100%;
+
     margin:auto;
+
     position:relative;
+
     z-index:3;
 }
 
 .hero-grid{
+
     display:grid;
-    grid-template-columns:1.03fr .97fr;
+
+    grid-template-columns:
+        1.02fr
+        .98fr;
+
     gap:70px;
+
     align-items:center;
 }
 
 .hero-kicker{
+
     display:inline-flex;
+
     align-items:center;
+
     gap:10px;
-    padding:8px 13px;
+
+    padding:
+        8px
+        13px;
+
+    border:
+        1px solid
+        rgba(67,228,255,.2);
+
+    background:
+        rgba(67,228,255,.05);
+
     border-radius:100px;
-    border:1px solid rgba(54,224,255,.2);
-    background:rgba(54,224,255,.055);
-    color:#9cecff;
-    font-size:11px;
-    letter-spacing:1.8px;
-    text-transform:uppercase;
-    font-weight:700;
-    margin-bottom:24px;
+
+    color:#8eeaff;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    letter-spacing:1.7px;
+
+    margin-bottom:25px;
 }
 
 .live-dot{
+
     width:7px;
+
     height:7px;
+
     border-radius:50%;
-    background:#39e6a3;
-    box-shadow:0 0 15px #39e6a3;
-    animation:pulse 1.7s infinite;
+
+    background:#35e0a0;
+
+    box-shadow:
+        0 0 15px
+        #35e0a0;
+
+    animation:
+        pulse
+        1.6s
+        infinite;
 }
 
 @keyframes pulse{
-    50%{opacity:.35;transform:scale(.7)}
+
+    50%{
+        opacity:.35;
+        transform:scale(.7);
+    }
 }
 
 .hero h1{
-    font-size:clamp(54px,7.2vw,105px);
-    line-height:.91;
-    letter-spacing:-6px;
+
+    font-size:
+        clamp(
+            50px,
+            7vw,
+            96px
+        );
+
+    line-height:.98;
+
+    letter-spacing:-5px;
+
     font-weight:900;
-    max-width:850px;
 }
 
 .hero h1 .gradient{
-    background:linear-gradient(
-        100deg,
-        #ffffff 10%,
-        #79ddff 45%,
-        #5e75ff 85%
-    );
+
+    background:
+        linear-gradient(
+            100deg,
+            #fff,
+            #73dcff 45%,
+            #7162ff
+        );
+
     -webkit-background-clip:text;
+
     background-clip:text;
+
     color:transparent;
+
+    background-size:200% auto;
+
+    animation:
+        gradientMove
+        5s
+        ease
+        infinite;
+}
+
+@keyframes gradientMove{
+
+    0%,100%{
+        background-position:0% center;
+    }
+
+    50%{
+        background-position:100% center;
+    }
 }
 
 .hero-description{
-    margin-top:30px;
+
     max-width:620px;
-    color:#98a7b5;
-    font-size:16px;
-    line-height:1.8;
+
+    margin-top:30px;
+
+    color:#96a7b3;
+
+    font-size:14px;
+
+    line-height:2;
 }
 
 .hero-actions{
-    margin-top:34px;
+
     display:flex;
-    gap:13px;
+
     flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:32px;
 }
 
 .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:9px;
+
     min-height:52px;
-    padding:0 21px;
+
+    padding:
+        0
+        21px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
     border-radius:14px;
-    border:1px solid transparent;
-    font-size:13px;
+
+    font-size:12px;
+
     font-weight:800;
-    cursor:pointer;
+
     transition:.3s ease;
 }
 
 .btn-primary{
+
     color:#fff;
-    background:linear-gradient(135deg,#168edc,#6d5bff);
-    box-shadow:0 18px 45px rgba(44,135,255,.22);
-}
 
-.btn-primary:hover{
-    transform:translateY(-3px);
-    box-shadow:0 22px 55px rgba(44,135,255,.32);
-}
-
-.btn-secondary{
-    color:#dce8ef;
-    border-color:rgba(255,255,255,.13);
-    background:rgba(255,255,255,.04);
-}
-
-.btn-secondary:hover{
-    background:rgba(255,255,255,.08);
-    transform:translateY(-3px);
-}
-
-.hero-trust{
-    display:flex;
-    gap:28px;
-    margin-top:45px;
-    flex-wrap:wrap;
-}
-
-.trust-item strong{
-    display:block;
-    font-size:20px;
-    font-weight:800;
-}
-
-.trust-item span{
-    display:block;
-    margin-top:5px;
-    color:#758795;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:1.3px;
-}
-
-/* =========================================================
-   HERO VISUAL — PREMIUM PHOTO FRAME
-   ========================================================= */
-
-.hero-visual{
-    position:relative;
-    min-height:590px;
-}
-
-.hero-image{
-    position:absolute;
-    inset:0;
-    border-radius:34px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.12);
     background:
         linear-gradient(
             135deg,
-            rgba(18,36,49,.95),
-            rgba(6,12,18,.98)
+            #168edb,
+            #765cff
         );
+
     box-shadow:
-        0 40px 100px rgba(0,0,0,.48),
-        inset 0 1px 0 rgba(255,255,255,.08);
+        0 18px 45px
+        rgba(39,150,255,.22);
 }
 
-/*
-   Replace the URL below with your own premium vehicle photo
-   if desired. The site remains attractive without it.
-*/
-.hero-image-bg{
-    position:absolute;
-    inset:0;
+.btn-primary:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 25px 55px
+        rgba(39,150,255,.35);
+}
+
+.btn-secondary{
+
+    color:#dbe6ec;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
     background:
-        linear-gradient(120deg,rgba(3,8,12,.25),rgba(3,8,12,.9)),
-        url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=85")
-        center/cover no-repeat;
-    filter:saturate(.8);
-    transform:scale(1.03);
-    animation:heroPhoto 12s ease-in-out infinite alternate;
+        rgba(255,255,255,.04);
 }
 
-@keyframes heroPhoto{
-    from{transform:scale(1.03)}
-    to{transform:scale(1.10)}
+.btn-secondary:hover{
+
+    transform:translateY(-4px);
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.hero-trust{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:30px;
+
+    margin-top:43px;
+}
+
+.trust-item strong{
+
+    display:block;
+
+    font-size:20px;
+}
+
+.trust-item span{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#6f818d;
+
+    font-size:9px;
+
+    letter-spacing:1.2px;
+}
+
+
+/* =========================================================
+   HERO PHOTO
+========================================================= */
+
+.hero-visual{
+
+    position:relative;
+
+    min-height:570px;
+
+    transition:
+        transform .25s ease;
+}
+
+.hero-image{
+
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:34px;
+
+    box-shadow:
+        0 40px 100px
+        rgba(0,0,0,.5);
+}
+
+.hero-image-bg{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            rgba(3,8,12,.30),
+            rgba(3,8,12,.82)
+        ),
+
+        url(
+            "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=85"
+        )
+
+        center/
+        cover
+        no-repeat;
+
+    animation:
+        heroZoom
+        12s
+        ease-in-out
+        infinite alternate;
+}
+
+@keyframes heroZoom{
+
+    from{
+        transform:scale(1.02);
+    }
+
+    to{
+        transform:scale(1.12);
+    }
 }
 
 .hero-image::after{
+
     content:"";
+
     position:absolute;
+
     inset:0;
+
     background:
-        linear-gradient(180deg,transparent 25%,rgba(4,8,12,.85) 100%),
-        linear-gradient(90deg,rgba(3,8,12,.65),transparent 60%);
+
+        linear-gradient(
+            180deg,
+            transparent 20%,
+            rgba(3,8,12,.9)
+        );
 }
 
 .visual-label{
+
     position:absolute;
-    z-index:2;
+
+    z-index:3;
+
     left:28px;
+
     top:28px;
-    padding:9px 12px;
+
+    padding:
+        9px
+        13px;
+
     border-radius:11px;
-    background:rgba(3,8,12,.62);
-    border:1px solid rgba(255,255,255,.13);
-    backdrop-filter:blur(14px);
-    font-size:10px;
-    letter-spacing:1.6px;
-    text-transform:uppercase;
-    color:#b8cad5;
+
+    background:
+        rgba(3,8,12,.65);
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    backdrop-filter:blur(15px);
+
+    color:#b7c8d3;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    letter-spacing:1.5px;
 }
 
 .visual-bottom{
+
     position:absolute;
-    z-index:2;
+
+    z-index:3;
+
     left:28px;
+
     right:28px;
+
     bottom:28px;
+
     display:flex;
+
     align-items:flex-end;
+
     justify-content:space-between;
-    gap:20px;
 }
 
 .visual-bottom h3{
-    font-size:25px;
+
+    font-size:24px;
+
     letter-spacing:-1px;
 }
 
 .visual-bottom p{
-    color:#94a6b3;
-    font-size:12px;
+
+    color:#91a3af;
+
     margin-top:7px;
+
+    font-size:11px;
 }
 
 .visual-badge{
+
     width:76px;
+
     height:76px;
-    flex-shrink:0;
-    border-radius:22px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    border:1px solid rgba(255,255,255,.13);
-    background:rgba(255,255,255,.07);
+
+    border-radius:22px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    background:
+        rgba(255,255,255,.07);
+
     backdrop-filter:blur(15px);
 }
 
 .visual-badge span{
+
+    color:#6de6ff;
+
     font-size:22px;
+
     font-weight:900;
-    color:#6ee8ff;
 }
 
-/* Floating glass cards */
+
+/* =========================================================
+   FLOATING CARDS
+========================================================= */
 
 .float-card{
+
     position:absolute;
+
     z-index:4;
-    padding:15px 17px;
+
+    padding:
+        15px
+        18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
     border-radius:17px;
-    border:1px solid rgba(255,255,255,.13);
-    background:rgba(7,14,20,.72);
+
+    background:
+        rgba(7,14,20,.76);
+
     backdrop-filter:blur(18px);
-    box-shadow:0 20px 50px rgba(0,0,0,.35);
-    animation:floatCard 5s ease-in-out infinite;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.4);
+
+    animation:
+        floating
+        5s
+        ease-in-out
+        infinite;
 }
 
 .float-card.one{
-    left:-35px;
-    top:105px;
+
+    left:-34px;
+
+    top:100px;
 }
 
 .float-card.two{
-    right:-35px;
-    bottom:125px;
-    animation-delay:1.4s;
+
+    right:-34px;
+
+    bottom:115px;
+
+    animation-delay:1.3s;
 }
 
 .float-card small{
+
     display:block;
-    color:#788d9b;
-    font-size:9px;
-    letter-spacing:1.2px;
-    text-transform:uppercase;
+
+    color:#738794;
+
+    font-size:8px;
+
+    letter-spacing:1.3px;
 }
 
 .float-card strong{
+
     display:block;
+
     margin-top:6px;
-    font-size:18px;
+
+    font-size:17px;
 }
 
-@keyframes floatCard{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-12px)}
+@keyframes floating{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
 }
+
 
 /* =========================================================
-   SECTIONS
-   ========================================================= */
+   SECTION
+========================================================= */
 
 .section{
+
+    padding:
+        120px
+        24px;
+
     position:relative;
-    padding:120px 24px;
 }
 
 .container{
-    width:100%;
+
     max-width:var(--max);
+
+    width:100%;
+
     margin:auto;
 }
 
 .section-head{
+
     display:flex;
-    align-items:flex-end;
+
     justify-content:space-between;
+
+    align-items:flex-end;
+
     gap:30px;
+
     margin-bottom:45px;
 }
 
 .eyebrow{
-    color:#62dcff;
-    font-size:10px;
-    font-weight:800;
+
+    color:#55ddff;
+
+    font-size:9px;
+
+    font-weight:900;
+
     letter-spacing:2px;
-    text-transform:uppercase;
-    margin-bottom:13px;
+
+    margin-bottom:14px;
 }
 
 .section-title{
-    font-size:clamp(34px,4.5vw,62px);
-    line-height:1;
+
+    font-size:
+        clamp(
+            34px,
+            4.5vw,
+            60px
+        );
+
+    line-height:1.05;
+
     letter-spacing:-3px;
+
     font-weight:900;
 }
 
 .section-copy{
-    max-width:440px;
-    color:#8c9ca8;
-    font-size:14px;
-    line-height:1.75;
+
+    max-width:450px;
+
+    color:#8c9da8;
+
+    font-size:12px;
+
+    line-height:1.9;
 }
 
+
 /* =========================================================
-   PRODUCT GRID
-   ========================================================= */
+   PRODUCTS
+========================================================= */
 
 .products{
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+        repeat(4,1fr);
+
     gap:15px;
 }
 
 .product-card{
+
     position:relative;
-    min-height:300px;
+
+    min-height:315px;
+
     overflow:hidden;
-    border-radius:22px;
-    border:1px solid rgba(255,255,255,.10);
-    background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+
+    border-radius:23px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:#091119;
+
     transition:
-        transform .45s cubic-bezier(.2,.8,.2,1),
+        transform .45s ease,
         border-color .3s ease,
         box-shadow .3s ease;
 }
 
 .product-card:hover{
-    transform:translateY(-9px);
-    border-color:rgba(54,224,255,.30);
-    box-shadow:0 30px 70px rgba(0,0,0,.4);
+
+    border-color:
+        rgba(67,228,255,.28);
+
+    box-shadow:
+        0 30px 70px
+        rgba(0,0,0,.42);
 }
 
 .product-image{
+
     position:absolute;
+
     inset:0;
+
     overflow:hidden;
 }
 
 .product-image::before{
+
     content:"";
+
     position:absolute;
+
     inset:0;
+
     background-size:cover;
+
     background-position:center;
-    transition:transform .7s ease;
-    filter:saturate(.65) contrast(1.05);
+
+    transition:
+        transform .8s ease;
+
+    filter:
+        saturate(.72)
+        contrast(1.08);
 }
 
-.product-card:hover .product-image::before{
-    transform:scale(1.09);
+.product-card:hover
+.product-image::before{
+
+    transform:scale(1.1);
 }
 
 .product-image::after{
+
     content:"";
+
     position:absolute;
+
     inset:0;
+
     background:
-        linear-gradient(180deg,rgba(4,9,13,.08),rgba(4,9,13,.95)),
-        linear-gradient(90deg,rgba(4,9,13,.25),transparent);
+
+        linear-gradient(
+            180deg,
+            rgba(3,8,12,.03),
+            rgba(3,8,12,.95)
+        );
 }
 
-/* Premium photo images */
+
+/* =========================================================
+   REAL PROFESSIONAL PHOTOS
+========================================================= */
 
 .img-cars::before{
-    background-image:url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80");
+
+    background-image:
+        url(
+            "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=85"
+        );
 }
 
 .img-accident::before{
-    background-image:url("https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=900&q=80");
+
+    background-image:
+        url(
+            "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1000&q=85"
+        );
 }
 
 .img-trucks::before{
-    background-image:url("https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=900&q=80");
+
+    background-image:
+        url(
+            "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1000&q=85"
+        );
 }
+
+
+/*
+   ★ CHANGED HEAVY MACHINERY PHOTO
+   Professional excavator / construction equipment
+*/
 
 .img-heavy::before{
-    background-image:url("https://images.unsplash.com/photo-1580901369227-308f6f40caca?auto=format&fit=crop&w=900&q=80");
+
+    background-image:
+        url(
+            "https://images.unsplash.com/photo-1574359411659-15573a27fd0c?auto=format&fit=crop&w=1200&q=90"
+        );
+
+    background-position:center;
 }
+
+
+/* Agricultural machinery */
 
 .img-agri::before{
-    background-image:url("https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=900&q=80");
+
+    background-image:
+        url(
+            "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1000&q=85"
+        );
 }
+
+
+/* Construction machinery */
 
 .img-machinery::before{
-    background-image:url("https://images.unsplash.com/photo-1574359411659-15573a27fd0c?auto=format&fit=crop&w=900&q=80");
+
+    background-image:
+        url(
+            "https://images.unsplash.com/photo-1580901369227-308f6f40caca?auto=format&fit=crop&w=1000&q=85"
+        );
 }
+
+
+/* Auto parts */
 
 .img-parts::before{
-    background-image:url("https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=900&q=80");
+
+    background-image:
+        url(
+            "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=1000&q=85"
+        );
 }
 
+
+/* Materials */
+
 .img-materials::before{
-    background-image:url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80");
+
+    background-image:
+        url(
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1000&q=85"
+        );
 }
 
 .product-content{
+
     position:absolute;
+
+    z-index:3;
+
     left:20px;
+
     right:20px;
+
     bottom:20px;
-    z-index:2;
 }
 
 .product-number{
-    color:#6be4ff;
-    font-size:10px;
-    font-weight:800;
+
+    color:#61e3ff;
+
+    font-size:9px;
+
+    font-weight:900;
+
     letter-spacing:1.5px;
 }
 
 .product-content h3{
+
     margin-top:7px;
-    font-size:19px;
-    letter-spacing:-.6px;
+
+    font-size:18px;
 }
 
 .product-content p{
-    margin-top:6px;
-    color:#9aabb7;
-    font-size:11px;
-    line-height:1.5;
+
+    margin-top:7px;
+
+    color:#98a9b4;
+
+    font-size:10px;
+
+    line-height:1.6;
 }
 
 .product-arrow{
+
     position:absolute;
-    right:18px;
+
+    z-index:4;
+
     top:18px;
-    z-index:3;
-    width:37px;
-    height:37px;
+
+    right:18px;
+
+    width:38px;
+
+    height:38px;
+
     border-radius:50%;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(3,8,12,.48);
-    color:#fff;
+
+    background:
+        rgba(3,8,12,.5);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
     transition:.3s ease;
 }
 
 .product-card:hover .product-arrow{
-    background:#fff;
+
     color:#071018;
+
+    background:#fff;
+
     transform:rotate(45deg);
 }
 
-/* =========================================================
-   FEATURE BANNER
-   ========================================================= */
 
-.feature{
-    position:relative;
-    overflow:hidden;
-    border-radius:32px;
-    padding:65px;
-    min-height:350px;
-    border:1px solid rgba(255,255,255,.12);
+/* =========================================================
+   LIGHT SWEEP ANIMATION
+========================================================= */
+
+.product-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-100%;
+
+    left:-100%;
+
+    width:50%;
+
+    height:300%;
+
     background:
-        radial-gradient(circle at 85% 30%,rgba(118,92,255,.25),transparent 32%),
-        radial-gradient(circle at 20% 80%,rgba(54,224,255,.16),transparent 35%),
-        linear-gradient(135deg,#0b1720,#091019);
-    box-shadow:var(--shadow);
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.10),
+            transparent
+        );
+
+    transform:rotate(20deg);
+
+    transition:.7s ease;
+
+    pointer-events:none;
 }
 
-.feature::before{
+.product-card:hover::after{
+
+    left:150%;
+}
+
+
+/* =========================================================
+   FEATURE
+========================================================= */
+
+.feature{
+
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:360px;
+
+    padding:65px;
+
+    border-radius:32px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.11);
+
+    background:
+
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(118,92,255,.27),
+            transparent 34%
+        ),
+
+        radial-gradient(
+            circle at 20% 90%,
+            rgba(67,228,255,.15),
+            transparent 35%
+        ),
+
+        #09131c;
+
+    box-shadow:
+        0 35px 90px
+        rgba(0,0,0,.35);
+}
+
+.feature::after{
+
     content:"EXPORT";
+
     position:absolute;
+
     right:-20px;
-    bottom:-65px;
+
+    bottom:-60px;
+
     font-size:170px;
+
     font-weight:900;
+
     letter-spacing:-12px;
-    color:rgba(255,255,255,.025);
+
+    color:
+        rgba(255,255,255,.025);
+
+    animation:
+        textFloat
+        8s
+        ease-in-out
+        infinite;
+}
+
+@keyframes textFloat{
+
+    50%{
+        transform:translateX(-25px);
+    }
 }
 
 .feature-content{
+
     position:relative;
+
     z-index:2;
+
     max-width:720px;
 }
 
 .feature h2{
-    font-size:clamp(35px,5vw,64px);
-    line-height:.98;
+
+    font-size:
+        clamp(
+            35px,
+            5vw,
+            62px
+        );
+
+    line-height:1;
+
     letter-spacing:-3px;
 }
 
 .feature p{
+
     margin-top:20px;
-    max-width:610px;
-    color:#9babb6;
-    line-height:1.8;
-    font-size:14px;
+
+    color:#98a9b4;
+
+    font-size:13px;
+
+    line-height:1.9;
 }
 
 .feature-pills{
+
     display:flex;
+
     flex-wrap:wrap;
-    gap:9px;
-    margin-top:28px;
+
+    gap:8px;
+
+    margin-top:27px;
 }
 
 .pill{
-    padding:9px 13px;
+
+    padding:
+        8px
+        13px;
+
     border-radius:100px;
-    border:1px solid rgba(255,255,255,.1);
-    background:rgba(255,255,255,.045);
-    color:#b9c8d1;
-    font-size:10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:#bdccd4;
+
+    font-size:9px;
 }
 
+
 /* =========================================================
-   WHY US
-   ========================================================= */
+   WHY
+========================================================= */
 
 .why-grid{
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
 }
 
 .why-card{
+
     padding:30px;
+
     border-radius:23px;
-    border:1px solid rgba(255,255,255,.09);
-    background:rgba(255,255,255,.035);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.035);
+
     transition:.35s ease;
 }
 
 .why-card:hover{
-    transform:translateY(-6px);
-    border-color:rgba(54,224,255,.2);
-    background:rgba(255,255,255,.055);
+
+    transform:translateY(-7px);
+
+    border-color:
+        rgba(67,228,255,.22);
 }
 
 .why-icon{
+
     width:48px;
+
     height:48px;
-    border-radius:15px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    margin-bottom:23px;
-    background:linear-gradient(135deg,rgba(54,224,255,.16),rgba(118,92,255,.16));
-    border:1px solid rgba(54,224,255,.14);
-    color:#63e5ff;
-    font-size:18px;
+
+    border-radius:15px;
+
+    color:#64e4ff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(67,228,255,.14),
+            rgba(118,92,255,.15)
+        );
+
+    border:
+        1px solid
+        rgba(67,228,255,.13);
+
+    margin-bottom:22px;
+
+    font-size:12px;
+
+    font-weight:900;
 }
 
 .why-card h3{
-    font-size:18px;
+
+    font-size:17px;
 }
 
 .why-card p{
-    color:#82939f;
-    font-size:12px;
-    line-height:1.75;
+
     margin-top:10px;
+
+    color:#83949f;
+
+    font-size:11px;
+
+    line-height:1.8;
 }
+
 
 /* =========================================================
    PROCESS
-   ========================================================= */
+========================================================= */
 
 .process{
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+        repeat(4,1fr);
+
     gap:12px;
 }
 
 .process-card{
+
     position:relative;
-    padding:28px 24px;
+
     min-height:220px;
+
+    padding:28px 24px;
+
     border-radius:22px;
-    border:1px solid rgba(255,255,255,.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
     background:#091119;
+
+    transition:.3s ease;
+}
+
+.process-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:
+        rgba(67,228,255,.22);
 }
 
 .process-number{
-    color:#5edfff;
-    font-size:11px;
-    font-weight:900;
+
+    color:#58ddff;
+
+    font-size:9px;
+
     letter-spacing:2px;
+
+    font-weight:900;
 }
 
 .process-card h3{
+
     margin-top:45px;
+
     font-size:18px;
 }
 
 .process-card p{
+
     margin-top:9px;
+
     color:#82939f;
-    font-size:11px;
-    line-height:1.7;
+
+    font-size:10px;
+
+    line-height:1.8;
 }
 
 .process-line{
+
     position:absolute;
-    top:46px;
-    right:-20px;
-    width:40px;
+
+    top:47px;
+
+    right:-22px;
+
+    width:43px;
+
     height:1px;
-    background:linear-gradient(90deg,#36e0ff,transparent);
+
+    background:
+        linear-gradient(
+            90deg,
+            #43e4ff,
+            transparent
+        );
 }
+
 
 /* =========================================================
    COMPANY
-   ========================================================= */
+========================================================= */
 
 .company-grid{
+
     display:grid;
-    grid-template-columns:.85fr 1.15fr;
+
+    grid-template-columns:
+        .85fr
+        1.15fr;
+
     gap:20px;
 }
 
 .company-card{
+
     padding:35px;
+
     border-radius:26px;
-    border:1px solid rgba(255,255,255,.09);
-    background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.06),
+            rgba(255,255,255,.025)
+        );
 }
 
 .company-card h3{
-    font-size:24px;
-    letter-spacing:-1px;
+
+    font-size:23px;
 }
 
 .company-card p{
-    color:#8b9ba7;
-    font-size:13px;
-    line-height:1.8;
+
     margin-top:15px;
+
+    color:#899ba6;
+
+    font-size:12px;
+
+    line-height:1.9;
 }
 
 .company-list{
+
     margin-top:25px;
 }
 
 .company-row{
+
     display:grid;
-    grid-template-columns:150px 1fr;
+
+    grid-template-columns:145px 1fr;
+
     gap:15px;
+
     padding:14px 0;
-    border-bottom:1px solid rgba(255,255,255,.07);
-    font-size:12px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+
+    font-size:11px;
 }
 
 .company-row span:first-child{
-    color:#6f8390;
+
+    color:#6e818d;
 }
 
 .company-row span:last-child{
-    color:#d9e4ea;
+
+    color:#d8e4ea;
 }
+
 
 /* =========================================================
    CONTACT
-   ========================================================= */
+========================================================= */
 
 .contact-box{
+
     position:relative;
+
     overflow:hidden;
-    border-radius:30px;
+
     padding:60px;
+
+    border-radius:30px;
+
     background:
-        radial-gradient(circle at 85% 20%,rgba(118,92,255,.3),transparent 35%),
-        radial-gradient(circle at 15% 100%,rgba(54,224,255,.17),transparent 35%),
+
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(118,92,255,.28),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 15% 100%,
+            rgba(67,228,255,.15),
+            transparent 35%
+        ),
+
         #09121a;
-    border:1px solid rgba(255,255,255,.12);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
 }
 
 .contact-box h2{
-    max-width:700px;
-    font-size:clamp(38px,5vw,65px);
-    line-height:.98;
+
+    font-size:
+        clamp(
+            38px,
+            5vw,
+            64px
+        );
+
+    line-height:1;
+
     letter-spacing:-3px;
 }
 
 .contact-box p{
+
     margin-top:20px;
-    color:#8fa0ac;
-    max-width:620px;
-    line-height:1.8;
-    font-size:14px;
+
+    max-width:650px;
+
+    color:#91a2ad;
+
+    font-size:13px;
+
+    line-height:1.9;
 }
 
 .contact-actions{
+
     display:flex;
-    gap:12px;
+
     flex-wrap:wrap;
+
+    gap:12px;
+
     margin-top:30px;
 }
 
+
 /* =========================================================
    FOOTER
-   ========================================================= */
+========================================================= */
 
 .footer{
-    padding:45px 24px 30px;
-    border-top:1px solid rgba(255,255,255,.07);
+
+    padding:
+        45px
+        24px
+        30px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
 }
 
 .footer-grid{
+
     max-width:var(--max);
+
     margin:auto;
+
     display:flex;
-    align-items:flex-start;
+
     justify-content:space-between;
+
     gap:40px;
 }
 
-.footer-brand{
-    max-width:400px;
-}
-
 .footer-brand p{
+
     margin-top:15px;
-    color:#6f818d;
-    font-size:11px;
-    line-height:1.8;
+
+    color:#6d7e89;
+
+    font-size:10px;
 }
 
 .footer-links{
+
     display:flex;
-    gap:25px;
+
+    flex-wrap:wrap;
+
+    gap:24px;
 }
 
 .footer-links a{
-    color:#8595a0;
-    font-size:11px;
+
+    color:#84949f;
+
+    font-size:10px;
+
+    transition:.25s;
 }
 
 .footer-links a:hover{
+
     color:#fff;
 }
 
 .footer-bottom{
+
     max-width:var(--max);
-    margin:35px auto 0;
+
+    margin:
+        35px
+        auto
+        0;
+
     padding-top:20px;
-    border-top:1px solid rgba(255,255,255,.06);
-    color:#5f707c;
-    font-size:10px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
     display:flex;
+
     justify-content:space-between;
-    gap:20px;
+
+    color:#5e707c;
+
+    font-size:9px;
 }
 
+
 /* =========================================================
-   BACK TO TOP
-   ========================================================= */
+   TOP BUTTON
+========================================================= */
 
 .top-btn{
+
     position:fixed;
-    right:25px;
-    bottom:25px;
+
+    right:24px;
+
+    bottom:24px;
+
     width:45px;
+
     height:45px;
+
     z-index:4000;
+
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.13);
-    background:rgba(6,12,17,.8);
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    background:
+        rgba(5,10,15,.82);
+
     backdrop-filter:blur(15px);
+
     color:#fff;
+
     cursor:pointer;
+
     opacity:0;
+
     visibility:hidden;
+
     transform:translateY(15px);
+
     transition:.3s ease;
 }
 
 .top-btn.show{
+
     opacity:1;
+
     visibility:visible;
-    transform:translateY(0);
+
+    transform:none;
 }
 
+
 /* =========================================================
-   SCROLL ANIMATION
-   ========================================================= */
+   SCROLL REVEAL
+========================================================= */
 
 .reveal{
+
     opacity:0;
-    transform:translateY(28px);
+
+    transform:
+        translateY(35px);
+
     transition:
         opacity .8s ease,
         transform .8s cubic-bezier(.2,.8,.2,1);
 }
 
 .reveal.visible{
+
     opacity:1;
+
     transform:none;
 }
 
+
 /* =========================================================
    BACKGROUND ORBS
-   ========================================================= */
+========================================================= */
 
 .orb{
+
     position:absolute;
+
     border-radius:50%;
+
+    filter:blur(80px);
+
     pointer-events:none;
-    filter:blur(70px);
-    opacity:.22;
+
+    opacity:.18;
 }
 
-.orb-1{
+.orb.one{
+
+    width:320px;
+
+    height:320px;
+
+    left:-150px;
+
+    top:15%;
+
+    background:#009dff;
+
+    animation:
+        orbMove
+        12s
+        ease-in-out
+        infinite;
+}
+
+.orb.two{
+
     width:300px;
-    height:300px;
-    background:#008dff;
-    top:10%;
-    left:-130px;
-    animation:orbMove 12s ease-in-out infinite;
-}
 
-.orb-2{
-    width:280px;
-    height:280px;
-    background:#6d4cff;
-    right:-100px;
+    height:300px;
+
+    right:-130px;
+
     top:35%;
-    animation:orbMove 15s ease-in-out infinite reverse;
+
+    background:#765cff;
+
+    animation:
+        orbMove
+        15s
+        ease-in-out
+        infinite
+        reverse;
 }
 
 @keyframes orbMove{
-    50%{transform:translate(45px,-30px) scale(1.1)}
+
+    50%{
+        transform:
+            translate(
+                45px,
+                -30px
+            )
+            scale(1.1);
+    }
 }
+
 
 /* =========================================================
    MOBILE
-   ========================================================= */
+========================================================= */
 
 @media(max-width:1050px){
 
-    .nav-links a{
-        padding:11px 9px;
-    }
-
     .products{
-        grid-template-columns:repeat(2,1fr);
+
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .hero-grid{
+
         gap:35px;
     }
 
     .hero-visual{
+
         min-height:500px;
     }
 }
@@ -1299,212 +2355,243 @@ img{
 @media(max-width:850px){
 
     .header{
-        padding:12px 14px;
+
+        padding:
+            12px
+            14px;
     }
 
     .navbar{
+
         min-height:67px;
+
         border-radius:18px;
     }
 
-    .logo{
-        min-width:auto;
-    }
-
     .logo-copy{
+
         display:none;
     }
 
     .nav-links{
+
         display:none;
+
         position:absolute;
+
         top:76px;
+
         left:14px;
+
         right:14px;
+
         padding:12px;
+
         flex-direction:column;
+
         align-items:stretch;
-        border:1px solid rgba(255,255,255,.1);
-        background:rgba(5,10,15,.95);
-        backdrop-filter:blur(25px);
+
+        border:
+            1px solid
+            rgba(255,255,255,.1);
+
         border-radius:18px;
+
+        background:
+            rgba(5,10,15,.96);
+
+        backdrop-filter:blur(25px);
     }
 
     .nav-links.open{
+
         display:flex;
     }
 
     .nav-links a{
+
         padding:14px;
     }
 
-    .nav-cta{
-        margin-left:0;
-    }
-
     .menu-btn{
+
         display:block;
     }
 
     .hero{
+
         padding-top:125px;
     }
 
     .hero-grid{
+
         grid-template-columns:1fr;
     }
 
     .hero h1{
-        font-size:clamp(52px,15vw,86px);
-        letter-spacing:-5px;
+
+        font-size:
+            clamp(
+                48px,
+                14vw,
+                82px
+            );
     }
 
     .hero-visual{
-        min-height:450px;
+
+        min-height:440px;
     }
 
     .float-card.one{
+
         left:10px;
-        top:70px;
     }
 
     .float-card.two{
+
         right:10px;
-        bottom:70px;
     }
 
     .section{
-        padding:85px 18px;
+
+        padding:
+            85px
+            18px;
     }
 
     .section-head{
+
         display:block;
     }
 
     .section-copy{
+
         margin-top:20px;
     }
 
     .why-grid{
+
         grid-template-columns:1fr;
     }
 
     .process{
-        grid-template-columns:1fr 1fr;
+
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .process-line{
+
         display:none;
     }
 
     .company-grid{
+
         grid-template-columns:1fr;
     }
 
     .contact-box{
-        padding:38px 25px;
+
+        padding:40px 25px;
     }
 
     .footer-grid{
+
         flex-direction:column;
     }
 
     .footer-bottom{
+
         flex-direction:column;
     }
 }
 
 @media(max-width:550px){
 
-    .hero{
-        padding-left:15px;
-        padding-right:15px;
-    }
-
-    .hero-description{
-        font-size:14px;
-    }
-
-    .hero-actions{
-        flex-direction:column;
-    }
-
-    .btn{
-        width:100%;
-    }
-
-    .hero-visual{
-        min-height:410px;
-    }
-
     .products{
+
         grid-template-columns:1fr;
     }
 
     .product-card{
+
         min-height:330px;
     }
 
-    .feature{
-        padding:38px 25px;
+    .hero-actions{
+
+        flex-direction:column;
+    }
+
+    .btn{
+
+        width:100%;
+    }
+
+    .hero-visual{
+
+        min-height:410px;
     }
 
     .process{
+
         grid-template-columns:1fr;
     }
 
     .company-row{
+
         grid-template-columns:1fr;
+
         gap:5px;
     }
 
+    .feature{
+
+        padding:40px 25px;
+    }
+
     .contact-box h2{
-        font-size:42px;
-    }
 
-    .footer-links{
-        flex-wrap:wrap;
-    }
-
-    .visual-bottom{
-        left:20px;
-        right:20px;
-        bottom:20px;
-    }
-
-    .visual-badge{
-        width:60px;
-        height:60px;
+        font-size:43px;
     }
 }
 
+
 /* =========================================================
    REDUCED MOTION
-   ========================================================= */
+========================================================= */
 
 @media(prefers-reduced-motion:reduce){
 
     *,
     *::before,
     *::after{
+
         animation-duration:.01ms!important;
+
         animation-iteration-count:1!important;
+
         scroll-behavior:auto!important;
+
         transition-duration:.01ms!important;
     }
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- =======================================================
+
+<!-- =====================================================
      LOADER
-     ======================================================= -->
+===================================================== -->
 
 <div id="loader">
 
-    <div class="loader-inner">
+    <div class="loader-box">
 
         <img
             class="loader-logo"
@@ -1517,7 +2604,7 @@ img{
         >
 
         <div class="loader-fallback">
-            <span>EZ</span>
+            <strong>EZ</strong>
         </div>
 
         <div class="loader-line"></div>
@@ -1527,9 +2614,9 @@ img{
 </div>
 
 
-<!-- =======================================================
+<!-- =====================================================
      HEADER
-     ======================================================= -->
+===================================================== -->
 
 <header class="header" id="header">
 
@@ -1542,7 +2629,7 @@ img{
                 <img
                     class="logo-img"
                     src="https://agmrifkan-collab.github.io/exportzone/images/EZ%20Logo.png"
-                    alt="EXPORT ZONE Logo"
+                    alt="EXPORT ZONE ロゴ"
                     onerror="
                         this.style.display='none';
                         this.parentElement.querySelector('.logo-fallback').style.display='flex';
@@ -1556,8 +2643,15 @@ img{
             </div>
 
             <div class="logo-copy">
-                <div class="logo-title">EXPORT ZONE</div>
-                <div class="logo-sub">JAPAN · GLOBAL SOURCING</div>
+
+                <div class="logo-title">
+                    EXPORT ZONE
+                </div>
+
+                <div class="logo-sub">
+                    JAPAN GLOBAL SOURCING
+                </div>
+
             </div>
 
         </a>
@@ -1565,29 +2659,46 @@ img{
 
         <div class="nav-links" id="navLinks">
 
-            <a href="#home" data-en="Home" data-jp="ホーム">Home</a>
-
-            <a href="#materials" data-en="Materials" data-jp="材料">Materials</a>
-
-            <a href="#vehicles" data-en="Vehicles" data-jp="車両">Vehicles</a>
-
-            <a href="#process" data-en="Process" data-jp="流れ">Process</a>
-
-            <a href="#company" data-en="Company" data-jp="会社情報">Company</a>
-
-            <a href="#contact" class="nav-cta" data-en="Contact Us" data-jp="お問い合わせ">
-                Contact Us
+            <a href="#home">
+                ホーム
             </a>
 
-            <button class="lang-btn" id="langBtn">JP</button>
+            <a href="#vehicles">
+                車両・機械
+            </a>
+
+            <a href="#materials">
+                素材・在庫
+            </a>
+
+            <a href="#process">
+                お取引の流れ
+            </a>
+
+            <a href="#company">
+                会社情報
+            </a>
+
+            <a
+                href="#contact"
+                class="nav-contact"
+            >
+                お問い合わせ
+            </a>
 
         </div>
 
 
-        <button class="menu-btn" id="menuBtn" aria-label="Menu">
+        <button
+            class="menu-btn"
+            id="menuBtn"
+            aria-label="メニュー"
+        >
+
             <span></span>
             <span></span>
             <span></span>
+
         </button>
 
     </nav>
@@ -1595,16 +2706,19 @@ img{
 </header>
 
 
-<!-- =======================================================
+<!-- =====================================================
      HERO
-     ======================================================= -->
+===================================================== -->
 
 <main>
 
-<section class="hero" id="home">
+<section
+    class="hero"
+    id="home"
+>
 
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
 
     <div class="hero-container">
 
@@ -1613,56 +2727,96 @@ img{
             <div class="hero-copy reveal">
 
                 <div class="hero-kicker">
+
                     <span class="live-dot"></span>
-                    JAPAN SOURCING & EXPORT
+
+                    日本から世界へ
+
                 </div>
 
+
                 <h1>
-                    WE BUY.<br>
-                    WE SOURCE.<br>
-                    <span class="gradient">WE EXPORT.</span>
+
+                    仕入れる。<br>
+
+                    選ぶ。<br>
+
+                    <span class="gradient">
+                        世界へ輸出する。
+                    </span>
+
                 </h1>
 
+
                 <p class="hero-description">
-                    Japan-based sourcing for vehicles, trucks, machinery,
-                    auto parts and quality stock materials.
-                    We connect Japanese supply with international markets.
+
+                    EXPORT ZONEは、日本国内から中古車・トラック・
+                    建設機械・農業機械・自動車部品・各種素材を
+                    仕入れ、海外市場へ輸出しています。
+
                 </p>
+
 
                 <div class="hero-actions">
 
-                    <a href="#vehicles" class="btn btn-primary">
-                        Explore Vehicles
+                    <a
+                        href="#vehicles"
+                        class="btn btn-primary"
+                    >
+                        車両・機械を見る
                         <span>↗</span>
                     </a>
 
-                    <a href="#materials" class="btn btn-secondary">
-                        View Materials
+                    <a
+                        href="#materials"
+                        class="btn btn-secondary"
+                    >
+                        素材・在庫を見る
                     </a>
 
                 </div>
+
 
                 <div class="hero-trust">
 
                     <div class="trust-item">
-                        <strong>Japan</strong>
-                        <span>Based</span>
+
+                        <strong>日本</strong>
+
+                        <span>
+                            拠点
+                        </span>
+
                     </div>
 
-                    <div class="trust-item">
-                        <strong>Global</strong>
-                        <span>Export</span>
-                    </div>
 
                     <div class="trust-item">
-                        <strong>Direct</strong>
-                        <span>Sourcing</span>
+
+                        <strong>世界</strong>
+
+                        <span>
+                            輸出
+                        </span>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <strong>直接</strong>
+
+                        <span>
+                            仕入れ
+                        </span>
+
                     </div>
 
                 </div>
 
             </div>
 
+
+            <!-- HERO PHOTO -->
 
             <div class="hero-visual reveal">
 
@@ -1674,17 +2828,28 @@ img{
                         PREMIUM JAPAN SOURCING
                     </div>
 
+
                     <div class="visual-bottom">
 
                         <div>
-                            <h3>From Japan to the World</h3>
+
+                            <h3>
+                                日本から世界へ
+                            </h3>
+
                             <p>
-                                Vehicles · Machinery · Parts · Materials
+                                車両 ・ 重機 ・ 部品 ・ 素材
                             </p>
+
                         </div>
 
+
                         <div class="visual-badge">
-                            <span>EZ</span>
+
+                            <span>
+                                EZ
+                            </span>
+
                         </div>
 
                     </div>
@@ -1693,13 +2858,28 @@ img{
 
 
                 <div class="float-card one">
-                    <small>Source</small>
-                    <strong>Japan 🇯🇵</strong>
+
+                    <small>
+                        仕入れ拠点
+                    </small>
+
+                    <strong>
+                        日本 🇯🇵
+                    </strong>
+
                 </div>
 
+
                 <div class="float-card two">
-                    <small>Markets</small>
-                    <strong>Global</strong>
+
+                    <small>
+                        輸出市場
+                    </small>
+
+                    <strong>
+                        GLOBAL
+                    </strong>
+
                 </div>
 
             </div>
@@ -1711,28 +2891,38 @@ img{
 </section>
 
 
-<!-- =======================================================
+<!-- =====================================================
      VEHICLES
-     ======================================================= -->
+===================================================== -->
 
-<section class="section" id="vehicles">
+<section
+    class="section"
+    id="vehicles"
+>
 
     <div class="container">
 
         <div class="section-head reveal">
 
             <div>
-                <div class="eyebrow">01 / Vehicles</div>
+
+                <div class="eyebrow">
+                    01 / 車両・機械
+                </div>
 
                 <h2 class="section-title">
-                    Vehicles & Machinery
+                    車両・機械
                 </h2>
+
             </div>
 
+
             <p class="section-copy">
-                We source a wide range of Japanese vehicles and machinery,
-                including used vehicles, trucks, construction equipment,
-                agricultural machinery and special-use units.
+
+                日本国内から、乗用車、事故車、トラック、
+                バス、建設機械、農業機械、重機など、
+                海外市場向けの商品を幅広く仕入れています。
+
             </p>
 
         </div>
@@ -1740,121 +2930,238 @@ img{
 
         <div class="products">
 
+
+            <!-- 01 -->
+
             <article class="product-card reveal">
 
                 <div class="product-image img-cars"></div>
 
-                <div class="product-arrow">↗</div>
+                <div class="product-arrow">
+                    ↗
+                </div>
 
                 <div class="product-content">
-                    <div class="product-number">01</div>
-                    <h3>Used Vehicles</h3>
-                    <p>Japanese passenger cars and commercial vehicles.</p>
+
+                    <div class="product-number">
+                        01
+                    </div>
+
+                    <h3>
+                        中古車
+                    </h3>
+
+                    <p>
+                        日本の乗用車・商用車など
+                    </p>
+
                 </div>
 
             </article>
 
+
+            <!-- 02 -->
 
             <article class="product-card reveal">
 
                 <div class="product-image img-accident"></div>
 
-                <div class="product-arrow">↗</div>
+                <div class="product-arrow">
+                    ↗
+                </div>
 
                 <div class="product-content">
-                    <div class="product-number">02</div>
-                    <h3>Accident Vehicles</h3>
-                    <p>Repairable and special-condition vehicles.</p>
+
+                    <div class="product-number">
+                        02
+                    </div>
+
+                    <h3>
+                        事故車・特殊車両
+                    </h3>
+
+                    <p>
+                        修理用・部品用車両など
+                    </p>
+
                 </div>
 
             </article>
 
+
+            <!-- 03 -->
 
             <article class="product-card reveal">
 
                 <div class="product-image img-trucks"></div>
 
-                <div class="product-arrow">↗</div>
+                <div class="product-arrow">
+                    ↗
+                </div>
 
                 <div class="product-content">
-                    <div class="product-number">03</div>
-                    <h3>Trucks & Buses</h3>
-                    <p>Commercial trucks, buses and work vehicles.</p>
+
+                    <div class="product-number">
+                        03
+                    </div>
+
+                    <h3>
+                        トラック・バス
+                    </h3>
+
+                    <p>
+                        商用車・大型車両など
+                    </p>
+
                 </div>
 
             </article>
 
+
+            <!-- 04 HEAVY MACHINERY -->
 
             <article class="product-card reveal">
 
                 <div class="product-image img-heavy"></div>
 
-                <div class="product-arrow">↗</div>
+                <div class="product-arrow">
+                    ↗
+                </div>
 
                 <div class="product-content">
-                    <div class="product-number">04</div>
-                    <h3>Construction</h3>
-                    <p>Excavators, loaders, forklifts and equipment.</p>
+
+                    <div class="product-number">
+                        04
+                    </div>
+
+                    <h3>
+                        建設機械・重機
+                    </h3>
+
+                    <p>
+                        油圧ショベル・ホイールローダー・
+                        フォークリフトなど
+                    </p>
+
                 </div>
 
             </article>
 
+
+            <!-- 05 -->
 
             <article class="product-card reveal">
 
                 <div class="product-image img-agri"></div>
 
-                <div class="product-arrow">↗</div>
+                <div class="product-arrow">
+                    ↗
+                </div>
 
                 <div class="product-content">
-                    <div class="product-number">05</div>
-                    <h3>Agricultural</h3>
-                    <p>Agricultural machinery and related equipment.</p>
+
+                    <div class="product-number">
+                        05
+                    </div>
+
+                    <h3>
+                        農業機械
+                    </h3>
+
+                    <p>
+                        トラクター・農業関連機械など
+                    </p>
+
                 </div>
 
             </article>
 
+
+            <!-- 06 -->
 
             <article class="product-card reveal">
 
                 <div class="product-image img-machinery"></div>
 
-                <div class="product-arrow">↗</div>
+                <div class="product-arrow">
+                    ↗
+                </div>
 
                 <div class="product-content">
-                    <div class="product-number">06</div>
-                    <h3>Heavy Machinery</h3>
-                    <p>Industrial and specialist machinery sourcing.</p>
+
+                    <div class="product-number">
+                        06
+                    </div>
+
+                    <h3>
+                        産業機械
+                    </h3>
+
+                    <p>
+                        各種産業・作業用機械
+                    </p>
+
                 </div>
 
             </article>
 
+
+            <!-- 07 -->
 
             <article class="product-card reveal">
 
                 <div class="product-image img-parts"></div>
 
-                <div class="product-arrow">↗</div>
+                <div class="product-arrow">
+                    ↗
+                </div>
 
                 <div class="product-content">
-                    <div class="product-number">07</div>
-                    <h3>Auto Parts</h3>
-                    <p>Parts, accessories and surplus automotive items.</p>
+
+                    <div class="product-number">
+                        07
+                    </div>
+
+                    <h3>
+                        自動車部品
+                    </h3>
+
+                    <p>
+                        部品・用品・在庫品など
+                    </p>
+
                 </div>
 
             </article>
 
 
-            <article class="product-card reveal" id="materials">
+            <!-- 08 -->
+
+            <article
+                class="product-card reveal"
+                id="materials"
+            >
 
                 <div class="product-image img-materials"></div>
 
-                <div class="product-arrow">↗</div>
+                <div class="product-arrow">
+                    ↗
+                </div>
 
                 <div class="product-content">
-                    <div class="product-number">08</div>
-                    <h3>Stock Materials</h3>
-                    <p>PVC, synthetic leather, fabric and stocklots.</p>
+
+                    <div class="product-number">
+                        08
+                    </div>
+
+                    <h3>
+                        素材・在庫品
+                    </h3>
+
+                    <p>
+                        PVC・合皮・生地・ストックロットなど
+                    </p>
+
                 </div>
 
             </article>
@@ -1866,9 +3173,9 @@ img{
 </section>
 
 
-<!-- =======================================================
-     FEATURE
-     ======================================================= -->
+<!-- =====================================================
+     STOCK
+===================================================== -->
 
 <section class="section">
 
@@ -1879,28 +3186,48 @@ img{
             <div class="feature-content">
 
                 <div class="eyebrow">
-                    Priority Stock
+                    PRIORITY STOCK
                 </div>
 
                 <h2>
-                    Main Stock Lot<br>
-                    Available for Export
+                    メイン在庫・<br>
+                    ストックロット
                 </h2>
 
                 <p>
-                    We purchase and export stocklots, surplus materials,
-                    synthetic leather, PVC, automotive fabrics and other
-                    commercially useful materials from Japan and overseas suppliers.
+
+                    PVC、合成皮革、カーシート用生地、
+                    ベルベット、各種在庫品・余剰品など、
+                    海外向けに適した商品を仕入れています。
+
                 </p>
+
 
                 <div class="feature-pills">
 
-                    <span class="pill">PVC</span>
-                    <span class="pill">Synthetic Leather</span>
-                    <span class="pill">Car Seat Fabric</span>
-                    <span class="pill">Stocklot</span>
-                    <span class="pill">Surplus</span>
-                    <span class="pill">Container Export</span>
+                    <span class="pill">
+                        PVC
+                    </span>
+
+                    <span class="pill">
+                        合成皮革
+                    </span>
+
+                    <span class="pill">
+                        カーシート生地
+                    </span>
+
+                    <span class="pill">
+                        ストックロット
+                    </span>
+
+                    <span class="pill">
+                        余剰在庫
+                    </span>
+
+                    <span class="pill">
+                        コンテナ輸出
+                    </span>
 
                 </div>
 
@@ -1913,9 +3240,9 @@ img{
 </section>
 
 
-<!-- =======================================================
-     WHY US
-     ======================================================= -->
+<!-- =====================================================
+     WHY
+===================================================== -->
 
 <section class="section">
 
@@ -1924,18 +3251,25 @@ img{
         <div class="section-head reveal">
 
             <div>
-                <div class="eyebrow">02 / Why Export Zone</div>
+
+                <div class="eyebrow">
+                    02 / 私たちについて
+                </div>
 
                 <h2 class="section-title">
-                    Built Around<br>
-                    Real Sourcing
+                    確かな仕入れを<br>
+                    世界へ。
                 </h2>
+
             </div>
 
+
             <p class="section-copy">
-                Our focus is straightforward: identify useful products,
-                communicate clearly, arrange purchasing and move goods
-                efficiently toward the destination market.
+
+                私たちは「何を買うか」だけではなく、
+                実際の市場・品質・数量・輸送条件を
+                考えながら仕入れを行っています。
+
             </p>
 
         </div>
@@ -1943,15 +3277,20 @@ img{
 
         <div class="why-grid">
 
+
             <div class="why-card reveal">
 
-                <div class="why-icon">01</div>
+                <div class="why-icon">
+                    01
+                </div>
 
-                <h3>Japan Based</h3>
+                <h3>
+                    日本国内の仕入れ
+                </h3>
 
                 <p>
-                    Located in Saitama, Japan, with access to Japanese
-                    vehicles, machinery, parts and commercial materials.
+                    埼玉県を拠点に、日本国内の車両・
+                    機械・部品・素材を探しています。
                 </p>
 
             </div>
@@ -1959,13 +3298,17 @@ img{
 
             <div class="why-card reveal">
 
-                <div class="why-icon">02</div>
+                <div class="why-icon">
+                    02
+                </div>
 
-                <h3>Direct Sourcing</h3>
+                <h3>
+                    幅広い商品
+                </h3>
 
                 <p>
-                    We look for practical purchasing opportunities through
-                    local suppliers, businesses, stockholders and auctions.
+                    車両だけでなく、重機、農業機械、
+                    部品、素材、在庫品まで対応しています。
                 </p>
 
             </div>
@@ -1973,13 +3316,17 @@ img{
 
             <div class="why-card reveal">
 
-                <div class="why-icon">03</div>
+                <div class="why-icon">
+                    03
+                </div>
 
-                <h3>Export Focused</h3>
+                <h3>
+                    海外輸出
+                </h3>
 
                 <p>
-                    Products are selected with international shipping,
-                    market demand and container logistics in mind.
+                    海外市場の需要を考えながら、
+                    商品の仕入れ・輸出を行っています。
                 </p>
 
             </div>
@@ -1991,28 +3338,39 @@ img{
 </section>
 
 
-<!-- =======================================================
+<!-- =====================================================
      PROCESS
-     ======================================================= -->
+===================================================== -->
 
-<section class="section" id="process">
+<section
+    class="section"
+    id="process"
+>
 
     <div class="container">
 
         <div class="section-head reveal">
 
             <div>
-                <div class="eyebrow">03 / Process</div>
+
+                <div class="eyebrow">
+                    03 / お取引の流れ
+                </div>
 
                 <h2 class="section-title">
-                    Simple.<br>
-                    Direct. Global.
+                    シンプルに、<br>
+                    直接。
                 </h2>
+
             </div>
 
+
             <p class="section-copy">
-                From your requirement to sourcing and export,
-                we keep communication direct and practical.
+
+                お探しの商品・車両をお知らせください。
+                条件を確認し、仕入れ可能な商品を
+                ご案内いたします。
+
             </p>
 
         </div>
@@ -2020,15 +3378,20 @@ img{
 
         <div class="process">
 
+
             <div class="process-card reveal">
 
-                <div class="process-number">STEP 01</div>
+                <div class="process-number">
+                    STEP 01
+                </div>
 
-                <h3>Tell Us</h3>
+                <h3>
+                    ご希望をお知らせください
+                </h3>
 
                 <p>
-                    Send us the product, specification, quantity
-                    or vehicle you are looking for.
+                    商品名、仕様、数量、車両情報などを
+                    お知らせください。
                 </p>
 
                 <div class="process-line"></div>
@@ -2038,13 +3401,17 @@ img{
 
             <div class="process-card reveal">
 
-                <div class="process-number">STEP 02</div>
+                <div class="process-number">
+                    STEP 02
+                </div>
 
-                <h3>We Source</h3>
+                <h3>
+                    仕入れ先を確認
+                </h3>
 
                 <p>
-                    We search available Japanese and international
-                    supply sources.
+                    日本国内の仕入れ先・在庫状況を
+                    確認します。
                 </p>
 
                 <div class="process-line"></div>
@@ -2054,13 +3421,17 @@ img{
 
             <div class="process-card reveal">
 
-                <div class="process-number">STEP 03</div>
+                <div class="process-number">
+                    STEP 03
+                </div>
 
-                <h3>Confirm</h3>
+                <h3>
+                    商品を確認
+                </h3>
 
                 <p>
-                    Photos, specifications, quantity and commercial
-                    details are checked before proceeding.
+                    写真、仕様、数量、価格などを
+                    ご確認いただきます。
                 </p>
 
                 <div class="process-line"></div>
@@ -2070,13 +3441,17 @@ img{
 
             <div class="process-card reveal">
 
-                <div class="process-number">STEP 04</div>
+                <div class="process-number">
+                    STEP 04
+                </div>
 
-                <h3>Export</h3>
+                <h3>
+                    輸出・出荷
+                </h3>
 
                 <p>
-                    We arrange purchasing and export logistics
-                    toward the destination market.
+                    購入後、輸送・コンテナ出荷などを
+                    手配します。
                 </p>
 
             </div>
@@ -2088,20 +3463,24 @@ img{
 </section>
 
 
-<!-- =======================================================
+<!-- =====================================================
      COMPANY
-     ======================================================= -->
+===================================================== -->
 
-<section class="section" id="company">
+<section
+    class="section"
+    id="company"
+>
 
     <div class="container">
 
         <div class="company-grid">
 
+
             <div class="company-card reveal">
 
                 <div class="eyebrow">
-                    04 / Company
+                    04 / 会社情報
                 </div>
 
                 <h3>
@@ -2109,17 +3488,22 @@ img{
                 </h3>
 
                 <p>
-                    A Japan-based sourcing and export company
-                    working with vehicles, machinery, automotive
-                    products and commercial stock materials.
+
+                    日本を拠点として、
+                    中古車・トラック・建設機械・
+                    農業機械・自動車部品・
+                    各種素材などを取り扱う
+                    仕入れ・輸出会社です。
+
                 </p>
+
 
                 <a
                     href="#contact"
                     class="btn btn-primary"
                     style="margin-top:25px;"
                 >
-                    Contact Export Zone
+                    お問い合わせ
                 </a>
 
             </div>
@@ -2127,42 +3511,92 @@ img{
 
             <div class="company-card reveal">
 
-                <h3>Company Information</h3>
+                <h3>
+                    会社情報
+                </h3>
+
 
                 <div class="company-list">
 
-                    <div class="company-row">
-                        <span>Company</span>
-                        <span>EXPORT ZONE Co., Ltd.</span>
-                    </div>
 
                     <div class="company-row">
-                        <span>Address</span>
+
                         <span>
-                            2607 Komuro, Ina, Kitaadachi District,
-                            Saitama 362-0806, Japan
+                            会社名
                         </span>
+
+                        <span>
+                            EXPORT ZONE Co., Ltd.
+                        </span>
+
                     </div>
 
-                    <div class="company-row">
-                        <span>Phone</span>
-                        <span>0120 888 405</span>
-                    </div>
 
                     <div class="company-row">
-                        <span>Email</span>
-                        <span>exportzonecoltd@gmail.com</span>
+
+                        <span>
+                            所在地
+                        </span>
+
+                        <span>
+                            〒362-0806<br>
+                            埼玉県北足立郡伊奈町小室2607
+                        </span>
+
                     </div>
 
-                    <div class="company-row">
-                        <span>LINE</span>
-                        <span>exportzonecoltd</span>
-                    </div>
 
                     <div class="company-row">
-                        <span>Dealer License</span>
-                        <span>第452750021040号</span>
+
+                        <span>
+                            電話
+                        </span>
+
+                        <span>
+                            0120 888 405
+                        </span>
+
                     </div>
+
+
+                    <div class="company-row">
+
+                        <span>
+                            メール
+                        </span>
+
+                        <span>
+                            exportzonecoltd@gmail.com
+                        </span>
+
+                    </div>
+
+
+                    <div class="company-row">
+
+                        <span>
+                            LINE
+                        </span>
+
+                        <span>
+                            exportzonecoltd
+                        </span>
+
+                    </div>
+
+
+                    <div class="company-row">
+
+                        <span>
+                            古物商許可番号
+                        </span>
+
+                        <span>
+                            第452750021040号
+                        </span>
+
+                    </div>
+
 
                 </div>
 
@@ -2175,31 +3609,39 @@ img{
 </section>
 
 
-<!-- =======================================================
+<!-- =====================================================
      CONTACT
-     ======================================================= -->
+===================================================== -->
 
-<section class="section" id="contact">
+<section
+    class="section"
+    id="contact"
+>
 
     <div class="container">
 
         <div class="contact-box reveal">
 
             <div class="eyebrow">
-                05 / Contact
+                05 / お問い合わせ
             </div>
 
+
             <h2>
-                Tell us what<br>
-                you need.
+                お探しの商品を<br>
+                お知らせください。
             </h2>
 
+
             <p>
-                Looking for a Japanese vehicle, machinery,
-                auto part, stocklot or specific material?
-                Send us your requirement and we will check
-                available sourcing possibilities.
+
+                日本の中古車、トラック、重機、
+                自動車部品、PVC、合成皮革、
+                生地、ストックロットなどをお探しの場合は、
+                お気軽にお問い合わせください。
+
             </p>
+
 
             <div class="contact-actions">
 
@@ -2207,15 +3649,17 @@ img{
                     href="tel:0120888405"
                     class="btn btn-primary"
                 >
-                    Call 0120 888 405
+                    📞 0120 888 405
                 </a>
+
 
                 <a
                     href="mailto:exportzonecoltd@gmail.com"
                     class="btn btn-secondary"
                 >
-                    Send Email
+                    ✉ メールでお問い合わせ
                 </a>
+
 
                 <a
                     href="https://line.me/ti/p/VcqKQ0PYkN"
@@ -2223,7 +3667,7 @@ img{
                     rel="noopener"
                     class="btn btn-secondary"
                 >
-                    LINE: exportzonecoltd
+                    LINEでお問い合わせ
                 </a>
 
             </div>
@@ -2237,17 +3681,21 @@ img{
 </main>
 
 
-<!-- =======================================================
+<!-- =====================================================
      FOOTER
-     ======================================================= -->
+===================================================== -->
 
 <footer class="footer">
 
     <div class="footer-grid">
 
+
         <div class="footer-brand">
 
-            <a href="#home" class="logo">
+            <a
+                href="#home"
+                class="logo"
+            >
 
                 <div class="logo-image-wrap">
 
@@ -2267,15 +3715,24 @@ img{
 
                 </div>
 
+
                 <div class="logo-copy">
-                    <div class="logo-title">EXPORT ZONE</div>
-                    <div class="logo-sub">JAPAN · GLOBAL SOURCING</div>
+
+                    <div class="logo-title">
+                        EXPORT ZONE
+                    </div>
+
+                    <div class="logo-sub">
+                        JAPAN GLOBAL SOURCING
+                    </div>
+
                 </div>
 
             </a>
 
+
             <p>
-                Vehicles · Machinery · Auto Parts · Stock Materials
+                車両 ・ 重機 ・ 部品 ・ 素材 ・ 輸出
             </p>
 
         </div>
@@ -2283,11 +3740,29 @@ img{
 
         <div class="footer-links">
 
-            <a href="#home">Home</a>
-            <a href="#vehicles">Vehicles</a>
-            <a href="#materials">Materials</a>
-            <a href="#company">Company</a>
-            <a href="#contact">Contact</a>
+            <a href="#home">
+                ホーム
+            </a>
+
+            <a href="#vehicles">
+                車両・機械
+            </a>
+
+            <a href="#materials">
+                素材・在庫
+            </a>
+
+            <a href="#process">
+                お取引の流れ
+            </a>
+
+            <a href="#company">
+                会社情報
+            </a>
+
+            <a href="#contact">
+                お問い合わせ
+            </a>
 
         </div>
 
@@ -2297,12 +3772,13 @@ img{
     <div class="footer-bottom">
 
         <span>
-            © <span id="year"></span> EXPORT ZONE Co., Ltd.
+            © <span id="year"></span>
+            EXPORT ZONE Co., Ltd.
             All Rights Reserved.
         </span>
 
         <span>
-            Japan
+            JAPAN
         </span>
 
     </div>
@@ -2310,11 +3786,14 @@ img{
 </footer>
 
 
-<!-- =======================================================
-     BACK TO TOP
-     ======================================================= -->
+<!-- =====================================================
+     TOP
+===================================================== -->
 
-<button class="top-btn" id="topBtn" aria-label="Back to top">
+<button
+    class="top-btn"
+    id="topBtn"
+>
     ↑
 </button>
 
@@ -2322,299 +3801,358 @@ img{
 <script>
 
 /* =========================================================
-   LOADER
-   ========================================================= */
+   LOADING
+========================================================= */
 
-window.addEventListener("load",function(){
+window.addEventListener(
+    "load",
+    function(){
 
-    setTimeout(function(){
+        setTimeout(
+            function(){
 
-        document.getElementById("loader")
-            .classList.add("hide");
+                document
+                    .getElementById("loader")
+                    .classList
+                    .add("hide");
 
-    },700);
+            },
+            700
+        );
 
-});
+    }
+);
 
 
 /* =========================================================
-   HEADER SCROLL
-   ========================================================= */
+   HEADER
+========================================================= */
 
-const header = document.getElementById("header");
+const header =
+    document.getElementById("header");
 
-window.addEventListener("scroll",function(){
+window.addEventListener(
+    "scroll",
+    function(){
 
-    if(window.scrollY > 40){
-        header.classList.add("scrolled");
-    }else{
-        header.classList.remove("scrolled");
+        if(window.scrollY > 40){
+
+            header.classList.add("scrolled");
+
+        }else{
+
+            header.classList.remove("scrolled");
+
+        }
+
     }
-
-});
+);
 
 
 /* =========================================================
    MOBILE MENU
-   ========================================================= */
+========================================================= */
 
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
+const menuBtn =
+    document.getElementById("menuBtn");
 
-menuBtn.addEventListener("click",function(){
+const navLinks =
+    document.getElementById("navLinks");
 
-    navLinks.classList.toggle("open");
+menuBtn.addEventListener(
+    "click",
+    function(){
 
-});
+        navLinks.classList.toggle("open");
 
-document.querySelectorAll(".nav-links a").forEach(function(link){
+    }
+);
 
-    link.addEventListener("click",function(){
+document
+    .querySelectorAll(".nav-links a")
+    .forEach(
+        function(link){
 
-        navLinks.classList.remove("open");
+            link.addEventListener(
+                "click",
+                function(){
 
-    });
+                    navLinks.classList.remove(
+                        "open"
+                    );
 
-});
+                }
+            );
+
+        }
+    );
 
 
 /* =========================================================
    SCROLL REVEAL
-   ========================================================= */
+========================================================= */
 
-const revealObserver = new IntersectionObserver(
+const observer =
+    new IntersectionObserver(
 
-    function(entries){
+        function(entries){
 
-        entries.forEach(function(entry){
+            entries.forEach(
+                function(entry){
 
-            if(entry.isIntersecting){
+                    if(
+                        entry.isIntersecting
+                    ){
 
-                entry.target.classList.add("visible");
+                        entry.target
+                            .classList
+                            .add("visible");
 
-                revealObserver.unobserve(entry.target);
+                        observer.unobserve(
+                            entry.target
+                        );
 
-            }
+                    }
 
-        });
+                }
+            );
 
-    },
+        },
 
-    {
-        threshold:.12
-    }
+        {
+            threshold:.12
+        }
 
-);
+    );
 
-document.querySelectorAll(".reveal").forEach(function(element){
+document
+    .querySelectorAll(".reveal")
+    .forEach(
+        function(element){
 
-    revealObserver.observe(element);
+            observer.observe(element);
 
-});
+        }
+    );
 
 
 /* =========================================================
-   BACK TO TOP
-   ========================================================= */
+   TOP BUTTON
+========================================================= */
 
-const topBtn = document.getElementById("topBtn");
+const topBtn =
+    document.getElementById("topBtn");
 
-window.addEventListener("scroll",function(){
+window.addEventListener(
+    "scroll",
+    function(){
 
-    if(window.scrollY > 700){
+        if(window.scrollY > 700){
 
-        topBtn.classList.add("show");
+            topBtn.classList.add("show");
 
-    }else{
+        }else{
 
-        topBtn.classList.remove("show");
+            topBtn.classList.remove("show");
+
+        }
 
     }
+);
 
-});
+topBtn.addEventListener(
+    "click",
+    function(){
 
-topBtn.addEventListener("click",function(){
+        window.scrollTo({
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+            top:0,
 
-});
+            behavior:"smooth"
+
+        });
+
+    }
+);
 
 
 /* =========================================================
    YEAR
-   ========================================================= */
+========================================================= */
 
-document.getElementById("year").textContent =
+document.getElementById(
+    "year"
+).textContent =
     new Date().getFullYear();
 
 
 /* =========================================================
-   LANGUAGE SWITCH
-   ========================================================= */
+   PRODUCT 3D EFFECT
+========================================================= */
 
-const langBtn = document.getElementById("langBtn");
+if(
+    window.matchMedia(
+        "(pointer:fine)"
+    ).matches
+){
 
-let language =
-    localStorage.getItem("ez-language") || "EN";
+    document
+        .querySelectorAll(
+            ".product-card"
+        )
+        .forEach(
+            function(card){
 
-function updateLanguage(){
+                card.addEventListener(
+                    "mousemove",
+                    function(e){
 
-    document.querySelectorAll("[data-en]").forEach(function(el){
+                        const rect =
+                            card.getBoundingClientRect();
 
-        if(language === "JP"){
+                        const x =
+                            e.clientX -
+                            rect.left;
 
-            el.textContent = el.dataset.jp;
+                        const y =
+                            e.clientY -
+                            rect.top;
 
-        }else{
+                        const rotateY =
+                            (
+                                x /
+                                rect.width -
+                                .5
+                            ) * 5;
 
-            el.textContent = el.dataset.en;
+                        const rotateX =
+                            (
+                                y /
+                                rect.height -
+                                .5
+                            ) * -5;
 
-        }
+                        card.style.transform =
+                            "perspective(900px)" +
+                            " rotateX(" +
+                            rotateX +
+                            "deg)" +
+                            " rotateY(" +
+                            rotateY +
+                            "deg)" +
+                            " translateY(-8px)";
 
-    });
-
-    langBtn.textContent =
-        language === "EN" ? "JP" : "EN";
-
-}
-
-langBtn.addEventListener("click",function(){
-
-    language =
-        language === "EN" ? "JP" : "EN";
-
-    localStorage.setItem(
-        "ez-language",
-        language
-    );
-
-    updateLanguage();
-
-});
-
-updateLanguage();
+                    }
+                );
 
 
-/* =========================================================
-   PREMIUM CARD TILT
-   ========================================================= */
+                card.addEventListener(
+                    "mouseleave",
+                    function(){
 
-if(window.matchMedia("(pointer:fine)").matches){
+                        card.style.transform =
+                            "";
 
-    document.querySelectorAll(".product-card").forEach(function(card){
+                    }
+                );
 
-        card.addEventListener("mousemove",function(e){
-
-            const rect =
-                card.getBoundingClientRect();
-
-            const x =
-                e.clientX - rect.left;
-
-            const y =
-                e.clientY - rect.top;
-
-            const rotateY =
-                ((x / rect.width) - .5) * 5;
-
-            const rotateX =
-                ((y / rect.height) - .5) * -5;
-
-            card.style.transform =
-                "perspective(800px) rotateX(" +
-                rotateX +
-                "deg) rotateY(" +
-                rotateY +
-                "deg) translateY(-9px)";
-
-        });
-
-        card.addEventListener("mouseleave",function(){
-
-            card.style.transform = "";
-
-        });
-
-    });
+            }
+        );
 
 }
 
 
 /* =========================================================
-   HERO MOUSE PARALLAX
-   ========================================================= */
+   HERO PARALLAX
+========================================================= */
 
-if(window.matchMedia("(pointer:fine)").matches){
+if(
+    window.matchMedia(
+        "(pointer:fine)"
+    ).matches
+){
 
     const heroVisual =
-        document.querySelector(".hero-visual");
+        document.querySelector(
+            ".hero-visual"
+        );
 
-    document.addEventListener("mousemove",function(e){
+    document.addEventListener(
+        "mousemove",
+        function(e){
 
-        const x =
-            (e.clientX / window.innerWidth - .5);
+            const x =
+                (
+                    e.clientX /
+                    window.innerWidth -
+                    .5
+                );
 
-        const y =
-            (e.clientY / window.innerHeight - .5);
+            const y =
+                (
+                    e.clientY /
+                    window.innerHeight -
+                    .5
+                );
 
-        if(heroVisual){
+            if(heroVisual){
 
-            heroVisual.style.transform =
-                "translate(" +
-                (x * 7) +
-                "px," +
-                (y * 5) +
-                "px)";
+                heroVisual.style.transform =
+                    "translate(" +
+                    (x * 6) +
+                    "px," +
+                    (y * 4) +
+                    "px)";
+
+            }
 
         }
-
-    });
+    );
 
 }
 
 
 /* =========================================================
-   IMAGE FALLBACK
-   ========================================================= */
+   SMOOTH LINKS
+========================================================= */
 
-document.querySelectorAll(".product-image").forEach(function(el){
+document
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(
+        function(anchor){
 
-    const style =
-        window.getComputedStyle(el,"::before");
+            anchor.addEventListener(
+                "click",
+                function(e){
 
-});
+                    const target =
+                        document.querySelector(
+                            this.getAttribute(
+                                "href"
+                            )
+                        );
 
+                    if(target){
 
-/* =========================================================
-   SMOOTH INTERNAL LINKS
-   ========================================================= */
+                        e.preventDefault();
 
-document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+                        target.scrollIntoView({
 
-    anchor.addEventListener("click",function(e){
+                            behavior:"smooth",
 
-        const target =
-            document.querySelector(
-                this.getAttribute("href")
+                            block:"start"
+
+                        });
+
+                    }
+
+                }
             );
 
-        if(target){
-
-            e.preventDefault();
-
-            target.scrollIntoView({
-                behavior:"smooth",
-                block:"start"
-            });
-
         }
-
-    });
-
-});
+    );
 
 </script>
 
