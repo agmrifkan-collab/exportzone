@@ -1,16 +1,1445 @@
-.line-contact{
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EXPORT ZONE Co., Ltd. | Vehicle & Machinery Buyback Japan</title>
+
+<meta name="description"
+content="EXPORT ZONE buys old cars, accident cars, non-running vehicles, trucks, heavy machinery, construction machinery and agricultural machinery anywhere in Japan.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:
+        Inter,
+        "Noto Sans JP",
+        Arial,
+        sans-serif;
+
+    background:#020812;
+    color:#ffffff;
+
+    overflow-x:hidden;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+
+    --bg:#020812;
+    --bg2:#071522;
+
+    --card:rgba(255,255,255,.065);
+
+    --border:rgba(255,255,255,.13);
+
+    --gold:#ffb400;
+    --orange:#ff6500;
+
+    --cyan:#12d9ff;
+    --blue:#198cff;
+
+    --green:#19dc80;
+    --line:#06c755;
+
+    --muted:#aabccc;
+
+}
+
+
+/* =========================================================
+   BACKGROUND GLOW
+========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:600px;
+    height:600px;
+
+    border-radius:50%;
+
+    background:rgba(15,210,255,.08);
+
+    filter:blur(130px);
+
+    top:-280px;
+    left:-250px;
+
+    pointer-events:none;
+
+    z-index:-10;
+
+    animation:floatBlue 12s ease-in-out infinite;
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:600px;
+    height:600px;
+
+    border-radius:50%;
+
+    background:rgba(255,100,0,.08);
+
+    filter:blur(130px);
+
+    bottom:-280px;
+    right:-250px;
+
+    pointer-events:none;
+
+    z-index:-10;
+
+    animation:floatOrange 14s ease-in-out infinite;
+}
+
+@keyframes floatBlue{
+
+    0%,100%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(120px,80px);
+    }
+}
+
+@keyframes floatOrange{
+
+    0%,100%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(-100px,-70px);
+    }
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    z-index:9999;
+
+    background:rgba(2,8,18,.76);
+
+    backdrop-filter:blur(22px);
+
+    -webkit-backdrop-filter:blur(22px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav{
+
+    width:min(1450px,92%);
+
+    height:82px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:25px;
+}
+
+.logo img{
+
+    width:175px;
+
+    max-height:58px;
+
+    object-fit:contain;
+}
+
+.menu{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+}
+
+.menu a{
+
+    color:#dce7f0;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    transition:.3s;
+}
+
+.menu a:hover{
+
+    color:var(--cyan);
+}
+
+.header-phone{
+
+    font-size:20px;
+
+    font-weight:900;
+
+    white-space:nowrap;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--gold),
+            var(--orange),
+            var(--gold)
+        );
+
+    background-size:200% auto;
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+
+    animation:phoneShine 3s linear infinite;
+}
+
+@keyframes phoneShine{
+
+    to{
+        background-position:200% center;
+    }
+}
+
+.language{
+
+    display:flex;
+
+    gap:4px;
+
+    padding:4px;
+
+    border:1px solid var(--border);
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.05);
+}
+
+.language button{
+
+    border:0;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:transparent;
+
+    color:#999;
+
+    cursor:pointer;
+
+    font-weight:800;
+}
+
+.language button.active{
+
+    background:#ffffff;
+
+    color:#000000;
+}
+
+.mobile-button{
+
+    display:none;
+
+    font-size:28px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    min-height:100vh;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:145px 4% 90px;
+
+    overflow:hidden;
+}
+
+.hero-background{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:-2;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(2,8,18,.96) 0%,
+            rgba(2,8,18,.78) 42%,
+            rgba(2,8,18,.30) 100%
+        ),
+
+        url("images/old-car.jpg")
+        center/cover no-repeat;
+
+    animation:heroSlide 18s infinite;
+}
+
+@keyframes heroSlide{
+
+    0%,28%{
+
+        background-image:
+
+        linear-gradient(
+            90deg,
+            rgba(2,8,18,.96),
+            rgba(2,8,18,.75),
+            rgba(2,8,18,.30)
+        ),
+
+        url("images/old-car.jpg");
+
+    }
+
+    33%,61%{
+
+        background-image:
+
+        linear-gradient(
+            90deg,
+            rgba(2,8,18,.96),
+            rgba(2,8,18,.75),
+            rgba(2,8,18,.30)
+        ),
+
+        url("images/accident.jpg");
+
+    }
+
+    66%,94%{
+
+        background-image:
+
+        linear-gradient(
+            90deg,
+            rgba(2,8,18,.96),
+            rgba(2,8,18,.75),
+            rgba(2,8,18,.30)
+        ),
+
+        url("images/machinery.jpg");
+
+    }
+
+    100%{
+
+        background-image:
+
+        linear-gradient(
+            90deg,
+            rgba(2,8,18,.96),
+            rgba(2,8,18,.75),
+            rgba(2,8,18,.30)
+        ),
+
+        url("images/old-car.jpg");
+
+    }
+}
+
+.hero-glow{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:-1;
+
+    background:
+
+        radial-gradient(
+            circle at 75% 35%,
+            rgba(20,217,255,.14),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 30% 80%,
+            rgba(255,100,0,.12),
+            transparent 30%
+        );
+}
+
+.hero-content{
+
+    width:min(1450px,100%);
+
+    margin:auto;
+}
+
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:10px 17px;
+
+    border-radius:40px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.17);
+
+    backdrop-filter:blur(12px);
+
+    color:#d9e7f2;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    margin-bottom:25px;
+}
+
+.hero-badge .status-dot{
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:0 0 15px var(--green);
+}
+
+.hero h1{
+
+    max-width:920px;
+
+    font-size:clamp(43px,6vw,88px);
+
+    line-height:1.04;
+
+    font-weight:900;
+
+    letter-spacing:-3px;
+}
+
+.gradient-text{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #ffffff,
+            var(--cyan),
+            var(--gold),
+            #ffffff
+        );
+
+    background-size:300% auto;
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+
+    animation:titleGradient 5s linear infinite;
+}
+
+@keyframes titleGradient{
+
+    to{
+        background-position:300% center;
+    }
+}
+
+.hero-description{
+
+    max-width:720px;
+
+    margin-top:25px;
+
+    color:#b9c8d6;
+
+    font-size:18px;
+
+    line-height:1.85;
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:13px;
+
     margin-top:35px;
+}
+
+.button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:9px;
+
+    padding:16px 25px;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    transition:.3s;
+}
+
+.button-primary{
+
+    color:#000000;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--gold),
+            var(--orange)
+        );
+
+    box-shadow:
+        0 15px 40px rgba(255,100,0,.25);
+}
+
+.button-primary:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 20px 50px rgba(255,100,0,.40);
+}
+
+.button-glass{
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+}
+
+.button-glass:hover{
+
+    background:rgba(255,255,255,.13);
+
+    transform:translateY(-4px);
+}
+
+.hero-phone{
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    font-size:clamp(32px,4vw,58px);
+
+    font-weight:900;
+
+    color:#ffffff;
+
+    text-shadow:
+
+        0 0 18px rgba(255,180,0,.5),
+
+        0 0 40px rgba(255,100,0,.25);
+
+    animation:phonePulse 2.5s infinite;
+}
+
+@keyframes phonePulse{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.025);
+    }
+}
+
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
+section{
+
+    padding:110px 4%;
+}
+
+.container{
+
+    width:min(1450px,100%);
+
+    margin:auto;
+}
+
+.section-title{
+
+    max-width:850px;
+
+    margin-bottom:55px;
+}
+
+.eyebrow{
+
+    color:var(--cyan);
+
+    font-size:12px;
+
+    font-weight:900;
+
+    letter-spacing:3px;
+
+    margin-bottom:13px;
+}
+
+.section-title h2{
+
+    font-size:clamp(35px,5vw,62px);
+
+    line-height:1.1;
+
+    font-weight:900;
+}
+
+.section-title p{
+
+    margin-top:18px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.payment-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:60px;
+
+    border-radius:32px;
+
+    border:1px solid rgba(255,255,255,.14);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(25,220,128,.11),
+            rgba(15,210,255,.07),
+            rgba(255,180,0,.08)
+        );
+}
+
+.payment-box::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:400px;
+
+    height:400px;
+
+    border-radius:50%;
+
+    right:-150px;
+
+    top:-180px;
+
+    background:var(--green);
+
+    opacity:.08;
+
+    filter:blur(100px);
+}
+
+.payment-box h2{
+
+    font-size:clamp(32px,5vw,60px);
+
+    line-height:1.1;
+
+    font-weight:900;
+}
+
+.payment-box h2 span{
+
+    color:var(--green);
+}
+
+.payment-box p{
+
+    max-width:900px;
+
+    margin-top:20px;
+
+    color:#b8c8d3;
+
+    font-size:17px;
+
+    line-height:1.85;
+}
+
+.payment-highlight{
+
+    margin-top:30px;
+
+    font-size:clamp(28px,4vw,52px);
+
+    font-weight:900;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--green),
+            var(--cyan)
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+}
+
+
+/* =========================================================
+   TWO COLUMN
+========================================================= */
+
+.two-column{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:60px;
+
+    align-items:center;
+}
+
+.photo-box{
+
+    min-height:520px;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    border:1px solid var(--border);
+
+    background:center/cover no-repeat;
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.35);
+}
+
+.old-car-photo{
+
+    background-image:url("images/old-car.jpg");
+}
+
+.emotional-content h2{
+
+    font-size:clamp(35px,5vw,64px);
+
+    line-height:1.1;
+}
+
+.emotional-content p{
+
+    margin-top:22px;
+
+    color:var(--muted);
+
+    line-height:1.9;
+
+    font-size:17px;
+}
+
+.check-list{
+
+    margin-top:30px;
+
+    display:grid;
+
+    gap:14px;
+}
+
+.check{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:#e4edf5;
+
+    font-weight:600;
+}
+
+.check-icon{
+
+    width:28px;
+
+    height:28px;
+
+    flex:0 0 28px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:rgba(25,220,128,.14);
+
+    color:var(--green);
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.products-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:18px;
+}
+
+.product{
+
+    min-height:330px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    border:1px solid var(--border);
+
+    background:#081321;
+
+    transition:.4s;
+}
+
+.product:hover{
+
+    transform:translateY(-8px);
+
+    border-color:rgba(15,210,255,.4);
+
+    box-shadow:
+        0 25px 65px rgba(0,0,0,.35);
+}
+
+.product-image{
+
+    position:absolute;
+
+    inset:0;
+
+    background:center/cover no-repeat;
+
+    transition:.6s;
+}
+
+.product:hover .product-image{
+
+    transform:scale(1.08);
+}
+
+.product-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            transparent 20%,
+            rgba(2,8,18,.96)
+        );
+}
+
+.product-content{
+
+    position:absolute;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    padding:25px;
+}
+
+.product-content h3{
+
+    font-size:21px;
+
+    font-weight:900;
+}
+
+.product-content p{
+
+    margin-top:8px;
+
+    color:#b6c7d6;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.feature-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:18px;
+}
+
+.feature{
+
+    padding:30px;
+
+    border-radius:23px;
+
+    border:1px solid var(--border);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+
+    transition:.35s;
+}
+
+.feature:hover{
+
+    transform:translateY(-6px);
+
+    border-color:rgba(15,210,255,.35);
+}
+
+.feature-icon{
+
+    width:55px;
+
+    height:55px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:17px;
+
+    font-size:25px;
+
+    margin-bottom:20px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(15,210,255,.17),
+            rgba(255,180,0,.13)
+        );
+}
+
+.feature h3{
+
+    font-size:20px;
+
+    margin-bottom:10px;
+}
+
+.feature p{
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   SHIPPING
+========================================================= */
+
+.shipping{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(2,8,18,.96),
+            rgba(2,8,18,.76),
+            rgba(2,8,18,.42)
+        ),
+
+        url("images/shipping.jpg")
+        center/cover no-repeat;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.shipping-content{
+
+    max-width:850px;
+}
+
+.shipping h2{
+
+    font-size:clamp(36px,5vw,68px);
+
+    line-height:1.05;
+
+    font-weight:900;
+}
+
+.shipping h2 span{
+
+    color:var(--cyan);
+}
+
+.shipping p{
+
+    margin-top:23px;
+
+    color:#c1ced9;
+
+    line-height:1.9;
+
+    font-size:17px;
+}
+
+.shipping-points{
+
+    margin-top:30px;
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:13px;
+}
+
+.shipping-point{
+
+    padding:17px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(10px);
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   PROCESS
+========================================================= */
+
+.process{
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    gap:12px;
+}
+
+.step{
+
+    min-height:210px;
+
+    padding:25px 18px;
+
+    text-align:center;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.045);
+
+    border:1px solid var(--border);
+}
+
+.step-number{
+
+    width:48px;
+
+    height:48px;
+
+    margin:0 auto 18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:#000;
+
+    font-size:17px;
+
+    font-weight:900;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--gold),
+            var(--orange)
+        );
+}
+
+.step h3{
+
+    font-size:16px;
+
+    margin-bottom:9px;
+}
+
+.step p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:1.65;
+}
+
+
+/* =========================================================
+   COMPANY
+========================================================= */
+
+.company-photo{
+
+    background-image:url("images/company.jpg");
+}
+
+.company-content h2{
+
+    font-size:clamp(35px,5vw,60px);
+}
+
+.company-content p{
+
+    margin-top:20px;
+
+    color:var(--muted);
+
+    line-height:1.9;
+}
+
+.company-info{
+
+    margin-top:30px;
+
+    display:grid;
+
+    gap:10px;
+}
+
+.info-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:16px;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.info-label{
+
+    color:#8fa4b7;
+}
+
+.info-value{
+
+    text-align:right;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:75px 40px;
+
+    text-align:center;
+
+    border-radius:36px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    background:
+
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(15,210,255,.15),
+            transparent 45%
+        ),
+
+        rgba(255,255,255,.04);
+}
+
+.contact-box h2{
+
+    font-size:clamp(38px,6vw,76px);
+
+    line-height:1.05;
+}
+
+.contact-box p{
+
+    max-width:700px;
+
+    margin:20px auto;
+
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+.big-phone{
+
+    display:block;
+
+    margin:25px 0;
+
+    font-size:clamp(36px,7vw,82px);
+
+    font-weight:900;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--gold),
+            var(--orange),
+            var(--cyan),
+            var(--gold)
+        );
+
+    background-size:300% auto;
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+
+    animation:titleGradient 5s linear infinite;
+}
+
+.contact-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:13px;
+}
+
+
+/* =========================================================
+   LINE BUTTON
+========================================================= */
+
+.line-contact{
+
+    margin-top:35px;
+
     display:inline-block;
 }
 
 .line-button{
+
     display:flex;
+
     align-items:center;
+
     gap:15px;
 
-    padding:14px 20px;
+    min-width:340px;
 
-    min-width:320px;
+    padding:14px 20px;
 
     border-radius:20px;
 
@@ -24,6 +1453,7 @@
 }
 
 .line-button:hover{
+
     transform:translateY(-4px);
 
     background:rgba(6,199,85,.18);
@@ -31,43 +1461,53 @@
     border-color:#06c755;
 
     box-shadow:
-        0 15px 35px rgba(6,199,85,.18);
+        0 15px 35px
+        rgba(6,199,85,.18);
 }
 
 .line-icon{
+
     width:52px;
+
     height:52px;
 
     flex-shrink:0;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     border-radius:15px;
 
     background:#06c755;
 
-    color:#fff;
+    color:#ffffff;
 
     font-size:12px;
+
     font-weight:900;
 }
 
 .line-info{
+
     flex:1;
+
     text-align:left;
 }
 
 .line-info strong{
+
     display:block;
 
-    color:#fff;
+    color:#ffffff;
 
     font-size:15px;
 }
 
 .line-info small{
+
     display:block;
 
     margin-top:5px;
@@ -78,9 +1518,2266 @@
 }
 
 .line-arrow{
+
     font-size:28px;
 
     color:#06c755;
 
     font-weight:900;
 }
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    padding:55px 4% 30px;
+
+    background:#01060d;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.footer-grid{
+
+    width:min(1450px,100%);
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1.5fr 1fr 1fr;
+
+    gap:40px;
+}
+
+.footer-logo img{
+
+    width:175px;
+}
+
+.footer-description{
+
+    margin-top:18px;
+
+    max-width:500px;
+
+    color:#8195a8;
+
+    font-size:13px;
+
+    line-height:1.8;
+}
+
+.footer h3{
+
+    margin-bottom:16px;
+}
+
+.footer-links{
+
+    display:grid;
+
+    gap:10px;
+
+    color:#9dafc0;
+
+    font-size:14px;
+}
+
+.footer-links a:hover{
+
+    color:var(--cyan);
+}
+
+.copyright{
+
+    width:min(1450px,100%);
+
+    margin:40px auto 0;
+
+    padding-top:20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    color:#65788b;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   SCROLL ANIMATION
+========================================================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(35px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+[data-lang="en"]{
+    display:none;
+}
+
+body.english [data-lang="ja"]{
+    display:none;
+}
+
+body.english [data-lang="en"]{
+    display:block;
+}
+
+body.english span[data-lang="en"],
+body.english a[data-lang="en"]{
+    display:inline;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1150px){
+
+    .menu{
+        display:none;
+    }
+
+    .mobile-button{
+        display:block;
+    }
+
+    .header-phone{
+        display:none;
+    }
+
+    .products-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .process{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+
+@media(max-width:850px){
+
+    section{
+        padding:80px 5%;
+    }
+
+    .hero{
+        padding:125px 5% 80px;
+    }
+
+    .two-column{
+        grid-template-columns:1fr;
+    }
+
+    .photo-box{
+        min-height:370px;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    .shipping-points{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .copyright{
+        flex-direction:column;
+    }
+}
+
+
+@media(max-width:600px){
+
+    .nav{
+        height:70px;
+    }
+
+    .logo img{
+        width:145px;
+    }
+
+    .language button{
+        padding:6px 8px;
+        font-size:11px;
+    }
+
+    .hero h1{
+        font-size:43px;
+        letter-spacing:-2px;
+    }
+
+    .hero-description{
+        font-size:15px;
+    }
+
+    .hero-phone{
+        font-size:31px;
+    }
+
+    .products-grid{
+        grid-template-columns:1fr;
+    }
+
+    .process{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .payment-box{
+        padding:35px 24px;
+    }
+
+    .contact-box{
+        padding:55px 20px;
+    }
+
+    .line-button{
+        min-width:0;
+        width:100%;
+    }
+
+    .line-contact{
+        width:100%;
+    }
+
+    .info-row{
+        flex-direction:column;
+        gap:6px;
+    }
+
+    .info-value{
+        text-align:left;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+<div class="nav">
+
+
+<a href="#home" class="logo">
+
+    <img
+        src="images/EZ Logo.png"
+        alt="EXPORT ZONE">
+
+</a>
+
+
+<nav class="menu">
+
+
+<a href="#home">
+
+    <span data-lang="ja">
+        ホーム
+    </span>
+
+    <span data-lang="en">
+        Home
+    </span>
+
+</a>
+
+
+<a href="#buyback">
+
+    <span data-lang="ja">
+        買取
+    </span>
+
+    <span data-lang="en">
+        Buyback
+    </span>
+
+</a>
+
+
+<a href="#products">
+
+    <span data-lang="ja">
+        買取品目
+    </span>
+
+    <span data-lang="en">
+        What We Buy
+    </span>
+
+</a>
+
+
+<a href="#shipping">
+
+    <span data-lang="ja">
+        輸出
+    </span>
+
+    <span data-lang="en">
+        Export
+    </span>
+
+</a>
+
+
+<a href="#company">
+
+    <span data-lang="ja">
+        会社情報
+    </span>
+
+    <span data-lang="en">
+        Company
+    </span>
+
+</a>
+
+
+<a href="#contact">
+
+    <span data-lang="ja">
+        お問い合わせ
+    </span>
+
+    <span data-lang="en">
+        Contact
+    </span>
+
+</a>
+
+
+</nav>
+
+
+<div class="header-phone">
+    📞 0120 888 405
+</div>
+
+
+<div class="language">
+
+<button
+    class="active"
+    onclick="setLanguage('ja')">
+
+    JP
+
+</button>
+
+
+<button
+    onclick="setLanguage('en')">
+
+    EN
+
+</button>
+
+</div>
+
+
+<div
+    class="mobile-button"
+    onclick="toggleMenu()">
+
+    ☰
+
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section
+    class="hero"
+    id="home">
+
+
+<div class="hero-background"></div>
+
+<div class="hero-glow"></div>
+
+
+<div class="hero-content reveal">
+
+
+<div class="hero-badge">
+
+<span class="status-dot"></span>
+
+<span data-lang="ja">
+    日本全国どこでも買取
+</span>
+
+<span data-lang="en">
+    BUYING ANYWHERE IN JAPAN
+</span>
+
+</div>
+
+
+<h1 data-lang="ja">
+
+古くても、壊れていても。<br>
+
+<span class="gradient-text">
+私たちは買い取ります。
+</span>
+
+</h1>
+
+
+<h1 data-lang="en">
+
+OLD CARS.<br>
+
+ACCIDENT CARS.<br>
+
+<span class="gradient-text">
+MACHINERY. WE BUY IT.
+</span>
+
+</h1>
+
+
+<p
+    class="hero-description"
+    data-lang="ja">
+
+古い車、事故車、動かない車、
+トラック、重機、建設機械、農業機械まで。
+EXPORT ZONEは日本全国から買取しています。
+
+</p>
+
+
+<p
+    class="hero-description"
+    data-lang="en">
+
+Old cars, accident cars, non-running vehicles,
+trucks, heavy machinery, construction machinery
+and agricultural machinery.
+
+EXPORT ZONE buys from anywhere in Japan.
+
+</p>
+
+
+<div class="hero-buttons">
+
+
+<a
+    href="tel:0120888405"
+    class="button button-primary">
+
+📞
+
+<span data-lang="ja">
+無料査定・お問い合わせ
+</span>
+
+<span data-lang="en">
+FREE APPRAISAL
+</span>
+
+</a>
+
+
+<a
+    href="#products"
+    class="button button-glass">
+
+<span data-lang="ja">
+買取品目を見る ↓
+</span>
+
+<span data-lang="en">
+WHAT WE BUY ↓
+</span>
+
+</a>
+
+
+</div>
+
+
+<a
+    href="tel:0120888405"
+    class="hero-phone">
+
+0120 888 405
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PAYMENT
+========================================================= -->
+
+<section id="buyback">
+
+<div class="container">
+
+
+<div class="payment-box reveal">
+
+
+<div class="eyebrow">
+PAYMENT
+</div>
+
+
+<h2 data-lang="ja">
+
+お客様がお金を払う必要はありません。<br>
+
+<span>
+私たちがお客様にお支払いします。
+</span>
+
+</h2>
+
+
+<h2 data-lang="en">
+
+YOU DON'T PAY US.<br>
+
+<span>
+WE PAY YOU.
+</span>
+
+</h2>
+
+
+<p data-lang="ja">
+
+車を処分するために費用を払うのではありません。
+車両を確認し、条件に合意した後、
+私たちがお客様へお支払いします。
+
+</p>
+
+
+<p data-lang="en">
+
+You don't pay us to take your vehicle.
+After checking the vehicle and agreeing on the conditions,
+we pay you.
+
+</p>
+
+
+<div class="payment-highlight">
+💰 WE PAY YOU
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     OLD / ACCIDENT
+========================================================= -->
+
+<section>
+
+<div class="container two-column">
+
+
+<div
+    class="photo-box old-car-photo reveal">
+</div>
+
+
+<div class="emotional-content reveal">
+
+
+<div class="eyebrow">
+NO WORRIES
+</div>
+
+
+<h2 data-lang="ja">
+
+もう乗らない車を、<br>
+どうしたらいい？
+
+</h2>
+
+
+<h2 data-lang="en">
+
+A vehicle you no longer need?<br>
+Don't worry.
+
+</h2>
+
+
+<p data-lang="ja">
+
+長年使った古い車。
+事故にあった車。
+故障して動かない車。
+車検が切れた車。
+駐車場に置いたままの車。
+
+「こんな車でも売れる？」
+
+そんな時は、まずEXPORT ZONEへ
+ご相談ください。
+
+</p>
+
+
+<p data-lang="en">
+
+An old vehicle you've used for years.
+An accident-damaged vehicle.
+A broken vehicle that cannot move.
+A vehicle with expired inspection.
+
+If you're wondering,
+"Can I sell this vehicle?"
+
+Talk to EXPORT ZONE first.
+
+</p>
+
+
+<div class="check-list">
+
+
+<div class="check">
+
+<div class="check-icon">
+✓
+</div>
+
+<span data-lang="ja">
+古い車でもOK
+</span>
+
+<span data-lang="en">
+Old vehicles welcome
+</span>
+
+</div>
+
+
+<div class="check">
+
+<div class="check-icon">
+✓
+</div>
+
+<span data-lang="ja">
+事故車でもOK
+</span>
+
+<span data-lang="en">
+Accident vehicles welcome
+</span>
+
+</div>
+
+
+<div class="check">
+
+<div class="check-icon">
+✓
+</div>
+
+<span data-lang="ja">
+動かない車でもOK
+</span>
+
+<span data-lang="en">
+Non-running vehicles welcome
+</span>
+
+</div>
+
+
+<div class="check">
+
+<div class="check-icon">
+✓
+</div>
+
+<span data-lang="ja">
+重機・機械もOK
+</span>
+
+<span data-lang="en">
+Machinery welcome
+</span>
+
+</div>
+
+
+<div class="check">
+
+<div class="check-icon">
+✓
+</div>
+
+<span data-lang="ja">
+日本全国対応
+</span>
+
+<span data-lang="en">
+Anywhere in Japan
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PRODUCTS
+========================================================= -->
+
+<section id="products">
+
+<div class="container">
+
+
+<div class="section-title reveal">
+
+
+<div class="eyebrow">
+WHAT WE BUY
+</div>
+
+
+<h2 data-lang="ja">
+買取品目
+</h2>
+
+
+<h2 data-lang="en">
+What We Buy
+</h2>
+
+
+<p data-lang="ja">
+
+自動車から大型重機まで、
+幅広い車両・機械を取り扱っています。
+
+</p>
+
+
+<p data-lang="en">
+
+From old vehicles to heavy machinery,
+we handle a wide range of vehicles and equipment.
+
+</p>
+
+
+</div>
+
+
+<div class="products-grid">
+
+
+<div class="product reveal">
+
+<div
+    class="product-image"
+    style="background-image:url('images/old-car.jpg');">
+</div>
+
+<div class="product-overlay"></div>
+
+<div class="product-content">
+
+<h3 data-lang="ja">
+古い中古車
+</h3>
+
+<h3 data-lang="en">
+Old / Used Cars
+</h3>
+
+<p data-lang="ja">
+年式が古い車・過走行車
+</p>
+
+<p data-lang="en">
+Old and high-mileage vehicles
+</p>
+
+</div>
+
+</div>
+
+
+<div class="product reveal">
+
+<div
+    class="product-image"
+    style="background-image:url('images/accident.jpg');">
+</div>
+
+<div class="product-overlay"></div>
+
+<div class="product-content">
+
+<h3 data-lang="ja">
+事故車・故障車
+</h3>
+
+<h3 data-lang="en">
+Accident & Broken Cars
+</h3>
+
+<p data-lang="ja">
+事故車・故障車・不動車
+</p>
+
+<p data-lang="en">
+Accident, broken and non-running cars
+</p>
+
+</div>
+
+</div>
+
+
+<div class="product reveal">
+
+<div
+    class="product-image"
+    style="background-image:url('images/truck.jpg');">
+</div>
+
+<div class="product-overlay"></div>
+
+<div class="product-content">
+
+<h3 data-lang="ja">
+トラック・バス
+</h3>
+
+<h3 data-lang="en">
+Trucks & Buses
+</h3>
+
+<p data-lang="ja">
+小型・大型トラック・バス
+</p>
+
+<p data-lang="en">
+Trucks and buses
+</p>
+
+</div>
+
+</div>
+
+
+<div class="product reveal">
+
+<div
+    class="product-image"
+    style="background-image:url('images/excavator.jpg');">
+</div>
+
+<div class="product-overlay"></div>
+
+<div class="product-content">
+
+<h3 data-lang="ja">
+建設機械
+</h3>
+
+<h3 data-lang="en">
+Construction Machinery
+</h3>
+
+<p data-lang="ja">
+油圧ショベル・重機など
+</p>
+
+<p data-lang="en">
+Excavators and heavy machinery
+</p>
+
+</div>
+
+</div>
+
+
+<div class="product reveal">
+
+<div
+    class="product-image"
+    style="background-image:url('images/agriculture.jpg');">
+</div>
+
+<div class="product-overlay"></div>
+
+<div class="product-content">
+
+<h3 data-lang="ja">
+農業機械
+</h3>
+
+<h3 data-lang="en">
+Agricultural Machinery
+</h3>
+
+<p data-lang="ja">
+農業用機械・設備
+</p>
+
+<p data-lang="en">
+Agricultural machinery and equipment
+</p>
+
+</div>
+
+</div>
+
+
+<div class="product reveal">
+
+<div
+    class="product-image"
+    style="background-image:url('images/machinery.jpg');">
+</div>
+
+<div class="product-overlay"></div>
+
+<div class="product-content">
+
+<h3 data-lang="ja">
+重機・機械
+</h3>
+
+<h3 data-lang="en">
+Heavy Machinery
+</h3>
+
+<p data-lang="ja">
+フォークリフト・特殊機械など
+</p>
+
+<p data-lang="en">
+Forklifts and special machinery
+</p>
+
+</div>
+
+</div>
+
+
+<div class="product reveal">
+
+<div
+    class="product-image"
+    style="background-image:url('images/parts.jpg');">
+</div>
+
+<div class="product-overlay"></div>
+
+<div class="product-content">
+
+<h3 data-lang="ja">
+自動車部品
+</h3>
+
+<h3 data-lang="en">
+Auto Parts
+</h3>
+
+<p data-lang="ja">
+部品・パーツ・在庫品
+</p>
+
+<p data-lang="en">
+Parts and stock items
+</p>
+
+</div>
+
+</div>
+
+
+<div class="product reveal">
+
+<div
+    class="product-image"
+    style="background-image:url('images/stock.jpg');">
+</div>
+
+<div class="product-overlay"></div>
+
+<div class="product-content">
+
+<h3 data-lang="ja">
+在庫・その他
+</h3>
+
+<h3 data-lang="en">
+Stock & Other
+</h3>
+
+<p data-lang="ja">
+余剰品・在庫品など
+</p>
+
+<p data-lang="en">
+Surplus and stock items
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     WHY EXPORT ZONE
+========================================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title reveal">
+
+<div class="eyebrow">
+WHY EXPORT ZONE
+</div>
+
+<h2 data-lang="ja">
+選ばれる理由
+</h2>
+
+<h2 data-lang="en">
+Why EXPORT ZONE
+</h2>
+
+</div>
+
+
+<div class="feature-grid">
+
+
+<div class="feature reveal">
+
+<div class="feature-icon">
+🇯🇵
+</div>
+
+<h3 data-lang="ja">
+日本全国対応
+</h3>
+
+<h3 data-lang="en">
+Nationwide Japan
+</h3>
+
+<p data-lang="ja">
+日本全国どこからでもお問い合わせいただけます。
+</p>
+
+<p data-lang="en">
+Contact us from anywhere in Japan.
+</p>
+
+</div>
+
+
+<div class="feature reveal">
+
+<div class="feature-icon">
+💰
+</div>
+
+<h3 data-lang="ja">
+お客様にお支払い
+</h3>
+
+<h3 data-lang="en">
+We Pay You
+</h3>
+
+<p data-lang="ja">
+お客様が買取費用を支払う必要はありません。
+</p>
+
+<p data-lang="en">
+You don't pay us. We pay you.
+</p>
+
+</div>
+
+
+<div class="feature reveal">
+
+<div class="feature-icon">
+🚚
+</div>
+
+<h3 data-lang="ja">
+車両引取サポート
+</h3>
+
+<h3 data-lang="en">
+Pickup Support
+</h3>
+
+<p data-lang="ja">
+必要な手続き後、車両の引取を手配します。
+</p>
+
+<p data-lang="en">
+We arrange vehicle pickup after required procedures.
+</p>
+
+</div>
+
+
+<div class="feature reveal">
+
+<div class="feature-icon">
+🔧
+</div>
+
+<h3 data-lang="ja">
+不動車も相談可能
+</h3>
+
+<h3 data-lang="en">
+Non-Running Vehicles
+</h3>
+
+<p data-lang="ja">
+動かない車両についてもご相談ください。
+</p>
+
+<p data-lang="en">
+Talk to us even if the vehicle cannot move.
+</p>
+
+</div>
+
+
+<div class="feature reveal">
+
+<div class="feature-icon">
+🌍
+</div>
+
+<h3 data-lang="ja">
+海外輸出
+</h3>
+
+<h3 data-lang="en">
+International Export
+</h3>
+
+<p data-lang="ja">
+日本から海外への輸出ネットワークを活用しています。
+</p>
+
+<p data-lang="en">
+We operate with an international export network.
+</p>
+
+</div>
+
+
+<div class="feature reveal">
+
+<div class="feature-icon">
+🤝
+</div>
+
+<h3 data-lang="ja">
+丁寧な対応
+</h3>
+
+<h3 data-lang="en">
+Professional Service
+</h3>
+
+<p data-lang="ja">
+一台一台、丁寧に対応します。
+</p>
+
+<p data-lang="en">
+We handle every vehicle professionally.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SHIPPING
+========================================================= -->
+
+<section
+    class="shipping"
+    id="shipping">
+
+
+<div class="container">
+
+
+<div class="shipping-content reveal">
+
+
+<div class="eyebrow">
+JAPAN → WORLD
+</div>
+
+
+<h2 data-lang="ja">
+
+日本から世界へ。<br>
+
+<span>
+車両・機械を海外へ輸出。
+</span>
+
+</h2>
+
+
+<h2 data-lang="en">
+
+FROM JAPAN TO THE WORLD.<br>
+
+<span>
+Vehicles & Machinery Export.
+</span>
+
+</h2>
+
+
+<p data-lang="ja">
+
+日本で買い取った中古車・トラック・重機・
+建設機械・農業機械などを、
+海外市場へ輸出しています。
+
+</p>
+
+
+<p data-lang="en">
+
+We export used vehicles, trucks,
+heavy machinery, construction machinery
+and agricultural equipment from Japan
+to international markets.
+
+</p>
+
+
+<div class="shipping-points">
+
+
+<div class="shipping-point">
+
+🚢
+
+<span data-lang="ja">
+海外輸出
+</span>
+
+<span data-lang="en">
+International Shipping
+</span>
+
+</div>
+
+
+<div class="shipping-point">
+
+🇯🇵
+
+<span data-lang="ja">
+日本国内仕入れ
+</span>
+
+<span data-lang="en">
+Sourced in Japan
+</span>
+
+</div>
+
+
+<div class="shipping-point">
+
+🚗
+
+<span data-lang="ja">
+中古車・事故車
+</span>
+
+<span data-lang="en">
+Used & Accident Vehicles
+</span>
+
+</div>
+
+
+<div class="shipping-point">
+
+🚜
+
+<span data-lang="ja">
+重機・建設機械
+</span>
+
+<span data-lang="en">
+Heavy Machinery
+</span>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PROCESS
+========================================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title reveal">
+
+<div class="eyebrow">
+SIMPLE PROCESS
+</div>
+
+<h2 data-lang="ja">
+買取の流れ
+</h2>
+
+<h2 data-lang="en">
+Simple Buyback Process
+</h2>
+
+</div>
+
+
+<div class="process">
+
+
+<div class="step reveal">
+
+<div class="step-number">
+01
+</div>
+
+<h3 data-lang="ja">
+お問い合わせ
+</h3>
+
+<h3 data-lang="en">
+Contact
+</h3>
+
+<p data-lang="ja">
+電話・LINE・メールからご連絡ください。
+</p>
+
+<p data-lang="en">
+Contact us by phone, LINE or email.
+</p>
+
+</div>
+
+
+<div class="step reveal">
+
+<div class="step-number">
+02
+</div>
+
+<h3 data-lang="ja">
+無料査定
+</h3>
+
+<h3 data-lang="en">
+Free Appraisal
+</h3>
+
+<p data-lang="ja">
+車両情報と写真を確認します。
+</p>
+
+<p data-lang="en">
+We check vehicle details and photos.
+</p>
+
+</div>
+
+
+<div class="step reveal">
+
+<div class="step-number">
+03
+</div>
+
+<h3 data-lang="ja">
+買取価格
+</h3>
+
+<h3 data-lang="en">
+Price
+</h3>
+
+<p data-lang="ja">
+買取条件と価格をご案内します。
+</p>
+
+<p data-lang="en">
+We provide the price and conditions.
+</p>
+
+</div>
+
+
+<div class="step reveal">
+
+<div class="step-number">
+04
+</div>
+
+<h3 data-lang="ja">
+ご契約
+</h3>
+
+<h3 data-lang="en">
+Agreement
+</h3>
+
+<p data-lang="ja">
+条件をご確認いただきます。
+</p>
+
+<p data-lang="en">
+Confirm the conditions.
+</p>
+
+</div>
+
+
+<div class="step reveal">
+
+<div class="step-number">
+05
+</div>
+
+<h3 data-lang="ja">
+お支払い
+</h3>
+
+<h3 data-lang="en">
+We Pay You
+</h3>
+
+<p data-lang="ja">
+合意した条件に基づきお支払いします。
+</p>
+
+<p data-lang="en">
+We pay you according to the agreement.
+</p>
+
+</div>
+
+
+<div class="step reveal">
+
+<div class="step-number">
+06
+</div>
+
+<h3 data-lang="ja">
+名義変更・引取
+</h3>
+
+<h3 data-lang="en">
+Transfer & Pickup
+</h3>
+
+<p data-lang="ja">
+必要な手続き後、車両を引き取ります。
+</p>
+
+<p data-lang="en">
+We arrange the required transfer and pickup.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     COMPANY
+========================================================= -->
+
+<section id="company">
+
+<div class="container two-column">
+
+
+<div class="photo-box company-photo reveal">
+</div>
+
+
+<div class="company-content reveal">
+
+
+<div class="eyebrow">
+COMPANY
+</div>
+
+
+<h2>
+EXPORT ZONE
+</h2>
+
+
+<p data-lang="ja">
+
+日本で培ったネットワークを活用し、
+中古車・トラック・重機・建設機械・
+農業機械などを国内外へ取り扱っています。
+
+</p>
+
+
+<p data-lang="en">
+
+Using our network in Japan,
+EXPORT ZONE handles used vehicles,
+trucks, heavy machinery,
+construction machinery and agricultural
+equipment for domestic and international markets.
+
+</p>
+
+
+<div class="company-info">
+
+
+<div class="info-row">
+
+<span
+    class="info-label"
+    data-lang="ja">
+会社名
+</span>
+
+<span
+    class="info-label"
+    data-lang="en">
+Company
+</span>
+
+<span class="info-value">
+EXPORT ZONE Co., Ltd.
+</span>
+
+</div>
+
+
+<div class="info-row">
+
+<span
+    class="info-label"
+    data-lang="ja">
+所在地
+</span>
+
+<span
+    class="info-label"
+    data-lang="en">
+Location
+</span>
+
+<span class="info-value">
+Saitama, Japan
+</span>
+
+</div>
+
+
+<div class="info-row">
+
+<span
+    class="info-label"
+    data-lang="ja">
+電話
+</span>
+
+<span
+    class="info-label"
+    data-lang="en">
+Phone
+</span>
+
+<span class="info-value">
+0120 888 405
+</span>
+
+</div>
+
+
+<div class="info-row">
+
+<span
+    class="info-label"
+    data-lang="ja">
+メール
+</span>
+
+<span
+    class="info-label"
+    data-lang="en">
+Email
+</span>
+
+<span class="info-value">
+exportzonecoltd@gmail.com
+</span>
+
+</div>
+
+
+<div class="info-row">
+
+<span
+    class="info-label"
+    data-lang="ja">
+古物商許可番号
+</span>
+
+<span
+    class="info-label"
+    data-lang="en">
+Secondhand Dealer License
+</span>
+
+<span class="info-value">
+第452750021040号
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section id="contact">
+
+<div class="container">
+
+
+<div class="contact-box reveal">
+
+
+<div class="eyebrow">
+CONTACT US
+</div>
+
+
+<h2 data-lang="ja">
+
+まずはお気軽に<br>
+ご相談ください。
+
+</h2>
+
+
+<h2 data-lang="en">
+
+Let's Talk About<br>
+Your Vehicle.
+
+</h2>
+
+
+<p data-lang="ja">
+
+「こんな車でも売れる？」と思ったら、
+まずはお気軽にお問い合わせください。
+
+</p>
+
+
+<p data-lang="en">
+
+Wondering if we can buy your vehicle?
+Contact us and let's discuss it.
+
+</p>
+
+
+<a
+    href="tel:0120888405"
+    class="big-phone">
+
+0120 888 405
+
+</a>
+
+
+<div class="contact-buttons">
+
+
+<a
+    href="tel:0120888405"
+    class="button button-primary">
+
+📞
+
+<span data-lang="ja">
+電話する
+</span>
+
+<span data-lang="en">
+Call Now
+</span>
+
+</a>
+
+
+<a
+    href="mailto:exportzonecoltd@gmail.com"
+    class="button button-glass">
+
+✉️
+
+<span data-lang="ja">
+メール
+</span>
+
+<span data-lang="en">
+Email
+</span>
+
+</a>
+
+
+</div>
+
+
+<!-- =====================================================
+     LINE BUTTON
+===================================================== -->
+
+<div class="line-contact">
+
+
+<a
+    href="https://line.me/ti/p/VcqKQ0PYkN"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="line-button">
+
+
+<div class="line-icon">
+LINE
+</div>
+
+
+<div class="line-info">
+
+<strong>
+LINE ID: exportzonecoltd
+</strong>
+
+
+<small data-lang="ja">
+LINEでお問い合わせ
+</small>
+
+
+<small data-lang="en">
+Contact us on LINE
+</small>
+
+
+</div>
+
+
+<div class="line-arrow">
+→
+</div>
+
+
+</a>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+
+<div class="footer-grid">
+
+
+<div>
+
+
+<div class="footer-logo">
+
+<img
+    src="images/EZ Logo.png"
+    alt="EXPORT ZONE">
+
+</div>
+
+
+<p
+    class="footer-description"
+    data-lang="ja">
+
+中古車・事故車・不動車・トラック・
+重機・建設機械・農業機械などを
+日本全国から買取しています。
+
+</p>
+
+
+<p
+    class="footer-description"
+    data-lang="en">
+
+We buy used cars, accident vehicles,
+non-running vehicles, trucks,
+heavy machinery, construction machinery
+and agricultural equipment across Japan.
+
+</p>
+
+
+</div>
+
+
+<div>
+
+
+<h3 data-lang="ja">
+メニュー
+</h3>
+
+
+<h3 data-lang="en">
+Menu
+</h3>
+
+
+<div class="footer-links">
+
+<a href="#home">
+Home
+</a>
+
+<a href="#buyback">
+Buyback
+</a>
+
+<a href="#products">
+What We Buy
+</a>
+
+<a href="#shipping">
+Export
+</a>
+
+<a href="#company">
+Company
+</a>
+
+<a href="#contact">
+Contact
+</a>
+
+</div>
+
+
+</div>
+
+
+<div>
+
+
+<h3 data-lang="ja">
+お問い合わせ
+</h3>
+
+
+<h3 data-lang="en">
+Contact
+</h3>
+
+
+<div class="footer-links">
+
+
+<a href="tel:0120888405">
+📞 0120 888 405
+</a>
+
+
+<a href="mailto:exportzonecoltd@gmail.com">
+✉️ exportzonecoltd@gmail.com
+</a>
+
+
+<a
+    href="https://line.me/ti/p/VcqKQ0PYkN"
+    target="_blank"
+    rel="noopener noreferrer">
+
+LINE: exportzonecoltd
+
+</a>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="copyright">
+
+<span>
+© 2026 EXPORT ZONE Co., Ltd. All Rights Reserved.
+</span>
+
+<span>
+Saitama, Japan
+</span>
+
+</div>
+
+
+</footer>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+
+/* =========================================================
+   LANGUAGE SWITCH
+========================================================= */
+
+function setLanguage(language){
+
+    const buttons =
+        document.querySelectorAll(
+            ".language button"
+        );
+
+
+    buttons.forEach(function(button){
+
+        button.classList.remove("active");
+
+    });
+
+
+    if(language === "en"){
+
+        document.body.classList.add("english");
+
+        document.documentElement.lang = "en";
+
+        if(buttons[1]){
+            buttons[1].classList.add("active");
+        }
+
+    }else{
+
+        document.body.classList.remove("english");
+
+        document.documentElement.lang = "ja";
+
+        if(buttons[0]){
+            buttons[0].classList.add("active");
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+function toggleMenu(){
+
+    const menu =
+        document.querySelector(".menu");
+
+
+    if(!menu){
+        return;
+    }
+
+
+    if(menu.style.display === "flex"){
+
+        menu.style.display = "none";
+
+        return;
+    }
+
+
+    menu.style.display = "flex";
+
+    menu.style.position = "absolute";
+
+    menu.style.top = "70px";
+
+    menu.style.left = "0";
+
+    menu.style.right = "0";
+
+    menu.style.padding = "25px";
+
+    menu.style.flexDirection = "column";
+
+    menu.style.alignItems = "flex-start";
+
+    menu.style.background =
+        "rgba(2,8,18,.98)";
+
+    menu.style.borderBottom =
+        "1px solid rgba(255,255,255,.1)";
+}
+
+
+/* =========================================================
+   CLOSE MOBILE MENU
+========================================================= */
+
+document
+.querySelectorAll(".menu a")
+.forEach(function(link){
+
+    link.addEventListener(
+        "click",
+        function(){
+
+            if(window.innerWidth <= 1150){
+
+                const menu =
+                    document.querySelector(".menu");
+
+                if(menu){
+                    menu.style.display = "none";
+                }
+
+            }
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const observer =
+new IntersectionObserver(
+
+    function(entries){
+
+        entries.forEach(
+            function(entry){
+
+                if(entry.isIntersecting){
+
+                    entry.target
+                        .classList
+                        .add("show");
+
+                }
+
+            }
+        );
+
+    },
+
+    {
+        threshold:0.12
+    }
+
+);
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(function(element){
+
+    observer.observe(element);
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
