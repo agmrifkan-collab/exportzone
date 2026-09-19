@@ -1,1012 +1,1431 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EXPORT ZONE Co., Ltd. | Vehicle & Machinery Buyback</title>
+<title>EXPORT ZONE Co., Ltd. | Japan Vehicle & Material Export</title>
+
+<meta name="description" content="EXPORT ZONE Co., Ltd. — Japan-based vehicle, machinery, auto parts and stock material sourcing and export.">
+<meta name="theme-color" content="#071018">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+/* =========================================================
+   EXPORT ZONE — PREMIUM WEBSITE
+   ========================================================= */
 
-html{scroll-behavior:smooth}
+:root{
+    --bg:#05090d;
+    --bg2:#081118;
+    --panel:rgba(255,255,255,.055);
+    --panel2:rgba(255,255,255,.08);
+    --border:rgba(255,255,255,.12);
+    --text:#f5f8fb;
+    --muted:#98a7b5;
+    --blue:#28a9ff;
+    --cyan:#36e0ff;
+    --violet:#765cff;
+    --green:#39e6a3;
+    --orange:#ff9d45;
+    --max:1240px;
+    --radius:26px;
+    --shadow:0 25px 80px rgba(0,0,0,.45);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
 
 body{
-    font-family:"Noto Sans JP","Yu Gothic",Arial,sans-serif;
-    background:#040812;
-    color:#fff;
+    font-family:"Inter","Plus Jakarta Sans",Arial,sans-serif;
+    background:
+        radial-gradient(circle at 15% 15%,rgba(40,169,255,.10),transparent 30%),
+        radial-gradient(circle at 85% 25%,rgba(118,92,255,.10),transparent 28%),
+        linear-gradient(180deg,#05090d,#071018 45%,#05090d);
+    color:var(--text);
     overflow-x:hidden;
 }
 
-/* ===============================
-   PREMIUM BACKGROUND
-================================ */
-
-body:before{
+body::before{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-5;
-    background:
-        radial-gradient(circle at 8% 15%,rgba(0,218,255,.13),transparent 28%),
-        radial-gradient(circle at 90% 15%,rgba(118,65,255,.14),transparent 30%),
-        radial-gradient(circle at 55% 85%,rgba(0,255,190,.07),transparent 28%),
-        #040812;
-}
-
-body:after{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-4;
-    opacity:.18;
-    background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-    background-size:70px 70px;
-    mask-image:linear-gradient(to bottom,#000,transparent);
     pointer-events:none;
+    z-index:9998;
+    opacity:.045;
+    background-image:
+        linear-gradient(rgba(255,255,255,.7) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.7) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to bottom,black,transparent 90%);
 }
 
-/* ===============================
-   HEADER
-================================ */
+a{
+    color:inherit;
+    text-decoration:none;
+}
 
-header{
+button{
+    font:inherit;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+/* =========================================================
+   LOADER
+   ========================================================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    z-index:10000;
+    background:#05090d;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:opacity .7s ease,visibility .7s ease;
+}
+
+#loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-inner{
+    text-align:center;
+}
+
+.loader-logo{
+    width:130px;
+    height:130px;
+    margin:auto;
+    object-fit:contain;
+    filter:
+        drop-shadow(0 0 15px rgba(54,224,255,.5))
+        drop-shadow(0 0 35px rgba(40,169,255,.25));
+    animation:loaderLogo 2s ease-in-out infinite;
+}
+
+.loader-fallback{
+    display:none;
+    width:120px;
+    height:120px;
+    margin:auto;
+    border:1px solid rgba(54,224,255,.4);
+    border-radius:30px;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(145deg,#10202c,#071017);
+    box-shadow:
+        0 0 35px rgba(54,224,255,.2),
+        inset 0 0 35px rgba(40,169,255,.08);
+}
+
+.loader-fallback span{
+    font-size:34px;
+    font-weight:900;
+    letter-spacing:-3px;
+    background:linear-gradient(90deg,#fff,#36e0ff,#765cff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.loader-line{
+    width:170px;
+    height:2px;
+    margin:28px auto 0;
+    overflow:hidden;
+    background:rgba(255,255,255,.1);
+}
+
+.loader-line::after{
+    content:"";
+    display:block;
+    width:45%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,#36e0ff,transparent);
+    animation:loaderLine 1.2s infinite;
+}
+
+@keyframes loaderLogo{
+    0%,100%{transform:scale(.96);opacity:.75}
+    50%{transform:scale(1.04);opacity:1}
+}
+
+@keyframes loaderLine{
+    from{transform:translateX(-150%)}
+    to{transform:translateX(350%)}
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header{
     position:fixed;
     top:0;
     left:0;
     width:100%;
-    height:92px;
-    z-index:1000;
-    background:rgba(2,7,18,.78);
-    border-bottom:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(25px);
-    -webkit-backdrop-filter:blur(25px);
+    z-index:5000;
+    padding:18px 24px;
+    transition:.35s ease;
 }
 
-.nav{
-    max-width:1500px;
-    height:100%;
+.header.scrolled{
+    padding:10px 24px;
+}
+
+.navbar{
+    max-width:var(--max);
     margin:auto;
-    padding:0 28px;
+    min-height:76px;
     display:flex;
     align-items:center;
-    gap:28px;
+    justify-content:space-between;
+    padding:10px 15px 10px 18px;
+
+    background:rgba(5,10,15,.70);
+    border:1px solid rgba(255,255,255,.11);
+    border-radius:22px;
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.3),
+        inset 0 1px 0 rgba(255,255,255,.05);
+
+    transition:.35s ease;
 }
 
-/* LOGO */
+.header.scrolled .navbar{
+    background:rgba(5,10,15,.88);
+    border-color:rgba(54,224,255,.15);
+}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
 
 .logo{
-    width:225px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:210px;
+}
+
+.logo-image-wrap{
+    width:54px;
+    height:54px;
+    position:relative;
     flex-shrink:0;
     display:flex;
     align-items:center;
-    position:relative;
+    justify-content:center;
 }
 
-.logo:before{
+.logo-image-wrap::before{
     content:"";
     position:absolute;
-    width:210px;
-    height:65px;
-    left:0;
-    background:radial-gradient(
-        ellipse,
-        rgba(0,220,255,.28),
-        transparent 70%
+    inset:-5px;
+    border-radius:16px;
+    background:conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(54,224,255,.8),
+        transparent,
+        rgba(118,92,255,.8),
+        transparent
     );
-    filter:blur(18px);
-    animation:logoGlow 3s ease-in-out infinite;
+    filter:blur(7px);
+    opacity:.65;
+    animation:logoOrbit 5s linear infinite;
 }
 
-.logo img{
-    width:215px;
-    max-height:70px;
+.logo-image-wrap::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:
+        inset 0 0 18px rgba(54,224,255,.12),
+        0 0 25px rgba(40,169,255,.14);
+}
+
+.logo-img{
+    width:50px;
+    height:50px;
     object-fit:contain;
-    display:block;
     position:relative;
     z-index:2;
-    filter:
-        drop-shadow(0 0 5px rgba(0,220,255,.45))
-        drop-shadow(0 0 20px rgba(0,150,255,.22));
+    border-radius:13px;
     animation:logoFloat 4s ease-in-out infinite;
 }
 
-@keyframes logoGlow{
-    0%,100%{opacity:.45}
-    50%{opacity:1}
+.logo-fallback{
+    display:none;
+    position:relative;
+    z-index:2;
+    width:50px;
+    height:50px;
+    border-radius:13px;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(145deg,#122431,#071017);
+    border:1px solid rgba(54,224,255,.28);
+    box-shadow:inset 0 0 20px rgba(54,224,255,.08);
+}
+
+.logo-fallback strong{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:-2px;
+    background:linear-gradient(90deg,#fff,#36e0ff,#765cff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.logo-copy{
+    display:flex;
+    flex-direction:column;
+    line-height:1.05;
+}
+
+.logo-title{
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:1.8px;
+}
+
+.logo-sub{
+    margin-top:5px;
+    font-size:9px;
+    letter-spacing:2px;
+    color:#7f92a1;
+    font-weight:700;
+}
+
+@keyframes logoOrbit{
+    to{transform:rotate(360deg)}
 }
 
 @keyframes logoFloat{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-3px)}
+    0%,100%{transform:translateY(0) rotate(0)}
+    50%{transform:translateY(-2px) rotate(.7deg)}
 }
 
-/* NAVIGATION */
+/* =========================================================
+   NAV
+   ========================================================= */
 
-nav{
-    flex:1;
-}
-
-nav ul{
+.nav-links{
     display:flex;
-    justify-content:center;
     align-items:center;
-    list-style:none;
     gap:4px;
 }
 
-nav a{
-    color:#e9f5ff;
-    text-decoration:none;
-    font-weight:800;
-    font-size:14px;
-    padding:13px 14px;
-    border-radius:14px;
-    transition:.3s;
+.nav-links a{
+    padding:12px 14px;
+    color:#aab8c4;
+    font-size:13px;
+    font-weight:600;
+    border-radius:12px;
+    transition:.25s ease;
 }
 
-nav a:hover{
+.nav-links a:hover{
     color:#fff;
-    background:rgba(0,210,255,.09);
-    box-shadow:0 0 25px rgba(0,210,255,.08);
+    background:rgba(255,255,255,.06);
 }
 
-/* LANGUAGE */
-
-.languages{
-    display:flex;
-    gap:6px;
+.nav-cta{
+    margin-left:8px;
+    padding:12px 18px!important;
+    color:#fff!important;
+    background:linear-gradient(135deg,#168dd9,#765cff);
+    box-shadow:0 10px 30px rgba(40,169,255,.18);
 }
 
-.languages button{
+.lang-btn{
     border:1px solid rgba(255,255,255,.12);
     background:rgba(255,255,255,.04);
-    color:#aebbd0;
-    padding:10px 14px;
-    border-radius:12px;
-    font-weight:900;
+    color:#fff;
+    padding:10px 12px;
+    border-radius:11px;
     cursor:pointer;
-    transition:.3s;
+    font-size:12px;
+    margin-left:6px;
 }
 
-.languages button.active,
-.languages button:hover{
-    color:#fff;
-    background:rgba(0,180,255,.15);
-    border-color:rgba(0,220,255,.45);
-}
-
-/* PHONE */
-
-.phone{
-    text-decoration:none;
-    color:#fff;
-    white-space:nowrap;
-    font-size:17px;
-    font-weight:1000;
-    padding:16px 21px;
-    border-radius:18px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,210,255,.11),
-            rgba(120,60,255,.13)
-        );
-    border:1px solid rgba(0,210,255,.22);
-    transition:.3s;
-}
-
-.phone:hover{
-    transform:translateY(-3px);
-    border-color:#00ddff;
-    box-shadow:0 15px 35px rgba(0,200,255,.18);
-}
-
-/* MOBILE MENU */
-
-.menu{
+.menu-btn{
     display:none;
-    width:46px;
-    height:46px;
+    width:44px;
+    height:44px;
     border:1px solid rgba(255,255,255,.12);
-    border-radius:13px;
+    border-radius:12px;
     background:rgba(255,255,255,.05);
     color:#fff;
-    font-size:23px;
+    cursor:pointer;
 }
 
-/* ===============================
+.menu-btn span{
+    display:block;
+    width:20px;
+    height:2px;
+    background:#fff;
+    margin:4px auto;
+}
+
+/* =========================================================
    HERO
-================================ */
+   ========================================================= */
 
 .hero{
-    min-height:850px;
-    padding:170px 6% 100px;
+    min-height:100vh;
     position:relative;
-    overflow:hidden;
     display:flex;
+    align-items:center;
+    overflow:hidden;
+    padding:150px 24px 80px;
+}
+
+.hero-container{
+    width:100%;
+    max-width:var(--max);
+    margin:auto;
+    position:relative;
+    z-index:3;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.03fr .97fr;
+    gap:70px;
     align-items:center;
 }
 
-.hero-content{
-    max-width:1050px;
-    position:relative;
-    z-index:5;
-}
-
-.hero-label{
+.hero-kicker{
     display:inline-flex;
     align-items:center;
     gap:10px;
-    padding:9px 16px;
-    border:1px solid rgba(0,220,255,.25);
-    border-radius:999px;
-    background:rgba(0,200,255,.06);
-    color:#78e9ff;
-    font-size:12px;
-    font-weight:1000;
-    letter-spacing:2px;
-    margin-bottom:25px;
+    padding:8px 13px;
+    border-radius:100px;
+    border:1px solid rgba(54,224,255,.2);
+    background:rgba(54,224,255,.055);
+    color:#9cecff;
+    font-size:11px;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:24px;
 }
 
-.hero-label i{
-    width:8px;
-    height:8px;
-    background:#00eaff;
+.live-dot{
+    width:7px;
+    height:7px;
     border-radius:50%;
-    box-shadow:0 0 15px #00eaff;
-    animation:pulse 1.5s infinite;
+    background:#39e6a3;
+    box-shadow:0 0 15px #39e6a3;
+    animation:pulse 1.7s infinite;
 }
 
 @keyframes pulse{
-    50%{transform:scale(.55);opacity:.4}
+    50%{opacity:.35;transform:scale(.7)}
 }
 
 .hero h1{
-    font-size:clamp(50px,7vw,105px);
-    line-height:1;
-    letter-spacing:-4px;
-    margin-bottom:25px;
-    font-weight:1000;
+    font-size:clamp(54px,7.2vw,105px);
+    line-height:.91;
+    letter-spacing:-6px;
+    font-weight:900;
+    max-width:850px;
+}
+
+.hero h1 .gradient{
     background:linear-gradient(
         100deg,
-        #fff 15%,
-        #b9f7ff 48%,
-        #899cff 85%
+        #ffffff 10%,
+        #79ddff 45%,
+        #5e75ff 85%
     );
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
 }
 
-.hero p{
-    color:#b9c8dc;
-    font-size:19px;
-    line-height:1.9;
-    max-width:900px;
+.hero-description{
+    margin-top:30px;
+    max-width:620px;
+    color:#98a7b5;
+    font-size:16px;
+    line-height:1.8;
 }
 
-.hero-buttons{
+.hero-actions{
+    margin-top:34px;
     display:flex;
-    gap:14px;
+    gap:13px;
     flex-wrap:wrap;
-    margin-top:35px;
 }
 
 .btn{
-    text-decoration:none;
-    min-width:190px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:17px 24px;
-    border-radius:17px;
-    font-weight:1000;
-    transition:.3s;
-}
-
-.btn-main{
-    color:#001018;
-    background:linear-gradient(135deg,#00eaff,#759bff);
-    box-shadow:0 18px 45px rgba(0,210,255,.2);
-}
-
-.btn-main:hover{
-    transform:translateY(-5px);
-    box-shadow:0 25px 55px rgba(0,210,255,.3);
-}
-
-.btn-glass{
-    color:#fff;
-    background:rgba(255,255,255,.045);
-    border:1px solid rgba(255,255,255,.13);
-    backdrop-filter:blur(12px);
-}
-
-.btn-glass:hover{
-    transform:translateY(-5px);
-    border-color:rgba(0,220,255,.4);
-}
-
-/* HERO GLOW */
-
-.hero-glow{
-    position:absolute;
-    right:-100px;
-    top:130px;
-    width:700px;
-    height:700px;
-    border-radius:50%;
-    background:
-        radial-gradient(
-            circle,
-            rgba(0,200,255,.14),
-            rgba(90,50,255,.08) 40%,
-            transparent 70%
-        );
-    filter:blur(15px);
-    animation:heroGlow 7s ease-in-out infinite;
-}
-
-@keyframes heroGlow{
-    50%{transform:scale(1.08) translate(-25px,15px)}
-}
-
-/* ===============================
-   SECTIONS
-================================ */
-
-section{
-    padding:105px 6%;
-}
-
-.container{
-    max-width:1500px;
-    margin:auto;
-}
-
-.label{
-    color:#52e5ff;
-    font-size:12px;
-    font-weight:1000;
-    letter-spacing:2px;
-    margin-bottom:12px;
-}
-
-.section-title{
-    font-size:clamp(38px,5vw,65px);
-    line-height:1.15;
-    margin-bottom:17px;
-}
-
-.section-description{
-    max-width:800px;
-    color:#9eacc0;
-    font-size:17px;
-    line-height:1.9;
-}
-
-/* ===============================
-   PREMIUM PRODUCT CARDS
-================================ */
-
-.products{
-    margin-top:55px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:22px;
-}
-
-.card{
-    position:relative;
-    min-height:420px;
-    border-radius:30px;
-    overflow:hidden;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.075),
-            rgba(255,255,255,.018)
-        );
-    border:1px solid rgba(255,255,255,.11);
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        0 25px 60px rgba(0,0,0,.28);
-    transition:.45s;
-}
-
-.card:hover{
-    transform:translateY(-12px);
-    border-color:rgba(0,220,255,.38);
-    box-shadow:
-        0 35px 80px rgba(0,0,0,.4),
-        0 0 45px rgba(0,190,255,.08);
-}
-
-/* glass reflection */
-
-.card:before{
-    content:"";
-    position:absolute;
-    width:150%;
-    height:100px;
-    left:-25%;
-    top:-70px;
-    transform:rotate(-10deg);
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.08),
-        transparent
-    );
-    transition:.6s;
-}
-
-.card:hover:before{
-    top:110%;
-}
-
-/* ART AREA */
-
-.art{
-    height:260px;
-    position:relative;
-    display:flex;
+    display:inline-flex;
     align-items:center;
     justify-content:center;
-    overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 50% 50%,
-            rgba(0,210,255,.12),
-            transparent 58%
-        ),
-        linear-gradient(
-            145deg,
-            #0a1426,
-            #050914
-        );
-}
-
-.art:before{
-    content:"";
-    position:absolute;
-    width:230px;
-    height:230px;
-    border-radius:50%;
-    border:1px solid rgba(0,220,255,.09);
-    box-shadow:
-        0 0 60px rgba(0,210,255,.08),
-        inset 0 0 60px rgba(0,210,255,.04);
-}
-
-.art:after{
-    content:"";
-    position:absolute;
-    bottom:0;
-    left:0;
-    right:0;
-    height:80px;
-    background:linear-gradient(
-        transparent,
-        rgba(4,8,18,.95)
-    );
-    z-index:4;
-}
-
-.art svg{
-    width:86%;
-    height:86%;
-    position:relative;
-    z-index:3;
-    filter:
-        drop-shadow(0 18px 20px rgba(0,0,0,.45))
-        drop-shadow(0 0 18px rgba(0,200,255,.12));
-    transition:.5s;
-}
-
-.card:hover .art svg{
-    transform:scale(1.07) translateY(-5px);
-}
-
-/* CARD TEXT */
-
-.card-content{
-    position:absolute;
-    left:25px;
-    right:25px;
-    bottom:24px;
-    z-index:8;
-}
-
-.card-content h3{
-    font-size:25px;
-    margin-bottom:7px;
-}
-
-.card-content p{
-    color:#a8b6c9;
+    gap:9px;
+    min-height:52px;
+    padding:0 21px;
+    border-radius:14px;
+    border:1px solid transparent;
     font-size:13px;
-    line-height:1.7;
+    font-weight:800;
+    cursor:pointer;
+    transition:.3s ease;
 }
 
-/* ===============================
-   HEART MESSAGE
-================================ */
+.btn-primary{
+    color:#fff;
+    background:linear-gradient(135deg,#168edc,#6d5bff);
+    box-shadow:0 18px 45px rgba(44,135,255,.22);
+}
 
-.heart{
+.btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 22px 55px rgba(44,135,255,.32);
+}
+
+.btn-secondary{
+    color:#dce8ef;
+    border-color:rgba(255,255,255,.13);
+    background:rgba(255,255,255,.04);
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,.08);
+    transform:translateY(-3px);
+}
+
+.hero-trust{
+    display:flex;
+    gap:28px;
+    margin-top:45px;
+    flex-wrap:wrap;
+}
+
+.trust-item strong{
+    display:block;
+    font-size:20px;
+    font-weight:800;
+}
+
+.trust-item span{
+    display:block;
+    margin-top:5px;
+    color:#758795;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.3px;
+}
+
+/* =========================================================
+   HERO VISUAL — PREMIUM PHOTO FRAME
+   ========================================================= */
+
+.hero-visual{
     position:relative;
-    padding:75px;
-    border-radius:38px;
+    min-height:590px;
+}
+
+.hero-image{
+    position:absolute;
+    inset:0;
+    border-radius:34px;
     overflow:hidden;
+    border:1px solid rgba(255,255,255,.12);
     background:
         linear-gradient(
             135deg,
-            rgba(0,190,255,.10),
-            rgba(115,65,255,.09)
+            rgba(18,36,49,.95),
+            rgba(6,12,18,.98)
         );
-    border:1px solid rgba(0,210,255,.16);
+    box-shadow:
+        0 40px 100px rgba(0,0,0,.48),
+        inset 0 1px 0 rgba(255,255,255,.08);
 }
 
-.heart:before{
+/*
+   Replace the URL below with your own premium vehicle photo
+   if desired. The site remains attractive without it.
+*/
+.hero-image-bg{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(120deg,rgba(3,8,12,.25),rgba(3,8,12,.9)),
+        url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=85")
+        center/cover no-repeat;
+    filter:saturate(.8);
+    transform:scale(1.03);
+    animation:heroPhoto 12s ease-in-out infinite alternate;
+}
+
+@keyframes heroPhoto{
+    from{transform:scale(1.03)}
+    to{transform:scale(1.10)}
+}
+
+.hero-image::after{
     content:"";
     position:absolute;
-    width:500px;
-    height:500px;
-    right:-250px;
-    top:-300px;
-    border-radius:50%;
-    background:rgba(0,210,255,.13);
-    filter:blur(70px);
-}
-
-.heart h2{
-    max-width:1000px;
-    font-size:clamp(36px,5vw,66px);
-    line-height:1.25;
-    margin-bottom:28px;
-}
-
-.heart p{
-    max-width:950px;
-    color:#aebdd0;
-    line-height:2;
-    font-size:17px;
-}
-
-/* ===============================
-   WHY
-================================ */
-
-.why{
-    margin-top:50px;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
-}
-
-.why-card{
-    padding:35px;
-    border-radius:27px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.09);
-    transition:.35s;
-}
-
-.why-card:hover{
-    transform:translateY(-8px);
-    border-color:rgba(0,210,255,.3);
-}
-
-.icon{
-    width:62px;
-    height:62px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:19px;
-    margin-bottom:22px;
-    font-size:27px;
+    inset:0;
     background:
-        linear-gradient(
-            135deg,
-            rgba(0,220,255,.15),
-            rgba(120,70,255,.14)
-        );
-    border:1px solid rgba(0,220,255,.15);
+        linear-gradient(180deg,transparent 25%,rgba(4,8,12,.85) 100%),
+        linear-gradient(90deg,rgba(3,8,12,.65),transparent 60%);
 }
 
-.why-card h3{
-    font-size:21px;
-    margin-bottom:12px;
+.visual-label{
+    position:absolute;
+    z-index:2;
+    left:28px;
+    top:28px;
+    padding:9px 12px;
+    border-radius:11px;
+    background:rgba(3,8,12,.62);
+    border:1px solid rgba(255,255,255,.13);
+    backdrop-filter:blur(14px);
+    font-size:10px;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:#b8cad5;
 }
 
-.why-card p{
-    color:#9facbf;
-    line-height:1.8;
-}
-
-/* ===============================
-   PROCESS
-================================ */
-
-.process{
-    margin-top:50px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
+.visual-bottom{
+    position:absolute;
+    z-index:2;
+    left:28px;
+    right:28px;
+    bottom:28px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
     gap:20px;
 }
 
-.step{
-    padding:32px 27px;
-    border-radius:26px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.09);
+.visual-bottom h3{
+    font-size:25px;
+    letter-spacing:-1px;
 }
 
-.step-number{
-    width:52px;
-    height:52px;
+.visual-bottom p{
+    color:#94a6b3;
+    font-size:12px;
+    margin-top:7px;
+}
+
+.visual-badge{
+    width:76px;
+    height:76px;
+    flex-shrink:0;
+    border-radius:22px;
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:50%;
-    background:linear-gradient(135deg,#00e4ff,#7773ff);
-    color:#001018;
-    font-weight:1000;
-    margin-bottom:20px;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(255,255,255,.07);
+    backdrop-filter:blur(15px);
 }
 
-.step h3{
-    font-size:20px;
-    margin-bottom:10px;
+.visual-badge span{
+    font-size:22px;
+    font-weight:900;
+    color:#6ee8ff;
 }
 
-.step p{
-    color:#9facbf;
-    line-height:1.75;
-}
+/* Floating glass cards */
 
-/* ===============================
-   COMPANY
-================================ */
-
-.company-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:55px;
-    align-items:center;
-}
-
-.company-card{
-    padding:42px;
-    border-radius:32px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.09);
-}
-
-.company-card h2{
-    font-size:40px;
-    margin-bottom:25px;
-}
-
-.info{
-    display:grid;
-    gap:12px;
-}
-
-.info-row{
+.float-card{
+    position:absolute;
+    z-index:4;
     padding:15px 17px;
-    border-radius:14px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.06);
+    border-radius:17px;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(7,14,20,.72);
+    backdrop-filter:blur(18px);
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+    animation:floatCard 5s ease-in-out infinite;
 }
 
-.info-row strong{
+.float-card.one{
+    left:-35px;
+    top:105px;
+}
+
+.float-card.two{
+    right:-35px;
+    bottom:125px;
+    animation-delay:1.4s;
+}
+
+.float-card small{
     display:block;
-    color:#5de4ff;
-    font-size:11px;
-    letter-spacing:1px;
-    margin-bottom:5px;
+    color:#788d9b;
+    font-size:9px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
 }
 
-.info-row span{
-    color:#eaf5ff;
-}
-
-/* ===============================
-   CONTACT
-================================ */
-
-.contact{
-    text-align:center;
-}
-
-.contact-box{
-    max-width:1150px;
-    margin:auto;
-    padding:70px 35px;
-    border-radius:38px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,180,255,.08),
-            rgba(110,60,255,.09)
-        );
-    border:1px solid rgba(255,255,255,.10);
-}
-
-.contact-box h2{
-    font-size:clamp(38px,5vw,65px);
-    margin-bottom:18px;
-}
-
-.contact-box p{
-    color:#aebcd0;
-    line-height:1.8;
-    margin-bottom:30px;
-}
-
-.big-phone{
-    display:inline-block;
-    color:#fff;
-    text-decoration:none;
-    font-size:clamp(35px,6vw,70px);
-    font-weight:1000;
-    margin-bottom:22px;
-    text-shadow:0 0 30px rgba(0,210,255,.3);
-}
-
-.email{
-    color:#66e1ff;
-    text-decoration:none;
+.float-card strong{
+    display:block;
+    margin-top:6px;
     font-size:18px;
 }
 
-/* LINE */
-
-.line-contact{
-    margin-top:30px;
-    display:flex;
-    justify-content:center;
+@keyframes floatCard{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-12px)}
 }
 
-.line-button{
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.section{
+    position:relative;
+    padding:120px 24px;
+}
+
+.container{
+    width:100%;
+    max-width:var(--max);
+    margin:auto;
+}
+
+.section-head{
     display:flex;
-    align-items:center;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:30px;
+    margin-bottom:45px;
+}
+
+.eyebrow{
+    color:#62dcff;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:13px;
+}
+
+.section-title{
+    font-size:clamp(34px,4.5vw,62px);
+    line-height:1;
+    letter-spacing:-3px;
+    font-weight:900;
+}
+
+.section-copy{
+    max-width:440px;
+    color:#8c9ca8;
+    font-size:14px;
+    line-height:1.75;
+}
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
     gap:15px;
-    min-width:330px;
-    padding:14px 20px;
-    text-decoration:none;
-    border-radius:20px;
-    background:rgba(6,199,85,.09);
-    border:1px solid rgba(6,199,85,.3);
-    transition:.3s;
 }
 
-.line-button:hover{
-    transform:translateY(-4px);
-    background:rgba(6,199,85,.17);
-    border-color:#06c755;
-    box-shadow:0 15px 35px rgba(6,199,85,.18);
+.product-card{
+    position:relative;
+    min-height:300px;
+    overflow:hidden;
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,.10);
+    background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+    transition:
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        border-color .3s ease,
+        box-shadow .3s ease;
 }
 
-.line-icon{
-    width:52px;
-    height:52px;
+.product-card:hover{
+    transform:translateY(-9px);
+    border-color:rgba(54,224,255,.30);
+    box-shadow:0 30px 70px rgba(0,0,0,.4);
+}
+
+.product-image{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+}
+
+.product-image::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+    transition:transform .7s ease;
+    filter:saturate(.65) contrast(1.05);
+}
+
+.product-card:hover .product-image::before{
+    transform:scale(1.09);
+}
+
+.product-image::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(180deg,rgba(4,9,13,.08),rgba(4,9,13,.95)),
+        linear-gradient(90deg,rgba(4,9,13,.25),transparent);
+}
+
+/* Premium photo images */
+
+.img-cars::before{
+    background-image:url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80");
+}
+
+.img-accident::before{
+    background-image:url("https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=900&q=80");
+}
+
+.img-trucks::before{
+    background-image:url("https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=900&q=80");
+}
+
+.img-heavy::before{
+    background-image:url("https://images.unsplash.com/photo-1580901369227-308f6f40caca?auto=format&fit=crop&w=900&q=80");
+}
+
+.img-agri::before{
+    background-image:url("https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=900&q=80");
+}
+
+.img-machinery::before{
+    background-image:url("https://images.unsplash.com/photo-1574359411659-15573a27fd0c?auto=format&fit=crop&w=900&q=80");
+}
+
+.img-parts::before{
+    background-image:url("https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=900&q=80");
+}
+
+.img-materials::before{
+    background-image:url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80");
+}
+
+.product-content{
+    position:absolute;
+    left:20px;
+    right:20px;
+    bottom:20px;
+    z-index:2;
+}
+
+.product-number{
+    color:#6be4ff;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.5px;
+}
+
+.product-content h3{
+    margin-top:7px;
+    font-size:19px;
+    letter-spacing:-.6px;
+}
+
+.product-content p{
+    margin-top:6px;
+    color:#9aabb7;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.product-arrow{
+    position:absolute;
+    right:18px;
+    top:18px;
+    z-index:3;
+    width:37px;
+    height:37px;
+    border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:15px;
-    background:#06c755;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(3,8,12,.48);
     color:#fff;
-    font-size:11px;
-    font-weight:1000;
+    transition:.3s ease;
 }
 
-.line-text{
-    flex:1;
-    text-align:left;
+.product-card:hover .product-arrow{
+    background:#fff;
+    color:#071018;
+    transform:rotate(45deg);
 }
 
-.line-text strong{
-    display:block;
-    color:#fff;
+/* =========================================================
+   FEATURE BANNER
+   ========================================================= */
+
+.feature{
+    position:relative;
+    overflow:hidden;
+    border-radius:32px;
+    padding:65px;
+    min-height:350px;
+    border:1px solid rgba(255,255,255,.12);
+    background:
+        radial-gradient(circle at 85% 30%,rgba(118,92,255,.25),transparent 32%),
+        radial-gradient(circle at 20% 80%,rgba(54,224,255,.16),transparent 35%),
+        linear-gradient(135deg,#0b1720,#091019);
+    box-shadow:var(--shadow);
+}
+
+.feature::before{
+    content:"EXPORT";
+    position:absolute;
+    right:-20px;
+    bottom:-65px;
+    font-size:170px;
+    font-weight:900;
+    letter-spacing:-12px;
+    color:rgba(255,255,255,.025);
+}
+
+.feature-content{
+    position:relative;
+    z-index:2;
+    max-width:720px;
+}
+
+.feature h2{
+    font-size:clamp(35px,5vw,64px);
+    line-height:.98;
+    letter-spacing:-3px;
+}
+
+.feature p{
+    margin-top:20px;
+    max-width:610px;
+    color:#9babb6;
+    line-height:1.8;
     font-size:14px;
 }
 
-.line-text small{
-    display:block;
-    margin-top:5px;
-    color:#9cc8aa;
+.feature-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-top:28px;
 }
 
-.line-arrow{
-    color:#06c755;
-    font-size:28px;
+.pill{
+    padding:9px 13px;
+    border-radius:100px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.045);
+    color:#b9c8d1;
+    font-size:10px;
 }
 
-/* ===============================
+/* =========================================================
+   WHY US
+   ========================================================= */
+
+.why-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.why-card{
+    padding:30px;
+    border-radius:23px;
+    border:1px solid rgba(255,255,255,.09);
+    background:rgba(255,255,255,.035);
+    transition:.35s ease;
+}
+
+.why-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(54,224,255,.2);
+    background:rgba(255,255,255,.055);
+}
+
+.why-icon{
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:23px;
+    background:linear-gradient(135deg,rgba(54,224,255,.16),rgba(118,92,255,.16));
+    border:1px solid rgba(54,224,255,.14);
+    color:#63e5ff;
+    font-size:18px;
+}
+
+.why-card h3{
+    font-size:18px;
+}
+
+.why-card p{
+    color:#82939f;
+    font-size:12px;
+    line-height:1.75;
+    margin-top:10px;
+}
+
+/* =========================================================
+   PROCESS
+   ========================================================= */
+
+.process{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.process-card{
+    position:relative;
+    padding:28px 24px;
+    min-height:220px;
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,.08);
+    background:#091119;
+}
+
+.process-number{
+    color:#5edfff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.process-card h3{
+    margin-top:45px;
+    font-size:18px;
+}
+
+.process-card p{
+    margin-top:9px;
+    color:#82939f;
+    font-size:11px;
+    line-height:1.7;
+}
+
+.process-line{
+    position:absolute;
+    top:46px;
+    right:-20px;
+    width:40px;
+    height:1px;
+    background:linear-gradient(90deg,#36e0ff,transparent);
+}
+
+/* =========================================================
+   COMPANY
+   ========================================================= */
+
+.company-grid{
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:20px;
+}
+
+.company-card{
+    padding:35px;
+    border-radius:26px;
+    border:1px solid rgba(255,255,255,.09);
+    background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
+}
+
+.company-card h3{
+    font-size:24px;
+    letter-spacing:-1px;
+}
+
+.company-card p{
+    color:#8b9ba7;
+    font-size:13px;
+    line-height:1.8;
+    margin-top:15px;
+}
+
+.company-list{
+    margin-top:25px;
+}
+
+.company-row{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:15px;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    font-size:12px;
+}
+
+.company-row span:first-child{
+    color:#6f8390;
+}
+
+.company-row span:last-child{
+    color:#d9e4ea;
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.contact-box{
+    position:relative;
+    overflow:hidden;
+    border-radius:30px;
+    padding:60px;
+    background:
+        radial-gradient(circle at 85% 20%,rgba(118,92,255,.3),transparent 35%),
+        radial-gradient(circle at 15% 100%,rgba(54,224,255,.17),transparent 35%),
+        #09121a;
+    border:1px solid rgba(255,255,255,.12);
+}
+
+.contact-box h2{
+    max-width:700px;
+    font-size:clamp(38px,5vw,65px);
+    line-height:.98;
+    letter-spacing:-3px;
+}
+
+.contact-box p{
+    margin-top:20px;
+    color:#8fa0ac;
+    max-width:620px;
+    line-height:1.8;
+    font-size:14px;
+}
+
+.contact-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+/* =========================================================
    FOOTER
-================================ */
+   ========================================================= */
 
-footer{
-    padding:55px 6% 30px;
-    background:#02050c;
+.footer{
+    padding:45px 24px 30px;
     border-top:1px solid rgba(255,255,255,.07);
 }
 
-.footer-inner{
-    max-width:1500px;
+.footer-grid{
+    max-width:var(--max);
     margin:auto;
     display:flex;
+    align-items:flex-start;
     justify-content:space-between;
-    align-items:center;
-    gap:35px;
+    gap:40px;
 }
 
-.footer-logo img{
-    width:210px;
-    max-height:70px;
-    object-fit:contain;
+.footer-brand{
+    max-width:400px;
 }
 
-.footer-text{
-    color:#7f8da2;
-    text-align:right;
-    font-size:13px;
+.footer-brand p{
+    margin-top:15px;
+    color:#6f818d;
+    font-size:11px;
     line-height:1.8;
 }
 
-/* ===============================
-   HIDDEN LANGUAGE
-================================ */
-
-[data-lang="en"]{
-    display:none;
+.footer-links{
+    display:flex;
+    gap:25px;
 }
 
-/* ===============================
+.footer-links a{
+    color:#8595a0;
+    font-size:11px;
+}
+
+.footer-links a:hover{
+    color:#fff;
+}
+
+.footer-bottom{
+    max-width:var(--max);
+    margin:35px auto 0;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.06);
+    color:#5f707c;
+    font-size:10px;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+}
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+
+.top-btn{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    width:45px;
+    height:45px;
+    z-index:4000;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(6,12,17,.8);
+    backdrop-filter:blur(15px);
+    color:#fff;
+    cursor:pointer;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(15px);
+    transition:.3s ease;
+}
+
+.top-btn.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+/* =========================================================
+   SCROLL ANIMATION
+   ========================================================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:none;
+}
+
+/* =========================================================
+   BACKGROUND ORBS
+   ========================================================= */
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+    filter:blur(70px);
+    opacity:.22;
+}
+
+.orb-1{
+    width:300px;
+    height:300px;
+    background:#008dff;
+    top:10%;
+    left:-130px;
+    animation:orbMove 12s ease-in-out infinite;
+}
+
+.orb-2{
+    width:280px;
+    height:280px;
+    background:#6d4cff;
+    right:-100px;
+    top:35%;
+    animation:orbMove 15s ease-in-out infinite reverse;
+}
+
+@keyframes orbMove{
+    50%{transform:translate(45px,-30px) scale(1.1)}
+}
+
+/* =========================================================
    MOBILE
-================================ */
+   ========================================================= */
 
-@media(max-width:1200px){
+@media(max-width:1050px){
 
-    .nav{gap:15px}
-
-    .logo{width:185px}
-
-    .logo img{width:180px}
-
-    nav a{
-        padding:10px 7px;
-        font-size:12px;
-    }
-
-    .phone{
-        font-size:14px;
-        padding:13px 15px;
+    .nav-links a{
+        padding:11px 9px;
     }
 
     .products{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .process{
-        grid-template-columns:repeat(2,1fr);
+    .hero-grid{
+        gap:35px;
+    }
+
+    .hero-visual{
+        min-height:500px;
     }
 }
 
 @media(max-width:850px){
 
-    header{height:78px}
+    .header{
+        padding:12px 14px;
+    }
 
-    .nav{
-        padding:0 15px;
+    .navbar{
+        min-height:67px;
+        border-radius:18px;
     }
 
     .logo{
-        width:165px;
+        min-width:auto;
     }
 
-    .logo img{
-        width:160px;
+    .logo-copy{
+        display:none;
     }
 
-    nav{
+    .nav-links{
         display:none;
         position:absolute;
-        left:0;
-        top:78px;
-        width:100%;
-        padding:15px;
-        background:rgba(2,7,18,.97);
-        backdrop-filter:blur(20px);
-    }
-
-    nav.open{
-        display:block;
-    }
-
-    nav ul{
+        top:76px;
+        left:14px;
+        right:14px;
+        padding:12px;
         flex-direction:column;
+        align-items:stretch;
+        border:1px solid rgba(255,255,255,.1);
+        background:rgba(5,10,15,.95);
+        backdrop-filter:blur(25px);
+        border-radius:18px;
     }
 
-    nav a{
-        width:100%;
-        text-align:center;
+    .nav-links.open{
+        display:flex;
+    }
+
+    .nav-links a{
         padding:14px;
     }
 
-    .phone{
-        display:none;
+    .nav-cta{
+        margin-left:0;
     }
 
-    .menu{
+    .menu-btn{
         display:block;
     }
 
     .hero{
-        min-height:720px;
-        padding:130px 6% 70px;
+        padding-top:125px;
+    }
+
+    .hero-grid{
+        grid-template-columns:1fr;
     }
 
     .hero h1{
-        letter-spacing:-1px;
+        font-size:clamp(52px,15vw,86px);
+        letter-spacing:-5px;
     }
 
-    .hero p{
-        font-size:17px;
+    .hero-visual{
+        min-height:450px;
     }
 
-    .why{
+    .float-card.one{
+        left:10px;
+        top:70px;
+    }
+
+    .float-card.two{
+        right:10px;
+        bottom:70px;
+    }
+
+    .section{
+        padding:85px 18px;
+    }
+
+    .section-head{
+        display:block;
+    }
+
+    .section-copy{
+        margin-top:20px;
+    }
+
+    .why-grid{
         grid-template-columns:1fr;
+    }
+
+    .process{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .process-line{
+        display:none;
     }
 
     .company-grid{
         grid-template-columns:1fr;
     }
 
-    .heart{
-        padding:45px 28px;
+    .contact-box{
+        padding:38px 25px;
     }
 
-    .footer-inner{
+    .footer-grid{
         flex-direction:column;
-        align-items:flex-start;
     }
 
-    .footer-text{
-        text-align:left;
+    .footer-bottom{
+        flex-direction:column;
     }
 }
 
-@media(max-width:560px){
-
-    section{
-        padding:75px 5%;
-    }
-
-    .logo{
-        width:140px;
-    }
-
-    .logo img{
-        width:138px;
-    }
-
-    .languages button{
-        padding:8px 10px;
-    }
+@media(max-width:550px){
 
     .hero{
-        padding-left:5%;
-        padding-right:5%;
+        padding-left:15px;
+        padding-right:15px;
     }
 
-    .hero-buttons{
+    .hero-description{
+        font-size:14px;
+    }
+
+    .hero-actions{
         flex-direction:column;
     }
 
@@ -1014,17 +1433,64 @@ footer{
         width:100%;
     }
 
+    .hero-visual{
+        min-height:410px;
+    }
+
     .products{
         grid-template-columns:1fr;
+    }
+
+    .product-card{
+        min-height:330px;
+    }
+
+    .feature{
+        padding:38px 25px;
     }
 
     .process{
         grid-template-columns:1fr;
     }
 
-    .line-button{
-        min-width:0;
-        width:100%;
+    .company-row{
+        grid-template-columns:1fr;
+        gap:5px;
+    }
+
+    .contact-box h2{
+        font-size:42px;
+    }
+
+    .footer-links{
+        flex-wrap:wrap;
+    }
+
+    .visual-bottom{
+        left:20px;
+        right:20px;
+        bottom:20px;
+    }
+
+    .visual-badge{
+        width:60px;
+        height:60px;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
     }
 }
 </style>
@@ -1032,1405 +1498,1123 @@ footer{
 
 <body>
 
-<header>
+<!-- =======================================================
+     LOADER
+     ======================================================= -->
 
-<div class="nav">
+<div id="loader">
 
-<a href="#home" class="logo">
-    <img src="./EZ%20Logo.JPG" alt="EXPORT ZONE Co., Ltd.">
-</a>
+    <div class="loader-inner">
 
-<nav id="navigation">
+        <img
+            class="loader-logo"
+            src="https://agmrifkan-collab.github.io/exportzone/images/EZ%20Logo.png"
+            alt="EXPORT ZONE"
+            onerror="
+                this.style.display='none';
+                document.querySelector('.loader-fallback').style.display='flex';
+            "
+        >
 
-<ul>
+        <div class="loader-fallback">
+            <span>EZ</span>
+        </div>
 
-<li>
-<a href="#home">
-<span data-lang="ja">ホーム</span>
-<span data-lang="en">Home</span>
-</a>
-</li>
+        <div class="loader-line"></div>
 
-<li>
-<a href="#products">
-<span data-lang="ja">買取品目</span>
-<span data-lang="en">What We Buy</span>
-</a>
-</li>
-
-<li>
-<a href="#why">
-<span data-lang="ja">選ばれる理由</span>
-<span data-lang="en">Why Us</span>
-</a>
-</li>
-
-<li>
-<a href="#process">
-<span data-lang="ja">買取の流れ</span>
-<span data-lang="en">Process</span>
-</a>
-</li>
-
-<li>
-<a href="#company">
-<span data-lang="ja">会社情報</span>
-<span data-lang="en">Company</span>
-</a>
-</li>
-
-<li>
-<a href="#contact">
-<span data-lang="ja">お問い合わせ</span>
-<span data-lang="en">Contact</span>
-</a>
-</li>
-
-</ul>
-
-</nav>
-
-<div class="languages">
-
-<button id="jp" class="active" onclick="language('ja')">
-JP
-</button>
-
-<button id="en" onclick="language('en')">
-EN
-</button>
+    </div>
 
 </div>
 
-<a class="phone" href="tel:0120888405">
-☎ 0120 888 405
-</a>
 
-<button class="menu" onclick="menuOpen()">
-☰
-</button>
+<!-- =======================================================
+     HEADER
+     ======================================================= -->
 
-</div>
+<header class="header" id="header">
+
+    <nav class="navbar">
+
+        <a href="#home" class="logo">
+
+            <div class="logo-image-wrap">
+
+                <img
+                    class="logo-img"
+                    src="https://agmrifkan-collab.github.io/exportzone/images/EZ%20Logo.png"
+                    alt="EXPORT ZONE Logo"
+                    onerror="
+                        this.style.display='none';
+                        this.parentElement.querySelector('.logo-fallback').style.display='flex';
+                    "
+                >
+
+                <div class="logo-fallback">
+                    <strong>EZ</strong>
+                </div>
+
+            </div>
+
+            <div class="logo-copy">
+                <div class="logo-title">EXPORT ZONE</div>
+                <div class="logo-sub">JAPAN · GLOBAL SOURCING</div>
+            </div>
+
+        </a>
+
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="#home" data-en="Home" data-jp="ホーム">Home</a>
+
+            <a href="#materials" data-en="Materials" data-jp="材料">Materials</a>
+
+            <a href="#vehicles" data-en="Vehicles" data-jp="車両">Vehicles</a>
+
+            <a href="#process" data-en="Process" data-jp="流れ">Process</a>
+
+            <a href="#company" data-en="Company" data-jp="会社情報">Company</a>
+
+            <a href="#contact" class="nav-cta" data-en="Contact Us" data-jp="お問い合わせ">
+                Contact Us
+            </a>
+
+            <button class="lang-btn" id="langBtn">JP</button>
+
+        </div>
+
+
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </nav>
 
 </header>
 
 
-<!-- HERO -->
+<!-- =======================================================
+     HERO
+     ======================================================= -->
+
+<main>
 
 <section class="hero" id="home">
 
-<div class="hero-glow"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-<div class="container">
+    <div class="hero-container">
 
-<div class="hero-content">
+        <div class="hero-grid">
 
-<div class="hero-label">
-<i></i>
-JAPAN NATIONWIDE BUYBACK
-</div>
+            <div class="hero-copy reveal">
 
-<h1>
-<span data-lang="ja">
-買取できるもの
-</span>
+                <div class="hero-kicker">
+                    <span class="live-dot"></span>
+                    JAPAN SOURCING & EXPORT
+                </div>
 
-<span data-lang="en">
-WE BUY IT.
-</span>
-</h1>
+                <h1>
+                    WE BUY.<br>
+                    WE SOURCE.<br>
+                    <span class="gradient">WE EXPORT.</span>
+                </h1>
 
-<p data-lang="ja">
-車から大型重機、農業機械、部品・在庫品まで、
-幅広く取り扱っています。<br>
-古い車・事故車・故障車・不動車でも、
-まずはお気軽にご相談ください。
-</p>
+                <p class="hero-description">
+                    Japan-based sourcing for vehicles, trucks, machinery,
+                    auto parts and quality stock materials.
+                    We connect Japanese supply with international markets.
+                </p>
 
-<p data-lang="en">
-From used cars and accident vehicles to heavy machinery,
-agricultural equipment, auto parts and stock materials.
-Old, damaged and non-running vehicles are also welcome.
-</p>
+                <div class="hero-actions">
 
-<div class="hero-buttons">
+                    <a href="#vehicles" class="btn btn-primary">
+                        Explore Vehicles
+                        <span>↗</span>
+                    </a>
 
-<a href="#products" class="btn btn-main">
-<span data-lang="ja">買取品目を見る</span>
-<span data-lang="en">WHAT WE BUY</span>
-</a>
+                    <a href="#materials" class="btn btn-secondary">
+                        View Materials
+                    </a>
 
-<a href="tel:0120888405" class="btn btn-glass">
-☎ 0120 888 405
-</a>
+                </div>
 
-</div>
+                <div class="hero-trust">
 
-</div>
+                    <div class="trust-item">
+                        <strong>Japan</strong>
+                        <span>Based</span>
+                    </div>
 
-</div>
+                    <div class="trust-item">
+                        <strong>Global</strong>
+                        <span>Export</span>
+                    </div>
+
+                    <div class="trust-item">
+                        <strong>Direct</strong>
+                        <span>Sourcing</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-visual reveal">
+
+                <div class="hero-image">
+
+                    <div class="hero-image-bg"></div>
+
+                    <div class="visual-label">
+                        PREMIUM JAPAN SOURCING
+                    </div>
+
+                    <div class="visual-bottom">
+
+                        <div>
+                            <h3>From Japan to the World</h3>
+                            <p>
+                                Vehicles · Machinery · Parts · Materials
+                            </p>
+                        </div>
+
+                        <div class="visual-badge">
+                            <span>EZ</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="float-card one">
+                    <small>Source</small>
+                    <strong>Japan 🇯🇵</strong>
+                </div>
+
+                <div class="float-card two">
+                    <small>Markets</small>
+                    <strong>Global</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- PRODUCTS -->
+<!-- =======================================================
+     VEHICLES
+     ======================================================= -->
 
-<section id="products">
+<section class="section" id="vehicles">
 
-<div class="container">
+    <div class="container">
 
-<div class="label">
-WHAT WE BUY
-</div>
+        <div class="section-head reveal">
 
-<h2 class="section-title">
+            <div>
+                <div class="eyebrow">01 / Vehicles</div>
 
-<span data-lang="ja">
-幅広い商品を買取
-</span>
+                <h2 class="section-title">
+                    Vehicles & Machinery
+                </h2>
+            </div>
 
-<span data-lang="en">
-WE BUY MANY TYPES
-</span>
+            <p class="section-copy">
+                We source a wide range of Japanese vehicles and machinery,
+                including used vehicles, trucks, construction equipment,
+                agricultural machinery and special-use units.
+            </p>
 
-</h2>
+        </div>
 
-<p class="section-description">
 
-<span data-lang="ja">
-「こんな状態でも売れるの？」と思ったら、
-まずはお問い合わせください。
-</span>
+        <div class="products">
 
-<span data-lang="en">
-Not sure whether your vehicle or machinery can be sold?
-Contact us first.
-</span>
+            <article class="product-card reveal">
 
-</p>
+                <div class="product-image img-cars"></div>
 
+                <div class="product-arrow">↗</div>
 
-<div class="products">
+                <div class="product-content">
+                    <div class="product-number">01</div>
+                    <h3>Used Vehicles</h3>
+                    <p>Japanese passenger cars and commercial vehicles.</p>
+                </div>
 
+            </article>
 
-<!-- 1 USED CAR -->
 
-<div class="card">
+            <article class="product-card reveal">
 
-<div class="art">
+                <div class="product-image img-accident"></div>
 
-<svg viewBox="0 0 600 320">
+                <div class="product-arrow">↗</div>
 
-<defs>
+                <div class="product-content">
+                    <div class="product-number">02</div>
+                    <h3>Accident Vehicles</h3>
+                    <p>Repairable and special-condition vehicles.</p>
+                </div>
 
-<linearGradient id="car" x1="0" x2="1">
-<stop stop-color="#00eaff"/>
-<stop offset=".5" stop-color="#4e8cff"/>
-<stop offset="1" stop-color="#8b5cff"/>
-</linearGradient>
+            </article>
 
-<linearGradient id="glass" x1="0" x2="1">
-<stop stop-color="#bdf8ff" stop-opacity=".45"/>
-<stop offset="1" stop-color="#5878ff" stop-opacity=".12"/>
-</linearGradient>
 
-</defs>
+            <article class="product-card reveal">
 
-<ellipse cx="300" cy="255" rx="210" ry="25"
-fill="#00cfff" opacity=".12"/>
+                <div class="product-image img-trucks"></div>
 
-<path d="M80 220 L120 145 Q135 125 175 120
-L230 80 Q245 70 280 70
-L375 70 Q410 75 430 100
-L505 155 Q525 170 530 220 Z"
-fill="url(#car)"/>
+                <div class="product-arrow">↗</div>
 
-<path d="M225 122 L255 87
-L360 87 L405 122 Z"
-fill="url(#glass)"/>
+                <div class="product-content">
+                    <div class="product-number">03</div>
+                    <h3>Trucks & Buses</h3>
+                    <p>Commercial trucks, buses and work vehicles.</p>
+                </div>
 
-<path d="M255 90 L250 120"
-stroke="#fff" stroke-opacity=".25" stroke-width="4"/>
+            </article>
 
-<circle cx="170" cy="220" r="43" fill="#050914"/>
-<circle cx="170" cy="220" r="20" fill="#8191a6"/>
-<circle cx="170" cy="220" r="8" fill="#d7f7ff"/>
 
-<circle cx="430" cy="220" r="43" fill="#050914"/>
-<circle cx="430" cy="220" r="20" fill="#8191a6"/>
-<circle cx="430" cy="220" r="8" fill="#d7f7ff"/>
+            <article class="product-card reveal">
 
-<rect x="105" y="165" width="42" height="20"
-rx="10" fill="#e9fcff"/>
+                <div class="product-image img-heavy"></div>
 
-<rect x="488" y="165" width="25" height="20"
-rx="10" fill="#ff6470"/>
+                <div class="product-arrow">↗</div>
 
-<path d="M115 205 H480"
-stroke="#fff" stroke-opacity=".2" stroke-width="3"/>
+                <div class="product-content">
+                    <div class="product-number">04</div>
+                    <h3>Construction</h3>
+                    <p>Excavators, loaders, forklifts and equipment.</p>
+                </div>
 
-</svg>
+            </article>
 
-</div>
 
-<div class="card-content">
+            <article class="product-card reveal">
 
-<h3>
-<span data-lang="ja">中古車</span>
-<span data-lang="en">Used Cars</span>
-</h3>
+                <div class="product-image img-agri"></div>
 
-<p>
-<span data-lang="ja">古い車・高走行車・長期保管車</span>
-<span data-lang="en">Old, high-mileage and long-stored vehicles</span>
-</p>
+                <div class="product-arrow">↗</div>
 
-</div>
+                <div class="product-content">
+                    <div class="product-number">05</div>
+                    <h3>Agricultural</h3>
+                    <p>Agricultural machinery and related equipment.</p>
+                </div>
 
-</div>
+            </article>
 
 
-<!-- 2 ACCIDENT -->
+            <article class="product-card reveal">
 
-<div class="card">
+                <div class="product-image img-machinery"></div>
 
-<div class="art">
+                <div class="product-arrow">↗</div>
 
-<svg viewBox="0 0 600 320">
+                <div class="product-content">
+                    <div class="product-number">06</div>
+                    <h3>Heavy Machinery</h3>
+                    <p>Industrial and specialist machinery sourcing.</p>
+                </div>
 
-<defs>
+            </article>
 
-<linearGradient id="acc" x1="0" x2="1">
-<stop stop-color="#ff5969"/>
-<stop offset=".5" stop-color="#ff8b4a"/>
-<stop offset="1" stop-color="#ffca52"/>
-</linearGradient>
 
-</defs>
+            <article class="product-card reveal">
 
-<ellipse cx="300" cy="255" rx="220" ry="24"
-fill="#ff6470" opacity=".12"/>
+                <div class="product-image img-parts"></div>
 
-<path d="M65 220
-L105 160
-L180 142
-L235 100
-L350 100
-L425 145
-L500 170
-L535 220 Z"
-fill="url(#acc)"/>
+                <div class="product-arrow">↗</div>
 
-<path d="M238 103
-L275 142
-L365 140
-L348 103 Z"
-fill="#071426"/>
+                <div class="product-content">
+                    <div class="product-number">07</div>
+                    <h3>Auto Parts</h3>
+                    <p>Parts, accessories and surplus automotive items.</p>
+                </div>
 
-<path d="M365 140
-L425 150
-L480 180
-L400 175 Z"
-fill="#17263c"/>
+            </article>
 
-<path d="M415 145 L475 115"
-stroke="#ff6972"
-stroke-width="10"/>
 
-<path d="M425 160 L500 155"
-stroke="#ff6972"
-stroke-width="10"/>
+            <article class="product-card reveal" id="materials">
 
-<circle cx="155" cy="220" r="42" fill="#050914"/>
-<circle cx="155" cy="220" r="19" fill="#8290a2"/>
+                <div class="product-image img-materials"></div>
 
-<circle cx="415" cy="220" r="42" fill="#050914"/>
-<circle cx="415" cy="220" r="19" fill="#8290a2"/>
+                <div class="product-arrow">↗</div>
 
-<path d="M90 185 L185 180"
-stroke="#fff" stroke-opacity=".25" stroke-width="4"/>
+                <div class="product-content">
+                    <div class="product-number">08</div>
+                    <h3>Stock Materials</h3>
+                    <p>PVC, synthetic leather, fabric and stocklots.</p>
+                </div>
 
-</svg>
+            </article>
 
-</div>
+        </div>
 
-<div class="card-content">
-
-<h3>
-<span data-lang="ja">事故車・故障車</span>
-<span data-lang="en">Accident Vehicles</span>
-</h3>
-
-<p>
-<span data-lang="ja">不動車・事故車・損傷車</span>
-<span data-lang="en">Damaged and non-running vehicles</span>
-</p>
-
-</div>
-
-</div>
-
-
-<!-- 3 TRUCK -->
-
-<div class="card">
-
-<div class="art">
-
-<svg viewBox="0 0 600 320">
-
-<defs>
-
-<linearGradient id="truck" x1="0" x2="1">
-<stop stop-color="#16e0ff"/>
-<stop offset=".6" stop-color="#467bff"/>
-<stop offset="1" stop-color="#7866ff"/>
-</linearGradient>
-
-</defs>
-
-<ellipse cx="300" cy="255" rx="220" ry="22"
-fill="#00d9ff" opacity=".12"/>
-
-<rect x="70" y="90"
-width="330"
-height="135"
-rx="14"
-fill="url(#truck)"/>
-
-<path d="M400 145
-L475 145
-L535 185
-L535 225
-L400 225 Z"
-fill="#6685ff"/>
-
-<rect x="425" y="160"
-width="72"
-height="40"
-rx="6"
-fill="#081426"/>
-
-<rect x="95" y="112"
-width="280"
-height="82"
-rx="8"
-fill="#dffcff"
-opacity=".10"/>
-
-<path d="M95 112 H375"
-stroke="#fff"
-stroke-opacity=".25"
-stroke-width="3"/>
-
-<circle cx="155" cy="230" r="43" fill="#050914"/>
-<circle cx="155" cy="230" r="20" fill="#8998aa"/>
-
-<circle cx="455" cy="230" r="43" fill="#050914"/>
-<circle cx="455" cy="230" r="20" fill="#8998aa"/>
-
-</svg>
-
-</div>
-
-<div class="card-content">
-
-<h3>
-<span data-lang="ja">トラック・バス</span>
-<span data-lang="en">Trucks & Buses</span>
-</h3>
-
-<p>
-<span data-lang="ja">商用車・大型車</span>
-<span data-lang="en">Commercial and heavy vehicles</span>
-</p>
-
-</div>
-
-</div>
-
-
-<!-- 4 EXCAVATOR -->
-
-<div class="card">
-
-<div class="art">
-
-<svg viewBox="0 0 600 320">
-
-<defs>
-
-<linearGradient id="exc" x1="0" x2="1">
-<stop stop-color="#ffe04a"/>
-<stop offset=".5" stop-color="#ffbd22"/>
-<stop offset="1" stop-color="#ff8a22"/>
-</linearGradient>
-
-</defs>
-
-<ellipse cx="290" cy="260" rx="220" ry="23"
-fill="#ffc62e" opacity=".13"/>
-
-<rect x="100" y="185"
-width="235"
-height="50"
-rx="20"
-fill="url(#exc)"/>
-
-<circle cx="145" cy="238" r="37" fill="#101827"/>
-<circle cx="145" cy="238" r="15" fill="#8997a7"/>
-
-<circle cx="290" cy="238" r="37" fill="#101827"/>
-<circle cx="290" cy="238" r="15" fill="#8997a7"/>
-
-<path d="M185 185
-L205 92
-L330 92
-L350 185 Z"
-fill="url(#exc)"/>
-
-<rect x="220" y="108"
-width="75"
-height="52"
-rx="6"
-fill="#071426"/>
-
-<path d="M330 105
-L425 125
-L405 155
-L330 140 Z"
-fill="#ffd22e"/>
-
-<path d="M415 125
-L505 180
-L480 205
-L390 150 Z"
-fill="#ffbd22"/>
-
-<path d="M475 178
-L545 220
-L510 235
-L450 198 Z"
-fill="#ffad20"/>
-
-<path d="M100 215 H350"
-stroke="#fff"
-stroke-opacity=".2"
-stroke-width="4"/>
-
-</svg>
-
-</div>
-
-<div class="card-content">
-
-<h3>
-<span data-lang="ja">建設機械</span>
-<span data-lang="en">Construction Machinery</span>
-</h3>
-
-<p>
-<span data-lang="ja">油圧ショベル・ホイールローダー等</span>
-<span data-lang="en">Excavators, wheel loaders and more</span>
-</p>
-
-</div>
-
-</div>
-
-
-<!-- 5 AGRICULTURE -->
-
-<div class="card">
-
-<div class="art">
-
-<svg viewBox="0 0 600 320">
-
-<defs>
-
-<linearGradient id="farm" x1="0" x2="1">
-<stop stop-color="#66ef82"/>
-<stop offset=".6" stop-color="#20c96b"/>
-<stop offset="1" stop-color="#12a96d"/>
-</linearGradient>
-
-</defs>
-
-<ellipse cx="290" cy="255" rx="210" ry="22"
-fill="#3ee87a" opacity=".12"/>
-
-<rect x="105" y="135"
-width="245"
-height="92"
-rx="18"
-fill="url(#farm)"/>
-
-<rect x="295" y="100"
-width="100"
-height="127"
-rx="15"
-fill="#2fc46a"/>
-
-<rect x="318" y="118"
-width="56"
-height="43"
-rx="6"
-fill="#071426"/>
-
-<circle cx="160" cy="235" r="44" fill="#101827"/>
-<circle cx="160" cy="235" r="18" fill="#8a9aa9"/>
-
-<circle cx="350" cy="235" r="35" fill="#101827"/>
-<circle cx="350" cy="235" r="15" fill="#8a9aa9"/>
-
-<path d="M105 160
-L45 190
-L30 175
-L80 140 Z"
-fill="#69e981"/>
-
-<path d="M45 184 L20 235"
-stroke="#59db73"
-stroke-width="15"/>
-
-</svg>
-
-</div>
-
-<div class="card-content">
-
-<h3>
-<span data-lang="ja">農業機械</span>
-<span data-lang="en">Agricultural Machinery</span>
-</h3>
-
-<p>
-<span data-lang="ja">トラクター・農機具等</span>
-<span data-lang="en">Tractors and agricultural equipment</span>
-</p>
-
-</div>
-
-</div>
-
-
-<!-- 6 HEAVY -->
-
-<div class="card">
-
-<div class="art">
-
-<svg viewBox="0 0 600 320">
-
-<defs>
-
-<linearGradient id="heavy" x1="0" x2="1">
-<stop stop-color="#dfe8f2"/>
-<stop offset=".5" stop-color="#8c9caf"/>
-<stop offset="1" stop-color="#596a80"/>
-</linearGradient>
-
-</defs>
-
-<ellipse cx="300" cy="255" rx="220" ry="22"
-fill="#b9c8d8" opacity=".10"/>
-
-<rect x="95" y="170"
-width="280"
-height="65"
-rx="16"
-fill="url(#heavy)"/>
-
-<rect x="135" y="105"
-width="115"
-height="80"
-rx="10"
-fill="#9aaabd"/>
-
-<rect x="155" y="120"
-width="65"
-height="42"
-rx="5"
-fill="#071426"/>
-
-<circle cx="145" cy="238" r="36" fill="#101827"/>
-<circle cx="315" cy="238" r="36" fill="#101827"/>
-
-<path d="M245 120
-L350 90
-L415 125
-L390 155
-L300 145 Z"
-fill="#bfcbd7"/>
-
-<path d="M400 120
-L500 180
-L470 210
-L370 150 Z"
-fill="#8f9dae"/>
-
-<path d="M95 205 H380"
-stroke="#fff"
-stroke-opacity=".2"
-stroke-width="4"/>
-
-</svg>
-
-</div>
-
-<div class="card-content">
-
-<h3>
-<span data-lang="ja">重機</span>
-<span data-lang="en">Heavy Machinery</span>
-</h3>
-
-<p>
-<span data-lang="ja">大型機械・特殊機械等</span>
-<span data-lang="en">Heavy and specialized machinery</span>
-</p>
-
-</div>
-
-</div>
-
-
-<!-- 7 AUTO PARTS -->
-
-<div class="card">
-
-<div class="art">
-
-<svg viewBox="0 0 600 320">
-
-<defs>
-
-<linearGradient id="gear" x1="0" x2="1">
-<stop stop-color="#00eaff"/>
-<stop offset=".5" stop-color="#5d9cff"/>
-<stop offset="1" stop-color="#a76aff"/>
-</linearGradient>
-
-</defs>
-
-<circle cx="300" cy="160"
-r="92"
-fill="none"
-stroke="url(#gear)"
-stroke-width="30"/>
-
-<circle cx="300" cy="160"
-r="40"
-fill="#071426"
-stroke="#a6edff"
-stroke-width="9"/>
-
-<circle cx="300" cy="160"
-r="16"
-fill="#dffcff"/>
-
-<path d="M300 52 L325 85 L300 105 L275 85 Z"
-fill="#738cff"/>
-
-<path d="M408 160 L375 185 L355 160 L375 135 Z"
-fill="#738cff"/>
-
-<path d="M300 268 L275 235 L300 215 L325 235 Z"
-fill="#738cff"/>
-
-<path d="M192 160 L225 135 L245 160 L225 185 Z"
-fill="#738cff"/>
-
-</svg>
-
-</div>
-
-<div class="card-content">
-
-<h3>
-<span data-lang="ja">自動車部品</span>
-<span data-lang="en">Auto Parts</span>
-</h3>
-
-<p>
-<span data-lang="ja">中古部品・余剰部品等</span>
-<span data-lang="en">Used and surplus auto parts</span>
-</p>
-
-</div>
-
-</div>
-
-
-<!-- 8 STOCK -->
-
-<div class="card">
-
-<div class="art">
-
-<svg viewBox="0 0 600 320">
-
-<defs>
-
-<linearGradient id="box1" x1="0" x2="1">
-<stop stop-color="#00dfff"/>
-<stop offset="1" stop-color="#397fff"/>
-</linearGradient>
-
-<linearGradient id="box2" x1="0" x2="1">
-<stop stop-color="#647cff"/>
-<stop offset="1" stop-color="#8c62ff"/>
-</linearGradient>
-
-</defs>
-
-<ellipse cx="300" cy="255" rx="220" ry="22"
-fill="#6a8dff" opacity=".12"/>
-
-<path d="M85 125
-L200 90
-L200 215
-L85 185 Z"
-fill="url(#box1)"/>
-
-<path d="M200 90
-L315 125
-L315 250
-L200 215 Z"
-fill="#2470dc"/>
-
-<path d="M200 90
-L315 125
-L200 160
-L85 125 Z"
-fill="#65eaff"/>
-
-<path d="M245 85
-L370 50
-L370 185
-L245 220 Z"
-fill="url(#box2)"/>
-
-<path d="M370 50
-L495 85
-L495 220
-L370 185 Z"
-fill="#6954d9"/>
-
-<path d="M370 50
-L495 85
-L370 120
-L245 85 Z"
-fill="#9d86ff"/>
-
-<path d="M110 135 L180 155"
-stroke="#fff"
-stroke-opacity=".35"
-stroke-width="5"/>
-
-<path d="M270 95 L345 115"
-stroke="#fff"
-stroke-opacity=".35"
-stroke-width="5"/>
-
-</svg>
-
-</div>
-
-<div class="card-content">
-
-<h3>
-<span data-lang="ja">在庫・素材</span>
-<span data-lang="en">Stock Materials</span>
-</h3>
-
-<p>
-<span data-lang="ja">余剰在庫・素材・ロール品等</span>
-<span data-lang="en">Surplus stock, materials and roll goods</span>
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- HEART -->
+<!-- =======================================================
+     FEATURE
+     ======================================================= -->
 
-<section>
+<section class="section">
 
-<div class="container">
+    <div class="container">
 
-<div class="heart">
+        <div class="feature reveal">
 
-<h2>
+            <div class="feature-content">
 
-<span data-lang="ja">
-「もう動かないから…」<br>
-「古いから売れない…」<br>
-そんな車でも、まずご相談ください。
-</span>
+                <div class="eyebrow">
+                    Priority Stock
+                </div>
 
-<span data-lang="en">
-Old, damaged or non-running?<br>
-Don't give up on your vehicle.<br>
-Talk to EXPORT ZONE first.
-</span>
+                <h2>
+                    Main Stock Lot<br>
+                    Available for Export
+                </h2>
 
-</h2>
+                <p>
+                    We purchase and export stocklots, surplus materials,
+                    synthetic leather, PVC, automotive fabrics and other
+                    commercially useful materials from Japan and overseas suppliers.
+                </p>
 
-<p>
+                <div class="feature-pills">
 
-<span data-lang="ja">
-長年使った車、事故に遭った車、故障して動かなくなった車。
-処分に困っている車でも、まずはお気軽にご相談ください。
-EXPORT ZONEは、お客様の状況を確認しながら丁寧に対応します。
-</span>
+                    <span class="pill">PVC</span>
+                    <span class="pill">Synthetic Leather</span>
+                    <span class="pill">Car Seat Fabric</span>
+                    <span class="pill">Stocklot</span>
+                    <span class="pill">Surplus</span>
+                    <span class="pill">Container Export</span>
 
-<span data-lang="en">
-Old vehicles, accident-damaged vehicles and vehicles that no longer run
-can be difficult to deal with. Contact EXPORT ZONE and tell us about your
-vehicle. We will carefully discuss your situation with you.
-</span>
+                </div>
 
-</p>
+            </div>
 
-</div>
+        </div>
 
-</div>
-
-</section>
-
-
-<!-- WHY -->
-
-<section id="why">
-
-<div class="container">
-
-<div class="label">
-WHY EXPORT ZONE
-</div>
-
-<h2 class="section-title">
-
-<span data-lang="ja">選ばれる理由</span>
-<span data-lang="en">Why Contact Us</span>
-
-</h2>
-
-<div class="why">
-
-<div class="why-card">
-
-<div class="icon">🚗</div>
-
-<h3>
-<span data-lang="ja">どんな状態でも相談OK</span>
-<span data-lang="en">Any Condition</span>
-</h3>
-
-<p>
-<span data-lang="ja">
-古い車、事故車、不動車、故障車など、
-お気軽にご相談ください。
-</span>
-
-<span data-lang="en">
-Old, damaged, accident and non-running vehicles can be discussed.
-</span>
-</p>
-
-</div>
-
-
-<div class="why-card">
-
-<div class="icon">🇯🇵</div>
-
-<h3>
-<span data-lang="ja">日本全国対応</span>
-<span data-lang="en">Nationwide Japan</span>
-</h3>
-
-<p>
-<span data-lang="ja">
-日本全国からのお問い合わせに対応しています。
-</span>
-
-<span data-lang="en">
-We accept inquiries from customers throughout Japan.
-</span>
-</p>
-
-</div>
-
-
-<div class="why-card">
-
-<div class="icon">🤝</div>
-
-<h3>
-<span data-lang="ja">丁寧な対応</span>
-<span data-lang="en">Personal Support</span>
-</h3>
-
-<p>
-<span data-lang="ja">
-お客様の状況を確認し、
-わかりやすくご案内します。
-</span>
-
-<span data-lang="en">
-We listen carefully and explain the process clearly.
-</span>
-</p>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- PROCESS -->
+<!-- =======================================================
+     WHY US
+     ======================================================= -->
 
-<section id="process">
+<section class="section">
 
-<div class="container">
+    <div class="container">
 
-<div class="label">
-HOW IT WORKS
-</div>
+        <div class="section-head reveal">
 
-<h2 class="section-title">
+            <div>
+                <div class="eyebrow">02 / Why Export Zone</div>
 
-<span data-lang="ja">買取の流れ</span>
-<span data-lang="en">Simple Process</span>
+                <h2 class="section-title">
+                    Built Around<br>
+                    Real Sourcing
+                </h2>
+            </div>
 
-</h2>
+            <p class="section-copy">
+                Our focus is straightforward: identify useful products,
+                communicate clearly, arrange purchasing and move goods
+                efficiently toward the destination market.
+            </p>
 
-<div class="process">
-
-<div class="step">
-
-<div class="step-number">01</div>
-
-<h3>
-<span data-lang="ja">お問い合わせ</span>
-<span data-lang="en">Contact Us</span>
-</h3>
-
-<p>
-<span data-lang="ja">
-電話・LINE・メールからお気軽にご連絡ください。
-</span>
-
-<span data-lang="en">
-Contact us by phone, LINE or email.
-</span>
-</p>
-
-</div>
+        </div>
 
 
-<div class="step">
+        <div class="why-grid">
 
-<div class="step-number">02</div>
+            <div class="why-card reveal">
 
-<h3>
-<span data-lang="ja">車両・商品確認</span>
-<span data-lang="en">Inspection</span>
-</h3>
+                <div class="why-icon">01</div>
 
-<p>
-<span data-lang="ja">
-車両や商品の状態を確認します。
-</span>
+                <h3>Japan Based</h3>
 
-<span data-lang="en">
-We check the vehicle or item.
-</span>
-</p>
+                <p>
+                    Located in Saitama, Japan, with access to Japanese
+                    vehicles, machinery, parts and commercial materials.
+                </p>
 
-</div>
+            </div>
 
 
-<div class="step">
+            <div class="why-card reveal">
 
-<div class="step-number">03</div>
+                <div class="why-icon">02</div>
 
-<h3>
-<span data-lang="ja">金額・条件確認</span>
-<span data-lang="en">Agreement</span>
-</h3>
+                <h3>Direct Sourcing</h3>
 
-<p>
-<span data-lang="ja">
-買取条件をご説明し、ご納得いただいた上で進めます。
-</span>
+                <p>
+                    We look for practical purchasing opportunities through
+                    local suppliers, businesses, stockholders and auctions.
+                </p>
 
-<span data-lang="en">
-We explain the purchase terms before proceeding.
-</span>
-</p>
-
-</div>
+            </div>
 
 
-<div class="step">
+            <div class="why-card reveal">
 
-<div class="step-number">04</div>
+                <div class="why-icon">03</div>
 
-<h3>
-<span data-lang="ja">お引取り・お支払い</span>
-<span data-lang="en">Pickup & Payment</span>
-</h3>
+                <h3>Export Focused</h3>
 
-<p>
-<span data-lang="ja">
-必要な手続き・引取り・お支払いまで対応します。
-</span>
+                <p>
+                    Products are selected with international shipping,
+                    market demand and container logistics in mind.
+                </p>
 
-<span data-lang="en">
-We arrange procedures, pickup and payment.
-</span>
-</p>
+            </div>
 
-</div>
+        </div>
 
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- COMPANY -->
+<!-- =======================================================
+     PROCESS
+     ======================================================= -->
 
-<section id="company">
+<section class="section" id="process">
 
-<div class="container">
+    <div class="container">
 
-<div class="company-grid">
+        <div class="section-head reveal">
 
-<div>
+            <div>
+                <div class="eyebrow">03 / Process</div>
 
-<div class="label">
-COMPANY
-</div>
+                <h2 class="section-title">
+                    Simple.<br>
+                    Direct. Global.
+                </h2>
+            </div>
 
-<h2 class="section-title">
-EXPORT ZONE<br>
-Co., Ltd.
-</h2>
+            <p class="section-copy">
+                From your requirement to sourcing and export,
+                we keep communication direct and practical.
+            </p>
 
-<p class="section-description">
-
-<span data-lang="ja">
-日本で培ってきたネットワークを活かし、
-中古車・重機・農業機械・部品・在庫品などを
-幅広く取り扱っています。
-</span>
-
-<span data-lang="en">
-We use our network and experience in Japan to handle
-used vehicles, heavy machinery, agricultural equipment,
-auto parts and stock materials.
-</span>
-
-</p>
-
-</div>
+        </div>
 
 
-<div class="company-card">
+        <div class="process">
 
-<h2>INFO</h2>
+            <div class="process-card reveal">
 
-<div class="info">
+                <div class="process-number">STEP 01</div>
 
-<div class="info-row">
-<strong>COMPANY</strong>
-<span>EXPORT ZONE Co., Ltd.</span>
-</div>
+                <h3>Tell Us</h3>
 
-<div class="info-row">
-<strong>ADDRESS</strong>
-<span>
-2607 Komuro, Ina, Kitaadachi District,
-Saitama 362-0806, Japan
-</span>
-</div>
+                <p>
+                    Send us the product, specification, quantity
+                    or vehicle you are looking for.
+                </p>
 
-<div class="info-row">
-<strong>PHONE</strong>
-<span>0120 888 405</span>
-</div>
+                <div class="process-line"></div>
 
-<div class="info-row">
-<strong>EMAIL</strong>
-<span>exportzonecoltd@gmail.com</span>
-</div>
-
-<div class="info-row">
-<strong>SECONDHAND DEALER LICENSE</strong>
-<span>第452750021040号</span>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
+            </div>
 
 
-<!-- CONTACT -->
+            <div class="process-card reveal">
 
-<section id="contact" class="contact">
+                <div class="process-number">STEP 02</div>
 
-<div class="container">
+                <h3>We Source</h3>
 
-<div class="contact-box">
+                <p>
+                    We search available Japanese and international
+                    supply sources.
+                </p>
 
-<h2>
+                <div class="process-line"></div>
 
-<span data-lang="ja">
-まずはお気軽にご相談ください
-</span>
-
-<span data-lang="en">
-LET'S TALK
-</span>
-
-</h2>
-
-<p>
-
-<span data-lang="ja">
-古い・事故・故障・不動など、
-気になることがあればお気軽にお問い合わせください。
-</span>
-
-<span data-lang="en">
-Old, damaged, accident or non-running —
-tell us about your vehicle.
-</span>
-
-</p>
-
-<a href="tel:0120888405" class="big-phone">
-☎ 0120 888 405
-</a>
-
-<br>
-
-<a
-href="mailto:exportzonecoltd@gmail.com"
-class="email"
->
-exportzonecoltd@gmail.com
-</a>
+            </div>
 
 
-<div class="line-contact">
+            <div class="process-card reveal">
 
-<a
-href="https://line.me/ti/p/VcqKQ0PYkN"
-target="_blank"
-rel="noopener noreferrer"
-class="line-button"
->
+                <div class="process-number">STEP 03</div>
 
-<div class="line-icon">
-LINE
-</div>
+                <h3>Confirm</h3>
 
-<div class="line-text">
+                <p>
+                    Photos, specifications, quantity and commercial
+                    details are checked before proceeding.
+                </p>
 
-<strong>
-LINE ID: exportzonecoltd
-</strong>
+                <div class="process-line"></div>
 
-<small>
+            </div>
 
-<span data-lang="ja">
-LINEでお問い合わせ
-</span>
 
-<span data-lang="en">
-Contact us on LINE
-</span>
+            <div class="process-card reveal">
 
-</small>
+                <div class="process-number">STEP 04</div>
 
-</div>
+                <h3>Export</h3>
 
-<div class="line-arrow">
-→
-</div>
+                <p>
+                    We arrange purchasing and export logistics
+                    toward the destination market.
+                </p>
 
-</a>
+            </div>
 
-</div>
+        </div>
 
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- FOOTER -->
+<!-- =======================================================
+     COMPANY
+     ======================================================= -->
 
-<footer>
+<section class="section" id="company">
 
-<div class="footer-inner">
+    <div class="container">
 
-<div class="footer-logo">
+        <div class="company-grid">
 
-<img
-src="./EZ%20Logo.JPG"
-alt="EXPORT ZONE Co., Ltd."
->
+            <div class="company-card reveal">
 
-</div>
+                <div class="eyebrow">
+                    04 / Company
+                </div>
 
-<div class="footer-text">
+                <h3>
+                    EXPORT ZONE Co., Ltd.
+                </h3>
 
-EXPORT ZONE Co., Ltd.<br>
+                <p>
+                    A Japan-based sourcing and export company
+                    working with vehicles, machinery, automotive
+                    products and commercial stock materials.
+                </p>
 
-2607 Komuro, Ina,
-Kitaadachi District,
-Saitama 362-0806, Japan<br>
+                <a
+                    href="#contact"
+                    class="btn btn-primary"
+                    style="margin-top:25px;"
+                >
+                    Contact Export Zone
+                </a>
 
-TEL: 0120 888 405<br>
+            </div>
 
-© 2026 EXPORT ZONE Co., Ltd.
 
-</div>
+            <div class="company-card reveal">
 
-</div>
+                <h3>Company Information</h3>
+
+                <div class="company-list">
+
+                    <div class="company-row">
+                        <span>Company</span>
+                        <span>EXPORT ZONE Co., Ltd.</span>
+                    </div>
+
+                    <div class="company-row">
+                        <span>Address</span>
+                        <span>
+                            2607 Komuro, Ina, Kitaadachi District,
+                            Saitama 362-0806, Japan
+                        </span>
+                    </div>
+
+                    <div class="company-row">
+                        <span>Phone</span>
+                        <span>0120 888 405</span>
+                    </div>
+
+                    <div class="company-row">
+                        <span>Email</span>
+                        <span>exportzonecoltd@gmail.com</span>
+                    </div>
+
+                    <div class="company-row">
+                        <span>LINE</span>
+                        <span>exportzonecoltd</span>
+                    </div>
+
+                    <div class="company-row">
+                        <span>Dealer License</span>
+                        <span>第452750021040号</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CONTACT
+     ======================================================= -->
+
+<section class="section" id="contact">
+
+    <div class="container">
+
+        <div class="contact-box reveal">
+
+            <div class="eyebrow">
+                05 / Contact
+            </div>
+
+            <h2>
+                Tell us what<br>
+                you need.
+            </h2>
+
+            <p>
+                Looking for a Japanese vehicle, machinery,
+                auto part, stocklot or specific material?
+                Send us your requirement and we will check
+                available sourcing possibilities.
+            </p>
+
+            <div class="contact-actions">
+
+                <a
+                    href="tel:0120888405"
+                    class="btn btn-primary"
+                >
+                    Call 0120 888 405
+                </a>
+
+                <a
+                    href="mailto:exportzonecoltd@gmail.com"
+                    class="btn btn-secondary"
+                >
+                    Send Email
+                </a>
+
+                <a
+                    href="https://line.me/ti/p/VcqKQ0PYkN"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn btn-secondary"
+                >
+                    LINE: exportzonecoltd
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =======================================================
+     FOOTER
+     ======================================================= -->
+
+<footer class="footer">
+
+    <div class="footer-grid">
+
+        <div class="footer-brand">
+
+            <a href="#home" class="logo">
+
+                <div class="logo-image-wrap">
+
+                    <img
+                        class="logo-img"
+                        src="https://agmrifkan-collab.github.io/exportzone/images/EZ%20Logo.png"
+                        alt="EXPORT ZONE"
+                        onerror="
+                            this.style.display='none';
+                            this.parentElement.querySelector('.logo-fallback').style.display='flex';
+                        "
+                    >
+
+                    <div class="logo-fallback">
+                        <strong>EZ</strong>
+                    </div>
+
+                </div>
+
+                <div class="logo-copy">
+                    <div class="logo-title">EXPORT ZONE</div>
+                    <div class="logo-sub">JAPAN · GLOBAL SOURCING</div>
+                </div>
+
+            </a>
+
+            <p>
+                Vehicles · Machinery · Auto Parts · Stock Materials
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#home">Home</a>
+            <a href="#vehicles">Vehicles</a>
+            <a href="#materials">Materials</a>
+            <a href="#company">Company</a>
+            <a href="#contact">Contact</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © <span id="year"></span> EXPORT ZONE Co., Ltd.
+            All Rights Reserved.
+        </span>
+
+        <span>
+            Japan
+        </span>
+
+    </div>
 
 </footer>
 
 
+<!-- =======================================================
+     BACK TO TOP
+     ======================================================= -->
+
+<button class="top-btn" id="topBtn" aria-label="Back to top">
+    ↑
+</button>
+
+
 <script>
 
-/* LANGUAGE */
+/* =========================================================
+   LOADER
+   ========================================================= */
 
-function language(lang){
+window.addEventListener("load",function(){
 
-document.documentElement.lang=lang;
+    setTimeout(function(){
 
-document.querySelectorAll("[data-lang]").forEach(function(el){
+        document.getElementById("loader")
+            .classList.add("hide");
 
-if(el.dataset.lang===lang){
-
-el.style.display="";
-
-}else{
-
-el.style.display="none";
-
-}
-
-});
-
-document.getElementById("jp").classList.toggle(
-"active",
-lang==="ja"
-);
-
-document.getElementById("en").classList.toggle(
-"active",
-lang==="en"
-);
-
-localStorage.setItem(
-"exportzone-language",
-lang
-);
-
-}
-
-
-/* LOAD LANGUAGE */
-
-document.addEventListener(
-"DOMContentLoaded",
-function(){
-
-const saved=
-localStorage.getItem("exportzone-language")||"ja";
-
-language(saved);
-
-}
-);
-
-
-/* MOBILE MENU */
-
-function menuOpen(){
-
-document
-.getElementById("navigation")
-.classList.toggle("open");
-
-}
-
-
-/* CLOSE MOBILE MENU */
-
-document.querySelectorAll("nav a").forEach(function(link){
-
-link.addEventListener(
-"click",
-function(){
-
-document
-.getElementById("navigation")
-.classList.remove("open");
-
-}
-);
+    },700);
 
 });
 
 
-/* HEADER SCROLL */
+/* =========================================================
+   HEADER SCROLL
+   ========================================================= */
 
-window.addEventListener(
-"scroll",
-function(){
+const header = document.getElementById("header");
 
-const header=document.querySelector("header");
+window.addEventListener("scroll",function(){
 
-if(window.scrollY>40){
+    if(window.scrollY > 40){
+        header.classList.add("scrolled");
+    }else{
+        header.classList.remove("scrolled");
+    }
 
-header.style.background="rgba(2,7,18,.96)";
+});
 
-}else{
 
-header.style.background="rgba(2,7,18,.78)";
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
 
-}
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
 
-}
+menuBtn.addEventListener("click",function(){
+
+    navLinks.classList.toggle("open");
+
+});
+
+document.querySelectorAll(".nav-links a").forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+        navLinks.classList.remove("open");
+
+    });
+
+});
+
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+
+const revealObserver = new IntersectionObserver(
+
+    function(entries){
+
+        entries.forEach(function(entry){
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("visible");
+
+                revealObserver.unobserve(entry.target);
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold:.12
+    }
+
 );
+
+document.querySelectorAll(".reveal").forEach(function(element){
+
+    revealObserver.observe(element);
+
+});
+
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+
+const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll",function(){
+
+    if(window.scrollY > 700){
+
+        topBtn.classList.add("show");
+
+    }else{
+
+        topBtn.classList.remove("show");
+
+    }
+
+});
+
+topBtn.addEventListener("click",function(){
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+});
+
+
+/* =========================================================
+   YEAR
+   ========================================================= */
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+
+/* =========================================================
+   LANGUAGE SWITCH
+   ========================================================= */
+
+const langBtn = document.getElementById("langBtn");
+
+let language =
+    localStorage.getItem("ez-language") || "EN";
+
+function updateLanguage(){
+
+    document.querySelectorAll("[data-en]").forEach(function(el){
+
+        if(language === "JP"){
+
+            el.textContent = el.dataset.jp;
+
+        }else{
+
+            el.textContent = el.dataset.en;
+
+        }
+
+    });
+
+    langBtn.textContent =
+        language === "EN" ? "JP" : "EN";
+
+}
+
+langBtn.addEventListener("click",function(){
+
+    language =
+        language === "EN" ? "JP" : "EN";
+
+    localStorage.setItem(
+        "ez-language",
+        language
+    );
+
+    updateLanguage();
+
+});
+
+updateLanguage();
+
+
+/* =========================================================
+   PREMIUM CARD TILT
+   ========================================================= */
+
+if(window.matchMedia("(pointer:fine)").matches){
+
+    document.querySelectorAll(".product-card").forEach(function(card){
+
+        card.addEventListener("mousemove",function(e){
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                e.clientX - rect.left;
+
+            const y =
+                e.clientY - rect.top;
+
+            const rotateY =
+                ((x / rect.width) - .5) * 5;
+
+            const rotateX =
+                ((y / rect.height) - .5) * -5;
+
+            card.style.transform =
+                "perspective(800px) rotateX(" +
+                rotateX +
+                "deg) rotateY(" +
+                rotateY +
+                "deg) translateY(-9px)";
+
+        });
+
+        card.addEventListener("mouseleave",function(){
+
+            card.style.transform = "";
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   HERO MOUSE PARALLAX
+   ========================================================= */
+
+if(window.matchMedia("(pointer:fine)").matches){
+
+    const heroVisual =
+        document.querySelector(".hero-visual");
+
+    document.addEventListener("mousemove",function(e){
+
+        const x =
+            (e.clientX / window.innerWidth - .5);
+
+        const y =
+            (e.clientY / window.innerHeight - .5);
+
+        if(heroVisual){
+
+            heroVisual.style.transform =
+                "translate(" +
+                (x * 7) +
+                "px," +
+                (y * 5) +
+                "px)";
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   IMAGE FALLBACK
+   ========================================================= */
+
+document.querySelectorAll(".product-image").forEach(function(el){
+
+    const style =
+        window.getComputedStyle(el,"::before");
+
+});
+
+
+/* =========================================================
+   SMOOTH INTERNAL LINKS
+   ========================================================= */
+
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+
+    anchor.addEventListener("click",function(e){
+
+        const target =
+            document.querySelector(
+                this.getAttribute("href")
+            );
+
+        if(target){
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+        }
+
+    });
+
+});
 
 </script>
 
