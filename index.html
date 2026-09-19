@@ -4,16 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EXPORT ZONE 株式会社 | 日本から世界へ</title>
-
-<meta name="description"
-content="EXPORT ZONE 株式会社 - 日本の中古車、トラック、建設機械、農業機械、自動車部品を世界へ輸出">
+<title>EXPORT ZONE 株式会社 | From Japan to the World</title>
 
 <style>
-/* =========================================================
-   RESET
-========================================================= */
-
 *{
     margin:0;
     padding:0;
@@ -28,100 +21,69 @@ body{
     font-family:
         "Noto Sans JP",
         "Yu Gothic",
-        "Hiragino Kaku Gothic ProN",
         Arial,
         sans-serif;
-
-    background:#06101c;
+    background:#03101b;
     color:#fff;
     overflow-x:hidden;
 }
 
 a{
-    text-decoration:none;
     color:inherit;
+    text-decoration:none;
 }
-
-img{
-    max-width:100%;
-    display:block;
-}
-
-/* =========================================================
-   VARIABLES
-========================================================= */
 
 :root{
-    --blue:#20a8ff;
-    --blue2:#0078ff;
-    --cyan:#38d9ff;
-    --green:#8fd34f;
-    --dark:#06101c;
-    --dark2:#0b1727;
-    --white:#ffffff;
-    --gray:#a9b5c5;
+    --blue:#16bfff;
+    --blue2:#087cff;
+    --cyan:#55ddff;
+    --dark:#03101b;
+    --dark2:#071a2a;
+    --text:#eaf6ff;
+    --muted:#9db2c5;
 }
 
-/* =========================================================
-   BACKGROUND
-========================================================= */
+/* =========================
+BACKGROUND
+========================= */
 
 body::before{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-5;
-
+    z-index:-3;
     background:
-        radial-gradient(
-            circle at 15% 20%,
-            rgba(0,190,255,.12),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 75%,
-            rgba(90,70,255,.12),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #03101a,
-            #07182a 50%,
-            #060b18
-        );
+        radial-gradient(circle at 10% 20%,
+            rgba(0,190,255,.16),
+            transparent 30%),
+        radial-gradient(circle at 90% 70%,
+            rgba(70,80,255,.14),
+            transparent 32%),
+        linear-gradient(135deg,#020b13,#071b2d,#030914);
 }
-
-/* animated grid */
 
 body::after{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-4;
-    opacity:.08;
-
+    z-index:-2;
+    opacity:.06;
     background-image:
-        linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
-
+        linear-gradient(rgba(255,255,255,.2) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.2) 1px,transparent 1px);
     background-size:45px 45px;
-
-    animation:gridMove 20s linear infinite;
+    animation:grid 20s linear infinite;
 }
 
-@keyframes gridMove{
-    from{
-        transform:translateY(0);
-    }
-
+@keyframes grid{
     to{
         transform:translateY(45px);
     }
 }
 
-/* =========================================================
-   HEADER
-========================================================= */
+/* =========================
+HEADER
+========================= */
 
 header{
     position:fixed;
@@ -129,178 +91,98 @@ header{
     left:0;
     width:100%;
     z-index:1000;
-
-    background:rgba(3,10,18,.82);
+    background:rgba(2,9,16,.84);
     backdrop-filter:blur(18px);
-
     border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .navbar{
     max-width:1400px;
+    height:78px;
     margin:auto;
-
-    height:82px;
+    padding:0 28px;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
-
-    padding:0 30px;
 }
 
-/* =========================================================
-   LOGO
-========================================================= */
+/* =========================
+LOGO
+========================= */
 
-.logo-area{
+.logo{
     display:flex;
     align-items:center;
-    gap:13px;
+    gap:12px;
 }
 
-.logo-box{
+.logo-image{
     width:58px;
     height:58px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    position:relative;
-}
-
-.logo-box::before{
-    content:"";
-
-    position:absolute;
-    width:54px;
-    height:54px;
-
-    border-radius:50%;
-
-    border:1px solid rgba(50,190,255,.45);
-
-    animation:logoRing 5s linear infinite;
-}
-
-.logo-box::after{
-    content:"";
-
-    position:absolute;
-    inset:-5px;
-
-    border-radius:50%;
-
-    box-shadow:
-        0 0 18px rgba(30,170,255,.45),
-        0 0 35px rgba(30,170,255,.18);
-
-    animation:logoGlow 3s ease-in-out infinite;
-}
-
-/*
-  Existing JPG is used.
-  Screen blend visually reduces the dark square background.
-*/
-
-.logo-box img{
-    width:52px;
-    height:52px;
-
     object-fit:contain;
 
-    position:relative;
-    z-index:2;
-
+    /*
+      Removes the appearance of the dark
+      JPG background without creating a new image.
+    */
     mix-blend-mode:screen;
 
     filter:
-        brightness(1.2)
-        contrast(1.15)
-        saturate(1.2);
+        brightness(1.35)
+        contrast(1.2)
+        saturate(1.15)
+        drop-shadow(0 0 12px rgba(30,190,255,.45));
 
     animation:logoFloat 4s ease-in-out infinite;
-}
-
-@keyframes logoRing{
-    from{
-        transform:rotate(0deg);
-    }
-
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-@keyframes logoGlow{
-    0%,100%{
-        opacity:.45;
-        transform:scale(.95);
-    }
-
-    50%{
-        opacity:1;
-        transform:scale(1.08);
-    }
 }
 
 @keyframes logoFloat{
     0%,100%{
         transform:translateY(0);
     }
-
     50%{
         transform:translateY(-4px);
     }
 }
 
-.company-name{
+.logo-name{
     font-size:18px;
-    font-weight:800;
-    letter-spacing:.5px;
+    font-weight:900;
+    white-space:nowrap;
 }
 
-.company-name span{
+.logo-name span{
     color:var(--blue);
 }
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+/* =========================
+NAV
+========================= */
 
 nav{
     display:flex;
-    align-items:center;
-    gap:35px;
+    gap:32px;
 }
 
 nav a{
+    color:#dce9f4;
     font-weight:700;
     font-size:15px;
-
-    color:#dce8f5;
-
     position:relative;
-
-    transition:.3s;
 }
 
 nav a::after{
     content:"";
-
     position:absolute;
     left:50%;
-    bottom:-10px;
-
+    bottom:-9px;
     width:0;
     height:2px;
-
     background:var(--blue);
-
-    transition:.3s;
-
     transform:translateX(-50%);
+    transition:.3s;
 }
 
 nav a:hover{
@@ -311,870 +193,581 @@ nav a:hover::after{
     width:100%;
 }
 
-/* =========================================================
-   LANGUAGE
-========================================================= */
+/* =========================
+LANGUAGE
+========================= */
 
 .language{
     display:flex;
-
-    background:rgba(255,255,255,.08);
-
-    border:1px solid rgba(255,255,255,.12);
-
+    border:1px solid rgba(255,255,255,.15);
     border-radius:30px;
-
     overflow:hidden;
+    background:rgba(255,255,255,.05);
 }
 
 .language button{
     border:0;
     background:transparent;
-
-    color:#fff;
-
-    padding:9px 14px;
-
+    color:white;
+    padding:9px 13px;
     cursor:pointer;
-
-    font-weight:700;
+    font-weight:800;
 }
 
 .language button.active{
     background:#fff;
-    color:#06101c;
+    color:#06101a;
 }
 
-/* =========================================================
-   HEADER BUTTON
-========================================================= */
+/* =========================
+CONTACT BUTTON
+========================= */
 
-.header-contact{
+.header-btn{
     padding:13px 23px;
-
     border-radius:30px;
-
-    background:linear-gradient(
-        135deg,
-        #24c6ff,
-        #087cff
-    );
-
-    font-weight:800;
-
-    box-shadow:
-        0 8px 30px rgba(0,140,255,.25);
-
+    background:linear-gradient(135deg,#20c7ff,#087cff);
+    font-weight:900;
+    box-shadow:0 8px 25px rgba(0,140,255,.25);
     transition:.3s;
 }
 
-.header-contact:hover{
+.header-btn:hover{
     transform:translateY(-3px);
-
-    box-shadow:
-        0 12px 40px rgba(0,160,255,.4);
 }
 
-/* =========================================================
-   HERO
-========================================================= */
+/* =========================
+HERO
+========================= */
 
 .hero{
     min-height:850px;
-
-    padding-top:82px;
-
+    padding-top:78px;
     position:relative;
-
-    display:flex;
-    align-items:center;
-
     overflow:hidden;
 }
 
-/* animated circles */
+.hero-inner{
+    max-width:1400px;
+    min-height:770px;
+    margin:auto;
+    padding:80px 40px;
 
-.hero-circle{
+    display:grid;
+    grid-template-columns:45% 55%;
+    align-items:center;
+    gap:20px;
+}
+
+/* glowing circles */
+
+.hero::before{
+    content:"";
     position:absolute;
-
+    width:600px;
+    height:600px;
+    left:-300px;
+    top:200px;
     border-radius:50%;
-
-    filter:blur(1px);
-
-    pointer-events:none;
+    background:radial-gradient(
+        circle,
+        rgba(0,190,255,.22),
+        transparent 70%
+    );
+    animation:orb 8s ease-in-out infinite;
 }
 
-.circle1{
-    width:500px;
-    height:500px;
-
-    left:-250px;
-    top:150px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(0,200,255,.20),
-            transparent 70%
-        );
-
-    animation:float1 8s ease-in-out infinite;
-}
-
-.circle2{
-    width:550px;
-    height:550px;
-
-    right:-260px;
+.hero::after{
+    content:"";
+    position:absolute;
+    width:600px;
+    height:600px;
+    right:-300px;
     bottom:-200px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(90,60,255,.22),
-            transparent 70%
-        );
-
-    animation:float2 10s ease-in-out infinite;
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        rgba(70,80,255,.22),
+        transparent 70%
+    );
+    animation:orb2 10s ease-in-out infinite;
 }
 
-@keyframes float1{
-    0%,100%{
-        transform:translate(0,0);
-    }
-
+@keyframes orb{
     50%{
         transform:translate(60px,-40px);
     }
 }
 
-@keyframes float2{
-    0%,100%{
-        transform:translate(0,0);
-    }
-
+@keyframes orb2{
     50%{
         transform:translate(-50px,30px);
     }
 }
 
-.hero-inner{
-    max-width:1400px;
-    width:100%;
+/* =========================
+HERO TEXT
+========================= */
 
-    margin:auto;
-
-    padding:70px 40px;
-
-    display:grid;
-    grid-template-columns:1fr 1.1fr;
-
-    align-items:center;
-
-    gap:50px;
-
+.hero-content{
     position:relative;
     z-index:2;
 }
 
-/* =========================================================
-   HERO TEXT
-========================================================= */
-
-.hero-small{
+.badge{
     display:inline-block;
-
-    padding:10px 18px;
-
-    border:1px solid rgba(40,190,255,.45);
-
+    padding:9px 18px;
+    border:1px solid rgba(30,200,255,.5);
     border-radius:30px;
-
-    color:#6fdcff;
-
-    background:rgba(20,160,255,.06);
-
-    font-weight:700;
-
-    margin-bottom:25px;
-
-    animation:pulseBorder 3s infinite;
-}
-
-@keyframes pulseBorder{
-    0%,100%{
-        box-shadow:0 0 0 rgba(0,170,255,0);
-    }
-
-    50%{
-        box-shadow:0 0 25px rgba(0,170,255,.15);
-    }
+    color:#69dcff;
+    background:rgba(20,170,255,.06);
+    font-weight:800;
+    margin-bottom:24px;
 }
 
 .hero h1{
-    font-size:clamp(48px,6vw,88px);
-
+    font-size:clamp(45px,5.5vw,78px);
     line-height:1.08;
-
     letter-spacing:-3px;
-
     margin-bottom:25px;
 }
 
-.gradient-text{
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #59d7ff,
-            #8c8aff
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-
-    color:transparent;
-
+.gradient{
+    background:linear-gradient(
+        90deg,
+        #fff,
+        #54ddff,
+        #8f82ff
+    );
     background-size:200% auto;
-
-    animation:textGradient 5s linear infinite;
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:gradient 5s linear infinite;
 }
 
-@keyframes textGradient{
+@keyframes gradient{
     to{
         background-position:200% center;
     }
 }
 
-.hero-description{
-    font-size:18px;
-
-    line-height:1.9;
-
-    color:#b7c6d8;
-
+.hero-text{
     max-width:620px;
-
-    margin-bottom:35px;
+    color:#b6c7d7;
+    font-size:17px;
+    line-height:1.9;
+    margin-bottom:30px;
 }
-
-/* =========================================================
-   BUTTONS
-========================================================= */
 
 .buttons{
     display:flex;
-    gap:15px;
-
+    gap:14px;
     flex-wrap:wrap;
 }
 
 .btn{
-    display:inline-flex;
-
-    align-items:center;
-    justify-content:center;
-
-    gap:10px;
-
-    padding:15px 27px;
-
+    padding:15px 26px;
     border-radius:35px;
-
-    font-weight:800;
-
+    font-weight:900;
     transition:.35s;
-
-    cursor:pointer;
 }
 
-.btn-primary{
-    background:
-        linear-gradient(
-            135deg,
-            #22c7ff,
-            #087cff
-        );
-
-    box-shadow:
-        0 10px 30px rgba(0,140,255,.25);
+.primary{
+    background:linear-gradient(135deg,#1ecaff,#087cff);
+    box-shadow:0 10px 30px rgba(0,130,255,.3);
 }
 
-.btn-primary:hover{
-    transform:translateY(-4px) scale(1.02);
-
-    box-shadow:
-        0 15px 40px rgba(0,150,255,.4);
-}
-
-.btn-outline{
-    border:1px solid rgba(255,255,255,.2);
-
-    background:rgba(255,255,255,.04);
-
-    backdrop-filter:blur(10px);
-}
-
-.btn-outline:hover{
-    border-color:var(--blue);
-
+.primary:hover{
     transform:translateY(-4px);
 }
 
-/* =========================================================
-   HERO VEHICLE VISUAL
-========================================================= */
+.outline{
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.04);
+}
 
-.hero-visual{
-    min-height:550px;
+.outline:hover{
+    border-color:var(--blue);
+    transform:translateY(-4px);
+}
 
+/* =========================
+VEHICLE DISPLAY
+========================= */
+
+.vehicle-area{
     position:relative;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    min-height:560px;
+    z-index:2;
 }
 
 .vehicle-glow{
-    width:460px;
-    height:460px;
-
+    position:absolute;
+    width:500px;
+    height:500px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
     border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(0,170,255,.23),
-            transparent 68%
-        );
-
-    filter:blur(15px);
-
+    background:radial-gradient(
+        circle,
+        rgba(0,180,255,.25),
+        transparent 68%
+    );
+    filter:blur(12px);
     animation:vehicleGlow 4s ease-in-out infinite;
 }
 
 @keyframes vehicleGlow{
-    0%,100%{
-        transform:scale(.95);
-        opacity:.7;
-    }
-
     50%{
-        transform:scale(1.08);
-        opacity:1;
+        transform:translate(-50%,-50%) scale(1.1);
     }
 }
 
-/*
-  CSS vehicle showcase.
-  No external image is required.
-*/
-
-.vehicle-stack{
+.vehicle{
     position:absolute;
-
-    width:100%;
-    height:100%;
-}
-
-.vehicle-card{
-    position:absolute;
-
-    border-radius:25px;
-
-    border:1px solid rgba(255,255,255,.15);
-
+    border:1px solid rgba(255,255,255,.14);
     background:
         linear-gradient(
             135deg,
-            rgba(255,255,255,.13),
-            rgba(255,255,255,.03)
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.025)
         );
-
     backdrop-filter:blur(18px);
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.4);
-
-    overflow:hidden;
-
-    transition:.5s;
-}
-
-.vehicle-card:hover{
-    transform:translateY(-12px) scale(1.03);
-}
-
-.vehicle-main{
-    width:85%;
-    height:300px;
-
-    right:0;
-    top:80px;
-
-    padding:30px;
-
+    border-radius:25px;
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
     display:flex;
     align-items:center;
     justify-content:center;
+}
 
-    animation:vehicleFloat 5s ease-in-out infinite;
+.vehicle-main{
+    width:78%;
+    height:330px;
+    right:0;
+    top:80px;
+    animation:float 5s ease-in-out infinite;
 }
 
 .vehicle-main::before{
     content:"🚙";
-
     font-size:190px;
-
-    filter:
-        drop-shadow(
-            0 20px 25px rgba(0,0,0,.5)
-        );
+    filter:drop-shadow(0 25px 25px rgba(0,0,0,.5));
 }
 
-.vehicle-small{
-    width:210px;
-    height:150px;
-
+.vehicle-truck{
+    width:220px;
+    height:160px;
     left:0;
     bottom:60px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    animation:vehicleFloat2 6s ease-in-out infinite;
+    animation:float2 6s ease-in-out infinite;
 }
 
-.vehicle-small::before{
+.vehicle-truck::before{
     content:"🚚";
-
     font-size:90px;
 }
 
-.vehicle-machinery{
+.vehicle-machine{
     width:190px;
-    height:130px;
-
-    right:35px;
+    height:140px;
+    right:20px;
     bottom:20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    animation:vehicleFloat3 5.5s ease-in-out infinite;
+    animation:float3 5.5s ease-in-out infinite;
 }
 
-.vehicle-machinery::before{
+.vehicle-machine::before{
     content:"🏗️";
-
-    font-size:80px;
+    font-size:85px;
 }
 
-@keyframes vehicleFloat{
-    0%,100%{
-        transform:translateY(0);
-    }
-
+@keyframes float{
     50%{
-        transform:translateY(-12px);
+        transform:translateY(-13px);
     }
 }
 
-@keyframes vehicleFloat2{
-    0%,100%{
-        transform:translateY(0) rotate(-2deg);
-    }
-
+@keyframes float2{
     50%{
         transform:translateY(-15px) rotate(2deg);
     }
 }
 
-@keyframes vehicleFloat3{
-    0%,100%{
-        transform:translateY(0);
-    }
-
+@keyframes float3{
     50%{
         transform:translateY(-10px);
     }
 }
 
-/* =========================================================
-   STATS
-========================================================= */
+/* =========================
+STATS
+========================= */
 
 .stats{
     max-width:1200px;
+    margin:-25px auto 0;
+    padding:0 25px 70px;
 
-    margin:-30px auto 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 
     position:relative;
     z-index:5;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:15px;
-
-    padding:0 30px 70px;
 }
 
 .stat{
     padding:25px;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    background:
-        rgba(255,255,255,.04);
-
-    backdrop-filter:blur(15px);
-
-    border-radius:20px;
-
     text-align:center;
-
-    transition:.3s;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(15px);
+    transition:.35s;
 }
 
 .stat:hover{
     transform:translateY(-7px);
-
-    border-color:
-        rgba(30,170,255,.4);
+    border-color:rgba(20,190,255,.45);
 }
 
 .stat-icon{
     font-size:30px;
-
     margin-bottom:10px;
 }
 
 .stat h3{
-    font-size:19px;
-    margin-bottom:5px;
+    margin-bottom:6px;
 }
 
 .stat p{
-    color:#9eafc2;
-    font-size:14px;
+    color:#8fa5b9;
+    font-size:13px;
 }
 
-/* =========================================================
-   SECTION
-========================================================= */
+/* =========================
+SECTIONS
+========================= */
 
 section{
     padding:100px 30px;
 }
 
-.section-inner{
+.container{
     max-width:1300px;
     margin:auto;
 }
 
 .section-title{
     text-align:center;
-
-    margin-bottom:55px;
+    margin-bottom:50px;
 }
 
-.section-title .small{
-    color:#35caff;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-
-    margin-bottom:12px;
+.section-small{
+    color:#29c8ff;
+    font-weight:900;
+    letter-spacing:3px;
+    font-size:13px;
+    margin-bottom:10px;
 }
 
 .section-title h2{
     font-size:clamp(35px,4vw,55px);
-
     margin-bottom:15px;
 }
 
 .section-title p{
-    color:#9eafc2;
-
-    max-width:650px;
-
+    color:#9eb1c3;
+    max-width:700px;
     margin:auto;
-
     line-height:1.8;
 }
 
-/* =========================================================
-   PRODUCTS
-========================================================= */
+/* =========================
+PRODUCTS
+========================= */
 
 .products{
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.025),
-            transparent
-        );
+    background:linear-gradient(
+        180deg,
+        rgba(255,255,255,.025),
+        transparent
+    );
 }
 
 .product-grid{
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:22px;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
 }
 
-.product-card{
-    position:relative;
+.product{
+    min-height:260px;
+    padding:28px;
 
-    padding:30px;
+    border-radius:24px;
 
-    min-height:250px;
-
-    border-radius:25px;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.09);
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.09),
+            rgba(255,255,255,.08),
             rgba(255,255,255,.025)
         );
 
-    backdrop-filter:blur(14px);
+    backdrop-filter:blur(15px);
 
-    transition:.45s;
+    transition:.4s;
+
+    position:relative;
+    overflow:hidden;
 }
 
-.product-card::before{
+.product::after{
     content:"";
-
     position:absolute;
-
-    width:170px;
-    height:170px;
-
-    right:-70px;
-    top:-70px;
-
+    width:180px;
+    height:180px;
+    right:-80px;
+    top:-80px;
     border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(0,170,255,.25),
-            transparent 70%
-        );
-
-    transition:.5s;
+    background:radial-gradient(
+        circle,
+        rgba(0,180,255,.2),
+        transparent 70%
+    );
 }
 
-.product-card:hover{
-    transform:
-        translateY(-10px)
-        scale(1.015);
-
-    border-color:
-        rgba(30,180,255,.5);
-
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.35);
-}
-
-.product-card:hover::before{
-    transform:scale(1.5);
+.product:hover{
+    transform:translateY(-10px);
+    border-color:rgba(20,190,255,.45);
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
 }
 
 .product-icon{
     width:65px;
     height:65px;
-
+    border-radius:18px;
     display:flex;
     align-items:center;
     justify-content:center;
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(30,190,255,.2),
-            rgba(100,80,255,.15)
-        );
-
-    border:
-        1px solid rgba(50,200,255,.2);
-
+    background:rgba(20,180,255,.1);
+    border:1px solid rgba(20,190,255,.2);
     font-size:32px;
-
-    margin-bottom:25px;
+    margin-bottom:22px;
 }
 
-.product-card h3{
-    font-size:22px;
-
+.product h3{
+    font-size:20px;
     margin-bottom:10px;
 }
 
-.product-card p{
-    color:#9facbc;
-
+.product p{
+    color:#94aabd;
     line-height:1.7;
-
-    font-size:14px;
+    font-size:13px;
 }
 
 .product-link{
-    display:inline-block;
-
-    margin-top:18px;
-
-    color:#36c8ff;
-
+    color:#2bcaff;
     font-weight:800;
-
-    font-size:14px;
+    display:block;
+    margin-top:18px;
 }
 
-/* =========================================================
-   ABOUT
-========================================================= */
+/* =========================
+ABOUT
+========================= */
 
 .about{
     background:
         linear-gradient(
             135deg,
-            #071423,
-            #0a1b2d
+            #061423,
+            #091d30
         );
 }
 
 .about-grid{
     display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
+    grid-template-columns:1fr 1fr;
     gap:70px;
-
     align-items:center;
 }
 
 .about h2{
     font-size:48px;
-
     margin-bottom:25px;
 }
 
 .about p{
-    color:#aebdcd;
-
+    color:#a8bacb;
     line-height:2;
-
-    margin-bottom:20px;
+    margin-bottom:18px;
 }
 
-.about-points{
+.points{
     display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:15px;
-
-    margin-top:30px;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+    margin-top:25px;
 }
 
-.about-point{
+.point{
     padding:20px;
-
     border-radius:17px;
-
+    background:rgba(255,255,255,.04);
     border:1px solid rgba(255,255,255,.08);
-
-    background:rgba(255,255,255,.035);
 }
 
-.about-point strong{
+.point strong{
     display:block;
-
-    margin-bottom:6px;
+    margin-bottom:7px;
 }
 
-.about-point span{
-    color:#9eafc2;
-
+.point span{
+    color:#8fa5b8;
     font-size:13px;
 }
 
-/* =========================================================
-   EXPORT PROCESS
-========================================================= */
+/* =========================
+PROCESS
+========================= */
 
 .process-grid{
     display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
+    grid-template-columns:repeat(4,1fr);
     gap:20px;
 }
 
 .process{
-    text-align:center;
-
     padding:30px 20px;
-
+    text-align:center;
     border-radius:22px;
-
     background:rgba(255,255,255,.04);
-
     border:1px solid rgba(255,255,255,.08);
-
     transition:.4s;
 }
 
 .process:hover{
     transform:translateY(-8px);
-
-    border-color:rgba(30,180,255,.4);
+    border-color:rgba(20,190,255,.4);
 }
 
-.process-number{
+.number{
     width:55px;
     height:55px;
-
-    margin:0 auto 20px;
-
     border-radius:50%;
+    margin:auto auto 20px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #18c8ff,
-            #316eff
-        );
+    background:linear-gradient(135deg,#20caff,#306cff);
 
     font-weight:900;
-
-    font-size:20px;
 }
 
 .process h3{
@@ -1182,181 +775,130 @@ section{
 }
 
 .process p{
-    color:#9eafc2;
-
+    color:#8fa5b8;
     font-size:13px;
-
     line-height:1.7;
 }
 
-/* =========================================================
-   CONTACT
-========================================================= */
-
-.contact{
-    position:relative;
-
-    overflow:hidden;
-}
+/* =========================
+CONTACT
+========================= */
 
 .contact-box{
     max-width:1100px;
-
     margin:auto;
-
-    padding:60px;
-
+    padding:60px 35px;
     text-align:center;
 
     border-radius:35px;
 
-    border:1px solid rgba(50,190,255,.25);
+    border:1px solid rgba(30,190,255,.25);
 
     background:
         linear-gradient(
             135deg,
-            rgba(20,160,255,.10),
-            rgba(100,70,255,.08)
+            rgba(20,160,255,.1),
+            rgba(80,60,255,.08)
         );
 
     backdrop-filter:blur(20px);
 
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.35);
+    box-shadow:0 30px 100px rgba(0,0,0,.35);
 }
 
 .contact-box h2{
     font-size:48px;
-
     margin-bottom:15px;
 }
 
 .contact-box p{
-    color:#aabacc;
-
-    max-width:650px;
-
+    max-width:700px;
     margin:0 auto 30px;
-
+    color:#a8bacb;
     line-height:1.8;
 }
 
-.contact-info{
+.contact-details{
     display:flex;
-
     justify-content:center;
-
     flex-wrap:wrap;
-
     gap:15px;
-
     margin-top:30px;
 }
 
 .contact-item{
-    padding:14px 20px;
-
+    padding:15px 22px;
     border-radius:15px;
-
     background:rgba(255,255,255,.06);
-
     border:1px solid rgba(255,255,255,.1);
-
-    color:#dbe7f3;
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
+/* =========================
+FOOTER
+========================= */
 
 footer{
-    padding:50px 30px 30px;
-
+    padding:50px 30px 25px;
+    background:#020a12;
     border-top:1px solid rgba(255,255,255,.08);
-
-    background:#030b14;
 }
 
-.footer-inner{
+.footer{
     max-width:1300px;
-
     margin:auto;
 
     display:flex;
-
     justify-content:space-between;
-
+    align-items:center;
     gap:30px;
-
     flex-wrap:wrap;
 }
 
 .footer-logo{
     display:flex;
-
     align-items:center;
-
     gap:12px;
-
-    font-weight:800;
+    font-weight:900;
 }
 
 .footer-logo img{
-    width:48px;
-    height:48px;
-
+    width:52px;
+    height:52px;
     object-fit:contain;
 
     mix-blend-mode:screen;
 
     filter:
-        brightness(1.2)
-        contrast(1.15);
+        brightness(1.35)
+        contrast(1.2)
+        drop-shadow(0 0 10px rgba(30,190,255,.4));
 }
 
 .footer-links{
     display:flex;
-
     gap:25px;
-
-    flex-wrap:wrap;
-
-    color:#9dacbc;
-
+    color:#8fa5b8;
     font-size:14px;
 }
 
-.footer-bottom{
+.copyright{
     max-width:1300px;
-
-    margin:40px auto 0;
-
+    margin:35px auto 0;
     padding-top:20px;
-
     border-top:1px solid rgba(255,255,255,.07);
-
-    color:#68798b;
-
-    font-size:13px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    flex-wrap:wrap;
-
-    gap:10px;
+    color:#63788b;
+    font-size:12px;
+    text-align:center;
 }
 
-/* =========================================================
-   TOP BUTTON
-========================================================= */
+/* =========================
+TOP
+========================= */
 
-.top-button{
+.top{
     position:fixed;
-
-    right:25px;
-    bottom:25px;
+    right:22px;
+    bottom:22px;
 
     width:52px;
     height:52px;
@@ -1367,70 +909,47 @@ footer{
     align-items:center;
     justify-content:center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #20c8ff,
-            #416cff
-        );
+    background:linear-gradient(135deg,#20caff,#426cff);
 
-    color:#fff;
+    cursor:pointer;
+    z-index:900;
 
     font-size:22px;
-
-    z-index:500;
-
-    box-shadow:
-        0 10px 30px rgba(0,130,255,.3);
-
-    cursor:pointer;
-
-    transition:.3s;
 }
 
-.top-button:hover{
-    transform:translateY(-5px);
-}
-
-/* =========================================================
-   MOBILE MENU
-========================================================= */
-
-.mobile-menu{
-    display:none;
-
-    font-size:28px;
-
-    cursor:pointer;
-}
-
-/* =========================================================
-   LANGUAGE TEXT
-========================================================= */
+/* =========================
+ENGLISH
+========================= */
 
 [data-en]{
     display:none;
 }
 
-body.english [data-ja]{
+body.en [data-ja]{
     display:none;
 }
 
-body.english [data-en]{
+body.en [data-en]{
     display:inline;
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+/* =========================
+MOBILE
+========================= */
+
+.mobile{
+    display:none;
+    font-size:28px;
+    cursor:pointer;
+}
 
 @media(max-width:1100px){
 
     nav{
-        gap:20px;
+        gap:18px;
     }
 
-    .header-contact{
+    .header-btn{
         display:none;
     }
 
@@ -1439,26 +958,24 @@ body.english [data-en]{
         text-align:center;
     }
 
-    .hero-description{
-        margin-left:auto;
-        margin-right:auto;
+    .hero-text{
+        margin:auto auto 30px;
     }
 
     .buttons{
         justify-content:center;
     }
 
-    .hero-visual{
-        min-height:500px;
+    .product-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .process-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
     .about-grid{
         grid-template-columns:1fr;
-    }
-
-    .process-grid{
-        grid-template-columns:
-            repeat(2,1fr);
     }
 }
 
@@ -1466,20 +983,29 @@ body.english [data-en]{
 
     .navbar{
         height:70px;
-
-        padding:0 18px;
-    }
-
-    .company-name{
-        font-size:15px;
+        padding:0 15px;
     }
 
     nav{
         display:none;
     }
 
-    .mobile-menu{
+    .mobile{
         display:block;
+    }
+
+    .language{
+        margin-left:auto;
+        margin-right:15px;
+    }
+
+    .logo-image{
+        width:48px;
+        height:48px;
+    }
+
+    .logo-name{
+        font-size:14px;
     }
 
     .hero{
@@ -1487,45 +1013,24 @@ body.english [data-en]{
     }
 
     .hero-inner{
-        padding:
-            70px 20px
-            50px;
+        padding:60px 20px;
     }
 
     .hero h1{
-        font-size:48px;
-
-        letter-spacing:-2px;
+        font-size:46px;
     }
 
-    .hero-visual{
-        min-height:420px;
+    .vehicle-area{
+        min-height:400px;
     }
 
     .vehicle-main{
-        height:230px;
+        height:240px;
+        width:90%;
     }
 
     .vehicle-main::before{
-        font-size:140px;
-    }
-
-    .vehicle-small{
-        width:160px;
-        height:120px;
-    }
-
-    .vehicle-small::before{
-        font-size:65px;
-    }
-
-    .vehicle-machinery{
-        width:150px;
-        height:110px;
-    }
-
-    .vehicle-machinery::before{
-        font-size:60px;
+        font-size:135px;
     }
 
     .stats{
@@ -1533,11 +1038,6 @@ body.english [data-en]{
     }
 
     .product-grid{
-        grid-template-columns:
-            1fr;
-    }
-
-    .about-points{
         grid-template-columns:1fr;
     }
 
@@ -1545,84 +1045,78 @@ body.english [data-en]{
         grid-template-columns:1fr;
     }
 
-    .contact-box{
-        padding:40px 20px;
-    }
-
-    .contact-box h2{
-        font-size:36px;
+    .points{
+        grid-template-columns:1fr;
     }
 
     section{
-        padding:
-            75px 20px;
+        padding:75px 20px;
+    }
+
+    .contact-box{
+        padding:45px 20px;
+    }
+
+    .contact-box h2{
+        font-size:38px;
+    }
+
+    .footer{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .footer-links{
+        justify-content:center;
+        flex-wrap:wrap;
     }
 }
 
 @media(max-width:480px){
 
-    .logo-box{
-        width:48px;
-        height:48px;
-    }
-
-    .logo-box img{
-        width:44px;
-        height:44px;
-    }
-
-    .company-name{
-        font-size:13px;
+    .logo-name{
+        font-size:12px;
     }
 
     .hero h1{
-        font-size:39px;
+        font-size:38px;
     }
 
-    .hero-description{
+    .hero-text{
         font-size:15px;
     }
 
-    .hero-visual{
-        min-height:360px;
+    .vehicle-area{
+        min-height:340px;
     }
 
     .vehicle-main{
-        width:95%;
         height:190px;
-        top:50px;
+        top:40px;
     }
 
     .vehicle-main::before{
-        font-size:110px;
+        font-size:105px;
     }
 
-    .vehicle-small{
-        left:-5px;
-        bottom:25px;
-
+    .vehicle-truck{
         width:130px;
         height:95px;
+        bottom:25px;
     }
 
-    .vehicle-small::before{
-        font-size:50px;
+    .vehicle-truck::before{
+        font-size:55px;
     }
 
-    .vehicle-machinery{
-        right:0;
-        bottom:10px;
-
+    .vehicle-machine{
         width:120px;
         height:90px;
+        bottom:15px;
     }
 
-    .vehicle-machinery::before{
-        font-size:48px;
-    }
-
-    .section-title h2{
-        font-size:35px;
+    .vehicle-machine::before{
+        font-size:50px;
     }
 }
 
@@ -1631,21 +1125,23 @@ body.english [data-en]{
 
 <body>
 
-<!-- ======================================================
+<!-- =========================
 HEADER
-====================================================== -->
+========================= -->
 
 <header>
 
 <div class="navbar">
 
-<a href="#home" class="logo-area">
+<a href="#home" class="logo">
 
-<div class="logo-box">
-<img src="./EZ Logo.JPG" alt="EXPORT ZONE 株式会社">
-</div>
+<img
+class="logo-image"
+src="./EZ Logo.JPG"
+alt="EXPORT ZONE 株式会社"
+>
 
-<div class="company-name">
+<div class="logo-name">
 EXPORT ZONE <span>株式会社</span>
 </div>
 
@@ -1677,42 +1173,41 @@ EXPORT ZONE <span>株式会社</span>
 
 <div class="language">
 
-<button id="jaBtn" class="active">日本語</button>
+<button id="ja" class="active">
+日本語
+</button>
 
-<button id="enBtn">EN</button>
+<button id="en">
+EN
+</button>
 
 </div>
 
-<a href="#contact" class="header-contact">
+<a href="#contact" class="header-btn">
 
 <span data-ja>お問い合わせ</span>
 <span data-en>Contact Us</span>
 
 </a>
 
-<div class="mobile-menu">
-☰
-</div>
+<div class="mobile">☰</div>
 
 </div>
 
 </header>
 
 
-<!-- ======================================================
+<!-- =========================
 HERO
-====================================================== -->
+========================= -->
 
 <section class="hero" id="home">
 
-<div class="hero-circle circle1"></div>
-<div class="hero-circle circle2"></div>
-
 <div class="hero-inner">
 
-<div>
+<div class="hero-content">
 
-<div class="hero-small">
+<div class="badge">
 
 <span data-ja>🇯🇵 日本から世界へ</span>
 
@@ -1725,46 +1220,48 @@ HERO
 <span data-ja>
 日本の価値ある商品を
 <br>
-<span class="gradient-text">世界へ</span>
+<span class="gradient">世界へ</span>
 </span>
 
 <span data-en>
 Quality from Japan,
 <br>
-<span class="gradient-text">Worldwide</span>
+<span class="gradient">Worldwide</span>
 </span>
 
 </h1>
 
-<p class="hero-description">
+<p class="hero-text">
 
 <span data-ja>
-高品質な日本の中古車、トラック、建設機械、
-農業機械、自動車部品などを世界のお客様へ。
-信頼・迅速・安心の輸出サービスを提供します。
+高品質な日本の中古車、トラック、バス、
+建設機械、農業機械、自動車部品などを
+世界のお客様へお届けします。
 </span>
 
 <span data-en>
-We export quality Japanese used vehicles,
-trucks, construction machinery, agricultural machinery
-and automotive parts to customers worldwide.
+We export quality Japanese used cars, trucks,
+buses, construction machinery, agricultural
+machinery and automotive parts worldwide.
 </span>
 
 </p>
 
 <div class="buttons">
 
-<a href="#products" class="btn btn-primary">
+<a href="#products" class="btn primary">
 
-<span data-ja>取扱商品を見る →</span>
-<span data-en>View Products →</span>
+<span data-ja>🚗 取扱商品を見る →</span>
+
+<span data-en>🚗 View Products →</span>
 
 </a>
 
-<a href="#contact" class="btn btn-outline">
+<a href="#contact" class="btn outline">
 
-<span data-ja>お問い合わせ</span>
-<span data-en>Contact Us</span>
+<span data-ja>✉ お問い合わせ</span>
+
+<span data-en>✉ Contact Us</span>
 
 </a>
 
@@ -1773,19 +1270,15 @@ and automotive parts to customers worldwide.
 </div>
 
 
-<div class="hero-visual">
+<div class="vehicle-area">
 
 <div class="vehicle-glow"></div>
 
-<div class="vehicle-stack">
+<div class="vehicle vehicle-main"></div>
 
-<div class="vehicle-card vehicle-main"></div>
+<div class="vehicle vehicle-truck"></div>
 
-<div class="vehicle-card vehicle-small"></div>
-
-<div class="vehicle-card vehicle-machinery"></div>
-
-</div>
+<div class="vehicle vehicle-machine"></div>
 
 </div>
 
@@ -1794,9 +1287,9 @@ and automotive parts to customers worldwide.
 </section>
 
 
-<!-- ======================================================
+<!-- =========================
 STATS
-====================================================== -->
+========================= -->
 
 <div class="stats">
 
@@ -1805,17 +1298,16 @@ STATS
 <div class="stat-icon">🚗</div>
 
 <h3>
-<span data-ja>日本中古車</span>
-<span data-en>Japanese Vehicles</span>
+<span data-ja>日本品質</span>
+<span data-en>Japan Quality</span>
 </h3>
 
 <p>
-<span data-ja>品質を重視した車両</span>
-<span data-en>Quality vehicles from Japan</span>
+<span data-ja>日本から厳選した商品</span>
+<span data-en>Quality products from Japan</span>
 </p>
 
 </div>
-
 
 <div class="stat">
 
@@ -1833,7 +1325,6 @@ STATS
 
 </div>
 
-
 <div class="stat">
 
 <div class="stat-icon">🤝</div>
@@ -1845,7 +1336,7 @@ STATS
 
 <p>
 <span data-ja>輸出手続きをサポート</span>
-<span data-en>Export support from start to finish</span>
+<span data-en>Export support</span>
 </p>
 
 </div>
@@ -1853,18 +1344,18 @@ STATS
 </div>
 
 
-<!-- ======================================================
+<!-- =========================
 PRODUCTS
-====================================================== -->
+========================= -->
 
 <section class="products" id="products">
 
-<div class="section-inner">
+<div class="container">
 
 <div class="section-title">
 
-<div class="small">
-EXPORT ZONE
+<div class="section-small">
+OUR PRODUCTS
 </div>
 
 <h2>
@@ -1881,8 +1372,8 @@ EXPORT ZONE
 </span>
 
 <span data-en>
-We supply a wide range of vehicles, machinery and
-automotive parts from Japan to worldwide customers.
+A wide range of vehicles, machinery and automotive
+parts from Japan.
 </span>
 
 </p>
@@ -1893,9 +1384,7 @@ automotive parts from Japan to worldwide customers.
 <div class="product-grid">
 
 
-<!-- CAR -->
-
-<div class="product-card">
+<div class="product">
 
 <div class="product-icon">🚗</div>
 
@@ -1906,25 +1395,20 @@ automotive parts from Japan to worldwide customers.
 
 <p>
 <span data-ja>
-セダン、SUV、ハイブリッド、ミニバンなど。
+セダン、SUV、ハイブリッド、ミニバンなど
 </span>
 
 <span data-en>
-Sedans, SUVs, hybrids, minivans and more.
+Sedans, SUVs, hybrids and minivans.
 </span>
 </p>
 
-<div class="product-link">
-<span data-ja>詳細を見る →</span>
-<span data-en>View Details →</span>
-</div>
+<div class="product-link">詳細を見る →</div>
 
 </div>
 
 
-<!-- TRUCK -->
-
-<div class="product-card">
+<div class="product">
 
 <div class="product-icon">🚚</div>
 
@@ -1935,26 +1419,20 @@ Sedans, SUVs, hybrids, minivans and more.
 
 <p>
 <span data-ja>
-小型・中型・大型トラック、冷凍車など。
+小型・中型・大型トラック、冷凍車など
 </span>
 
 <span data-en>
-Light, medium and heavy trucks,
-refrigerated trucks and more.
+Light, medium, heavy and refrigerated trucks.
 </span>
 </p>
 
-<div class="product-link">
-<span data-ja>詳細を見る →</span>
-<span data-en>View Details →</span>
-</div>
+<div class="product-link">詳細を見る →</div>
 
 </div>
 
 
-<!-- BUS -->
-
-<div class="product-card">
+<div class="product">
 
 <div class="product-icon">🚌</div>
 
@@ -1965,25 +1443,20 @@ refrigerated trucks and more.
 
 <p>
 <span data-ja>
-観光バス、マイクロバス、スクールバスなど。
+観光バス、マイクロバスなど
 </span>
 
 <span data-en>
-Tour buses, minibuses and other buses.
+Tour buses and minibuses.
 </span>
 </p>
 
-<div class="product-link">
-<span data-ja>詳細を見る →</span>
-<span data-en>View Details →</span>
-</div>
+<div class="product-link">詳細を見る →</div>
 
 </div>
 
 
-<!-- CONSTRUCTION -->
-
-<div class="product-card">
+<div class="product">
 
 <div class="product-icon">🏗️</div>
 
@@ -1994,26 +1467,20 @@ Tour buses, minibuses and other buses.
 
 <p>
 <span data-ja>
-ショベル、ブルドーザー、ホイールローダーなど。
+ショベル、ブルドーザー、ホイールローダーなど
 </span>
 
 <span data-en>
-Excavators, bulldozers, wheel loaders
-and other machinery.
+Excavators, bulldozers and wheel loaders.
 </span>
 </p>
 
-<div class="product-link">
-<span data-ja>詳細を見る →</span>
-<span data-en>View Details →</span>
-</div>
+<div class="product-link">詳細を見る →</div>
 
 </div>
 
 
-<!-- AGRICULTURE -->
-
-<div class="product-card">
+<div class="product">
 
 <div class="product-icon">🚜</div>
 
@@ -2024,7 +1491,7 @@ and other machinery.
 
 <p>
 <span data-ja>
-トラクター、コンバイン、農業機械など。
+トラクター、コンバインなど
 </span>
 
 <span data-en>
@@ -2032,17 +1499,12 @@ Tractors, combines and agricultural equipment.
 </span>
 </p>
 
-<div class="product-link">
-<span data-ja>詳細を見る →</span>
-<span data-en>View Details →</span>
-</div>
+<div class="product-link">詳細を見る →</div>
 
 </div>
 
 
-<!-- PARTS -->
-
-<div class="product-card">
+<div class="product">
 
 <div class="product-icon">⚙️</div>
 
@@ -2053,26 +1515,20 @@ Tractors, combines and agricultural equipment.
 
 <p>
 <span data-ja>
-エンジン、タイヤ、ホイール、各種部品など。
+エンジン、タイヤ、ホイール、各種部品
 </span>
 
 <span data-en>
-Engines, tires, wheels and various
-automotive parts.
+Engines, tires, wheels and auto parts.
 </span>
 </p>
 
-<div class="product-link">
-<span data-ja>詳細を見る →</span>
-<span data-en>View Details →</span>
-</div>
+<div class="product-link">詳細を見る →</div>
 
 </div>
 
 
-<!-- STOCK -->
-
-<div class="product-card">
+<div class="product">
 
 <div class="product-icon">📦</div>
 
@@ -2083,18 +1539,15 @@ automotive parts.
 
 <p>
 <span data-ja>
-余剰在庫、過剰在庫、ストックロットなど。
+余剰在庫、過剰在庫、ストックロット
 </span>
 
 <span data-en>
-Surplus, overstock, clearance and stock lots.
+Surplus, overstock and stock lots.
 </span>
 </p>
 
-<div class="product-link">
-<span data-ja>詳細を見る →</span>
-<span data-en>View Details →</span>
-</div>
+<div class="product-link">詳細を見る →</div>
 
 </div>
 
@@ -2106,22 +1559,20 @@ Surplus, overstock, clearance and stock lots.
 </section>
 
 
-<!-- ======================================================
+<!-- =========================
 ABOUT
-====================================================== -->
+========================= -->
 
 <section class="about" id="about">
 
-<div class="section-inner">
+<div class="container">
 
 <div class="about-grid">
 
 <div>
 
-<div class="section-title" style="text-align:left;margin-bottom:25px;">
-
-<div class="small">
-EXPORT ZONE
+<div class="section-small">
+ABOUT US
 </div>
 
 <h2>
@@ -2130,8 +1581,6 @@ EXPORT ZONE
 <span data-en>About Us</span>
 
 </h2>
-
-</div>
 
 <p>
 
@@ -2142,9 +1591,9 @@ EXPORT ZONE 株式会社は、日本国内から高品質な中古車、
 </span>
 
 <span data-en>
-EXPORT ZONE Co., Ltd. specializes in sourcing
-quality used vehicles, trucks, machinery and
-automotive parts from Japan for customers worldwide.
+EXPORT ZONE Co., Ltd. supplies quality used vehicles,
+trucks, machinery and automotive parts from Japan
+to customers around the world.
 </span>
 
 </p>
@@ -2152,61 +1601,37 @@ automotive parts from Japan for customers worldwide.
 <p>
 
 <span data-ja>
-お客様のご要望に合わせた商品探しから、
-検品、輸送、輸出手続きまでサポートします。
+商品探し、確認、検品、輸送、輸出手続きまで
+お客様のご要望に合わせてサポートします。
 </span>
 
 <span data-en>
-From sourcing and inspection to shipping and export
-procedures, we support our customers throughout the process.
+We support sourcing, inspection, shipping and
+export procedures according to customer requirements.
 </span>
 
 </p>
 
-<div class="about-points">
+<div class="points">
 
-<div class="about-point">
-
+<div class="point">
 <strong>🇯🇵 Japan Quality</strong>
-
-<span>
-<span data-ja>日本国内から商品を調達</span>
-<span data-en>Products sourced in Japan</span>
-</span>
-
+<span>日本国内から商品を調達</span>
 </div>
 
-<div class="about-point">
-
+<div class="point">
 <strong>🌎 Global Network</strong>
-
-<span>
-<span data-ja>世界各国へ輸出対応</span>
-<span data-en>Export support worldwide</span>
-</span>
-
+<span>世界各国へ輸出対応</span>
 </div>
 
-<div class="about-point">
-
+<div class="point">
 <strong>🔎 Inspection</strong>
-
-<span>
-<span data-ja>商品の確認・検品</span>
-<span data-en>Product checking and inspection</span>
-</span>
-
+<span>商品の確認・検品</span>
 </div>
 
-<div class="about-point">
-
+<div class="point">
 <strong>🚢 Shipping</strong>
-
-<span>
-<span data-ja>コンテナ・船積み対応</span>
-<span data-en>Container and shipping support</span>
-</span>
-
+<span>コンテナ・船積み対応</span>
 </div>
 
 </div>
@@ -2214,19 +1639,15 @@ procedures, we support our customers throughout the process.
 </div>
 
 
-<div class="hero-visual">
+<div class="vehicle-area">
 
 <div class="vehicle-glow"></div>
 
-<div class="vehicle-stack">
+<div class="vehicle vehicle-main"></div>
 
-<div class="vehicle-card vehicle-main"></div>
+<div class="vehicle vehicle-truck"></div>
 
-<div class="vehicle-card vehicle-small"></div>
-
-<div class="vehicle-card vehicle-machinery"></div>
-
-</div>
+<div class="vehicle vehicle-machine"></div>
 
 </div>
 
@@ -2237,17 +1658,17 @@ procedures, we support our customers throughout the process.
 </section>
 
 
-<!-- ======================================================
+<!-- =========================
 PROCESS
-====================================================== -->
+========================= -->
 
 <section>
 
-<div class="section-inner">
+<div class="container">
 
 <div class="section-title">
 
-<div class="small">
+<div class="section-small">
 HOW WE WORK
 </div>
 
@@ -2263,10 +1684,9 @@ HOW WE WORK
 
 <div class="process-grid">
 
-
 <div class="process">
 
-<div class="process-number">01</div>
+<div class="number">01</div>
 
 <h3>
 <span data-ja>お問い合わせ</span>
@@ -2274,13 +1694,8 @@ HOW WE WORK
 </h3>
 
 <p>
-<span data-ja>
-ご希望の商品・仕様をお知らせください。
-</span>
-
-<span data-en>
-Tell us what vehicle or product you are looking for.
-</span>
+<span data-ja>ご希望の商品をお知らせください。</span>
+<span data-en>Tell us what you need.</span>
 </p>
 
 </div>
@@ -2288,7 +1703,7 @@ Tell us what vehicle or product you are looking for.
 
 <div class="process">
 
-<div class="process-number">02</div>
+<div class="number">02</div>
 
 <h3>
 <span data-ja>商品探し</span>
@@ -2296,13 +1711,8 @@ Tell us what vehicle or product you are looking for.
 </h3>
 
 <p>
-<span data-ja>
-日本国内から商品を探します。
-</span>
-
-<span data-en>
-We source suitable products in Japan.
-</span>
+<span data-ja>日本国内から商品を探します。</span>
+<span data-en>We source suitable products.</span>
 </p>
 
 </div>
@@ -2310,7 +1720,7 @@ We source suitable products in Japan.
 
 <div class="process">
 
-<div class="process-number">03</div>
+<div class="number">03</div>
 
 <h3>
 <span data-ja>確認・検品</span>
@@ -2318,13 +1728,8 @@ We source suitable products in Japan.
 </h3>
 
 <p>
-<span data-ja>
-写真・情報を確認し、商品をチェックします。
-</span>
-
-<span data-en>
-We check the product and provide information.
-</span>
+<span data-ja>写真・情報を確認します。</span>
+<span data-en>We check the product details.</span>
 </p>
 
 </div>
@@ -2332,7 +1737,7 @@ We check the product and provide information.
 
 <div class="process">
 
-<div class="process-number">04</div>
+<div class="number">04</div>
 
 <h3>
 <span data-ja>輸出・配送</span>
@@ -2340,17 +1745,11 @@ We check the product and provide information.
 </h3>
 
 <p>
-<span data-ja>
-船積みから輸出までサポートします。
-</span>
-
-<span data-en>
-We support shipping and export procedures.
-</span>
+<span data-ja>船積み・輸出までサポートします。</span>
+<span data-en>We support shipping and export.</span>
 </p>
 
 </div>
-
 
 </div>
 
@@ -2359,17 +1758,15 @@ We support shipping and export procedures.
 </section>
 
 
-<!-- ======================================================
+<!-- =========================
 CONTACT
-====================================================== -->
+========================= -->
 
-<section class="contact" id="contact">
+<section id="contact">
 
 <div class="contact-box">
 
-<div class="section-title" style="margin-bottom:20px;">
-
-<div class="small">
+<div class="section-small">
 CONTACT
 </div>
 
@@ -2380,8 +1777,6 @@ CONTACT
 
 </h2>
 
-</div>
-
 <p>
 
 <span data-ja>
@@ -2391,50 +1786,44 @@ CONTACT
 </span>
 
 <span data-en>
-Looking for used vehicles, trucks, machinery,
-automotive parts or stock lots from Japan?
-Contact us anytime.
+If you are looking for used vehicles, trucks,
+machinery, auto parts or stock lots from Japan,
+please contact us.
 </span>
 
 </p>
 
-
 <div class="buttons" style="justify-content:center;">
 
 <a
-href="https://wa.me/94777426436"
-target="_blank"
-class="btn btn-primary"
+href="tel:0120888405"
+class="btn primary"
 >
-
-💬 WhatsApp
-
+📞 0120 888 405
 </a>
 
 <a
-href="mailto:agmrifkan@gmail.com"
-class="btn btn-outline"
+href="mailto:exportzonecoltd@gmail.com"
+class="btn outline"
 >
-
-✉ Email
-
+✉ exportzonecoltd@gmail.com
 </a>
 
 </div>
 
 
-<div class="contact-info">
+<div class="contact-details">
 
 <div class="contact-item">
-📞 +94 77 742 6436
+📞 0120 888 405
 </div>
 
 <div class="contact-item">
-✉ agmrifkan@gmail.com
+✉ exportzonecoltd@gmail.com
 </div>
 
 <div class="contact-item">
-📍 Colombo, Sri Lanka
+📍 Japan / Worldwide
 </div>
 
 </div>
@@ -2444,18 +1833,20 @@ class="btn btn-outline"
 </section>
 
 
-<!-- ======================================================
+<!-- =========================
 FOOTER
-====================================================== -->
+========================= -->
 
 <footer>
 
-<div class="footer-inner">
+<div class="footer">
 
 <div class="footer-logo">
 
-<img src="./EZ Logo.JPG"
-alt="EXPORT ZONE">
+<img
+src="./EZ Logo.JPG"
+alt="EXPORT ZONE"
+>
 
 <span>
 EXPORT ZONE 株式会社
@@ -2466,195 +1857,125 @@ EXPORT ZONE 株式会社
 
 <div class="footer-links">
 
-<a href="#home">
-<span data-ja>ホーム</span>
-<span data-en>Home</span>
-</a>
+<a href="#home">ホーム</a>
 
-<a href="#products">
-<span data-ja>取扱商品</span>
-<span data-en>Products</span>
-</a>
+<a href="#products">取扱商品</a>
 
-<a href="#about">
-<span data-ja>会社案内</span>
-<span data-en>Company</span>
-</a>
+<a href="#about">会社案内</a>
 
-<a href="#contact">
-<span data-ja>お問い合わせ</span>
-<span data-en>Contact</span>
-</a>
+<a href="#contact">お問い合わせ</a>
 
 </div>
 
 </div>
 
 
-<div class="footer-bottom">
+<div class="copyright">
 
-<span>
 © 2026 EXPORT ZONE 株式会社. All Rights Reserved.
-</span>
-
-<span>
+<br>
 From Japan to the World 🌎
-</span>
 
 </div>
 
 </footer>
 
 
-<!-- ======================================================
-TOP BUTTON
-====================================================== -->
+<!-- TOP -->
 
 <div
-class="top-button"
+class="top"
 onclick="window.scrollTo({top:0,behavior:'smooth'})"
 >
 ↑
 </div>
 
 
-<!-- ======================================================
-JAVASCRIPT
-====================================================== -->
-
 <script>
 
-/* ======================================================
-LANGUAGE SWITCH
-====================================================== */
+/* =========================
+LANGUAGE
+========================= */
 
-const jaBtn = document.getElementById("jaBtn");
-const enBtn = document.getElementById("enBtn");
+const jaButton =
+document.getElementById("ja");
 
-jaBtn.addEventListener("click", () => {
+const enButton =
+document.getElementById("en");
 
-    document.body.classList.remove("english");
+jaButton.onclick = function(){
 
-    jaBtn.classList.add("active");
-    enBtn.classList.remove("active");
+    document.body.classList.remove("en");
 
-    document.documentElement.lang = "ja";
+    jaButton.classList.add("active");
+    enButton.classList.remove("active");
 
-});
+    document.documentElement.lang="ja";
 
-enBtn.addEventListener("click", () => {
+};
 
-    document.body.classList.add("english");
+enButton.onclick = function(){
 
-    enBtn.classList.add("active");
-    jaBtn.classList.remove("active");
+    document.body.classList.add("en");
 
-    document.documentElement.lang = "en";
+    enButton.classList.add("active");
+    jaButton.classList.remove("active");
 
-});
+    document.documentElement.lang="en";
 
-
-/* ======================================================
-SCROLL REVEAL
-====================================================== */
-
-const cards = document.querySelectorAll(
-    ".product-card, .stat, .process, .about-point"
-);
-
-const observer = new IntersectionObserver(
-    entries => {
-
-        entries.forEach(entry => {
-
-            if(entry.isIntersecting){
-
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-
-            }
-
-        });
-
-    },
-    {
-        threshold:.12
-    }
-);
+};
 
 
-cards.forEach(card => {
-
-    card.style.opacity = "0";
-
-    card.style.transform = "translateY(25px)";
-
-    card.style.transition =
-        "opacity .7s ease, transform .7s ease";
-
-    observer.observe(card);
-
-});
-
-
-/* ======================================================
+/* =========================
 MOBILE MENU
-====================================================== */
+========================= */
 
-const mobileMenu =
-    document.querySelector(".mobile-menu");
+const mobile =
+document.querySelector(".mobile");
 
 const nav =
-    document.querySelector("nav");
+document.querySelector("nav");
 
-mobileMenu.addEventListener("click", () => {
+mobile.onclick = function(){
 
     if(nav.style.display === "flex"){
 
-        nav.style.display = "none";
+        nav.style.display="none";
 
     }else{
 
-        nav.style.display = "flex";
+        nav.style.display="flex";
 
-        nav.style.position = "absolute";
+        nav.style.position="absolute";
+        nav.style.top="70px";
+        nav.style.left="0";
+        nav.style.width="100%";
 
-        nav.style.top = "70px";
+        nav.style.flexDirection="column";
+        nav.style.padding="25px";
 
-        nav.style.left = "0";
+        nav.style.background=
+            "rgba(2,9,16,.97)";
 
-        nav.style.width = "100%";
-
-        nav.style.padding = "25px";
-
-        nav.style.flexDirection = "column";
-
-        nav.style.background =
-            "rgba(3,10,18,.96)";
-
-        nav.style.backdropFilter =
+        nav.style.backdropFilter=
             "blur(20px)";
-
     }
+};
 
-});
 
+/* =========================
+CLOSE MOBILE NAV
+========================= */
 
-/* ======================================================
-CLOSE MOBILE MENU AFTER CLICK
-====================================================== */
+document.querySelectorAll("nav a").forEach(link=>{
 
-document.querySelectorAll("nav a").forEach(link => {
-
-    link.addEventListener("click", () => {
+    link.onclick=function(){
 
         if(window.innerWidth <= 800){
-
-            nav.style.display = "none";
-
+            nav.style.display="none";
         }
 
-    });
+    };
 
 });
 
