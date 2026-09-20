@@ -1,2902 +1,1868 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+import { Hono } from "hono";
+import * as XLSX from "xlsx";
+import PDFDocument from "pdfkit";
 
-<title>中古車・トラック・建設機械の買取｜EXPORT ZONE 株式会社</title>
+type CellValue = string | number | boolean | Date | null | undefined;
+type Row = CellValue[];
 
-<meta name="description" content="EXPORT ZONE 株式会社は、日本全国から中古車・トラック・建設機械・農業機械・自動車部品・在庫品などを買取。日本から海外へ輸出しています。埼玉県を拠点に全国対応。">
+const app = new Hono();
 
-<meta name="keywords" content="中古車 買取,トラック 買取,建設機械 買取,農業機械 買取,中古車 輸出,建設機械 輸出,埼玉 中古車 買取,日本全国 買取,EXPORT ZONE">
+const PORT = Number(process.env.PORT || 8080);
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN || "";
+const WHATSAPP_TOKEN = process.env.WHATSAPP_TOKEN || "";
+const PHONE_NUMBER_ID = process.env.PHONE_NUMBER_ID || "";
+const LOGIN_PIN = process.env.LOGIN_PIN || "";
+const ADMIN_NUMBER = process.env.ADMIN_NUMBER || "";
+const AUTHORIZED_1 = process.env.AUTHORIZED_1 || "";
+const AUTHORIZED_2 = process.env.AUTHORIZED_2 || "";
+const AUTHORIZED_3 = process.env.AUTHORIZED_3 || "";
+const AUTHORIZED_4 = process.env.AUTHORIZED_4 || "";
+const JAPAN_EXCEL_URL = process.env.JAPAN_EXCEL_URL || "";
+const KOREA_EXCEL_URL = process.env.KOREA_EXCEL_URL || "";
+const LOCAL_JAPAN_EXCEL_PATH = process.env.LOCAL_JAPAN_EXCEL_PATH || "";
+const LOCAL_KOREA_EXCEL_PATH = process.env.LOCAL_KOREA_EXCEL_PATH || "";
+const LOGO_BASE64 = process.env.LOGO_BASE64 || "";
 
-<meta name="robots" content="index, follow">
+const GRAPH_URL = `https://graph.facebook.com/v26.0/${PHONE_NUMBER_ID}/messages`;
 
-<link rel="canonical" href="https://agmrifkan-collab.github.io/exportzone/">
+const SESSION_MS = 12 * 60 * 60 * 1000;
+const RATE_WINDOW_MS = 60 * 1000;
+const MAX_REQUESTS_PER_WINDOW = 30;
+const LOGIN_FAIL_LIMIT = 5;
+const LOGIN_BLOCK_MS = 15 * 60 * 1000;
 
-<meta property="og:title" content="中古車・トラック・建設機械の買取｜EXPORT ZONE 株式会社">
-<meta property="og:description" content="日本全国から中古車・トラック・建設機械・在庫品を買取。日本から海外へ輸出しています。">
-<meta property="og:url" content="https://agmrifkan-collab.github.io/exportzone/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="EXPORT ZONE 株式会社">
+const PDF = {
+  navy: "#0A2540",
+  navyMid: "#1E5A96",
+  coral: "#FF6F61",
+  bgLight: "#F8FAFC",
+  textGray: "#64748B",
+  textLight: "#94A3B8",
+  green: "#10B981",
+  red: "#EF4444",
+  blueSoft: "#E8F0F8",
+};
 
-<meta name="theme-color" content="#06101d">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
-
-<style>
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+interface Session {
+  phone: string;
+  role: "admin" | "authorized" | "auth4";
+  loggedInAt: number;
 }
 
-html{
-  scroll-behavior:smooth;
+interface CacheEntry {
+  buffer: ArrayBuffer;
+  expiresAt: number;
 }
 
-body{
-  font-family:"Noto Sans JP",sans-serif;
-  background:#06101d;
-  color:#fff;
-  line-height:1.8;
-  overflow-x:hidden;
+interface StockItem {
+  item: string;
+  qtyIn: number;
+  qtyOut: number;
+  balance: number;
 }
 
-a{
-  color:inherit;
-  text-decoration:none;
+interface InvestorData {
+  name: string;
+  originalInvestment: number;
+  capitalIn: number;
+  withdrawal: number;
+  profitPct: number;
+  profit: number;
+  finalBalance: number;
 }
 
-img{
-  max-width:100%;
-  display:block;
+interface ChequeData {
+  chequeNo: string;
+  party: string;
+  bank: string;
+  amount: number;
+  dueDate: string;
+  status: string;
 }
 
-/* =========================
-LOADER
-========================= */
-
-#loader{
-  position:fixed;
-  inset:0;
-  background:#06101d;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  transition:.6s;
+interface BusinessSummary {
+  sales: number;
+  purchases: number;
+  expenses: number;
+  profit: number;
+  capitalIn: number;
+  withdrawals: number;
+  cashReceived: number;
+  pending: number;
+  deposited: number;
+  cleared: number;
+  returned: number;
+  dueSoon: number;
+  cashIn: number;
+  cashOut: number;
+  balance: number;
+  qtyIn: number;
+  qtyOut: number;
+  stockBalance: number;
+  japanToKorea: number;
+  koreaToJapan: number;
 }
 
-#loader.hide{
-  opacity:0;
-  visibility:hidden;
+const sessions = new Map<string, Session>();
+const excelCache = new Map<string, CacheEntry>();
+const rateMap = new Map<string, { start: number; count: number }>();
+const loginFailures = new Map<string, { count: number; blockedUntil: number }>();
+const processedMessages = new Map<string, number>();
+const PROCESSED_MESSAGE_TTL = 10 * 60 * 1000;
+
+function clean(value: unknown): string { return String(value ?? "").trim(); }
+
+function normalizeText(value: unknown): string {
+  return clean(value).toLowerCase().replace(/\u00a0/g, " ").replace(/\s+/g, " ");
 }
 
-.loader-inner{
-  text-align:center;
+function normalizePhone(value: unknown): string {
+  let s = clean(value).replace(/\D/g, "");
+  if (!s) return "";
+  if (s.startsWith("00")) s = s.slice(2);
+  if (s.length === 10 && s.startsWith("0")) s = "94" + s.slice(1);
+  if (s.length === 9 && s.startsWith("7")) s = "94" + s;
+  if (s.length >= 10 && s.startsWith("0") && s[1] === "8") s = "81" + s.slice(1);
+  return s;
 }
 
-.loader-logo{
-  width:110px;
-  margin:auto auto 25px;
-  animation:loaderPulse 1.5s infinite;
+function samePhone(a: unknown, b: unknown): boolean {
+  const aa = normalizePhone(a);
+  const bb = normalizePhone(b);
+  return !!aa && !!bb && aa === bb;
 }
 
-.loader-text{
-  font-size:14px;
-  letter-spacing:4px;
-  color:#ffd83d;
+function authorizedRole(phone: string): Session["role"] | null {
+  if (samePhone(phone, ADMIN_NUMBER)) return "admin";
+  if ([AUTHORIZED_1, AUTHORIZED_2, AUTHORIZED_3].some((x) => samePhone(phone, x))) return "authorized";
+  if (samePhone(phone, AUTHORIZED_4)) return "auth4";
+  return null;
 }
 
-@keyframes loaderPulse{
-  0%,100%{
-    transform:scale(1);
-    opacity:.7;
+function sessionFor(phone: string): Session | null {
+  const key = normalizePhone(phone);
+  const session = sessions.get(key);
+  if (!session) return null;
+  if (Date.now() - session.loggedInAt > SESSION_MS) { sessions.delete(key); return null; }
+  return session;
+}
+
+function rateAllowed(phone: string): boolean {
+  const key = normalizePhone(phone);
+  const now = Date.now();
+  const old = rateMap.get(key);
+  if (!old || now - old.start >= RATE_WINDOW_MS) { rateMap.set(key, { start: now, count: 1 }); return true; }
+  if (old.count >= MAX_REQUESTS_PER_WINDOW) return false;
+  old.count++;
+  return true;
+}
+
+function loginAllowed(phone: string): boolean {
+  const key = normalizePhone(phone);
+  const item = loginFailures.get(key);
+  if (!item) return true;
+  if (item.blockedUntil > Date.now()) return false;
+  loginFailures.delete(key);
+  return true;
+}
+
+function recordFailedLogin(phone: string) {
+  const key = normalizePhone(phone);
+  const old = loginFailures.get(key) || { count: 0, blockedUntil: 0 };
+  old.count++;
+  if (old.count >= LOGIN_FAIL_LIMIT) old.blockedUntil = Date.now() + LOGIN_BLOCK_MS;
+  loginFailures.set(key, old);
+}
+
+function clearFailedLogin(phone: string) { loginFailures.delete(normalizePhone(phone)); }
+
+function numberValue(value: unknown): number {
+  if (typeof value === "number") return Number.isFinite(value) ? value : 0;
+  const s = clean(value).replace(/,/g, "").replace(/[^\d.-]/g, "");
+  const n = Number(s);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function money(value: unknown): string {
+  return numberValue(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
+}
+
+function percent(value: unknown): string {
+  let n = numberValue(value);
+  if (Math.abs(n) <= 1) n *= 100;
+  return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "%";
+}
+
+function excelSerialToDate(value: number): Date | null {
+  if (!Number.isFinite(value)) return null;
+  try {
+    const p = XLSX.SSF.parse_date_code(value);
+    if (!p) return null;
+    return new Date(p.y, Math.max(0, p.m - 1), p.d, p.H || 0, p.M || 0, Math.floor(p.S || 0));
+  } catch { return null; }
+}
+
+function dateFromCell(value: unknown): Date | null {
+  if (value instanceof Date && !isNaN(value.getTime())) return value;
+  if (typeof value === "number") return excelSerialToDate(value);
+  const s = clean(value);
+  if (!s) return null;
+  const m = s.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})$/);
+  if (m) {
+    const d = Number(m[1]); const mo = Number(m[2]) - 1; const y = Number(m[3]);
+    const dt = new Date(y, mo, d);
+    if (!isNaN(dt.getTime())) return dt;
   }
-  50%{
-    transform:scale(1.08);
-    opacity:1;
-  }
+  const dt = new Date(s);
+  return isNaN(dt.getTime()) ? null : dt;
 }
 
-/* =========================
-HEADER
-========================= */
-
-header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:5000;
-  background:rgba(4,12,23,.84);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.nav{
-  max-width:1450px;
-  margin:auto;
-  padding:14px 30px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:25px;
-}
-
-.logo img{
-  width:145px;
-}
-
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
-
-.nav-links a{
-  position:relative;
-  font-size:13px;
-  font-weight:800;
-  color:rgba(255,255,255,.86);
-  transition:.3s;
-}
-
-.nav-links a:hover{
-  color:#ffd83d;
-}
-
-.nav-links a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-7px;
-  width:0;
-  height:2px;
-  background:#ffd83d;
-  transition:.3s;
-}
-
-.nav-links a:hover::after{
-  width:100%;
-}
-
-.header-phone{
-  white-space:nowrap;
-  padding:10px 17px;
-  border-radius:30px;
-  background:linear-gradient(135deg,#ffd83d,#ffae00);
-  color:#07111f;
-  font-size:14px;
-  font-weight:900;
-  animation:phoneGlow 2s infinite;
-}
-
-@keyframes phoneGlow{
-  0%,100%{
-    box-shadow:0 0 15px rgba(255,196,0,.25);
-  }
-  50%{
-    box-shadow:0 0 35px rgba(255,196,0,.65);
-  }
-}
-
-.menu-btn{
-  display:none;
-  border:0;
-  background:none;
-  color:white;
-  font-size:30px;
-  cursor:pointer;
-}
-
-/* =========================
-HERO
-========================= */
-
-.hero{
-  min-height:100vh;
-  padding:150px 6% 80px;
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 15% 20%,rgba(0,180,255,.15),transparent 35%),
-    radial-gradient(circle at 90% 30%,rgba(255,190,0,.12),transparent 35%),
-    linear-gradient(135deg,#06101d,#091827 60%,#03101c);
-}
-
-.hero-grid{
-  max-width:1450px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1fr 1.05fr;
-  align-items:center;
-  gap:45px;
-  position:relative;
-  z-index:2;
-}
-
-.hero-label{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  color:#ffd83d;
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:2px;
-  margin-bottom:20px;
-}
-
-.hero-label::before{
-  content:"";
-  width:32px;
-  height:2px;
-  background:#ffd83d;
-}
-
-.hero h1{
-  font-size:clamp(40px,5vw,76px);
-  line-height:1.15;
-  font-weight:900;
-  letter-spacing:-2px;
-  margin-bottom:25px;
-}
-
-.hero h1 span{
-  color:#ffd83d;
-  text-shadow:0 0 30px rgba(255,216,61,.25);
-}
-
-.hero-description{
-  max-width:650px;
-  color:rgba(255,255,255,.72);
-  font-size:16px;
-  margin-bottom:28px;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-bottom:25px;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:52px;
-  padding:0 25px;
-  border-radius:12px;
-  font-weight:900;
-  transition:.3s;
-}
-
-.btn-primary{
-  background:linear-gradient(135deg,#ffd83d,#ffad00);
-  color:#07111f;
-  box-shadow:0 12px 35px rgba(255,190,0,.25);
-}
-
-.btn-primary:hover{
-  transform:translateY(-4px);
-  box-shadow:0 18px 45px rgba(255,190,0,.4);
-}
-
-.btn-outline{
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(255,255,255,.04);
-}
-
-.btn-outline:hover{
-  border-color:#ffd83d;
-  color:#ffd83d;
-  transform:translateY(-4px);
-}
-
-.hero-phone{
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  font-size:26px;
-  font-weight:900;
-  animation:heroPhonePulse 2s infinite;
-}
-
-.hero-phone-icon{
-  width:43px;
-  height:43px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#ffd83d;
-  color:#07111f;
-}
-
-@keyframes heroPhonePulse{
-  0%,100%{
-    transform:scale(1);
-  }
-  50%{
-    transform:scale(1.035);
-    text-shadow:0 0 25px rgba(255,216,61,.55);
-  }
-}
-
-/* =========================
-PAYMENT
-========================= */
-
-.hero-payment{
-  margin-top:30px;
-  position:relative;
-  border-radius:20px;
-  padding:2px;
-  overflow:hidden;
-  background:conic-gradient(
-    from 0deg,
-    #ffd83d,
-    #fff3a1,
-    #ffae00,
-    #ffe76b,
-    #ffd83d
-  );
-  animation:paymentRotate 4s linear infinite,
-             paymentGlow 2s ease-in-out infinite;
-}
-
-@keyframes paymentRotate{
-  to{
-    filter:hue-rotate(360deg);
-  }
-}
-
-@keyframes paymentGlow{
-  0%,100%{
-    box-shadow:0 0 15px rgba(255,205,0,.25);
-  }
-  50%{
-    box-shadow:
-      0 0 35px rgba(255,205,0,.7),
-      0 0 70px rgba(255,170,0,.25);
-  }
-}
-
-.payment-inner{
-  position:relative;
-  overflow:hidden;
-  border-radius:18px;
-  padding:22px 25px;
-  background:linear-gradient(135deg,#171b0a,#0b1017);
-}
-
-.payment-shine{
-  position:absolute;
-  top:0;
-  left:-120%;
-  width:70%;
-  height:100%;
-  background:linear-gradient(
-    100deg,
-    transparent,
-    rgba(255,255,255,.22),
-    transparent
-  );
-  transform:skewX(-20deg);
-  animation:paymentShine 3s infinite;
-}
-
-@keyframes paymentShine{
-  0%{
-    left:-120%;
-  }
-  55%,100%{
-    left:150%;
-  }
-}
-
-.payment-title{
-  position:relative;
-  z-index:2;
-  color:#ffd83d;
-  font-size:18px;
-  font-weight:900;
-  margin-bottom:7px;
-  animation:titleGlow 1.5s infinite;
-}
-
-.payment-title::before{
-  content:"💰";
-  margin-right:8px;
-  display:inline-block;
-  animation:moneyBounce 1.2s infinite;
-}
-
-@keyframes moneyBounce{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-5px) rotate(-5deg);
-  }
-}
-
-@keyframes titleGlow{
-  0%,100%{
-    text-shadow:0 0 5px rgba(255,216,61,.2);
-  }
-  50%{
-    text-shadow:
-      0 0 12px rgba(255,216,61,.9),
-      0 0 25px rgba(255,174,0,.5);
-  }
-}
-
-.payment-text{
-  position:relative;
-  z-index:2;
-  font-size:13px;
-  line-height:1.9;
-  color:rgba(255,255,255,.9);
-}
-
-/* =========================
-WORLD MAP
-========================= */
-
-.hero-map{
-  position:relative;
-  min-height:590px;
-  border-radius:35px;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 50%,rgba(0,170,255,.1),transparent 65%),
-    rgba(255,255,255,.025);
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:
-    inset 0 0 80px rgba(0,160,255,.05),
-    0 30px 80px rgba(0,0,0,.25);
-}
-
-#heroMap{
-  width:100%;
-  height:590px;
-  display:block;
-}
-
-.map-title{
-  position:absolute;
-  top:25px;
-  left:28px;
-  z-index:5;
-}
-
-.map-title strong{
-  display:block;
-  font-size:18px;
-}
-
-.map-title span{
-  color:#ffd83d;
-  font-size:12px;
-  letter-spacing:2px;
-}
-
-.map-badge{
-  position:absolute;
-  bottom:25px;
-  left:25px;
-  z-index:5;
-  padding:10px 15px;
-  border-radius:30px;
-  background:rgba(0,0,0,.4);
-  border:1px solid rgba(255,216,61,.35);
-  color:#ffd83d;
-  font-size:12px;
-  font-weight:800;
-}
-
-/* =========================
-SECTIONS
-========================= */
-
-section{
-  padding:100px 6%;
-}
-
-.section-head{
-  max-width:800px;
-  margin:0 auto 55px;
-  text-align:center;
-}
-
-.section-label{
-  color:#ffd83d;
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:3px;
-  margin-bottom:10px;
-}
-
-.section-head h2{
-  font-size:clamp(30px,4vw,52px);
-  line-height:1.3;
-  margin-bottom:15px;
-}
-
-.section-head p{
-  color:rgba(255,255,255,.6);
-}
-
-/* =========================
-PRODUCTS
-========================= */
-
-.products{
-  background:#081522;
-}
-
-.product-grid{
-  max-width:1400px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:22px;
-}
-
-.product-card{
-  position:relative;
-  min-height:330px;
-  overflow:hidden;
-  border-radius:20px;
-  background:#101e2c;
-  border:1px solid rgba(255,255,255,.08);
-  transition:.4s;
-}
-
-.product-card:hover{
-  transform:translateY(-10px);
-  border-color:rgba(255,216,61,.45);
-  box-shadow:0 25px 55px rgba(0,0,0,.3);
-}
-
-.product-card img{
-  width:100%;
-  height:100%;
-  min-height:330px;
-  object-fit:cover;
-  opacity:.7;
-  transition:.5s;
-}
-
-.product-card:hover img{
-  transform:scale(1.07);
-  opacity:.85;
-}
-
-.product-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    transparent 25%,
-    rgba(3,10,18,.9)
-  );
-}
-
-.product-content{
-  position:absolute;
-  left:25px;
-  right:25px;
-  bottom:22px;
-}
-
-.product-number{
-  color:#ffd83d;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.product-content h3{
-  font-size:23px;
-  margin:4px 0;
-}
-
-.product-content p{
-  font-size:13px;
-  color:rgba(255,255,255,.68);
-}
-
-/* =========================
-REASONS
-========================= */
-
-.reasons{
-  background:
-    radial-gradient(circle at 20% 50%,rgba(255,200,0,.05),transparent 35%),
-    #06101d;
-}
-
-.reason-grid{
-  max-width:1250px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-
-.reason-card{
-  padding:35px 28px;
-  border-radius:18px;
-  background:rgba(255,255,255,.035);
-  border:1px solid rgba(255,255,255,.07);
-  transition:.35s;
-}
-
-.reason-card:hover{
-  transform:translateY(-7px);
-  border-color:rgba(255,216,61,.35);
-}
-
-.reason-icon{
-  font-size:35px;
-  margin-bottom:15px;
-}
-
-.reason-card h3{
-  font-size:20px;
-  margin-bottom:8px;
-}
-
-.reason-card p{
-  color:rgba(255,255,255,.62);
-  font-size:14px;
-}
-
-/* =========================
-PROCESS
-========================= */
-
-.process{
-  background:#081522;
-}
-
-.process-grid{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-}
-
-.process-card{
-  padding:30px 20px;
-  border-radius:18px;
-  background:rgba(255,255,255,.035);
-  border:1px solid rgba(255,255,255,.08);
-  text-align:center;
-}
-
-.process-number{
-  width:48px;
-  height:48px;
-  margin:0 auto 15px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:#ffd83d;
-  color:#07111f;
-  font-weight:900;
-}
-
-.process-card h3{
-  margin-bottom:8px;
-}
-
-.process-card p{
-  color:rgba(255,255,255,.6);
-  font-size:13px;
-}
-
-/* =========================
-EXPORT
-========================= */
-
-.export-section{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(0,155,255,.14),transparent 50%),
-    #06101d;
-}
-
-.export-box{
-  max-width:1200px;
-  margin:auto;
-  padding:60px;
-  border-radius:30px;
-  background:linear-gradient(
-    135deg,
-    rgba(255,255,255,.06),
-    rgba(255,255,255,.02)
-  );
-  border:1px solid rgba(255,255,255,.09);
-  text-align:center;
-}
-
-.export-box h2{
-  font-size:clamp(30px,4vw,52px);
-  margin-bottom:20px;
-}
-
-.export-box h2 span{
-  color:#ffd83d;
-}
-
-.export-box p{
-  max-width:750px;
-  margin:auto;
-  color:rgba(255,255,255,.65);
-}
-
-.export-flow{
-  margin-top:35px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.flow-item{
-  padding:15px 22px;
-  border-radius:12px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.08);
-  font-weight:800;
-}
-
-.flow-arrow{
-  color:#ffd83d;
-  font-size:25px;
-}
-
-/* =========================
-COMPANY
-========================= */
-
-.company{
-  background:#081522;
-}
-
-.company-grid{
-  max-width:1100px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:45px;
-  align-items:center;
-}
-
-.company-intro h2{
-  font-size:40px;
-  line-height:1.35;
-  margin-bottom:20px;
-}
-
-.company-intro h2 span{
-  color:#ffd83d;
-}
-
-.company-intro p{
-  color:rgba(255,255,255,.62);
-}
-
-.company-table{
-  border-radius:20px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.company-row{
-  display:grid;
-  grid-template-columns:150px 1fr;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-
-.company-row:last-child{
-  border-bottom:0;
-}
-
-.company-row div{
-  padding:15px 18px;
-}
-
-.company-row div:first-child{
-  color:#ffd83d;
-  font-weight:800;
-  background:rgba(255,255,255,.025);
-}
-
-.company-row div:last-child{
-  color:rgba(255,255,255,.78);
+function dateKey(value: unknown): string {
+  const dt = dateFromCell(value);
+  if (!dt) return "";
+  return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
 }
 
-/* =========================
-CONTACT
-========================= */
-
-.contact{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(255,210,0,.09),transparent 45%),
-    #06101d;
-}
-
-.contact-box{
-  max-width:1050px;
-  margin:auto;
-  text-align:center;
-}
-
-.contact-box h2{
-  font-size:clamp(32px,5vw,60px);
-  margin-bottom:15px;
-}
-
-.contact-box>p{
-  color:rgba(255,255,255,.62);
-  margin-bottom:35px;
-}
-
-.contact-phone{
-  display:inline-block;
-  font-size:clamp(38px,6vw,72px);
-  font-weight:900;
-  color:#ffd83d;
-  line-height:1.2;
-  animation:contactPhone 2s infinite;
-}
-
-@keyframes contactPhone{
-  0%,100%{
-    text-shadow:0 0 10px rgba(255,216,61,.15);
-  }
-  50%{
-    text-shadow:
-      0 0 25px rgba(255,216,61,.7),
-      0 0 55px rgba(255,180,0,.35);
-  }
-}
-
-.contact-buttons{
-  margin-top:30px;
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.map-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:14px 22px;
-  border-radius:12px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  transition:.3s;
-  font-weight:800;
-}
-
-.map-btn:hover{
-  border-color:#ffd83d;
-  color:#ffd83d;
-  transform:translateY(-3px);
-}
-
-/* =========================
-FAQ
-========================= */
-
-.faq{
-  background:#081522;
-}
-
-.faq-list{
-  max-width:900px;
-  margin:auto;
-}
-
-.faq-item{
-  border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.faq-question{
-  width:100%;
-  padding:22px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:none;
-  border:0;
-  color:white;
-  font-family:inherit;
-  text-align:left;
-  font-size:16px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.faq-question span:last-child{
-  color:#ffd83d;
-  font-size:25px;
-  transition:.3s;
-}
-
-.faq-answer{
-  max-height:0;
-  overflow:hidden;
-  color:rgba(255,255,255,.62);
-  font-size:14px;
-  transition:max-height .4s ease;
-}
-
-.faq-answer-inner{
-  padding-bottom:20px;
+function displayDate(value: unknown): string {
+  const dt = dateFromCell(value);
+  if (!dt) return clean(value);
+  return `${String(dt.getDate()).padStart(2, "0")}-${String(dt.getMonth() + 1).padStart(2, "0")}-${dt.getFullYear()}`;
 }
 
-.faq-item.active .faq-answer{
-  max-height:300px;
+function todaySriLankaKey(): string {
+  const now = new Date();
+  const sri = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Colombo" }));
+  return dateKey(sri);
 }
 
-.faq-item.active .faq-question span:last-child{
-  transform:rotate(45deg);
+function sheetMatrix(wb: XLSX.WorkBook, sheetName: string): Row[] {
+  const ws = wb.Sheets[sheetName];
+  if (!ws) return [];
+  return XLSX.utils.sheet_to_json(ws, { header: 1, defval: "", raw: false, blankrows: true }) as Row[];
 }
-
-/* =========================
-FOOTER
-========================= */
-
-footer{
-  padding:45px 6%;
-  background:#030a12;
-  border-top:1px solid rgba(255,255,255,.07);
-}
-
-.footer-inner{
-  max-width:1300px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  gap:30px;
-  align-items:center;
-}
-
-.footer-logo{
-  width:140px;
-}
-
-.footer-copy{
-  color:rgba(255,255,255,.45);
-  font-size:12px;
-}
-
-.footer-links{
-  display:flex;
-  gap:18px;
-  font-size:12px;
-  color:rgba(255,255,255,.6);
-}
-
-/* =========================
-FLOATING PHONE
-========================= */
-
-.floating-phone{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:4500;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:13px 20px;
-  border-radius:50px;
-  background:linear-gradient(135deg,#ffd83d,#ffae00);
-  color:#07111f;
-  font-weight:900;
-  box-shadow:0 10px 40px rgba(255,180,0,.35);
-  animation:floatingPhone 2s infinite;
-}
-
-@keyframes floatingPhone{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-5px);
-  }
-}
-
-/* =========================
-REVEAL
-========================= */
-
-.reveal{
-  opacity:0;
-  transform:translateY(35px);
-  transition:opacity .8s ease,transform .8s ease;
-}
-
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:1050px){
-
-  .nav-links{
-    display:none;
-    position:absolute;
-    top:75px;
-    left:15px;
-    right:15px;
-    padding:20px;
-    flex-direction:column;
-    align-items:stretch;
-    background:rgba(4,12,23,.97);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:15px;
-  }
-
-  .nav-links.open{
-    display:flex;
-  }
-
-  .nav-links a{
-    padding:10px;
-  }
-
-  .menu-btn{
-    display:block;
-  }
-
-  .header-phone{
-    display:none;
-  }
-
-  .hero-grid{
-    grid-template-columns:1fr;
-  }
-
-  .hero-map{
-    min-height:480px;
-  }
-
-  #heroMap{
-    height:480px;
-  }
-
-  .company-grid{
-    grid-template-columns:1fr;
-  }
-
-}
-
-@media(max-width:800px){
-
-  section{
-    padding:75px 5%;
-  }
-
-  .hero{
-    padding:125px 5% 60px;
-  }
-
-  .product-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .reason-grid{
-    grid-template-columns:1fr;
-  }
-
-  .process-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .export-box{
-    padding:40px 25px;
-  }
-
-  .footer-inner{
-    flex-direction:column;
-    text-align:center;
-  }
-
-}
-
-@media(max-width:560px){
-
-  .nav{
-    padding:12px 18px;
-  }
-
-  .logo img{
-    width:120px;
-  }
-
-  .hero h1{
-    font-size:39px;
-  }
-
-  .hero-description{
-    font-size:14px;
-  }
-
-  .hero-buttons{
-    flex-direction:column;
-  }
-
-  .btn{
-    width:100%;
-  }
-
-  .hero-phone{
-    font-size:21px;
-  }
-
-  .payment-inner{
-    padding:18px;
-  }
-
-  .payment-title{
-    font-size:15px;
-  }
-
-  .payment-text{
-    font-size:12px;
-  }
-
-  .hero-map{
-    min-height:350px;
-    border-radius:22px;
-  }
-
-  #heroMap{
-    height:350px;
-  }
-
-  .product-grid{
-    grid-template-columns:1fr;
-  }
-
-  .process-grid{
-    grid-template-columns:1fr;
-  }
-
-  .company-row{
-    grid-template-columns:105px 1fr;
-  }
-
-  .company-row div{
-    padding:12px;
-    font-size:12px;
-  }
-
-  .floating-phone{
-    right:12px;
-    bottom:12px;
-    font-size:13px;
-    padding:11px 15px;
-  }
-
-  .footer-links{
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- LOADER -->
-
-<div id="loader">
-
-  <div class="loader-inner">
-
-    <img
-      src="./EZ%20Logo.png"
-      alt="EXPORT ZONE"
-      class="loader-logo">
-
-    <div class="loader-text">
-      JAPAN → WORLDWIDE
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- HEADER -->
-
-<header>
-
-<nav class="nav">
-
-<a href="#home" class="logo">
-
-<img
-  src="./EZ%20Logo.png"
-  alt="EXPORT ZONE 株式会社">
-
-</a>
-
-
-<div class="nav-links" id="navLinks">
-
-<a href="#home">ホーム</a>
-<a href="#products">買取品目</a>
-<a href="#reasons">買取について</a>
-<a href="#reasons">選ばれる理由</a>
-<a href="#process">買取の流れ</a>
-<a href="#export">海外輸出</a>
-<a href="#company">会社情報</a>
-<a href="#contact">お問い合わせ</a>
-
-</div>
-
-
-<a
-href="tel:0120888405"
-class="header-phone">
-☎ 0120 888 405
-</a>
-
-
-<button
-class="menu-btn"
-id="menuBtn">
-☰
-</button>
-
-</nav>
-
-</header>
-
-
-<!-- HERO -->
-
-<main id="home">
-
-<section class="hero">
-
-<div class="hero-grid">
-
-
-<div class="hero-content reveal">
-
-<div class="hero-label">
-JAPAN → WORLDWIDE EXPORT
-</div>
-
-
-<h1>
-
-動かなくても。<br>
-
-<span>日本全国から買取。</span>
-
-</h1>
-
-
-<p class="hero-description">
-
-中古車・トラック・建設機械・農業機械・
-自動車部品・在庫品など、日本全国から幅広く買取しています。
-買取した商品は、日本から海外へ輸出しています。
-
-</p>
-
-
-<div class="hero-buttons">
-
-<a
-href="tel:0120888405"
-class="btn btn-primary">
-☎ 今すぐ無料相談
-</a>
-
-<a
-href="#products"
-class="btn btn-outline">
-買取品目を見る
-</a>
-
-</div>
-
-
-<a
-href="tel:0120888405"
-class="hero-phone">
-
-<span class="hero-phone-icon">
-☎
-</span>
-
-<span>
-0120 888 405
-</span>
-
-</a>
-
-
-<!-- PAYMENT -->
-
-<div class="hero-payment">
-
-<div class="payment-inner">
-
-<div class="payment-shine"></div>
-
-<div class="payment-title">
-買取代金は、EXPORT ZONEからお客様へ
-</div>
-
-<div class="payment-text">
-
-お客様からお金をいただくのではありません。<br>
-
-お車・トラック・建設機械などを買取する際は、<br>
-
-EXPORT ZONEがお客様へ買取代金をお支払いします。
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- WORLD MAP -->
-
-<div class="hero-map reveal">
-
-<div class="map-title">
-
-<strong>
-日本から世界へ
-</strong>
-
-<span>
-JAPAN TO WORLDWIDE
-</span>
-
-</div>
-
-
-<svg
-id="heroMap"
-viewBox="0 0 1440 760"
-preserveAspectRatio="xMidYMid meet">
-</svg>
-
-
-<div class="map-badge">
-🌏 JAPAN → WORLD
-</div>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-<!-- PRODUCTS -->
-
-<section
-class="products"
-id="products">
-
-<div class="section-head reveal">
-
-<div class="section-label">
-WHAT WE BUY
-</div>
-
-<h2>
-幅広い商品を買取しています
-</h2>
-
-<p>
-古い車両・使用済み機械・在庫品など、
-まずはお気軽にご相談ください。
-</p>
-
-</div>
-
-
-<div class="product-grid">
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=90"
-alt="中古車 買取"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-01 / VEHICLES
-</div>
-
-<h3>
-中古車
-</h3>
-
-<p>
-乗用車・商用車・古い車・動かない車など
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1597974380476-fbf652dfe188?auto=format&fit=crop&w=1200&q=85"
-alt="トラック 買取"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-02 / TRUCKS
-</div>
-
-<h3>
-トラック
-</h3>
-
-<p>
-大型・中型・小型トラック・特殊車両など
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1778066995093-a7f7d1049f8f?auto=format&fit=crop&w=1200&q=85"
-alt="建設機械 買取"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-03 / MACHINERY
-</div>
-
-<h3>
-建設機械
-</h3>
-
-<p>
-油圧ショベル・ホイールローダーなど
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=1200&q=90"
-alt="農業機械 買取"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-04 / AGRICULTURE
-</div>
-
-<h3>
-農業機械
-</h3>
-
-<p>
-農機・作業機械・関連設備など
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&q=90"
-alt="自動車部品"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-05 / AUTO PARTS
-</div>
-
-<h3>
-自動車部品
-</h3>
-
-<p>
-中古部品・パーツ・各種自動車用品など
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1586528116493-da8f6e3f9a53?auto=format&fit=crop&w=1200&q=90"
-alt="在庫品 ストックロット"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-06 / STOCK LOT
-</div>
-
-<h3>
-在庫品・ストックロット
-</h3>
-
-<p>
-余剰在庫・デッドストック・未使用品など
-</p>
-
-</div>
-
-</article>
-
-
-</div>
-
-</section>
-
-
-<!-- REASONS -->
-
-<section
-class="reasons"
-id="reasons">
-
-<div class="section-head reveal">
-
-<div class="section-label">
-WHY EXPORT ZONE
-</div>
-
-<h2>
-EXPORT ZONEが選ばれる理由
-</h2>
-
-</div>
-
-
-<div class="reason-grid">
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-🇯🇵
-</div>
-
-<h3>
-日本全国対応
-</h3>
-
-<p>
-埼玉県を拠点に、日本全国から
-中古車・トラック・機械などを買取しています。
-</p>
-
-</div>
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-💰
-</div>
-
-<h3>
-買取代金をお支払い
-</h3>
-
-<p>
-買取が成立した場合、
-EXPORT ZONEからお客様へ買取代金をお支払いします。
-</p>
-
-</div>
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-🌏
-</div>
-
-<h3>
-海外輸出ネットワーク
-</h3>
-
-<p>
-日本で買取した商品を海外市場へ。
-日本品質の商品を世界へ届けています。
-</p>
-
-</div>
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-🚛
-</div>
-
-<h3>
-幅広い買取品目
-</h3>
-
-<p>
-車・トラックだけでなく、
-建設機械・農業機械・部品・在庫品にも対応。
-</p>
-
-</div>
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-🤝
-</div>
-
-<h3>
-丁寧な対応
-</h3>
-
-<p>
-商品の状態や数量などを確認し、
-一件一件丁寧に対応します。
-</p>
-
-</div>
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-📦
-</div>
-
-<h3>
-大量在庫も相談可能
-</h3>
-
-<p>
-車両・機械・部品・材料など、
-まとまった数量の在庫もご相談ください。
-</p>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-<!-- PROCESS -->
-
-<section
-class="process"
-id="process">
-
-<div class="section-head reveal">
-
-<div class="section-label">
-PURCHASE FLOW
-</div>
-
-<h2>
-買取の流れ
-</h2>
-
-</div>
-
-
-<div class="process-grid">
-
-
-<div class="process-card reveal">
-
-<div class="process-number">
-01
-</div>
-
-<h3>
-お問い合わせ
-</h3>
-
-<p>
-電話・メール・LINEから
-お気軽にご連絡ください。
-</p>
-
-</div>
-
-
-<div class="process-card reveal">
-
-<div class="process-number">
-02
-</div>
-
-<h3>
-商品確認
-</h3>
-
-<p>
-車両・機械・在庫品などの
-状態や数量を確認します。
-</p>
-
-</div>
-
-
-<div class="process-card reveal">
-
-<div class="process-number">
-03
-</div>
-
-<h3>
-査定・お見積り
-</h3>
-
-<p>
-商品内容を確認して
-買取条件をご案内します。
-</p>
-
-</div>
-
-
-<div class="process-card reveal">
-
-<div class="process-number">
-04
-</div>
-
-<h3>
-買取・お支払い
-</h3>
-
-<p>
-買取成立後、
-EXPORT ZONEがお客様へお支払いします。
-</p>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-<!-- EXPORT -->
-
-<section
-class="export-section"
-id="export">
-
-<div class="export-box reveal">
-
-<div class="section-label">
-JAPAN TO WORLDWIDE
-</div>
-
-<h2>
-日本から<span>世界へ</span>
-</h2>
-
-<p>
-EXPORT ZONEは日本国内で買取した
-中古車・トラック・建設機械・農業機械・
-自動車部品・在庫品などを海外市場へ輸出しています。
-</p>
-
-
-<div class="export-flow">
-
-<div class="flow-item">
-🇯🇵 日本
-</div>
-
-<div class="flow-arrow">
-→
-</div>
-
-<div class="flow-item">
-🚗 買取
-</div>
-
-<div class="flow-arrow">
-→
-</div>
-
-<div class="flow-item">
-🚢 輸出
-</div>
-
-<div class="flow-arrow">
-→
-</div>
-
-<div class="flow-item">
-🌏 世界
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- COMPANY -->
-
-<section
-class="company"
-id="company">
-
-<div class="company-grid">
-
-
-<div class="company-intro reveal">
-
-<div class="section-label">
-COMPANY
-</div>
-
-<h2>
-日本から<br>
-<span>世界へ。</span>
-</h2>
-
-<p>
-EXPORT ZONE 株式会社は、
-日本国内で中古車・トラック・建設機械・
-農業機械・自動車部品・在庫品などを取り扱い、
-海外市場へ輸出しています。
-</p>
-
-</div>
-
-
-<div class="company-table reveal">
-
-
-<div class="company-row">
-<div>会社名</div>
-<div>EXPORT ZONE 株式会社</div>
-</div>
-
-
-<div class="company-row">
-<div>所在地</div>
-<div>
-〒362-0806<br>
-埼玉県北足立郡伊奈町小室2607
-</div>
-</div>
-
-
-<div class="company-row">
-<div>電話番号</div>
-<div>
-0120 888 405
-</div>
-</div>
-
-
-<div class="company-row">
-<div>メール</div>
-<div>
-exportzonecoltd@gmail.com
-</div>
-</div>
-
-
-<div class="company-row">
-<div>LINE</div>
-<div>
-exportzonecoltd
-</div>
-</div>
-
-
-<div class="company-row">
-<div>古物商許可</div>
-<div>
-第452750021040号
-</div>
-</div>
-
-
-<div class="company-row">
-<div>事業内容</div>
-<div>
-中古車・トラック・建設機械・農業機械・
-自動車部品・在庫品の買取・輸出
-</div>
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CONTACT -->
-
-<section
-class="contact"
-id="contact">
-
-<div class="contact-box reveal">
-
-<div class="section-label">
-CONTACT
-</div>
-
-<h2>
-まずはお気軽に<br>
-ご相談ください
-</h2>
-
-<p>
-「これも売れる？」というご相談でも大丈夫です。
-</p>
-
-
-<a
-href="tel:0120888405"
-class="contact-phone">
-0120 888 405
-</a>
-
-
-<div class="contact-buttons">
-
-
-<a
-href="mailto:exportzonecoltd@gmail.com"
-class="btn btn-primary">
-✉ メールでお問い合わせ
-</a>
-
-
-<a
-href="https://line.me/ti/p/VcqKQ0PYkN"
-target="_blank"
-rel="noopener"
-class="btn btn-outline">
-LINEで相談
-</a>
-
-
-<a
-href="https://maps.app.goo.gl/P173Hs525vH4QBvS6?g_st=ic"
-target="_blank"
-rel="noopener"
-class="map-btn">
-📍 Googleマップで見る
-</a>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- FAQ -->
-
-<section class="faq">
-
-<div class="section-head reveal">
-
-<div class="section-label">
-FAQ
-</div>
-
-<h2>
-よくあるご質問
-</h2>
-
-</div>
-
-
-<div class="faq-list">
-
-
-<div class="faq-item reveal">
-
-<button class="faq-question">
-
-<span>
-動かない車でも買取できますか？
-</span>
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<div class="faq-answer-inner">
-はい。車両の状態を確認したうえで
-買取についてご相談いただけます。
-</div>
-
-</div>
-
-</div>
-
-
-<div class="faq-item reveal">
-
-<button class="faq-question">
-
-<span>
-トラックや建設機械も買取できますか？
-</span>
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<div class="faq-answer-inner">
-はい。トラック・建設機械・農業機械なども
-買取対象です。
-</div>
-
-</div>
-
-</div>
-
-
-<div class="faq-item reveal">
-
-<button class="faq-question">
-
-<span>
-日本全国から問い合わせできますか？
-</span>
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<div class="faq-answer-inner">
-はい。日本全国からお問い合わせいただけます。
-まずは電話・メール・LINEでご相談ください。
-</div>
-
-</div>
-
-</div>
-
-
-<div class="faq-item reveal">
-
-<button class="faq-question">
-
-<span>
-在庫品や大量の商品も相談できますか？
-</span>
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<div class="faq-answer-inner">
-はい。在庫品・余剰品・部品・材料など、
-まとまった数量についてもご相談ください。
-</div>
-
-</div>
-
-</div>
-
-
-<div class="faq-item reveal">
-
-<button class="faq-question">
-
-<span>
-買取のときにお金を払う必要がありますか？
-</span>
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<div class="faq-answer-inner">
-お客様から買取代金をいただくのではありません。
-買取が成立した場合、EXPORT ZONEがお客様へ
-買取代金をお支払いします。
-</div>
-
-</div>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-</main>
-
-
-<!-- FOOTER -->
-
-<footer>
-
-<div class="footer-inner">
-
-
-<img
-src="./EZ%20Logo.png"
-alt="EXPORT ZONE 株式会社"
-class="footer-logo">
-
-
-<div class="footer-copy">
-© EXPORT ZONE 株式会社. All Rights Reserved.
-</div>
-
-
-<div class="footer-links">
-
-<a href="#home">
-ホーム
-</a>
-
-<a href="#products">
-買取品目
-</a>
-
-<a href="#company">
-会社情報
-</a>
-
-<a href="#contact">
-お問い合わせ
-</a>
-
-</div>
-
-
-</div>
-
-</footer>
-
-
-<!-- FLOATING PHONE -->
-
-<a
-href="tel:0120888405"
-class="floating-phone">
-☎ 0120 888 405
-</a>
-
-
-<script>
-
-/* =========================
-LOADER
-========================= */
-
-window.addEventListener("load",function(){
-
-  setTimeout(function(){
-
-    document
-      .getElementById("loader")
-      .classList.add("hide");
-
-  },700);
-
-});
-
-
-/* =========================
-MOBILE MENU
-========================= */
-
-const menuBtn =
-  document.getElementById("menuBtn");
-
-const navLinks =
-  document.getElementById("navLinks");
-
-
-menuBtn.addEventListener("click",function(){
-
-  navLinks.classList.toggle("open");
-
-});
-
-
-document
-.querySelectorAll(".nav-links a")
-.forEach(function(link){
-
-  link.addEventListener("click",function(){
-
-    navLinks.classList.remove("open");
 
+function findSheet(wb: XLSX.WorkBook, wanted: string | string[]): string | null {
+  const wantedList = (Array.isArray(wanted) ? wanted : [wanted]).map(normalizeText).filter(Boolean);
+  if (!wantedList.length) return null;
+  const exact = wb.SheetNames.find((name) => wantedList.includes(normalizeText(name)));
+  if (exact) return exact;
+  const partial = wb.SheetNames.find((name) => {
+    const normalized = normalizeText(name);
+    return wantedList.some((w) => normalized.includes(w) || w.includes(normalized));
   });
+  return partial || null;
+}
 
-});
+function headerIndex(rows: Row[], candidates: string[], maxRows = 50): number {
+  const wanted = candidates.map(normalizeText).filter(Boolean);
+  let bestRow = -1;
+  let bestScore = 0;
+  for (let r = 0; r < Math.min(rows.length, maxRows); r++) {
+    const cells = rows[r].map(normalizeText).filter(Boolean);
+    if (!cells.length) continue;
+    let score = 0;
+    for (const wantedHeader of wanted) {
+      for (const cell of cells) {
+        if (cell === wantedHeader) { score += 10; break; }
+        if (cell.includes(wantedHeader) || wantedHeader.includes(cell)) score += 2;
+      }
+    }
+    if (score > bestScore) { bestScore = score; bestRow = r; }
+  }
+  return bestRow;
+}
 
+function columnIndex(header: Row, candidates: string[]): number {
+  const wanted = candidates.map(normalizeText).filter(Boolean);
+  for (let c = 0; c < header.length; c++) {
+    const cell = normalizeText(header[c]);
+    if (cell && wanted.some((w) => cell === w)) return c;
+  }
+  for (let c = 0; c < header.length; c++) {
+    const cell = normalizeText(header[c]);
+    if (cell && wanted.some((w) => cell.includes(w) || w.includes(cell))) return c;
+  }
+  return -1;
+}
 
-/* =========================
-SCROLL REVEAL
-========================= */
+function rowsAfterHeader(rows: Row[], candidates: string[]): { header: Row; data: Row[]; headerRow: number; } {
+  const index = headerIndex(rows, candidates);
+  if (index < 0) return { header: [], data: [], headerRow: -1 };
+  return { header: rows[index], data: rows.slice(index + 1), headerRow: index };
+}
 
-const revealObserver =
-  new IntersectionObserver(
-    function(entries){
+function googleFileId(url: string): string {
+  try {
+    const u = new URL(url);
+    const m = u.pathname.match(/\/spreadsheets\/d\/([^/]+)/) || u.pathname.match(/\/file\/d\/([^/]+)/);
+    if (m) return m[1];
+    return u.searchParams.get("id") || "";
+  } catch { return ""; }
+}
 
-      entries.forEach(function(entry){
+function googleDownloadUrl(url: string): string {
+  const id = googleFileId(url);
+  if (!id) return url;
+  return `https://docs.google.com/spreadsheets/d/${id}/export?format=xlsx`;
+}
 
-        if(entry.isIntersecting){
+async function loadExcel(key: string, url: string, localPath: string): Promise<XLSX.WorkBook> {
+  const cached = excelCache.get(key);
+  if (cached && cached.expiresAt > Date.now()) {
+    return XLSX.read(new Uint8Array(cached.buffer), { type: "array", cellDates: true, cellFormula: false });
+  }
+  let buffer: ArrayBuffer | null = null;
+  if (url) {
+    const downloadUrl = googleDownloadUrl(url);
+    const response = await fetch(downloadUrl, { method: "GET" });
+    if (!response.ok) throw new Error(`${key} Excel download failed: ${response.status}`);
+    buffer = await response.arrayBuffer();
+  }
+  if (!buffer && localPath) {
+    try {
+      const fs = await import("node:fs");
+      if (fs.existsSync(localPath)) {
+        const b = fs.readFileSync(localPath);
+        buffer = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
+      }
+    } catch (error) { console.log(`[${key}] Local Excel error:`, error); }
+  }
+  if (!buffer) throw new Error(`${key} Excel source is not available`);
+  excelCache.set(key, { buffer, expiresAt: Date.now() + 2 * 60 * 1000 });
+  return XLSX.read(new Uint8Array(buffer), { type: "array", cellDates: true, cellFormula: false });
+}
 
-          entry.target.classList.add("visible");
+function isUsefulStockRow(row: Row, itemCol: number, inCol: number, outCol: number): boolean {
+  const item = clean(row[itemCol]);
+  if (!item) return false;
+  const low = normalizeText(item);
+  if (low === "total" || low === "grand total" || low === "stock balance" || low === "total stock qty") return false;
+  if (inCol >= 0 && numberValue(row[inCol]) !== 0) return true;
+  if (outCol >= 0 && numberValue(row[outCol]) !== 0) return true;
+  return false;
+}
 
-        }else{
+function readStockFromSheet(rows: Row[]): StockItem[] {
+  if (!rows.length) return [];
+  const headerCandidates = ["item", "item name", "product", "product name", "description", "material", "stock item", "name", "type", "category"];
+  const result = rowsAfterHeader(rows, headerCandidates);
+  if (result.headerRow < 0 || !result.header.length) return [];
+  const itemCol = columnIndex(result.header, ["item", "item name", "product", "product name", "description", "material", "stock item", "name", "type", "category"]);
+  const inCol = columnIndex(result.header, ["in", "qty in", "quantity in", "stock in", "in qty", "received", "received qty", "purchase qty", "qty received", "import qty", "quantity"]);
+  const outCol = columnIndex(result.header, ["out", "qty out", "quantity out", "stock out", "out qty", "sold", "sold qty", "sales qty", "qty sold", "export qty"]);
+  if (itemCol < 0) return [];
+  const map = new Map<string, StockItem>();
+  for (const row of result.data) {
+    if (!isUsefulStockRow(row, itemCol, inCol, outCol)) continue;
+    const item = clean(row[itemCol]);
+    if (!item) continue;
+    const key = normalizeText(item);
+    const qtyIn = inCol >= 0 ? numberValue(row[inCol]) : 0;
+    const qtyOut = outCol >= 0 ? numberValue(row[outCol]) : 0;
+    const old = map.get(key) || { item, qtyIn: 0, qtyOut: 0, balance: 0 };
+    old.qtyIn += qtyIn; old.qtyOut += qtyOut; old.balance = old.qtyIn - old.qtyOut;
+    map.set(key, old);
+  }
+  return Array.from(map.values());
+}
 
-          entry.target.classList.remove("visible");
+function readStock(wb: XLSX.WorkBook): StockItem[] {
+  const dailySheet = findSheet(wb, ["Daily Update", "DAILY UPDATE"]);
+  if (dailySheet) {
+    const rows = sheetMatrix(wb, dailySheet);
+    const { header, data, headerRow } = rowsAfterHeader(rows, ["Date", "Category", "Item"]);
+    if (headerRow >= 0) {
+      const itemCol = columnIndex(header, ["Item / Description", "Description", "Item"]);
+      const qtyInCol = columnIndex(header, ["Qty In", "Quantity In"]);
+      const qtyOutCol = columnIndex(header, ["Qty Out", "Quantity Out"]);
+      if (itemCol >= 0 && qtyInCol >= 0) {
+        const stock = new Map<string, StockItem>();
+        for (const row of data) {
+          const item = clean(row[itemCol]);
+          if (!item) continue;
+          const low = normalizeText(item);
+          if (low === "total" || low === "grand total") continue;
+          const qtyIn = numberValue(row[qtyInCol]);
+          const qtyOut = qtyOutCol >= 0 ? numberValue(row[qtyOutCol]) : 0;
+          if (qtyIn === 0 && qtyOut === 0) continue;
+          const key = normalizeText(item);
+          const current = stock.get(key) || { item, qtyIn: 0, qtyOut: 0, balance: 0 };
+          current.qtyIn += qtyIn; current.qtyOut += qtyOut; current.balance = current.qtyIn - current.qtyOut;
+          stock.set(key, current);
+        }
+        const result = Array.from(stock.values());
+        if (result.length > 0) return result;
+      }
+    }
+  }
+  const preferredSheets = ["Stock", "Korea Stock", "Japan Stock", "Inventory", "Import Stock"];
+  const sheetNames: string[] = [];
+  for (const wanted of preferredSheets) {
+    const found = findSheet(wb, wanted);
+    if (found && !sheetNames.includes(found)) sheetNames.push(found);
+  }
+  for (const name of wb.SheetNames) {
+    if (!sheetNames.includes(name)) sheetNames.push(name);
+  }
+  const all = new Map<string, StockItem>();
+  for (const sheetName of sheetNames) {
+    if (sheetName === dailySheet) continue;
+    const rows = sheetMatrix(wb, sheetName);
+    const items = readStockFromSheet(rows);
+    for (const item of items) {
+      const key = normalizeText(item.item);
+      const old = all.get(key) || { item: item.item, qtyIn: 0, qtyOut: 0, balance: 0 };
+      old.qtyIn += item.qtyIn; old.qtyOut += item.qtyOut; old.balance = old.qtyIn - old.qtyOut;
+      all.set(key, old);
+    }
+  }
+  return Array.from(all.values()).filter(x => x.qtyIn !== 0 || x.qtyOut !== 0 || x.balance !== 0);
+}
 
+function readBusinessSummary(wb: XLSX.WorkBook): BusinessSummary {
+  const summary: BusinessSummary = {
+    sales: 0, purchases: 0, expenses: 0, profit: 0,
+    capitalIn: 0, withdrawals: 0, cashReceived: 0,
+    pending: 0, deposited: 0, cleared: 0, returned: 0, dueSoon: 0,
+    cashIn: 0, cashOut: 0, balance: 0,
+    qtyIn: 0, qtyOut: 0, stockBalance: 0,
+    japanToKorea: 0, koreaToJapan: 0,
+  };
+
+  const summarySheet = findSheet(wb, ["Daily Summary", "Summary", "Business Summary"]);
+  if (summarySheet) {
+    const rows = sheetMatrix(wb, summarySheet);
+    for (const row of rows) {
+      const label = normalizeText(row[0]);
+      const value = numberValue(row[1]);
+      if (label.includes("total sales")) summary.sales = value;
+      if (label.includes("total purchase")) summary.purchases = value;
+      if (label.includes("total expense")) summary.expenses = value;
+      if (label.includes("profit") || label.includes("profit / loss")) summary.profit = value;
+      if (label.includes("investor capital in")) summary.capitalIn = value;
+      if (label.includes("investor withdrawal")) summary.withdrawals = value;
+      if (label.includes("cash received")) summary.cashReceived = value;
+      if (label.includes("pending")) summary.pending = value;
+      if (label.includes("deposited")) summary.deposited = value;
+      if (label.includes("cleared")) summary.cleared = value;
+      if (label.includes("returned")) summary.returned = value;
+      if (label.includes("due soon")) summary.dueSoon = value;
+      if (label.includes("total cash in")) summary.cashIn = value;
+      if (label.includes("total cash out")) summary.cashOut = value;
+      if (label.includes("available cash balance")) summary.balance = value;
+      if (label.includes("total qty in")) summary.qtyIn = value;
+      if (label.includes("total qty out")) summary.qtyOut = value;
+      if (label.includes("stock qty balance")) summary.stockBalance = value;
+      if (label.includes("japan") && label.includes("korea")) {
+        if (label.includes("→ korea") || label.includes("to korea")) summary.japanToKorea = value;
+        if (label.includes("→ japan") || label.includes("to japan")) summary.koreaToJapan = value;
+      }
+    }
+  }
+
+  const hasSummaryValues = summary.sales !== 0 || summary.purchases !== 0 || summary.capitalIn !== 0 || summary.withdrawals !== 0;
+
+  if (!hasSummaryValues) {
+    const dailySheet = findSheet(wb, ["Daily Update", "DAILY UPDATE"]);
+    if (dailySheet) {
+      const rows = sheetMatrix(wb, dailySheet);
+      const result = rowsAfterHeader(rows, ["Date", "Category", "Item"]);
+      if (result.headerRow >= 0) {
+        const catCol = columnIndex(result.header, ["Category", "Type"]);
+        const cashInCol = columnIndex(result.header, ["Cash In"]);
+        const cashOutCol = columnIndex(result.header, ["Cash Out"]);
+        const chequeCol = columnIndex(result.header, ["Cheque No.", "Cheque Number", "Cheque"]);
+
+        let sales = 0, purchases = 0, expenses = 0;
+        let capitalIn = 0, withdrawals = 0;
+        let cashIn = 0, cashOut = 0;
+        let japanToKorea = 0, koreaToJapan = 0;
+        let cashReceived = 0;
+
+        for (const row of result.data) {
+          const category = normalizeText(row[catCol]);
+          const cIn = cashInCol >= 0 ? numberValue(row[cashInCol]) : 0;
+          const cOut = cashOutCol >= 0 ? numberValue(row[cashOutCol]) : 0;
+          const chequeNo = chequeCol >= 0 ? clean(row[chequeCol]) : "";
+
+          cashIn += cIn;
+          cashOut += cOut;
+          if (cIn > 0 && !chequeNo) cashReceived += cIn;
+
+          if (category.includes("sale")) sales += cIn;
+          else if (category.includes("purchase")) purchases += cOut;
+          else if (category.includes("expense")) expenses += cOut;
+          else if (category.includes("investor capital")) capitalIn += cIn;
+          else if (category.includes("investor withdrawal")) withdrawals += cOut;
+          else if (category.includes("japan") && category.includes("korea")) {
+            if (category.includes("→ korea") || category.includes("to korea")) japanToKorea += cIn;
+            if (category.includes("→ japan") || category.includes("to japan")) koreaToJapan += cOut;
+          }
         }
 
+        summary.sales = sales;
+        summary.purchases = purchases;
+        summary.expenses = expenses;
+        summary.capitalIn = capitalIn;
+        summary.withdrawals = withdrawals;
+        summary.cashIn = cashIn;
+        summary.cashOut = cashOut;
+        summary.cashReceived = cashReceived;
+        summary.japanToKorea = japanToKorea;
+        summary.koreaToJapan = koreaToJapan;
+      }
+    }
+  }
+
+  const stock = readStock(wb);
+  if (summary.qtyIn === 0 && summary.qtyOut === 0) {
+    summary.qtyIn = stock.reduce((sum, x) => sum + x.qtyIn, 0);
+    summary.qtyOut = stock.reduce((sum, x) => sum + x.qtyOut, 0);
+    summary.stockBalance = stock.reduce((sum, x) => sum + x.balance, 0);
+  }
+
+  if (summary.profit === 0 && (summary.sales !== 0 || summary.purchases !== 0 || summary.expenses !== 0)) {
+    summary.profit = summary.sales - summary.purchases - summary.expenses;
+  }
+
+  if (summary.cashIn === 0) summary.cashIn = summary.sales + summary.capitalIn;
+  if (summary.cashOut === 0) summary.cashOut = summary.purchases + summary.expenses + summary.withdrawals;
+  if (summary.balance === 0) summary.balance = summary.cashIn - summary.cashOut;
+
+  return summary;
+}
+
+function readInvestors(wb: XLSX.WorkBook): InvestorData[] {
+  const sheet = findSheet(wb, ["Investor Capital", "Investors", "Investor", "Capital"]);
+  if (sheet) {
+    const rows = sheetMatrix(wb, sheet);
+    const result = rowsAfterHeader(rows, ["investor", "name", "original investment", "capital"]);
+    if (result.headerRow >= 0) {
+      const nameCol = columnIndex(result.header, ["investor", "investor name", "name"]);
+      const originalCol = columnIndex(result.header, ["original investment", "original capital", "investment"]);
+      const capitalCol = columnIndex(result.header, ["capital in", "additional capital", "capital"]);
+      const withdrawalCol = columnIndex(result.header, ["withdrawal", "withdraw"]);
+      const pctCol = columnIndex(result.header, ["profit %", "profit percentage", "share %", "%"]);
+      const profitCol = columnIndex(result.header, ["profit", "profit amount"]);
+      const balanceCol = columnIndex(result.header, ["final balance", "balance", "closing balance"]);
+
+      if (nameCol >= 0) {
+        const investors: InvestorData[] = [];
+        for (const row of result.data) {
+          const name = clean(row[nameCol]);
+          if (!name) continue;
+          const originalInvestment = originalCol >= 0 ? numberValue(row[originalCol]) : 0;
+          const capitalIn = capitalCol >= 0 ? numberValue(row[capitalCol]) : 0;
+          const withdrawal = withdrawalCol >= 0 ? numberValue(row[withdrawalCol]) : 0;
+          const profitPct = pctCol >= 0 ? numberValue(row[pctCol]) : 0;
+          const profit = profitCol >= 0 ? numberValue(row[profitCol]) : 0;
+          let finalBalance = balanceCol >= 0 ? numberValue(row[balanceCol]) : 0;
+          if (finalBalance === 0) finalBalance = originalInvestment + capitalIn - withdrawal + profit;
+          investors.push({ name, originalInvestment, capitalIn, withdrawal, profitPct, profit, finalBalance });
+        }
+        const hasValues = investors.some(inv =>
+          inv.originalInvestment !== 0 || inv.capitalIn !== 0 || inv.withdrawal !== 0 || inv.finalBalance !== 0
+        );
+        if (hasValues) return investors;
+      }
+    }
+  }
+
+  const dailySheet = findSheet(wb, ["Daily Update", "DAILY UPDATE"]);
+  if (!dailySheet) return [];
+  const dailyRows = sheetMatrix(wb, dailySheet);
+  const dailyResult = rowsAfterHeader(dailyRows, ["Date", "Category", "Item"]);
+  if (dailyResult.headerRow < 0) return [];
+
+  const catCol = columnIndex(dailyResult.header, ["Category", "Type"]);
+  const itemCol = columnIndex(dailyResult.header, ["Item / Description", "Description", "Item"]);
+  const cashInCol = columnIndex(dailyResult.header, ["Cash In"]);
+  const cashOutCol = columnIndex(dailyResult.header, ["Cash Out"]);
+  if (catCol < 0 || itemCol < 0) return [];
+
+  const map = new Map<string, { capital: number; withdrawal: number }>();
+  for (const row of dailyResult.data) {
+    const category = normalizeText(row[catCol]);
+    const item = clean(row[itemCol]);
+    if (!item) continue;
+    const cIn = cashInCol >= 0 ? numberValue(row[cashInCol]) : 0;
+    const cOut = cashOutCol >= 0 ? numberValue(row[cashOutCol]) : 0;
+    if (category.includes("investor capital")) {
+      const current = map.get(item) || { capital: 0, withdrawal: 0 };
+      current.capital += cIn;
+      map.set(item, current);
+    } else if (category.includes("investor withdrawal")) {
+      const current = map.get(item) || { capital: 0, withdrawal: 0 };
+      current.withdrawal += cOut;
+      map.set(item, current);
+    }
+  }
+
+  return Array.from(map.entries()).map(([name, val]) => ({
+    name,
+    originalInvestment: val.capital,
+    capitalIn: val.capital,
+    withdrawal: val.withdrawal,
+    profitPct: 0,
+    profit: 0,
+    finalBalance: val.capital - val.withdrawal,
+  }));
+}
+
+/* ========== UPDATED: readCheques with proper Bank/Party splitting ========== */
+function readCheques(wb: XLSX.WorkBook): ChequeData[] {
+  const sheet = findSheet(wb, ["Cheques", "CHEQUES"]);
+  if (!sheet) return [];
+  const rows = sheetMatrix(wb, sheet);
+  const result = rowsAfterHeader(rows, ["Cheque No.", "Cheque", "Amount"]);
+  if (result.headerRow < 0) return [];
+
+  const noCol = columnIndex(result.header, ["Cheque No.", "Cheque Number", "Cheque"]);
+  const amountCol = columnIndex(result.header, ["Amount"]);
+  const dueCol = columnIndex(result.header, ["Due Date", "Date Due"]);
+  const statusCol = columnIndex(result.header, ["Status"]);
+
+  // Find combined "Bank / Party" column FIRST
+  const combinedCol = columnIndex(result.header, ["Bank / Party", "Bank/Party", "Bank Party"]);
+
+  // Party/Bank separate columns ONLY if they differ from combined
+  const partyColRaw = columnIndex(result.header, ["Party", "Party Name"]);
+  const bankColRaw = columnIndex(result.header, ["Bank", "Bank Name"]);
+  const partyCol = (partyColRaw >= 0 && partyColRaw !== combinedCol) ? partyColRaw : -1;
+  const bankCol = (bankColRaw >= 0 && bankColRaw !== combinedCol) ? bankColRaw : -1;
+
+  const cheques: ChequeData[] = [];
+  for (const row of result.data) {
+    const no = clean(row[noCol]);
+    if (!no) continue;
+
+    let party = "";
+    let bank = "";
+
+    // Case 1: Separate Party & Bank columns exist
+    if (partyCol >= 0) party = clean(row[partyCol]);
+    if (bankCol >= 0) bank = clean(row[bankCol]);
+
+    // Case 2: Combined "Bank / Party" column exists
+    if (combinedCol >= 0 && (!party || !bank)) {
+      const combined = clean(row[combinedCol]);
+      if (combined) {
+        // Handle BOTH slash (/) AND newline (Enter) as separators
+        const normalized = combined.replace(/\r\n|\r|\n/g, "/");
+        const parts = normalized.split(/\s*\/\s*/).map(p => p.trim()).filter(Boolean);
+
+        if (parts.length >= 2) {
+          // First part → Bank, Second part → Party
+          if (!bank) bank = parts[0];
+          if (!party) party = parts.slice(1).join("/");
+        } else if (parts.length === 1) {
+          // Only one part → Party
+          if (!party) party = parts[0];
+        }
+      }
+    }
+
+    cheques.push({
+      chequeNo: no,
+      party: party,
+      bank: bank,
+      amount: amountCol >= 0 ? numberValue(row[amountCol]) : 0,
+      dueDate: dueCol >= 0 ? displayDate(row[dueCol]) : "",
+      status: statusCol >= 0 ? clean(row[statusCol]) : "",
+    });
+  }
+  return cheques;
+}
+
+interface TodayEntry {
+  category: string;
+  item: string;
+  qtyIn: number;
+  qtyOut: number;
+  cashIn: number;
+  cashOut: number;
+}
+
+function readToday(wb: XLSX.WorkBook): { entries: TodayEntry[]; totalCashIn: number; totalCashOut: number; totalQtyIn: number; totalQtyOut: number; } {
+  const dailySheet = findSheet(wb, ["Daily Update", "DAILY UPDATE"]);
+  if (!dailySheet) return { entries: [], totalCashIn: 0, totalCashOut: 0, totalQtyIn: 0, totalQtyOut: 0 };
+
+  const rows = sheetMatrix(wb, dailySheet);
+  const { header, data, headerRow } = rowsAfterHeader(rows, ["Date", "Category", "Item"]);
+  if (headerRow < 0) return { entries: [], totalCashIn: 0, totalCashOut: 0, totalQtyIn: 0, totalQtyOut: 0 };
+
+  const dateCol = columnIndex(header, ["Date"]);
+  const catCol = columnIndex(header, ["Category", "Type"]);
+  const itemCol = columnIndex(header, ["Item / Description", "Description", "Item"]);
+  const qtyInCol = columnIndex(header, ["Qty In", "Quantity In"]);
+  const qtyOutCol = columnIndex(header, ["Qty Out", "Quantity Out"]);
+  const cashInCol = columnIndex(header, ["Cash In"]);
+  const cashOutCol = columnIndex(header, ["Cash Out"]);
+
+  const today = todaySriLankaKey();
+  const entries: TodayEntry[] = [];
+  let totalCashIn = 0, totalCashOut = 0, totalQtyIn = 0, totalQtyOut = 0;
+
+  for (const row of data) {
+    if (dateCol < 0 || dateKey(row[dateCol]) !== today) continue;
+    const e: TodayEntry = {
+      category: catCol >= 0 ? clean(row[catCol]) : "",
+      item: itemCol >= 0 ? clean(row[itemCol]) : "",
+      qtyIn: qtyInCol >= 0 ? numberValue(row[qtyInCol]) : 0,
+      qtyOut: qtyOutCol >= 0 ? numberValue(row[qtyOutCol]) : 0,
+      cashIn: cashInCol >= 0 ? numberValue(row[cashInCol]) : 0,
+      cashOut: cashOutCol >= 0 ? numberValue(row[cashOutCol]) : 0,
+    };
+    entries.push(e);
+    totalCashIn += e.cashIn;
+    totalCashOut += e.cashOut;
+    totalQtyIn += e.qtyIn;
+    totalQtyOut += e.qtyOut;
+  }
+
+  return { entries, totalCashIn, totalCashOut, totalQtyIn, totalQtyOut };
+}
+
+async function sendWhatsAppText(to: string, text: string) {
+  if (!WHATSAPP_TOKEN || !PHONE_NUMBER_ID) { console.log("WhatsApp env missing"); return; }
+  await fetch(GRAPH_URL, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${WHATSAPP_TOKEN}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ messaging_product: "whatsapp", recipient_type: "individual", to: normalizePhone(to), type: "text", text: { preview_url: false, body: text } }),
+  });
+}
+
+async function sendInteractiveButtons(to: string, bodyText: string, buttons: { id: string; title: string }[]) {
+  await fetch(GRAPH_URL, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${WHATSAPP_TOKEN}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: normalizePhone(to),
+      type: "interactive",
+      interactive: {
+        type: "button",
+        body: { text: bodyText },
+        action: {
+          buttons: buttons.slice(0, 3).map((b) => ({
+            type: "reply",
+            reply: { id: b.id, title: b.title.slice(0, 20) },
+          })),
+        },
+      },
+    }),
+  });
+}
+
+async function sendInteractiveList(
+  to: string,
+  title: string,
+  bodyText: string,
+  rows: { id: string; title: string; description?: string }[]
+) {
+  const sections: { title: string; rows: any[] }[] = [];
+
+  const firstSection = rows.slice(0, 10);
+  if (firstSection.length > 0) {
+    sections.push({ title: "📊 Reports", rows: firstSection });
+  }
+
+  const secondSection = rows.slice(10);
+  if (secondSection.length > 0) {
+    sections.push({ title: "🏠 Navigation", rows: secondSection });
+  }
+
+  await fetch(GRAPH_URL, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${WHATSAPP_TOKEN}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: normalizePhone(to),
+      type: "interactive",
+      interactive: {
+        type: "list",
+        header: { type: "text", text: title },
+        body: { text: bodyText },
+        action: {
+          button: "Open",
+          sections: sections,
+        },
+      },
+    }),
+  });
+}
+
+async function sendWhatsAppDocument(to: string, pdfBuffer: Buffer, filename: string, caption: string) {
+  if (!WHATSAPP_TOKEN || !PHONE_NUMBER_ID) { console.log("WhatsApp env missing"); return; }
+  const formData = new FormData();
+  const blob = new Blob([new Uint8Array(pdfBuffer)], { type: "application/pdf" });
+  formData.append("file", blob, filename);
+  formData.append("type", "application/pdf");
+  formData.append("messaging_product", "whatsapp");
+
+  const uploadResponse = await fetch(
+    `https://graph.facebook.com/v26.0/${PHONE_NUMBER_ID}/media`,
+    { method: "POST", headers: { Authorization: `Bearer ${WHATSAPP_TOKEN}` }, body: formData }
+  );
+
+  const uploadData: any = await uploadResponse.json();
+  if (!uploadResponse.ok || !uploadData.id) throw new Error("PDF upload failed");
+
+  await fetch(GRAPH_URL, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${WHATSAPP_TOKEN}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: normalizePhone(to),
+      type: "document",
+      document: { id: uploadData.id, filename, caption },
+    }),
+  });
+}
+
+/* ========== PDF HELPERS ========== */
+
+function drawIconCircle(doc: any, cx: number, cy: number, r: number, iconType: string, color: string, bgColor?: string) {
+  doc.save();
+  doc.circle(cx, cy, r).fill(bgColor || color + "20");
+  doc.strokeColor(color).fillColor(color).lineWidth(1.5);
+
+  if (iconType === "cart") {
+    doc.moveTo(cx - 5, cy - 3).lineTo(cx + 5, cy - 3).lineTo(cx + 4, cy + 3).lineTo(cx - 4, cy + 3).closePath().stroke();
+    doc.circle(cx - 2.5, cy + 5, 1).fill();
+    doc.circle(cx + 2.5, cy + 5, 1).fill();
+  } else if (iconType === "doc") {
+    doc.rect(cx - 4, cy - 5, 8, 10).stroke();
+    doc.moveTo(cx - 2, cy - 2).lineTo(cx + 2, cy - 2).stroke();
+    doc.moveTo(cx - 2, cy + 1).lineTo(cx + 2, cy + 1).stroke();
+  } else if (iconType === "chart") {
+    doc.rect(cx - 5, cy + 1, 2, 4).fill();
+    doc.rect(cx - 1, cy - 3, 2, 8).fill();
+    doc.rect(cx + 3, cy - 1, 2, 6).fill();
+  } else if (iconType === "people") {
+    doc.circle(cx - 3, cy - 2, 2).fill();
+    doc.circle(cx + 3, cy - 2, 2).fill();
+    doc.moveTo(cx - 6, cy + 4).lineTo(cx - 6, cy + 2).quadraticCurveTo(cx - 3, cy + 1, cx - 3, cy + 2).stroke();
+    doc.moveTo(cx + 6, cy + 4).lineTo(cx + 6, cy + 2).quadraticCurveTo(cx + 3, cy + 1, cx + 3, cy + 2).stroke();
+  } else if (iconType === "money") {
+    doc.circle(cx, cy, 5).stroke();
+    doc.fontSize(9).fillColor(color).font("Helvetica-Bold").text("$", cx - 3, cy - 4);
+  } else if (iconType === "check") {
+    doc.rect(cx - 4, cy - 4, 8, 8).stroke();
+    doc.moveTo(cx - 2, cy).lineTo(cx - 0.5, cy + 2).lineTo(cx + 2.5, cy - 2).stroke();
+  }
+  doc.restore();
+}
+
+function drawHeader(doc: any, country: string, title: string) {
+  doc.rect(0, 0, 595, 3).fill(PDF.coral);
+  doc.rect(0, 3, 595, 73).fill(PDF.navy);
+
+  doc.save();
+  doc.strokeColor("#1A3A5C").lineWidth(0.5);
+  for (let i = 0; i < 10; i++) {
+    doc.moveTo(430 + i * 20, 3).lineTo(400 + i * 20, 76).stroke();
+  }
+  doc.restore();
+
+  let logoDrawn = false;
+  if (LOGO_BASE64) {
+    try {
+      let rawBase64 = LOGO_BASE64;
+      const commaIndex = rawBase64.indexOf(",");
+      if (commaIndex > 0 && rawBase64.substring(0, commaIndex).includes("base64")) {
+        rawBase64 = rawBase64.substring(commaIndex + 1);
+      }
+      rawBase64 = rawBase64.replace(/\s+/g, "");
+      const logoBuffer = Buffer.from(rawBase64, "base64");
+
+      console.log("Logo signature:", logoBuffer.slice(0, 8).toString("hex"));
+
+      const isPng = logoBuffer[0] === 0x89 && logoBuffer[1] === 0x50 && logoBuffer[2] === 0x4E && logoBuffer[3] === 0x47;
+      const isJpg = logoBuffer[0] === 0xFF && logoBuffer[1] === 0xD8 && logoBuffer[2] === 0xFF;
+
+      if (isPng || isJpg) {
+        doc.circle(45, 40, 26).fill("#FFFFFF");
+        doc.image(logoBuffer, 23, 18, { height: 44, width: 44 });
+        logoDrawn = true;
+        console.log("Logo drawn successfully");
+      } else {
+        console.log("Logo is not PNG/JPEG. Skipping.");
+      }
+    } catch (err) {
+      console.log("Logo draw failed:", err);
+    }
+  }
+
+  const nameX = logoDrawn ? 82 : 50;
+  doc.fontSize(18).fillColor("#FFFFFF").font("Helvetica-Bold")
+    .text("GlobalStock International", nameX, 22, { width: 350 });
+  doc.fontSize(9).fillColor("#8899AA").font("Helvetica")
+    .text("Business Management System", nameX, 45, { width: 350, characterSpacing: 0.5 });
+
+  doc.save();
+  doc.roundedRect(360, 18, 90, 40, 6).fill("#132C48");
+  doc.restore();
+  doc.fontSize(7).fillColor("#8899AA").font("Helvetica")
+    .text("Generated", 365, 24, { width: 80, align: "center" });
+  doc.fontSize(9).fillColor("#FFFFFF").font("Helvetica-Bold")
+    .text(displayDate(new Date()), 365, 36, { width: 80, align: "center" });
+
+  doc.fontSize(6).fillColor("#8899AA").font("Helvetica-Bold")
+    .text("TRUST", 480, 22, { width: 80, characterSpacing: 1.5 });
+  doc.text("DATA", 480, 32, { width: 80, characterSpacing: 1.5 });
+  doc.text("GROWTH", 480, 42, { width: 80, characterSpacing: 1.5 });
+  doc.text("TOGETHER", 480, 52, { width: 80, characterSpacing: 1.5 });
+
+  const heroY = 76;
+  doc.rect(0, heroY, 595, 100).fill("#F5F7FA");
+  doc.rect(45, heroY + 18, 35, 3).fill(PDF.coral);
+
+  doc.fontSize(38).fillColor(PDF.navy).font("Helvetica-Bold")
+    .text(country, 45, heroY + 28, { characterSpacing: -0.5 });
+
+  doc.fontSize(18).fillColor(PDF.navyMid).font("Helvetica")
+    .text(title.toUpperCase(), 45, heroY + 68, { characterSpacing: 1.2 });
+
+  doc.fontSize(7).fillColor(PDF.textGray).font("Helvetica")
+    .text("INSIGHTS TODAY. A STRONGER TOMORROW.", 45, heroY + 92, { characterSpacing: 2.5 });
+
+  doc.fontSize(8).fillColor(PDF.navy).font("Helvetica-Bold")
+    .text(country.toUpperCase(), 480, heroY + 20, { width: 70, align: "right", characterSpacing: 2 });
+  doc.fontSize(6).fillColor(PDF.textGray).font("Helvetica")
+    .text("PEOPLE", 480, heroY + 38, { width: 70, align: "right" });
+  doc.text("MARKETS", 480, heroY + 48, { width: 70, align: "right" });
+  doc.text("OPPORTUNITIES", 480, heroY + 58, { width: 70, align: "right" });
+
+  doc.rect(510, heroY + 75, 40, 2).fill(PDF.coral);
+  doc.y = heroY + 115;
+}
+
+function drawSectionTitle(doc: any, text: string, iconType?: string) {
+  const y = doc.y + 10;
+  if (iconType) {
+    drawIconCircle(doc, 68, y + 10, 11, iconType, PDF.navyMid, PDF.blueSoft);
+  }
+  const textX = iconType ? 88 : 50;
+  doc.fontSize(10).fillColor(PDF.navy).font("Helvetica-Bold")
+    .text(text.toUpperCase(), textX, y + 6, { characterSpacing: 1.2 });
+  doc.fontSize(12).fillColor(PDF.navyMid).font("Helvetica-Bold")
+    .text(">", 530, y + 4, { width: 20, align: "right" });
+  doc.y = y + 28;
+}
+
+function drawKeyValue(doc: any, label: string, value: string, color?: string) {
+  const y = doc.y;
+  doc.fontSize(9).fillColor(PDF.textGray).font("Helvetica").text(label, 55, y, { width: 250 });
+  doc.fontSize(11).fillColor(color || PDF.navy).font("Helvetica-Bold")
+    .text(value, 305, y, { width: 240, align: "right" });
+  doc.y = y + 18;
+}
+
+function drawTable(doc: any, headers: string[], rows: string[][], colWidths: number[]) {
+  const startX = 50;
+  let y = doc.y + 5;
+  const rowHeight = 24;
+  const totalWidth = colWidths.reduce((a, b) => a + b, 0);
+
+  doc.save();
+  doc.roundedRect(startX, y, totalWidth, rowHeight, 4).fill(PDF.navy);
+  doc.restore();
+
+  let x = startX;
+  doc.fontSize(8).fillColor("#FFFFFF").font("Helvetica-Bold");
+  for (let i = 0; i < headers.length; i++) {
+    doc.text(headers[i].toUpperCase(), x + 10, y + 8, {
+      width: colWidths[i] - 20, align: i === 0 ? "left" : "right", characterSpacing: 0.8,
+    });
+    x += colWidths[i];
+  }
+  y += rowHeight + 3;
+
+  doc.font("Helvetica").fontSize(10);
+  for (let r = 0; r < rows.length; r++) {
+    if (y > 720) { doc.addPage(); y = 60; }
+    if (r % 2 === 1) {
+      doc.save();
+      doc.roundedRect(startX, y, totalWidth, rowHeight, 3).fill(PDF.bgLight);
+      doc.restore();
+    }
+    doc.rect(startX, y + 4, 2, rowHeight - 8).fill(r % 2 === 0 ? PDF.navyMid : PDF.coral);
+    x = startX;
+    for (let i = 0; i < rows[r].length; i++) {
+      const isFirst = i === 0;
+      doc.fillColor(isFirst ? PDF.navy : "#333333")
+        .font(isFirst ? "Helvetica-Bold" : "Helvetica")
+        .text(rows[r][i], x + 12, y + 7, {
+          width: colWidths[i] - 20, align: isFirst ? "left" : "right",
+        });
+      x += colWidths[i];
+    }
+    y += rowHeight;
+  }
+  doc.y = y + 15;
+}
+
+function drawBarChart(doc: any, data: { label: string; value: number; color: string }[], title: string) {
+  const startY = doc.y + 5;
+  const chartX = 65;
+  const chartY = startY + 25;
+  const chartW = 230;
+  const chartH = 90;
+  const maxV = Math.max(...data.map((d) => d.value), 1);
+  const baseY = chartY + chartH;
+  const barW = 30;
+  const gap = (chartW - barW * data.length) / (data.length + 1);
+
+  doc.fontSize(9).fillColor(PDF.navy).font("Helvetica-Bold")
+    .text(title, chartX, startY, { width: chartW + 30, align: "center" });
+
+  doc.fontSize(7).fillColor(PDF.textLight).font("Helvetica");
+  for (let i = 0; i <= 3; i++) {
+    const val = (maxV / 3) * i;
+    const gy = baseY - (chartH / 3) * i;
+    doc.text(money(val), chartX - 35, gy - 4, { width: 32, align: "right" });
+    doc.strokeColor("#EEEEEE").lineWidth(0.5).moveTo(chartX, gy).lineTo(chartX + chartW, gy).stroke();
+  }
+  doc.strokeColor("#CCCCCC").lineWidth(0.8).moveTo(chartX, baseY).lineTo(chartX + chartW, baseY).stroke();
+
+  data.forEach((d, i) => {
+    const bh = Math.max((d.value / maxV) * chartH, 2);
+    const bx = chartX + gap + i * (barW + gap);
+    const by = baseY - bh;
+    doc.save();
+    doc.fillColor("#00000015");
+    doc.rect(bx + 2, by + 2, barW, bh).fill();
+    doc.restore();
+    doc.rect(bx, by, barW, bh).fill(d.color);
+    doc.fontSize(8).fillColor(PDF.navy).font("Helvetica-Bold")
+      .text(money(d.value), bx - 15, by - 14, { width: barW + 30, align: "center" });
+    doc.fontSize(7).fillColor(PDF.textGray).font("Helvetica")
+      .text(d.label, bx - 5, baseY + 5, { width: barW + 10, align: "center" });
+  });
+
+  doc.y = baseY + 25;
+}
+
+function drawFooter(doc: any) {
+  const pages = doc.bufferedPageRange();
+  for (let i = 0; i < pages.count; i++) {
+    doc.switchToPage(i);
+    doc.rect(0, 800, 595, 42).fill(PDF.navy);
+    doc.fontSize(8).fillColor("#FFFFFF").font("Helvetica-Bold")
+      .text("GlobalStock International", 45, 815, { width: 250 });
+    doc.fontSize(7).fillColor("#8899AA").font("Helvetica")
+      .text("Business Management System", 45, 828, { width: 250 });
+    doc.fontSize(8).fillColor(PDF.coral).font("Helvetica-Bold")
+      .text(`Page ${i + 1} / ${pages.count}`, 445, 815, { width: 100, align: "right" });
+  }
+}
+
+/* ========== PDF GENERATORS ========== */
+
+async function generateSummaryPDF(country: "japan" | "korea", role: Session["role"]): Promise<Buffer> {
+  const wb = await loadExcel(country, country === "japan" ? JAPAN_EXCEL_URL : KOREA_EXCEL_URL, country === "japan" ? LOCAL_JAPAN_EXCEL_PATH : LOCAL_KOREA_EXCEL_PATH);
+  const s = readBusinessSummary(wb);
+  const stock = readStock(wb);
+  const investors = readInvestors(wb);
+
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({ margin: 0, size: "A4", bufferPages: true });
+      const chunks: Buffer[] = [];
+      doc.on("data", (c: Buffer) => chunks.push(c));
+      doc.on("end", () => resolve(Buffer.concat(chunks)));
+      doc.on("error", reject);
+
+      const countryName = country === "japan" ? "JAPAN" : "KOREA";
+      const isAuth4 = role === "auth4";
+
+      drawHeader(doc, countryName, "BUSINESS SUMMARY");
+      doc.y = 200;
+      drawSectionTitle(doc, "Sales & Business", "chart");
+
+      const saveY = doc.y;
+      drawKeyValue(doc, "Total Sales", `LKR ${money(s.sales)}`);
+      drawKeyValue(doc, "Total Purchases", `LKR ${money(s.purchases)}`);
+      drawKeyValue(doc, "Total Expenses", `LKR ${money(s.expenses)}`);
+      drawKeyValue(doc, "Business Profit / Loss", `LKR ${money(s.profit)}`, s.profit < 0 ? PDF.red : PDF.green);
+
+      const chartStartY = saveY - 40;
+      doc.save();
+      const currentY = doc.y;
+      doc.y = chartStartY;
+
+      const data = [
+        { label: "Sales", value: s.sales, color: PDF.navyMid },
+        { label: "Purchases", value: s.purchases, color: "#2E6BA8" },
+        { label: "Expenses", value: s.expenses, color: PDF.coral },
+      ];
+      const chartX = 320;
+      const chartY = chartStartY + 30;
+      const chartW = 230;
+      const chartH = 90;
+      const maxV = Math.max(...data.map((d) => d.value), 1);
+      const baseY = chartY + chartH;
+      const barW = 30;
+      const gap = (chartW - barW * data.length) / (data.length + 1);
+
+      doc.fontSize(9).fillColor(PDF.navy).font("Helvetica-Bold")
+        .text("Sales / Purchases / Expenses", chartX, chartStartY, { width: chartW, align: "left" });
+      doc.fontSize(7).fillColor(PDF.textGray).font("Helvetica")
+        .text("Amount in LKR", chartX, chartStartY + 15, { width: chartW, align: "right" });
+
+      for (let i = 0; i <= 3; i++) {
+        const gy = baseY - (chartH / 3) * i;
+        doc.strokeColor("#EEEEEE").lineWidth(0.5).moveTo(chartX, gy).lineTo(chartX + chartW, gy).stroke();
+        doc.fontSize(7).fillColor(PDF.textLight)
+          .text(money((maxV / 3) * i), chartX - 38, gy - 4, { width: 35, align: "right" });
+      }
+      doc.strokeColor("#CCCCCC").lineWidth(0.8).moveTo(chartX, baseY).lineTo(chartX + chartW, baseY).stroke();
+
+      data.forEach((d, i) => {
+        const bh = Math.max((d.value / maxV) * chartH, 2);
+        const bx = chartX + gap + i * (barW + gap);
+        const by = baseY - bh;
+        doc.rect(bx, by, barW, bh).fill(d.color);
+        doc.fontSize(8).fillColor(PDF.navy).font("Helvetica-Bold")
+          .text(money(d.value), bx - 15, by - 14, { width: barW + 30, align: "center" });
+        doc.fontSize(7).fillColor(PDF.textGray).font("Helvetica")
+          .text(d.label, bx - 5, baseY + 5, { width: barW + 10, align: "center" });
       });
 
-    },
-    {
-      threshold:.12
-    }
-  );
+      doc.y = Math.max(currentY, baseY + 25);
+      doc.restore();
 
+      if (!isAuth4) {
+        doc.moveDown(0.5);
+        const rowY = doc.y;
 
-document
-.querySelectorAll(".reveal")
-.forEach(function(element){
+        doc.fontSize(10).fillColor(PDF.navyMid).font("Helvetica-Bold")
+          .text("INVESTORS", 55, rowY, { characterSpacing: 1 });
+        doc.fontSize(9).fillColor(PDF.textGray).font("Helvetica")
+          .text("Capital In", 55, rowY + 22, { width: 130 });
+        doc.fontSize(11).fillColor(PDF.navy).font("Helvetica-Bold")
+          .text(`LKR ${money(s.capitalIn)}`, 175, rowY + 22, { width: 100, align: "right" });
+        doc.fontSize(9).fillColor(PDF.textGray).font("Helvetica")
+          .text("Withdrawals", 55, rowY + 42, { width: 130 });
+        doc.fontSize(11).fillColor(PDF.navy).font("Helvetica-Bold")
+          .text(`LKR ${money(s.withdrawals)}`, 175, rowY + 42, { width: 100, align: "right" });
 
-  revealObserver.observe(element);
+        doc.fontSize(10).fillColor(PDF.navyMid).font("Helvetica-Bold")
+          .text("FOREIGN INVESTMENTS", 320, rowY, { characterSpacing: 1 });
+        doc.fontSize(9).fillColor(PDF.textGray).font("Helvetica")
+          .text("Japan to Korea", 320, rowY + 22, { width: 130 });
+        doc.fontSize(11).fillColor(PDF.navy).font("Helvetica-Bold")
+          .text(`LKR ${money(s.japanToKorea)}`, 470, rowY + 22, { width: 75, align: "right" });
+        doc.fontSize(9).fillColor(PDF.textGray).font("Helvetica")
+          .text("Korea to Japan", 320, rowY + 42, { width: 130 });
+        doc.fontSize(11).fillColor(PDF.navy).font("Helvetica-Bold")
+          .text(`LKR ${money(s.koreaToJapan)}`, 470, rowY + 42, { width: 75, align: "right" });
 
-});
-
-
-/* =========================
-FAQ
-========================= */
-
-document
-.querySelectorAll(".faq-question")
-.forEach(function(button){
-
-  button.addEventListener("click",function(){
-
-    const item =
-      button.parentElement;
-
-    document
-    .querySelectorAll(".faq-item")
-    .forEach(function(other){
-
-      if(other !== item){
-
-        other.classList.remove("active");
-
+        doc.y = rowY + 70;
       }
 
-    });
+      doc.moveDown(0.5);
+      drawSectionTitle(doc, "Cash & Cheques", "money");
+      drawKeyValue(doc, "Cash Received", `LKR ${money(s.cashReceived)}`, PDF.green);
+      drawKeyValue(doc, "Pending", `LKR ${money(s.pending)}`);
+      drawKeyValue(doc, "Deposited", `LKR ${money(s.deposited)}`);
+      drawKeyValue(doc, "Cleared", `LKR ${money(s.cleared)}`);
+      drawKeyValue(doc, "Returned", `LKR ${money(s.returned)}`, PDF.red);
+      drawKeyValue(doc, "Due Soon (7 Days)", `LKR ${money(s.dueSoon)}`);
 
-    item.classList.toggle("active");
+      if (!isAuth4) {
+        const posY = doc.y + 10;
+        doc.save();
+        doc.roundedRect(45, posY, 505, 70, 8).fill(PDF.navy);
+        doc.restore();
 
+        doc.circle(75, posY + 35, 20).fill("#1A3A5C");
+        doc.circle(75, posY + 35, 16).fill(PDF.navyMid);
+
+        doc.save();
+        doc.strokeColor("#FFFFFF").lineWidth(1.5);
+        doc.ellipse(75, posY + 30, 7, 3).stroke();
+        doc.moveTo(68, posY + 30).lineTo(68, posY + 40).stroke();
+        doc.moveTo(82, posY + 30).lineTo(82, posY + 40).stroke();
+        doc.ellipse(75, posY + 40, 7, 3).stroke();
+        doc.restore();
+
+        doc.fontSize(10).fillColor("#FFFFFF").font("Helvetica-Bold")
+          .text("CASH POSITION", 110, posY + 20, { characterSpacing: 1 });
+
+        doc.strokeColor("#1A3A5C").lineWidth(1)
+          .moveTo(240, posY + 15).lineTo(240, posY + 55).stroke();
+
+        doc.fontSize(7).fillColor("#8899AA").font("Helvetica")
+          .text("Total Cash In", 255, posY + 15);
+        doc.fontSize(16).fillColor("#FFFFFF").font("Helvetica-Bold")
+          .text(`LKR ${money(s.cashIn)}`, 255, posY + 28);
+
+        doc.strokeColor("#1A3A5C").lineWidth(1)
+          .moveTo(430, posY + 15).lineTo(430, posY + 55).stroke();
+
+        doc.fontSize(7).fillColor("#8899AA").font("Helvetica")
+          .text("Balance", 445, posY + 15);
+        doc.fontSize(12).fillColor(s.balance >= 0 ? "#10B981" : "#EF4444").font("Helvetica-Bold")
+          .text(`LKR ${money(s.balance)}`, 445, posY + 28);
+
+        doc.y = posY + 85;
+      }
+
+      if (stock.length) {
+        doc.addPage();
+        drawHeader(doc, countryName, "STOCK REPORT");
+        doc.y = 200;
+        drawSectionTitle(doc, "Stock Inventory", "cart");
+        drawTable(doc, ["Item", "Qty In", "Qty Out", "Balance"],
+          stock.map((item) => [item.item, money(item.qtyIn), money(item.qtyOut), money(item.balance)]),
+          [195, 100, 100, 100]);
+        doc.fontSize(11).fillColor(PDF.navy).font("Helvetica-Bold")
+          .text(`Total Stock Qty: ${money(s.stockBalance)}`, { align: "right" });
+      }
+
+      if (!isAuth4 && investors.length > 0) {
+        doc.addPage();
+        drawHeader(doc, countryName, "INVESTOR DETAILS");
+        doc.y = 200;
+        drawSectionTitle(doc, "Investor Summary", "people");
+        drawTable(doc, ["Investor", "Capital In", "Withdrawal", "Balance"],
+          investors.map((inv) => [inv.name, money(inv.capitalIn), money(inv.withdrawal), money(inv.finalBalance)]),
+          [165, 110, 110, 110]);
+        const total = investors.reduce((sum, inv) => sum + inv.finalBalance, 0);
+        doc.fontSize(11).fillColor(PDF.navy).font("Helvetica-Bold")
+          .text(`Total Balance: LKR ${money(total)}`, { align: "right" });
+      }
+
+      drawFooter(doc);
+      doc.end();
+    } catch (err) { reject(err); }
   });
+}
 
-});
+async function generateInvestorsPDF(country: "japan" | "korea", role: Session["role"]): Promise<Buffer> {
+  const wb = await loadExcel(country, country === "japan" ? JAPAN_EXCEL_URL : KOREA_EXCEL_URL, country === "japan" ? LOCAL_JAPAN_EXCEL_PATH : LOCAL_KOREA_EXCEL_PATH);
+  const investors = readInvestors(wb);
 
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({ margin: 0, size: "A4", bufferPages: true });
+      const chunks: Buffer[] = [];
+      doc.on("data", (c: Buffer) => chunks.push(c));
+      doc.on("end", () => resolve(Buffer.concat(chunks)));
+      doc.on("error", reject);
 
-/* =========================
-WORLD MAP
-========================= */
+      const countryName = country === "japan" ? "JAPAN" : "KOREA";
+      drawHeader(doc, countryName, "INVESTORS");
+      doc.y = 200;
 
-const svg =
-  d3.select("#heroMap");
+      if (!investors.length) {
+        doc.fontSize(12).fillColor(PDF.textGray).text("No investor data found.", { align: "center" });
+      } else if (role === "auth4") {
+        if (investors.length >= 4) {
+          const inv = investors[3];
+          drawSectionTitle(doc, "Investor Details", "people");
+          drawKeyValue(doc, "Name", inv.name);
+          drawKeyValue(doc, "Investment", `LKR ${money(inv.originalInvestment)}`);
+          drawKeyValue(doc, "Capital In", `LKR ${money(inv.capitalIn)}`);
+          drawKeyValue(doc, "Withdrawal", `LKR ${money(inv.withdrawal)}`);
+          drawKeyValue(doc, "Profit", `LKR ${money(inv.profit)}`);
+          drawKeyValue(doc, "Share", percent(inv.profitPct));
+          drawKeyValue(doc, "Final Balance", `LKR ${money(inv.finalBalance)}`, PDF.green);
+        }
+      } else {
+        drawSectionTitle(doc, "Investor Summary", "people");
+        drawTable(doc, ["Investor", "Capital In", "Withdrawal", "Balance"],
+          investors.map((inv) => [inv.name, money(inv.capitalIn), money(inv.withdrawal), money(inv.finalBalance)]),
+          [165, 110, 110, 110]);
+        const total = investors.reduce((sum, inv) => sum + inv.finalBalance, 0);
+        doc.fontSize(11).fillColor(PDF.navy).font("Helvetica-Bold")
+          .text(`Total Balance: LKR ${money(total)}`, { align: "right" });
+      }
 
-const width = 1440;
-const height = 760;
+      drawFooter(doc);
+      doc.end();
+    } catch (err) { reject(err); }
+  });
+}
 
+async function generateChequesPDF(country: "japan" | "korea"): Promise<Buffer> {
+  const wb = await loadExcel(country, country === "japan" ? JAPAN_EXCEL_URL : KOREA_EXCEL_URL, country === "japan" ? LOCAL_JAPAN_EXCEL_PATH : LOCAL_KOREA_EXCEL_PATH);
+  const cheques = readCheques(wb);
 
-const projection =
-  d3.geoNaturalEarth1()
-    .scale(225)
-    .translate([
-      width / 2,
-      height / 2 + 25
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({ margin: 0, size: "A4", bufferPages: true });
+      const chunks: Buffer[] = [];
+      doc.on("data", (c: Buffer) => chunks.push(c));
+      doc.on("end", () => resolve(Buffer.concat(chunks)));
+      doc.on("error", reject);
+
+      const countryName = country === "japan" ? "JAPAN" : "KOREA";
+      drawHeader(doc, countryName, "CHEQUES");
+      doc.y = 200;
+
+      if (!cheques.length) {
+        doc.fontSize(12).fillColor(PDF.textGray).text("No cheque records found.", { align: "center" });
+      } else {
+        let pending = 0, deposited = 0, cleared = 0, returned = 0;
+        for (const ch of cheques) {
+          const st = normalizeText(ch.status);
+          if (st.includes("pending")) pending += ch.amount;
+          else if (st.includes("deposit")) deposited += ch.amount;
+          else if (st.includes("clear") || st.includes("passed")) cleared += ch.amount;
+          else if (st.includes("return")) returned += ch.amount;
+        }
+        drawSectionTitle(doc, "Cheque Status Summary", "check");
+        drawKeyValue(doc, "Pending", `LKR ${money(pending)}`);
+        drawKeyValue(doc, "Deposited", `LKR ${money(deposited)}`);
+        drawKeyValue(doc, "Cleared", `LKR ${money(cleared)}`, PDF.green);
+        drawKeyValue(doc, "Returned", `LKR ${money(returned)}`, PDF.red);
+
+        doc.moveDown(1);
+        drawSectionTitle(doc, "Cheque Details", "doc");
+        drawTable(doc,
+          ["Cheque No.", "Party", "Bank", "Amount", "Status", "Due Date"],
+          cheques.map((ch) => [
+            ch.chequeNo,
+            ch.party || "-",
+            ch.bank || "-",
+            money(ch.amount),
+            ch.status || "-",
+            ch.dueDate || "-",
+          ]),
+          [65, 100, 85, 85, 90, 80]);
+      }
+
+      drawFooter(doc);
+      doc.end();
+    } catch (err) { reject(err); }
+  });
+}
+
+async function generateTodayPDF(country: "japan" | "korea"): Promise<Buffer> {
+  const wb = await loadExcel(country, country === "japan" ? JAPAN_EXCEL_URL : KOREA_EXCEL_URL, country === "japan" ? LOCAL_JAPAN_EXCEL_PATH : LOCAL_KOREA_EXCEL_PATH);
+  const { entries, totalCashIn, totalCashOut, totalQtyIn, totalQtyOut } = readToday(wb);
+
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({ margin: 0, size: "A4", bufferPages: true });
+      const chunks: Buffer[] = [];
+      doc.on("data", (c: Buffer) => chunks.push(c));
+      doc.on("end", () => resolve(Buffer.concat(chunks)));
+      doc.on("error", reject);
+
+      const countryName = country === "japan" ? "JAPAN" : "KOREA";
+      drawHeader(doc, countryName, "TODAY REPORT");
+      doc.y = 200;
+
+      if (!entries.length) {
+        doc.fontSize(12).fillColor(PDF.textGray).text("No entries found for today.", { align: "center" });
+      } else {
+        drawSectionTitle(doc, "Today's Transactions", "doc");
+        drawTable(doc, ["Category / Item", "Qty In", "Qty Out", "Cash In", "Cash Out"],
+          entries.map((e) => [
+            `${e.category || "Entry"}${e.item ? ` - ${e.item}` : ""}`,
+            money(e.qtyIn), money(e.qtyOut), money(e.cashIn), money(e.cashOut),
+          ]),
+          [155, 80, 80, 90, 90]);
+
+        doc.moveDown(1);
+        drawSectionTitle(doc, "Totals", "chart");
+        drawKeyValue(doc, "Total Cash In", `LKR ${money(totalCashIn)}`, PDF.green);
+        drawKeyValue(doc, "Total Cash Out", `LKR ${money(totalCashOut)}`, PDF.red);
+        drawKeyValue(doc, "Total Qty In", money(totalQtyIn));
+        drawKeyValue(doc, "Total Qty Out", money(totalQtyOut));
+      }
+
+      drawFooter(doc);
+      doc.end();
+    } catch (err) { reject(err); }
+  });
+}
+
+/* ========== MENUS ========== */
+
+async function showMainMenu(phone: string) {
+  const session = sessionFor(phone);
+  const isAuth4 = session?.role === "auth4";
+
+  if (isAuth4) {
+    await sendInteractiveButtons(phone, "📊 BUSINESS MANAGEMENT\n\nSelect an option:", [
+      { id: "japan", title: "🇯🇵 Japan" },
+      { id: "logout", title: "🚪 Logout" },
     ]);
-
-
-const path =
-  d3.geoPath()
-    .projection(projection);
-
-
-const mapGroup =
-  svg.append("g");
-
-const routesGroup =
-  svg.append("g");
-
-const pointsGroup =
-  svg.append("g");
-
-
-const japan =
-  [138.2529,36.2048];
-
-
-const destinations = [
-
-  {
-    name:"Korea",
-    coordinates:[127.7669,35.9078]
-  },
-
-  {
-    name:"Thailand",
-    coordinates:[100.5018,13.7563]
-  },
-
-  {
-    name:"Singapore",
-    coordinates:[103.8198,1.3521]
-  },
-
-  {
-    name:"UAE",
-    coordinates:[54.3773,24.4539]
-  },
-
-  {
-    name:"Saudi Arabia",
-    coordinates:[46.6753,24.7136]
-  },
-
-  {
-    name:"Germany",
-    coordinates:[10.4515,51.1657]
-  },
-
-  {
-    name:"France",
-    coordinates:[2.2137,46.2276]
-  },
-
-  {
-    name:"Spain",
-    coordinates:[-3.7038,40.4168]
-  },
-
-  {
-    name:"Egypt",
-    coordinates:[31.2357,30.0444]
-  },
-
-  {
-    name:"USA",
-    coordinates:[-100,38]
-  },
-
-  {
-    name:"South America",
-    coordinates:[-58.3816,-34.6037]
-  },
-
-  {
-    name:"Australia",
-    coordinates:[151.2093,-33.8688]
-  }
-
-];
-
-
-/* =========================
-SVG FILTER
-========================= */
-
-const defs =
-  svg.append("defs");
-
-
-const routeGlow =
-  defs
-    .append("filter")
-    .attr("id","routeGlow")
-    .attr("x","-100%")
-    .attr("y","-100%")
-    .attr("width","300%")
-    .attr("height","300%");
-
-
-routeGlow
-  .append("feGaussianBlur")
-  .attr("stdDeviation","3")
-  .attr("result","blur");
-
-
-const merge =
-  routeGlow.append("feMerge");
-
-
-merge
-  .append("feMergeNode")
-  .attr("in","blur");
-
-
-merge
-  .append("feMergeNode")
-  .attr("in","SourceGraphic");
-
-
-/* =========================
-LOAD MAP
-========================= */
-
-d3.json(
-  "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
-)
-.then(function(world){
-
-  const countries =
-    topojson.feature(
-      world,
-      world.objects.countries
-    );
-
-
-  /* COUNTRIES */
-
-  mapGroup
-    .selectAll("path")
-    .data(countries.features)
-    .join("path")
-    .attr("d",path)
-    .attr("fill","rgba(35,120,160,.25)")
-    .attr("stroke","rgba(130,210,255,.25)")
-    .attr("stroke-width",.8);
-
-
-  const start =
-    projection(japan);
-
-
-  if(!start){
-
-    console.error(
-      "Japan projection failed"
-    );
-
     return;
-
   }
 
+  await sendInteractiveButtons(phone, "📊 BUSINESS MANAGEMENT\n\nSelect an option:", [
+    { id: "japan", title: "🇯🇵 Japan" },
+    { id: "korea", title: "🇰🇷 Korea" },
+    { id: "logout", title: "🚪 Logout" },
+  ]);
+}
 
-  /* =========================
-  ROUTES
-  ========================= */
+async function showCountryMenu(phone: string, country: "japan" | "korea") {
+  const session = sessionFor(phone);
 
-  destinations.forEach(function(destination){
+  if (country === "korea" && session?.role === "auth4") {
+    await sendWhatsAppText(phone, "⛔ Korea access is not authorized for your number.");
+    return;
+  }
 
-    const end =
-      projection(destination.coordinates);
+  if (country === "japan" && session?.role === "auth4") {
+    await sendInteractiveList(phone, "🇯🇵 JAPAN", "Choose a report:", [
+      { id: "japan_today", title: "📅 Today" },
+      { id: "japan_summary", title: "📊 Summary" },
+      { id: "japan_stock", title: "📦 Stock" },
+      { id: "japan_investors", title: "👥 Investors" },
+      { id: "japan_cheques", title: "🧾 Cheques" },
+      { id: "japan_summary_pdf", title: "📄 Summary PDF" },
+      { id: "japan_investors_pdf", title: "📄 Investors PDF" },
+      { id: "japan_cheques_pdf", title: "📄 Cheques PDF" },
+      { id: "japan_today_pdf", title: "📄 Today PDF" },
+      { id: "main_menu", title: "🏠 Main Menu" },
+    ]);
+    return;
+  }
 
+  const flag = country === "japan" ? "🇯🇵" : "🇰🇷";
+  const name = country === "japan" ? "JAPAN" : "KOREA";
+  await sendInteractiveList(phone, `${flag} ${name}`, "Choose a report:", [
+    { id: `${country}_today`, title: "📅 Today" },
+    { id: `${country}_summary`, title: "📊 Summary" },
+    { id: `${country}_stock`, title: "📦 Stock" },
+    { id: `${country}_investors`, title: "👥 Investors" },
+    { id: `${country}_cheques`, title: "🧾 Cheques" },
+    { id: `${country}_summary_pdf`, title: "📄 Summary PDF" },
+    { id: `${country}_investors_pdf`, title: "📄 Investors PDF" },
+    { id: `${country}_cheques_pdf`, title: "📄 Cheques PDF" },
+    { id: `${country}_today_pdf`, title: "📄 Today PDF" },
+    { id: "main_menu", title: "🏠 Main Menu" },
+  ]);
+}
 
-    if(!end) return;
+/* ========== TEXT REPORTS ========== */
 
+async function japanStockReport(phone: string, role: Session["role"]) {
+  try {
+    const wb = await loadExcel("japan", JAPAN_EXCEL_URL, LOCAL_JAPAN_EXCEL_PATH);
+    const stock = readStock(wb);
+    let message = "🇯🇵 JAPAN STOCK SUMMARY\n\n";
+    if (!stock.length) { message += "📊 Total Stock Qty: 0\n\nNo stock rows found."; }
+    else {
+      let totalBal = 0;
+      for (const item of stock) {
+        totalBal += item.balance;
+        message += `📦 ${item.item}\nIn: ${money(item.qtyIn)} | Out: ${money(item.qtyOut)} | Balance: ${money(item.balance)}\n\n`;
+      }
+      message += `📊 Total Stock Qty: ${money(totalBal)}`;
+    }
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Japan Stock Error\n\n" + String(error)); }
+}
 
-    const midX =
-      (start[0] + end[0]) / 2;
+async function koreaStockReport(phone: string) {
+  try {
+    const wb = await loadExcel("korea", KOREA_EXCEL_URL, LOCAL_KOREA_EXCEL_PATH);
+    const stock = readStock(wb);
+    let message = "🇰🇷 KOREA STOCK SUMMARY\n\n";
+    if (!stock.length) { message += "📊 Total Stock Qty: 0\n\nNo stock rows found."; }
+    else {
+      for (const item of stock) {
+        message += `📦 ${item.item}\nIn: ${money(item.qtyIn)} | Out: ${money(item.qtyOut)} | Balance: ${money(item.balance)}\n\n`;
+      }
+      message += `📊 Total Stock Qty: ${money(stock.reduce((sum, x) => sum + x.balance, 0))}`;
+    }
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Korea Stock Error\n\n" + String(error)); }
+}
 
+async function japanSummaryReport(phone: string, role: Session["role"]) {
+  try {
+    const wb = await loadExcel("japan", JAPAN_EXCEL_URL, LOCAL_JAPAN_EXCEL_PATH);
+    const s = readBusinessSummary(wb);
+    let message = "🇯🇵 JAPAN BUSINESS SUMMARY\n\n━━━━━━━━━━━━━━\n\n";
+    message += "💵 SALES & BUSINESS\n💰 Total Sales: LKR " + money(s.sales) + "\n📦 Total Purchases: LKR " + money(s.purchases) + "\n💸 Total Expenses: LKR " + money(s.expenses) + "\n📊 Business Profit / Loss: LKR " + money(s.profit) + "\n\n";
+    if (role !== "auth4") {
+      message += "👥 INVESTORS\n💳 Capital In: LKR " + money(s.capitalIn) + "\n🏧 Withdrawals: LKR " + money(s.withdrawals) + "\n\n";
+    }
+    message += "🌏 FOREIGN INVESTMENTS\nJapan to Korea: LKR " + money(s.japanToKorea) + "\nKorea to Japan: LKR " + money(s.koreaToJapan) + "\n\n";
+    message += "🏦 CASH & CHEQUES\n💵 Cash Received: LKR " + money(s.cashReceived) + "\n🔵 Pending: LKR " + money(s.pending) + "\n🟡 Deposited: LKR " + money(s.deposited) + "\n🟢 Cleared: LKR " + money(s.cleared) + "\n🔴 Returned: LKR " + money(s.returned) + "\n⏰ Due Soon: LKR " + money(s.dueSoon) + "\n\n";
+    if (role !== "auth4") {
+      message += "💰 CASH POSITION\n⬆️ Cash In: LKR " + money(s.cashIn) + "\n⬇️ Cash Out: LKR " + money(s.cashOut) + "\n🏦 Balance: LKR " + money(s.balance) + "\n\n";
+    }
+    message += "📦 STOCK\n📥 Qty In: " + money(s.qtyIn) + "\n📤 Qty Out: " + money(s.qtyOut) + "\n📊 Stock Balance: " + money(s.stockBalance) + "\n";
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Japan Summary Error\n\n" + String(error)); }
+}
 
-    const distance =
-      Math.abs(
-        end[0] - start[0]
-      );
+async function koreaSummaryReport(phone: string) {
+  try {
+    const wb = await loadExcel("korea", KOREA_EXCEL_URL, LOCAL_KOREA_EXCEL_PATH);
+    const s = readBusinessSummary(wb);
+    let message = "🇰🇷 KOREA BUSINESS SUMMARY\n\n━━━━━━━━━━━━━━\n\n";
+    message += "💵 SALES & BUSINESS\n💰 Total Sales: LKR " + money(s.sales) + "\n📦 Total Purchases: LKR " + money(s.purchases) + "\n💸 Total Expenses: LKR " + money(s.expenses) + "\n📊 Business Profit / Loss: LKR " + money(s.profit) + "\n\n";
+    message += "👥 INVESTORS\n💳 Capital In: LKR " + money(s.capitalIn) + "\n🏧 Withdrawals: LKR " + money(s.withdrawals) + "\n\n";
+    message += "🌏 FOREIGN INVESTMENTS\nJapan to Korea: LKR " + money(s.japanToKorea) + "\nKorea to Japan: LKR " + money(s.koreaToJapan) + "\n\n";
+    message += "🏦 CASH & CHEQUES\n💵 Cash Received: LKR " + money(s.cashReceived) + "\n🔵 Pending: LKR " + money(s.pending) + "\n🟡 Deposited: LKR " + money(s.deposited) + "\n🟢 Cleared: LKR " + money(s.cleared) + "\n🔴 Returned: LKR " + money(s.returned) + "\n⏰ Due Soon: LKR " + money(s.dueSoon) + "\n\n";
+    message += "💰 CASH POSITION\n⬆️ Cash In: LKR " + money(s.cashIn) + "\n⬇️ Cash Out: LKR " + money(s.cashOut) + "\n🏦 Balance: LKR " + money(s.balance) + "\n\n";
+    message += "📦 STOCK\n📥 Qty In: " + money(s.qtyIn) + "\n📤 Qty Out: " + money(s.qtyOut) + "\n📊 Stock Balance: " + money(s.stockBalance) + "\n";
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Korea Summary Error\n\n" + String(error)); }
+}
 
+async function japanInvestorsReport(phone: string, role: Session["role"]) {
+  try {
+    const wb = await loadExcel("japan", JAPAN_EXCEL_URL, LOCAL_JAPAN_EXCEL_PATH);
+    const investors = readInvestors(wb);
+    if (!investors.length) { await sendWhatsAppText(phone, "No investor data found."); return; }
 
-    const curveHeight =
-      Math.max(
-        50,
-        distance * .18
-      );
-
-
-    const midY =
-      Math.min(
-        start[1],
-        end[1]
-      ) - curveHeight;
-
-
-    const curvePath = `
-      M ${start[0]} ${start[1]}
-      Q ${midX} ${midY}
-      ${end[0]} ${end[1]}
-    `;
-
-
-    /* ROUTE */
-
-    const route =
-      routesGroup
-        .append("path")
-        .attr("d",curvePath)
-        .attr("fill","none")
-        .attr("stroke","#ffd83d")
-        .attr("stroke-width",1.5)
-        .attr("stroke-opacity",.38)
-        .attr("stroke-dasharray","6 8");
-
-
-    /* =========================
-    DASH ANIMATION
-    ========================= */
-
-    function animateRoute(){
-
-      route
-        .attr("stroke-dashoffset",0)
-        .transition()
-        .duration(3000)
-        .ease(d3.easeLinear)
-        .attr("stroke-dashoffset",-100)
-        .on("end",function(){
-
-          animateRoute();
-
-        });
-
+    if (role === "auth4") {
+      if (investors.length < 4) { await sendWhatsAppText(phone, "❌ 4th investor record not found."); return; }
+      const inv = investors[3];
+      await sendWhatsAppText(phone, `👥 JAPAN INVESTOR SUMMARY\n\n👤 ${inv.name}\nInvestment: LKR ${money(inv.originalInvestment)}\nCapital In: LKR ${money(inv.capitalIn)}\nWithdrawal: LKR ${money(inv.withdrawal)}\nProfit: LKR ${money(inv.profit)}\nShare: ${percent(inv.profitPct)}\nFinal Balance: LKR ${money(inv.finalBalance)}`);
+      return;
     }
 
-
-    animateRoute();
-
-
-    /* =========================
-    MOVING DOT
-    ========================= */
-
-    const dot =
-      routesGroup
-        .append("circle")
-        .attr("r",4)
-        .attr("fill","#ffd83d")
-        .attr("filter","url(#routeGlow)");
-
-
-    function animateDot(){
-
-      const pathNode =
-        route.node();
-
-
-      const totalLength =
-        pathNode.getTotalLength();
-
-
-      dot
-        .interrupt()
-        .attr(
-          "transform",
-          `translate(${start[0]},${start[1]})`
-        );
-
-
-      dot
-        .transition()
-        .duration(
-          3000 + Math.random() * 1500
-        )
-        .ease(d3.easeLinear)
-        .attrTween(
-          "transform",
-          function(){
-
-            return function(t){
-
-              const point =
-                pathNode.getPointAtLength(
-                  t * totalLength
-                );
-
-
-              return `
-                translate(
-                  ${point.x},
-                  ${point.y}
-                )
-              `;
-
-            };
-
-          }
-        )
-        .on("end",function(){
-
-          setTimeout(
-            animateDot,
-            500 + Math.random() * 1000
-          );
-
-        });
-
+    let message = "🇯🇵 JAPAN INVESTOR SUMMARY\n\n";
+    let totalBal = 0;
+    for (const inv of investors) {
+      totalBal += inv.finalBalance;
+      message += `👤 ${inv.name}\nInvestment: LKR ${money(inv.originalInvestment)}\nCapital In: LKR ${money(inv.capitalIn)}\nWithdrawal: LKR ${money(inv.withdrawal)}\nProfit: LKR ${money(inv.profit)}\nShare: ${percent(inv.profitPct)}\nFinal Balance: LKR ${money(inv.finalBalance)}\n\n`;
     }
+    message += `━━━━━━━━━━━━━━\n📊 Total Balance: LKR ${money(totalBal)}`;
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Japan Investors Error\n\n" + String(error)); }
+}
 
+async function koreaInvestorsReport(phone: string) {
+  try {
+    const wb = await loadExcel("korea", KOREA_EXCEL_URL, LOCAL_KOREA_EXCEL_PATH);
+    const investors = readInvestors(wb);
+    let message = "🇰🇷 KOREA INVESTOR SUMMARY\n\n";
+    if (!investors.length) { message += "No investor data found."; }
+    else {
+      let totalBal = 0;
+      for (const inv of investors) {
+        totalBal += inv.finalBalance;
+        message += `👤 ${inv.name}\nInvestment: LKR ${money(inv.originalInvestment)}\nCapital In: LKR ${money(inv.capitalIn)}\nWithdrawal: LKR ${money(inv.withdrawal)}\nProfit: LKR ${money(inv.profit)}\nShare: ${percent(inv.profitPct)}\nFinal Balance: LKR ${money(inv.finalBalance)}\n\n`;
+      }
+      message += `━━━━━━━━━━━━━━\n📊 Total Balance: LKR ${money(totalBal)}`;
+    }
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Korea Investors Error\n\n" + String(error)); }
+}
 
-    animateDot();
+async function japanChequesReport(phone: string) {
+  try {
+    const wb = await loadExcel("japan", JAPAN_EXCEL_URL, LOCAL_JAPAN_EXCEL_PATH);
+    const cheques = readCheques(wb);
+    let message = "🇯🇵 JAPAN CHEQUE SUMMARY\n\n";
+    if (!cheques.length) { message += "No cheque records found."; }
+    else {
+      let pending = 0, deposited = 0, cleared = 0, returned = 0;
+      const details: string[] = [];
+      for (const ch of cheques) {
+        const st = normalizeText(ch.status);
+        if (st.includes("pending")) pending += ch.amount;
+        else if (st.includes("deposit")) deposited += ch.amount;
+        else if (st.includes("clear") || st.includes("passed")) cleared += ch.amount;
+        else if (st.includes("return")) returned += ch.amount;
+        details.push(`🧾 ${ch.chequeNo} | LKR ${money(ch.amount)} | ${ch.status || "No Status"}${ch.dueDate ? ` | Due ${ch.dueDate}` : ""}${ch.party ? ` | ${ch.party}` : ""}${ch.bank ? ` | ${ch.bank}` : ""}`);
+      }
+      message += `🔵 Pending: LKR ${money(pending)}\n🟡 Deposited: LKR ${money(deposited)}\n🟢 Cleared: LKR ${money(cleared)}\n🔴 Returned: LKR ${money(returned)}\n\n`;
+      message += details.join("\n");
+    }
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Japan Cheques Error\n\n" + String(error)); }
+}
 
+async function koreaChequesReport(phone: string) {
+  try {
+    const wb = await loadExcel("korea", KOREA_EXCEL_URL, LOCAL_KOREA_EXCEL_PATH);
+    const cheques = readCheques(wb);
+    let message = "🇰🇷 KOREA CHEQUE SUMMARY\n\n";
+    if (!cheques.length) { message += "No cheque records found."; }
+    else {
+      let pending = 0, deposited = 0, cleared = 0, returned = 0;
+      const details: string[] = [];
+      for (const ch of cheques) {
+        const st = normalizeText(ch.status);
+        if (st.includes("pending")) pending += ch.amount;
+        else if (st.includes("deposit")) deposited += ch.amount;
+        else if (st.includes("clear") || st.includes("passed")) cleared += ch.amount;
+        else if (st.includes("return")) returned += ch.amount;
+        details.push(`🧾 ${ch.chequeNo} | LKR ${money(ch.amount)} | ${ch.status || "No Status"}${ch.dueDate ? ` | Due ${ch.dueDate}` : ""}${ch.party ? ` | ${ch.party}` : ""}${ch.bank ? ` | ${ch.bank}` : ""}`);
+      }
+      message += `🔵 Pending: LKR ${money(pending)}\n🟡 Deposited: LKR ${money(deposited)}\n🟢 Cleared: LKR ${money(cleared)}\n🔴 Returned: LKR ${money(returned)}\n\n`;
+      message += details.join("\n");
+    }
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Korea Cheques Error\n\n" + String(error)); }
+}
 
-    /* DESTINATION POINT */
+async function japanTodayReport(phone: string) {
+  try {
+    const wb = await loadExcel("japan", JAPAN_EXCEL_URL, LOCAL_JAPAN_EXCEL_PATH);
+    const { entries, totalCashIn, totalCashOut, totalQtyIn, totalQtyOut } = readToday(wb);
+    let message = `🇯🇵 JAPAN TODAY — ${displayDate(new Date())}\n\n`;
+    if (!entries.length) { message += "📭 No entries found for today."; }
+    else {
+      for (const e of entries) {
+        message += `• ${e.category || "Entry"}${e.item ? ` — ${e.item}` : ""}\n  Qty In: ${money(e.qtyIn)} | Qty Out: ${money(e.qtyOut)}\n  Cash In: LKR ${money(e.cashIn)} | Cash Out: LKR ${money(e.cashOut)}\n\n`;
+      }
+      message += `━━━━━━━━━━━━━━\n💵 Total Cash In: LKR ${money(totalCashIn)}\n💸 Total Cash Out: LKR ${money(totalCashOut)}\n📦 Qty In: ${money(totalQtyIn)}\n📦 Qty Out: ${money(totalQtyOut)}`;
+    }
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Japan Today Error\n\n" + String(error)); }
+}
 
-    pointsGroup
-      .append("circle")
-      .attr("cx",end[0])
-      .attr("cy",end[1])
-      .attr("r",4)
-      .attr("fill","#8eeaff")
-      .attr("opacity",.9);
+async function koreaTodayReport(phone: string) {
+  try {
+    const wb = await loadExcel("korea", KOREA_EXCEL_URL, LOCAL_KOREA_EXCEL_PATH);
+    const { entries, totalCashIn, totalCashOut, totalQtyIn, totalQtyOut } = readToday(wb);
+    let message = `🇰🇷 KOREA TODAY — ${displayDate(new Date())}\n\n`;
+    if (!entries.length) { message += "📭 No entries found for today."; }
+    else {
+      for (const e of entries) {
+        message += `• ${e.category || "Entry"}${e.item ? ` — ${e.item}` : ""}\n  Qty In: ${money(e.qtyIn)} | Qty Out: ${money(e.qtyOut)}\n  Cash In: LKR ${money(e.cashIn)} | Cash Out: LKR ${money(e.cashOut)}\n\n`;
+      }
+      message += `━━━━━━━━━━━━━━\n💵 Total Cash In: LKR ${money(totalCashIn)}\n💸 Total Cash Out: LKR ${money(totalCashOut)}\n📦 Qty In: ${money(totalQtyIn)}\n📦 Qty Out: ${money(totalQtyOut)}`;
+    }
+    await sendWhatsAppText(phone, message);
+  } catch (error) { await sendWhatsAppText(phone, "❌ Korea Today Error\n\n" + String(error)); }
+}
 
+/* ========== PDF REPORT WRAPPERS ========== */
 
-    pointsGroup
-      .append("circle")
-      .attr("cx",end[0])
-      .attr("cy",end[1])
-      .attr("r",10)
-      .attr("fill","none")
-      .attr("stroke","#8eeaff")
-      .attr("stroke-width",1)
-      .attr("opacity",.35)
-      .attr("class","destination-pulse");
+async function japanSummaryPDFReport(phone: string, role: Session["role"]) {
+  try {
+    await sendWhatsAppText(phone, "📄 Generating Summary PDF... Please wait.");
+    const pdfBuffer = await generateSummaryPDF("japan", role);
+    await sendWhatsAppDocument(phone, pdfBuffer, `Japan_Summary_${new Date().toISOString().slice(0, 10)}.pdf`, "🇯🇵 Japan Business Summary");
+  } catch (error) {
+    console.error("Japan Summary PDF error:", error);
+    await sendWhatsAppText(phone, "❌ Failed: " + String(error));
+  }
+}
 
+async function koreaSummaryPDFReport(phone: string) {
+  try {
+    await sendWhatsAppText(phone, "📄 Generating Summary PDF... Please wait.");
+    const pdfBuffer = await generateSummaryPDF("korea", "authorized");
+    await sendWhatsAppDocument(phone, pdfBuffer, `Korea_Summary_${new Date().toISOString().slice(0, 10)}.pdf`, "🇰🇷 Korea Business Summary");
+  } catch (error) {
+    console.error("Korea Summary PDF error:", error);
+    await sendWhatsAppText(phone, "❌ Failed: " + String(error));
+  }
+}
 
-  });
+async function japanInvestorsPDFReport(phone: string, role: Session["role"]) {
+  try {
+    await sendWhatsAppText(phone, "📄 Generating Investors PDF... Please wait.");
+    const pdfBuffer = await generateInvestorsPDF("japan", role);
+    await sendWhatsAppDocument(phone, pdfBuffer, `Japan_Investors_${new Date().toISOString().slice(0, 10)}.pdf`, "🇯🇵 Japan Investors");
+  } catch (error) {
+    console.error("Japan Investors PDF error:", error);
+    await sendWhatsAppText(phone, "❌ Failed: " + String(error));
+  }
+}
 
+async function koreaInvestorsPDFReport(phone: string) {
+  try {
+    await sendWhatsAppText(phone, "📄 Generating Investors PDF... Please wait.");
+    const pdfBuffer = await generateInvestorsPDF("korea", "authorized");
+    await sendWhatsAppDocument(phone, pdfBuffer, `Korea_Investors_${new Date().toISOString().slice(0, 10)}.pdf`, "🇰🇷 Korea Investors");
+  } catch (error) {
+    console.error("Korea Investors PDF error:", error);
+    await sendWhatsAppText(phone, "❌ Failed: " + String(error));
+  }
+}
 
-  /* =========================
-  JAPAN
-  ========================= */
+async function japanChequesPDFReport(phone: string) {
+  try {
+    await sendWhatsAppText(phone, "📄 Generating Cheques PDF... Please wait.");
+    const pdfBuffer = await generateChequesPDF("japan");
+    await sendWhatsAppDocument(phone, pdfBuffer, `Japan_Cheques_${new Date().toISOString().slice(0, 10)}.pdf`, "🇯🇵 Japan Cheques");
+  } catch (error) { await sendWhatsAppText(phone, "❌ Failed: " + String(error)); }
+}
 
-  pointsGroup
-    .append("circle")
-    .attr("cx",start[0])
-    .attr("cy",start[1])
-    .attr("r",15)
-    .attr("fill","#ff4d4d")
-    .attr("opacity",.18)
-    .attr("class","japan-pulse");
+async function koreaChequesPDFReport(phone: string) {
+  try {
+    await sendWhatsAppText(phone, "📄 Generating Cheques PDF... Please wait.");
+    const pdfBuffer = await generateChequesPDF("korea");
+    await sendWhatsAppDocument(phone, pdfBuffer, `Korea_Cheques_${new Date().toISOString().slice(0, 10)}.pdf`, "🇰🇷 Korea Cheques");
+  } catch (error) { await sendWhatsAppText(phone, "❌ Failed: " + String(error)); }
+}
 
+async function japanTodayPDFReport(phone: string) {
+  try {
+    await sendWhatsAppText(phone, "📄 Generating Today PDF... Please wait.");
+    const pdfBuffer = await generateTodayPDF("japan");
+    await sendWhatsAppDocument(phone, pdfBuffer, `Japan_Today_${new Date().toISOString().slice(0, 10)}.pdf`, "🇯🇵 Japan Today");
+  } catch (error) { await sendWhatsAppText(phone, "❌ Failed: " + String(error)); }
+}
 
-  pointsGroup
-    .append("circle")
-    .attr("cx",start[0])
-    .attr("cy",start[1])
-    .attr("r",6)
-    .attr("fill","#ff5555");
+async function koreaTodayPDFReport(phone: string) {
+  try {
+    await sendWhatsAppText(phone, "📄 Generating Today PDF... Please wait.");
+    const pdfBuffer = await generateTodayPDF("korea");
+    await sendWhatsAppDocument(phone, pdfBuffer, `Korea_Today_${new Date().toISOString().slice(0, 10)}.pdf`, "🇰🇷 Korea Today");
+  } catch (error) { await sendWhatsAppText(phone, "❌ Failed: " + String(error)); }
+}
 
+/* ========== ACTION HANDLER ========== */
 
-  pointsGroup
-    .append("text")
-    .attr("x",start[0]+14)
-    .attr("y",start[1]+5)
-    .attr("fill","#fff")
-    .attr("font-size","16")
-    .attr("font-weight","800")
-    .text("JAPAN");
+async function handleAction(phone: string, action: string) {
+  console.log("Action:", action);
+  const session = sessionFor(phone);
+  const isAuth4 = session?.role === "auth4";
 
+  if (isAuth4 && action.startsWith("korea")) {
+    await sendWhatsAppText(phone, "⛔ Korea access is not authorized for your number.");
+    return;
+  }
 
-})
-.catch(function(error){
+  switch (action) {
+    case "japan": await showCountryMenu(phone, "japan"); return;
+    case "korea":
+      if (isAuth4) { await sendWhatsAppText(phone, "⛔ Korea access is not authorized."); return; }
+      await showCountryMenu(phone, "korea"); return;
+    case "logout":
+      sessions.delete(normalizePhone(phone));
+      await sendWhatsAppText(phone, "✅ Logged out.");
+      return;
+    case "main_menu": await showMainMenu(phone); return;
 
-  console.error(
-    "World map loading error:",
-    error
-  );
+    case "japan_stock": await japanStockReport(phone, session?.role || "authorized"); await showCountryMenu(phone, "japan"); return;
+    case "japan_summary": await japanSummaryReport(phone, session?.role || "authorized"); await showCountryMenu(phone, "japan"); return;
+    case "japan_investors": await japanInvestorsReport(phone, session?.role || "authorized"); await showCountryMenu(phone, "japan"); return;
+    case "japan_cheques": await japanChequesReport(phone); await showCountryMenu(phone, "japan"); return;
+    case "japan_today": await japanTodayReport(phone); await showCountryMenu(phone, "japan"); return;
 
+    case "japan_summary_pdf": await japanSummaryPDFReport(phone, session?.role || "authorized"); await showCountryMenu(phone, "japan"); return;
+    case "japan_investors_pdf": await japanInvestorsPDFReport(phone, session?.role || "authorized"); await showCountryMenu(phone, "japan"); return;
+    case "japan_cheques_pdf": await japanChequesPDFReport(phone); await showCountryMenu(phone, "japan"); return;
+    case "japan_today_pdf": await japanTodayPDFReport(phone); await showCountryMenu(phone, "japan"); return;
+
+    case "korea_stock": await koreaStockReport(phone); await showCountryMenu(phone, "korea"); return;
+    case "korea_summary": await koreaSummaryReport(phone); await showCountryMenu(phone, "korea"); return;
+    case "korea_investors": await koreaInvestorsReport(phone); await showCountryMenu(phone, "korea"); return;
+    case "korea_cheques": await koreaChequesReport(phone); await showCountryMenu(phone, "korea"); return;
+    case "korea_today": await koreaTodayReport(phone); await showCountryMenu(phone, "korea"); return;
+
+    case "korea_summary_pdf": await koreaSummaryPDFReport(phone); await showCountryMenu(phone, "korea"); return;
+    case "korea_investors_pdf": await koreaInvestorsPDFReport(phone); await showCountryMenu(phone, "korea"); return;
+    case "korea_cheques_pdf": await koreaChequesPDFReport(phone); await showCountryMenu(phone, "korea"); return;
+    case "korea_today_pdf": await koreaTodayPDFReport(phone); await showCountryMenu(phone, "korea"); return;
+
+    default: await sendWhatsAppText(phone, "Please choose an option."); await showMainMenu(phone);
+  }
+}
+
+/* ========== WEBHOOK ========== */
+
+app.get("/webhook", async (c) => {
+  const mode = c.req.query("hub.mode");
+  const token = c.req.query("hub.verify_token");
+  const challenge = c.req.query("hub.challenge");
+  if (mode === "subscribe" && token === VERIFY_TOKEN) return c.text(challenge || "", 200);
+  return c.text("Forbidden", 403);
 });
 
+app.post("/webhook", async (c) => {
+  try {
+    const body = await c.req.json();
+    const entry = body?.entry?.[0];
+    const changes = entry?.changes?.[0];
+    const value = changes?.value;
+    const messages = value?.messages;
+    if (!Array.isArray(messages) || !messages.length) return c.json({ ok: true });
 
-/* =========================
-MAP ANIMATION CSS
-========================= */
+    const message = messages[0];
+    const messageId = clean(message?.id);
+    if (messageId) {
+      const old = processedMessages.get(messageId);
+      if (old && Date.now() - old < PROCESSED_MESSAGE_TTL) return c.json({ ok: true });
+      processedMessages.set(messageId, Date.now());
+    }
 
-const mapStyle =
-  document.createElement("style");
+    const phone = normalizePhone(message?.from);
+    if (!phone) return c.json({ ok: true });
 
+    if (!rateAllowed(phone)) { await sendWhatsAppText(phone, "Too many requests."); return c.json({ ok: true }); }
 
-mapStyle.textContent = `
+    let text = "";
+    let action = "";
 
-.japan-pulse{
+    if (message?.type === "text") { text = clean(message?.text?.body); }
+    if (message?.type === "interactive") {
+      const interactive = message?.interactive;
+      if (interactive?.type === "list_reply") { action = clean(interactive?.list_reply?.id); text = clean(interactive?.list_reply?.title); }
+      if (interactive?.type === "button_reply") { action = clean(interactive?.button_reply?.id); text = clean(interactive?.button_reply?.title); }
+    }
 
-  transform-box:fill-box;
-  transform-origin:center;
+    console.log(`Incoming: ${phone} | ${text} | ${action}`);
 
-  animation:
-    japanPulse
-    1.8s
-    ease-in-out
-    infinite;
+    const existingSession = sessionFor(phone);
+    if (!existingSession) {
+      const role = authorizedRole(phone);
+      if (!role) { await sendWhatsAppText(phone, "❌ Unauthorized."); return c.json({ ok: true }); }
 
-}
+      if (LOGIN_PIN && text !== LOGIN_PIN) {
+        if (normalizeText(text) === "login") { await sendWhatsAppText(phone, "🔐 Please enter your Login PIN."); return c.json({ ok: true }); }
+        await sendWhatsAppText(phone, "🔐 Please send Login first."); return c.json({ ok: true });
+      }
 
-.destination-pulse{
+      sessions.set(normalizePhone(phone), { phone, role, loggedInAt: Date.now() });
+      clearFailedLogin(phone);
+      await sendWhatsAppText(phone, "✅ Login successful.");
+      await showMainMenu(phone);
+      return c.json({ ok: true });
+    }
 
-  transform-box:fill-box;
-  transform-origin:center;
+    if (action) { await handleAction(phone, action); return c.json({ ok: true }); }
 
-  animation:
-    destinationPulse
-    2s
-    ease-out
-    infinite;
+    const command = normalizeText(text);
+    if (command === "menu" || command === "start" || command === "home") { await showMainMenu(phone); return c.json({ ok: true }); }
+    if (command === "japan") { await showCountryMenu(phone, "japan"); return c.json({ ok: true }); }
+    if (command === "korea") {
+      if (existingSession.role === "auth4") { await sendWhatsAppText(phone, "⛔ Korea access is not authorized."); return c.json({ ok: true }); }
+      await showCountryMenu(phone, "korea");
+      return c.json({ ok: true });
+    }
+    if (command === "logout") {
+      sessions.delete(normalizePhone(phone));
+      await sendWhatsAppText(phone, "✅ Logged out.");
+      return c.json({ ok: true });
+    }
 
-}
-
-
-@keyframes japanPulse{
-
-  0%,100%{
-
-    transform:scale(1);
-    opacity:.35;
-
+    await sendWhatsAppText(phone, "Please choose an option:");
+    await showMainMenu(phone);
+    return c.json({ ok: true });
+  } catch (error) {
+    console.error("Webhook error:", error);
+    return c.json({ ok: false }, 200);
   }
+});
 
-  50%{
+app.get("/", (c) => c.json({ status: "OK", service: "GlobalStock International Bot V26" }));
+app.get("/health", (c) => c.json({ status: "healthy" }));
 
-    transform:scale(2);
-    opacity:.03;
+console.log("==============================================");
+console.log(" GlobalStock International — WhatsApp Bot V26");
+console.log("==============================================");
+console.log("Logo configured:", !!LOGO_BASE64);
+console.log("Premium PDF Style: ENABLED");
+console.log("Logo validation: PNG/JPEG signature check");
+console.log("Cheque PDF: Party & Bank columns ADDED");
+console.log("Bank/Party Auto-Split: ENABLED (slash + newline)");
+console.log("Menu: Check Excel & Stock PDF REMOVED");
+console.log("Interactive List: 2-Section support");
 
-  }
-
-}
-
-
-@keyframes destinationPulse{
-
-  0%{
-
-    transform:scale(.7);
-    opacity:.5;
-
-  }
-
-  70%{
-
-    transform:scale(1.8);
-    opacity:.05;
-
-  }
-
-  100%{
-
-    transform:scale(1.8);
-    opacity:0;
-
-  }
-
-}
-
-`;
-
-
-document.head.appendChild(mapStyle);
-
-</script>
-
-</body>
-</html>
+Bun.serve({ port: PORT, fetch: app.fetch });
