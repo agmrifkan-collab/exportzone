@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EXPORT ZONE 株式会社｜中古車・トラック・建設機械・在庫品の買取</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+EXPORT ZONE 株式会社｜中古車・トラック・建設機械・在庫品の買取
+</title>
 
 <meta name="description"
 content="EXPORT ZONE 株式会社。日本全国から中古車、トラック、建設機械、農業機械、自動車部品、各種在庫品を買取。日本から海外へ輸出しています。">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
@@ -34,7 +41,7 @@ html{
 
 body{
     font-family:"Noto Sans JP",sans-serif;
-    background:#07090d;
+    background:#05080c;
     color:#fff;
     overflow-x:hidden;
 }
@@ -53,39 +60,56 @@ button{
     font-family:inherit;
 }
 
+
 /* =========================================================
    VARIABLES
 ========================================================= */
 
 :root{
+
     --yellow:#ffd21c;
-    --yellow2:#ffb300;
-    --gold:#ffcf33;
-    --dark:#07090d;
-    --dark2:#0d1118;
-    --dark3:#141a22;
-    --text:#fff;
-    --muted:#aeb7c5;
-    --border:rgba(255,255,255,.10);
-    --container:1200px;
+    --yellow2:#ffae00;
+
+    --blue:#25a9ff;
+    --blue2:#087fe0;
+
+    --dark:#05080c;
+    --dark2:#0a0f15;
+    --dark3:#111821;
+
+    --text:#ffffff;
+    --muted:#aeb8c7;
+
+    --border:rgba(255,255,255,.09);
+
+    --container:1220px;
 }
+
 
 /* =========================================================
    LOADER
 ========================================================= */
 
 .loader{
+
     position:fixed;
     inset:0;
+
     z-index:99999;
-    background:#05070a;
+
+    background:#030507;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    transition:opacity .7s ease,visibility .7s ease;
+
+    transition:
+        opacity .7s ease,
+        visibility .7s ease;
 }
 
 .loader.hide{
+
     opacity:0;
     visibility:hidden;
 }
@@ -95,85 +119,143 @@ button{
 }
 
 .loader-logo{
-    width:170px;
+
+    width:180px;
+
     margin:auto;
-    animation:loaderPulse 1.5s ease-in-out infinite;
+
+    animation:
+        loaderPulse 1.5s ease-in-out infinite;
 }
 
 .loader-line{
-    width:170px;
+
+    width:180px;
     height:3px;
+
     margin:22px auto 0;
-    background:rgba(255,255,255,.1);
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:20px;
+
     overflow:hidden;
-    border-radius:10px;
 }
 
 .loader-line span{
+
     display:block;
+
     width:45%;
     height:100%;
+
     background:var(--yellow);
-    animation:loaderLine 1.2s ease-in-out infinite;
+
+    animation:
+        loaderLine 1.2s ease-in-out infinite;
 }
 
 @keyframes loaderPulse{
-    0%,100%{transform:scale(1);opacity:.75;}
-    50%{transform:scale(1.04);opacity:1;}
+
+    0%,100%{
+        transform:scale(1);
+        opacity:.75;
+    }
+
+    50%{
+        transform:scale(1.05);
+        opacity:1;
+    }
 }
 
 @keyframes loaderLine{
-    0%{transform:translateX(-120%);}
-    100%{transform:translateX(320%);}
+
+    0%{
+        transform:translateX(-120%);
+    }
+
+    100%{
+        transform:translateX(320%);
+    }
 }
+
 
 /* =========================================================
    HEADER
 ========================================================= */
 
 .header{
+
     position:fixed;
+
     top:0;
     left:0;
+
     width:100%;
+
     z-index:9000;
-    background:rgba(5,7,10,.78);
+
+    background:rgba(3,7,11,.88);
+
     backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.07);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
 }
 
 .nav{
+
     max-width:var(--container);
-    margin:auto;
+
     min-height:78px;
-    padding:0 24px;
+
+    padding:0 22px;
+
+    margin:auto;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
+
     gap:25px;
 }
 
 .logo{
+
     width:150px;
+
     flex-shrink:0;
 }
 
 .logo img{
+
     width:100%;
     height:auto;
 }
 
 .nav-links{
+
     display:flex;
+
     align-items:center;
-    gap:24px;
+
+    gap:25px;
 }
 
 .nav-links a{
+
     position:relative;
+
+    color:#dbe2eb;
+
     font-size:13px;
-    font-weight:700;
-    color:#dce1e8;
+
+    font-weight:800;
+
+    white-space:nowrap;
+
     transition:.3s;
 }
 
@@ -182,13 +264,21 @@ button{
 }
 
 .nav-links a::after{
+
     content:"";
+
     position:absolute;
+
     left:0;
+
     bottom:-8px;
+
     width:0;
+
     height:2px;
+
     background:var(--yellow);
+
     transition:.3s;
 }
 
@@ -196,69 +286,137 @@ button{
     width:100%;
 }
 
+
+/* =========================================================
+   HEADER PHONE
+========================================================= */
+
 .header-phone{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    white-space:nowrap;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:950;
+
+    animation:
+        phoneGlow 1.7s ease-in-out infinite;
+}
+
+.header-phone .phone-circle{
+
+    width:47px;
+    height:47px;
+
+    border-radius:50%;
+
     display:flex;
     align-items:center;
-    gap:9px;
-    color:var(--yellow);
-    font-size:14px;
-    font-weight:900;
-    white-space:nowrap;
-    animation:phoneGlow 1.7s ease-in-out infinite;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #25b5ff,
+            #0789eb
+        );
+
+    color:#fff;
+
+    font-size:20px;
+
+    box-shadow:
+        0 0 20px rgba(20,160,255,.35);
+
+    animation:
+        phoneCirclePulse 1.7s ease-in-out infinite;
 }
 
-.phone-icon{
-    display:inline-flex;
-    animation:ringPhone 1.5s ease-in-out infinite;
-}
+@keyframes phoneCirclePulse{
 
-@keyframes ringPhone{
-    0%,100%{transform:rotate(0deg);}
-    10%{transform:rotate(-14deg);}
-    20%{transform:rotate(14deg);}
-    30%{transform:rotate(-10deg);}
-    40%{transform:rotate(10deg);}
-    50%{transform:rotate(0);}
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
 }
 
 @keyframes phoneGlow{
+
     0%,100%{
-        text-shadow:0 0 4px rgba(255,210,28,.15);
+        text-shadow:
+            0 0 4px rgba(255,255,255,.05);
     }
+
     50%{
         text-shadow:
-        0 0 8px rgba(255,210,28,.8),
-        0 0 20px rgba(255,190,0,.4);
+            0 0 10px rgba(255,210,28,.6);
     }
 }
 
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
 .menu-btn{
+
     display:none;
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.05);
-    color:#fff;
+
     width:45px;
     height:45px;
+
+    border:1px solid rgba(255,255,255,.15);
+
     border-radius:12px;
+
+    background:rgba(255,255,255,.05);
+
+    color:#fff;
+
     font-size:23px;
+
     cursor:pointer;
 }
+
 
 /* =========================================================
    MOBILE MENU
 ========================================================= */
 
 .mobile-menu{
+
     position:fixed;
+
     top:78px;
+
     right:-100%;
-    width:min(330px,88%);
+
+    width:min(340px,90%);
+
     height:calc(100vh - 78px);
+
     z-index:8999;
-    background:rgba(8,11,16,.98);
+
+    padding:30px 22px;
+
+    background:rgba(6,10,15,.98);
+
     backdrop-filter:blur(20px);
-    border-left:1px solid rgba(255,255,255,.1);
-    padding:35px 25px;
+
+    border-left:
+        1px solid rgba(255,255,255,.08);
+
     transition:right .4s ease;
 }
 
@@ -267,11 +425,16 @@ button{
 }
 
 .mobile-menu a{
+
     display:block;
+
     padding:17px 10px;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    color:#fff;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+
     font-size:15px;
+
     font-weight:800;
 }
 
@@ -280,167 +443,297 @@ button{
 }
 
 .mobile-phone{
-    margin-top:30px;
-    display:block;
-    padding:17px;
+
+    margin-top:28px;
+
+    padding:17px !important;
+
     text-align:center;
-    border-radius:14px;
+
+    border-radius:13px;
+
     background:var(--yellow);
-    color:#111;
-    font-weight:950;
+
+    color:#111 !important;
+
+    border:0 !important;
 }
+
 
 /* =========================================================
    HERO
 ========================================================= */
 
 .hero{
+
     position:relative;
+
     min-height:100vh;
-    padding:150px 24px 90px;
+
+    padding:
+        145px
+        24px
+        90px;
+
     display:flex;
+
     align-items:center;
+
     overflow:hidden;
+
     background:
+
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(15,100,170,.12),
+            transparent 35%
+        ),
+
         linear-gradient(
             90deg,
-            rgba(4,6,9,.97) 0%,
-            rgba(4,6,9,.82) 43%,
-            rgba(4,6,9,.48) 100%
+            rgba(3,6,10,.98),
+            rgba(3,6,10,.83),
+            rgba(3,6,10,.60)
         ),
+
         url("https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=2200&q=90")
         center/cover no-repeat;
 }
 
 .hero::before{
+
     content:"";
+
     position:absolute;
+
     inset:0;
+
     background:
-        radial-gradient(circle at 15% 45%,rgba(255,210,28,.12),transparent 30%),
-        radial-gradient(circle at 85% 30%,rgba(0,120,255,.08),transparent 35%);
-    pointer-events:none;
+        radial-gradient(
+            circle at 15% 45%,
+            rgba(255,210,28,.08),
+            transparent 30%
+        );
 }
 
 .hero::after{
+
     content:"";
+
     position:absolute;
-    inset:auto 0 0;
+
+    left:0;
+    right:0;
+    bottom:0;
+
     height:180px;
-    background:linear-gradient(transparent,#07090d);
+
+    background:
+        linear-gradient(
+            transparent,
+            #05080c
+        );
 }
 
 .hero-content{
+
     position:relative;
+
     z-index:2;
-    max-width:var(--container);
+
     width:100%;
+
+    max-width:var(--container);
+
     margin:auto;
 }
 
 .hero-label{
+
     display:inline-flex;
+
     align-items:center;
+
     gap:9px;
-    padding:9px 14px;
-    border:1px solid rgba(255,210,28,.35);
+
+    padding:9px 15px;
+
+    border:
+        1px solid rgba(40,200,255,.3);
+
     border-radius:50px;
-    background:rgba(255,210,28,.07);
-    color:var(--yellow);
-    font-size:12px;
+
+    background:
+        rgba(20,170,255,.06);
+
+    color:#8ee0ff;
+
+    font-size:11px;
+
     font-weight:900;
-    margin-bottom:25px;
-    animation:fadeUp .8s ease both;
+
+    letter-spacing:1.5px;
+
+    animation:
+        fadeUp .8s ease both;
 }
 
 .hero-label span{
+
     width:8px;
     height:8px;
+
     border-radius:50%;
-    background:var(--yellow);
-    box-shadow:0 0 14px var(--yellow);
-    animation:dotPulse 1.4s infinite;
+
+    background:#31e29b;
+
+    box-shadow:
+        0 0 14px #31e29b;
+
+    animation:
+        dotPulse 1.4s infinite;
 }
 
 @keyframes dotPulse{
-    0%,100%{transform:scale(1);opacity:.7;}
-    50%{transform:scale(1.6);opacity:1;}
+
+    0%,100%{
+        transform:scale(1);
+        opacity:.7;
+    }
+
+    50%{
+        transform:scale(1.6);
+        opacity:1;
+    }
 }
 
 .hero h1{
-    max-width:850px;
-    font-size:clamp(42px,6vw,78px);
+
+    max-width:800px;
+
+    margin-top:28px;
+
+    font-size:
+        clamp(43px,6vw,78px);
+
     line-height:1.08;
+
     letter-spacing:-2px;
+
     font-weight:950;
-    animation:fadeUp .9s .1s ease both;
+
+    animation:
+        fadeUp .9s .1s ease both;
 }
 
 .hero h1 .yellow{
-    color:var(--yellow);
-    text-shadow:0 0 25px rgba(255,210,28,.15);
+    color:#5ecbff;
 }
 
 .hero-copy{
-    max-width:700px;
-    margin-top:27px;
-    color:#d4dae2;
-    font-size:17px;
+
+    max-width:720px;
+
+    margin-top:28px;
+
+    color:#d0d8e3;
+
+    font-size:16px;
+
     line-height:2;
-    animation:fadeUp .9s .2s ease both;
+
+    animation:
+        fadeUp .9s .2s ease both;
 }
 
 .hero-actions{
+
     display:flex;
+
     flex-wrap:wrap;
+
     gap:13px;
-    margin-top:34px;
-    animation:fadeUp .9s .3s ease both;
+
+    margin-top:32px;
+
+    animation:
+        fadeUp .9s .3s ease both;
 }
 
 .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
+
     min-height:54px;
-    padding:0 24px;
+
+    padding:0 25px;
+
     border-radius:13px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
     font-size:14px;
+
     font-weight:900;
+
     transition:.3s;
 }
 
 .btn-yellow{
+
     background:var(--yellow);
+
     color:#111;
-    box-shadow:0 0 25px rgba(255,210,28,.15);
+
+    box-shadow:
+        0 0 25px rgba(255,210,28,.18);
 }
 
 .btn-yellow:hover{
+
     transform:translateY(-3px);
-    box-shadow:0 10px 35px rgba(255,210,28,.3);
+
+    box-shadow:
+        0 12px 35px rgba(255,210,28,.32);
 }
 
 .btn-dark{
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.05);
-    color:#fff;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid rgba(255,255,255,.15);
 }
 
 .btn-dark:hover{
-    border-color:var(--yellow);
+
     color:var(--yellow);
+
+    border-color:
+        rgba(255,210,28,.5);
 }
 
 .hero-phone{
-    margin-top:30px;
+
     display:inline-flex;
+
     align-items:center;
+
     gap:13px;
-    font-size:clamp(23px,3vw,34px);
-    font-weight:950;
+
+    margin-top:28px;
+
     color:#fff;
-    animation:heroPhonePulse 1.8s ease-in-out infinite;
+
+    font-size:30px;
+
+    font-weight:950;
+
+    animation:
+        heroPhonePulse 1.8s ease-in-out infinite;
 }
 
 .hero-phone .number{
@@ -448,82 +741,376 @@ button{
 }
 
 @keyframes heroPhonePulse{
+
     0%,100%{
         transform:scale(1);
-        text-shadow:0 0 4px rgba(255,210,28,.15);
+
+        text-shadow:
+            0 0 4px rgba(255,210,28,.15);
     }
+
     50%{
         transform:scale(1.035);
+
         text-shadow:
-        0 0 10px rgba(255,210,28,.65),
-        0 0 28px rgba(255,190,0,.25);
+            0 0 10px rgba(255,210,28,.7),
+            0 0 28px rgba(255,190,0,.25);
     }
 }
+
+
+/* =========================================================
+   GENERAL SECTION
+========================================================= */
+
+.section{
+
+    position:relative;
+
+    padding:105px 24px;
+}
+
+.container{
+
+    max-width:var(--container);
+
+    margin:auto;
+}
+
+.section-head{
+
+    max-width:760px;
+
+    margin-bottom:45px;
+}
+
+.eyebrow{
+
+    margin-bottom:13px;
+
+    color:var(--yellow);
+
+    font-size:11px;
+
+    font-weight:950;
+
+    letter-spacing:2px;
+}
+
+.section-title{
+
+    font-size:
+        clamp(31px,4vw,49px);
+
+    line-height:1.25;
+
+    font-weight:950;
+
+    letter-spacing:-1px;
+}
+
+.section-text{
+
+    margin-top:18px;
+
+    color:var(--muted);
+
+    font-size:15px;
+
+    line-height:2;
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.products{
+    background:#05080c;
+}
+
+.product-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+}
+
+.product-card{
+
+    position:relative;
+
+    min-height:390px;
+
+    overflow:hidden;
+
+    border-radius:21px;
+
+    background:#10161e;
+
+    border:
+        1px solid var(--border);
+
+    transition:
+        transform .45s ease,
+        border-color .45s ease,
+        box-shadow .45s ease;
+}
+
+.product-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:
+        rgba(255,210,28,.35);
+
+    box-shadow:
+        0 25px 55px rgba(0,0,0,.35);
+}
+
+.product-image{
+
+    position:absolute;
+
+    inset:0;
+}
+
+.product-image img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform .7s ease;
+}
+
+.product-card:hover
+.product-image img{
+    transform:scale(1.08);
+}
+
+.product-image::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            transparent 25%,
+            rgba(0,0,0,.92)
+        );
+}
+
+.product-content{
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    z-index:2;
+
+    padding:27px;
+}
+
+.product-number{
+
+    color:var(--yellow);
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    margin-bottom:8px;
+}
+
+.product-content h3{
+
+    font-size:22px;
+
+    font-weight:950;
+
+    margin-bottom:9px;
+}
+
+.product-content p{
+
+    color:#c2cad5;
+
+    font-size:13px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   WORLD MAP SECTION
+========================================================= */
+
+.map-section{
+
+    background:
+
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(0,130,220,.08),
+            transparent 35%
+        ),
+
+        #060a0f;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   PAYMENT + MAP SIDE BY SIDE
+========================================================= */
+
+.map-payment-layout{
+
+    display:grid;
+
+    grid-template-columns:
+        .90fr
+        1.45fr;
+
+    gap:20px;
+
+    align-items:stretch;
+}
+
 
 /* =========================================================
    PAYMENT HIGHLIGHT
 ========================================================= */
 
 .payment-highlight{
+
     position:relative;
-    margin-top:38px;
-    max-width:760px;
-    padding:30px 32px;
-    border-radius:23px;
-    background:rgba(18,19,14,.96);
+
+    width:100%;
+
+    min-height:100%;
+
+    margin:0;
+
+    padding:34px 30px;
+
+    border-radius:24px;
+
+    background:#14150f;
+
     overflow:hidden;
+
     isolation:isolate;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
     box-shadow:
+
         0 0 18px rgba(255,210,28,.28),
+
         0 0 45px rgba(255,180,0,.13);
-    animation:paymentBoxGlow 2s ease-in-out infinite;
+
+    animation:
+        paymentBoxGlow 2s ease-in-out infinite;
 }
 
 .payment-highlight::before{
+
     content:"";
+
     position:absolute;
+
     inset:-3px;
-    border-radius:26px;
-    background:conic-gradient(
-        from 0deg,
-        transparent 0deg,
-        transparent 35deg,
-        #ffd21c 70deg,
-        #fff4a3 90deg,
-        #ffae00 110deg,
-        transparent 145deg,
-        transparent 210deg,
-        #ffd21c 250deg,
-        #fff4a3 270deg,
-        #ffae00 290deg,
-        transparent 325deg,
-        transparent 360deg
-    );
+
+    border-radius:27px;
+
+    background:
+        conic-gradient(
+            from 0deg,
+
+            transparent 0deg,
+
+            transparent 35deg,
+
+            #ffd21c 70deg,
+
+            #fff4a3 90deg,
+
+            #ffae00 110deg,
+
+            transparent 145deg,
+
+            transparent 210deg,
+
+            #ffd21c 250deg,
+
+            #fff4a3 270deg,
+
+            #ffae00 290deg,
+
+            transparent 325deg,
+
+            transparent 360deg
+        );
+
     z-index:-2;
-    animation:borderRotate 2.4s linear infinite;
+
+    animation:
+        borderRotate 2.4s linear infinite;
 }
 
 .payment-highlight::after{
+
     content:"";
+
     position:absolute;
+
     inset:3px;
-    border-radius:20px;
+
+    border-radius:21px;
+
     background:
         linear-gradient(
             135deg,
-            rgba(25,25,16,.99),
-            rgba(12,13,10,.99)
+            rgba(27,27,16,.99),
+            rgba(10,11,9,.99)
         );
+
     z-index:-1;
 }
 
 .payment-light{
-    display:block;
+
     position:absolute;
+
     top:-40%;
+
     left:-80%;
+
     width:32%;
+
     height:180%;
+
+    display:block;
+
     background:
         linear-gradient(
             90deg,
@@ -533,29 +1120,45 @@ button{
             rgba(255,255,255,.08),
             transparent
         );
+
     transform:skewX(-20deg);
+
     filter:blur(2px);
+
     pointer-events:none;
+
     z-index:3;
-    animation:paymentSweep 2.4s ease-in-out infinite;
+
+    animation:
+        paymentSweep 2.4s ease-in-out infinite;
 }
 
 @keyframes borderRotate{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 @keyframes paymentSweep{
+
     0%{
         left:-80%;
         opacity:0;
     }
+
     15%{
         opacity:1;
     }
+
     55%{
         opacity:1;
     }
+
     100%{
         left:150%;
         opacity:0;
@@ -563,740 +1166,1083 @@ button{
 }
 
 @keyframes paymentBoxGlow{
+
     0%,100%{
+
         transform:scale(1);
+
         box-shadow:
+
             0 0 15px rgba(255,210,28,.22),
+
             0 0 35px rgba(255,180,0,.10);
     }
+
     50%{
+
         transform:scale(1.012);
+
         box-shadow:
-            0 0 25px rgba(255,210,28,.48),
+
+            0 0 27px rgba(255,210,28,.48),
+
             0 0 55px rgba(255,180,0,.20);
     }
 }
 
 .payment-title{
+
     position:relative;
+
     z-index:5;
+
     display:flex;
+
     align-items:center;
+
     gap:11px;
+
     color:var(--yellow);
-    font-size:19px;
+
+    font-size:20px;
+
     font-weight:950;
+
     line-height:1.5;
-    margin-bottom:14px;
-    text-shadow:0 0 8px rgba(255,210,28,.35);
-    animation:paymentTitleGlow 1.6s ease-in-out infinite;
+
+    margin-bottom:18px;
+
+    text-shadow:
+        0 0 8px rgba(255,210,28,.35);
+
+    animation:
+        paymentTitleGlow 1.6s ease-in-out infinite;
 }
 
 .payment-title::before{
+
     content:"💰";
+
     display:inline-block;
-    font-size:25px;
-    filter:drop-shadow(0 0 8px rgba(255,210,28,.7));
-    animation:moneyIconAnimation 1.2s ease-in-out infinite;
+
+    font-size:27px;
+
+    filter:
+        drop-shadow(
+            0 0 8px rgba(255,210,28,.7)
+        );
+
+    animation:
+        moneyIconAnimation 1.2s ease-in-out infinite;
 }
 
 @keyframes paymentTitleGlow{
+
     0%,100%{
-        text-shadow:0 0 5px rgba(255,210,28,.25);
-    }
-    50%{
+
         text-shadow:
-        0 0 10px rgba(255,210,28,.85),
-        0 0 25px rgba(255,190,0,.45);
+            0 0 5px rgba(255,210,28,.25);
+    }
+
+    50%{
+
+        text-shadow:
+            0 0 10px rgba(255,210,28,.85),
+            0 0 25px rgba(255,190,0,.45);
     }
 }
 
 @keyframes moneyIconAnimation{
+
     0%,100%{
-        transform:translateY(0) rotate(0deg) scale(1);
+
+        transform:
+            translateY(0)
+            rotate(0deg)
+            scale(1);
     }
+
     25%{
-        transform:translateY(-5px) rotate(-7deg) scale(1.08);
+
+        transform:
+            translateY(-5px)
+            rotate(-7deg)
+            scale(1.08);
     }
+
     50%{
-        transform:translateY(0) rotate(7deg) scale(1.15);
+
+        transform:
+            translateY(0)
+            rotate(7deg)
+            scale(1.15);
     }
+
     75%{
-        transform:translateY(-3px) rotate(-4deg) scale(1.05);
+
+        transform:
+            translateY(-3px)
+            rotate(-4deg)
+            scale(1.05);
     }
 }
 
 .payment-text{
+
     position:relative;
+
     z-index:5;
+
     color:#fff;
+
     font-size:14px;
+
     line-height:2;
+
     font-weight:700;
 }
 
 .payment-text strong{
+
     color:var(--yellow);
+
     font-weight:950;
-    text-shadow:0 0 8px rgba(255,210,28,.25);
-    animation:strongTextGlow 1.8s ease-in-out infinite;
+
+    text-shadow:
+        0 0 8px rgba(255,210,28,.25);
+
+    animation:
+        strongTextGlow 1.8s ease-in-out infinite;
 }
 
 @keyframes strongTextGlow{
+
     0%,100%{
         opacity:.9;
     }
+
     50%{
+
         opacity:1;
+
         text-shadow:
-        0 0 10px rgba(255,210,28,.7),
-        0 0 20px rgba(255,190,0,.25);
+            0 0 10px rgba(255,210,28,.7),
+            0 0 20px rgba(255,190,0,.25);
     }
 }
 
-/* =========================================================
-   SECTION
-========================================================= */
-
-.section{
-    position:relative;
-    padding:110px 24px;
-}
-
-.container{
-    max-width:var(--container);
-    margin:auto;
-}
-
-.section-head{
-    max-width:750px;
-    margin-bottom:50px;
-}
-
-.eyebrow{
-    color:var(--yellow);
-    font-size:12px;
-    font-weight:950;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    margin-bottom:13px;
-}
-
-.section-title{
-    font-size:clamp(30px,4vw,48px);
-    line-height:1.25;
-    font-weight:950;
-    letter-spacing:-1px;
-}
-
-.section-text{
-    margin-top:18px;
-    color:var(--muted);
-    line-height:2;
-    font-size:15px;
-}
 
 /* =========================================================
-   PRODUCTS
+   WORLD MAP BOX
 ========================================================= */
-
-.products{
-    background:#07090d;
-}
-
-.product-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.product-card{
-    position:relative;
-    min-height:390px;
-    overflow:hidden;
-    border-radius:20px;
-    background:#10141b;
-    border:1px solid var(--border);
-    transition:.45s ease;
-}
-
-.product-card:hover{
-    transform:translateY(-8px);
-    border-color:rgba(255,210,28,.38);
-    box-shadow:0 25px 55px rgba(0,0,0,.35);
-}
-
-.product-image{
-    position:absolute;
-    inset:0;
-}
-
-.product-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:.7s ease;
-}
-
-.product-card:hover .product-image img{
-    transform:scale(1.08);
-}
-
-.product-image::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-        linear-gradient(
-            transparent 25%,
-            rgba(0,0,0,.9) 100%
-        );
-}
-
-.product-content{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    z-index:2;
-    padding:27px;
-}
-
-.product-number{
-    color:var(--yellow);
-    font-size:11px;
-    font-weight:900;
-    margin-bottom:8px;
-}
-
-.product-content h3{
-    font-size:22px;
-    font-weight:950;
-    margin-bottom:9px;
-}
-
-.product-content p{
-    color:#c4cbd5;
-    font-size:13px;
-    line-height:1.8;
-}
-
-/* =========================================================
-   PAYMENT EXPLANATION
-========================================================= */
-
-.payment-section{
-    background:
-        radial-gradient(circle at 20% 20%,rgba(255,210,28,.08),transparent 30%),
-        #0a0d12;
-}
-
-.payment-large{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
-    align-items:stretch;
-}
-
-.payment-panel{
-    padding:42px;
-    border-radius:24px;
-    border:1px solid rgba(255,255,255,.09);
-    background:linear-gradient(145deg,#151a22,#0b0f14);
-}
-
-.payment-panel.yellow{
-    border-color:rgba(255,210,28,.3);
-    background:
-        linear-gradient(145deg,
-        rgba(255,210,28,.10),
-        rgba(12,14,17,.98));
-}
-
-.payment-panel h3{
-    font-size:28px;
-    font-weight:950;
-    line-height:1.4;
-}
-
-.payment-panel h3 span{
-    color:var(--yellow);
-}
-
-.payment-panel p{
-    color:#c5ccd6;
-    line-height:2;
-    font-size:14px;
-    margin-top:20px;
-}
-
-.payment-badge{
-    display:inline-flex;
-    padding:9px 14px;
-    margin-bottom:20px;
-    border-radius:50px;
-    background:var(--yellow);
-    color:#111;
-    font-size:11px;
-    font-weight:950;
-}
-
-/* =========================================================
-   MAP
-========================================================= */
-
-.map-section{
-    background:#080b10;
-    overflow:hidden;
-}
 
 .map-wrap{
+
     position:relative;
+
     width:100%;
+
+    min-height:500px;
+
     border-radius:25px;
-    border:1px solid rgba(255,255,255,.08);
-    background:
-        radial-gradient(circle at center,rgba(25,42,62,.4),transparent 60%),
-        #05080c;
+
     overflow:hidden;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(20,60,90,.28),
+            transparent 60%
+        ),
+
+        #04080d;
 }
 
 #worldMap{
+
     width:100%;
+
     height:auto;
-    min-height:420px;
+
+    min-height:500px;
+
     display:block;
 }
 
 .country{
-    fill:#1a222c;
-    stroke:#303a47;
-    stroke-width:.6;
+
+    fill:#121c27;
+
+    stroke:#263443;
+
+    stroke-width:.65;
 }
 
 .route{
+
     fill:none;
-    stroke:var(--yellow);
+
+    stroke:#2bc8ff;
+
     stroke-width:2;
-    stroke-dasharray:8 8;
-    opacity:.55;
-    animation:routeDash 1.5s linear infinite;
+
+    stroke-dasharray:7 9;
+
+    opacity:.68;
+
+    animation:
+        routeDash 1.4s linear infinite;
 }
 
 @keyframes routeDash{
+
     to{
         stroke-dashoffset:-32;
     }
 }
 
 .japan-point{
-    fill:var(--yellow);
+
+    fill:#ffd21c;
+
     stroke:#fff;
+
     stroke-width:2;
-    filter:drop-shadow(0 0 8px rgba(255,210,28,.9));
+
+    filter:
+        drop-shadow(
+            0 0 10px rgba(255,210,28,.95)
+        );
 }
 
 .route-dot{
+
     fill:#fff;
-    filter:drop-shadow(0 0 6px var(--yellow));
+
+    filter:
+        drop-shadow(
+            0 0 7px #25c7ff
+        );
 }
 
 .map-label{
+
     position:absolute;
-    left:30px;
-    top:25px;
-    padding:12px 16px;
+
+    left:24px;
+
+    top:24px;
+
+    z-index:10;
+
+    padding:11px 15px;
+
     border-radius:12px;
-    background:rgba(5,8,12,.78);
-    border:1px solid rgba(255,210,28,.2);
+
+    background:
+        rgba(3,8,13,.78);
+
+    border:
+        1px solid rgba(45,190,255,.18);
+
     backdrop-filter:blur(12px);
 }
 
 .map-label strong{
-    color:var(--yellow);
-    font-size:14px;
+
+    display:block;
+
+    color:#9ae4ff;
+
+    font-size:12px;
+
+    letter-spacing:1px;
 }
 
 .map-label span{
+
     display:block;
-    color:#aeb7c5;
-    font-size:11px;
+
     margin-top:4px;
+
+    color:#8390a0;
+
+    font-size:10px;
 }
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    margin-top:20px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    background:#0a1017;
+}
+
+.stat{
+
+    min-height:140px;
+
+    padding:28px 20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    border-right:
+        1px solid rgba(255,255,255,.07);
+}
+
+.stat:last-child{
+    border-right:0;
+}
+
+.stat strong{
+
+    color:#b9ecff;
+
+    font-size:36px;
+
+    font-weight:950;
+}
+
+.stat span{
+
+    margin-top:8px;
+
+    color:#7e8999;
+
+    font-size:11px;
+}
+
 
 /* =========================================================
    REASONS
 ========================================================= */
 
 .reason-grid{
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:18px;
 }
 
 .reason{
+
     padding:30px;
+
     border-radius:20px;
-    background:#10141b;
-    border:1px solid var(--border);
+
+    background:#10161e;
+
+    border:
+        1px solid var(--border);
+
     transition:.35s;
 }
 
 .reason:hover{
+
     transform:translateY(-6px);
-    border-color:rgba(255,210,28,.3);
+
+    border-color:
+        rgba(255,210,28,.3);
 }
 
 .reason-icon{
+
     width:52px;
     height:52px;
-    border-radius:15px;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
-    background:rgba(255,210,28,.1);
-    color:var(--yellow);
-    font-size:24px;
+
     margin-bottom:20px;
+
+    border-radius:15px;
+
+    background:
+        rgba(255,210,28,.1);
+
+    color:var(--yellow);
+
+    font-size:24px;
 }
 
 .reason h3{
+
     font-size:18px;
-    margin-bottom:10px;
+
     font-weight:900;
+
+    margin-bottom:10px;
 }
 
 .reason p{
+
     color:#aeb7c5;
-    line-height:1.9;
+
     font-size:13px;
+
+    line-height:1.9;
 }
+
 
 /* =========================================================
    PROCESS
 ========================================================= */
 
 .process{
-    background:#0b0f15;
+
+    background:#090e14;
 }
 
 .process-grid{
+
     display:grid;
-    grid-template-columns:repeat(5,1fr);
+
+    grid-template-columns:
+        repeat(5,1fr);
+
     gap:12px;
 }
 
 .process-step{
-    position:relative;
+
     padding:28px 20px;
-    border:1px solid rgba(255,255,255,.08);
-    background:#11161e;
+
     border-radius:18px;
+
+    background:#10161e;
+
+    border:
+        1px solid rgba(255,255,255,.08);
 }
 
 .process-num{
+
     color:var(--yellow);
-    font-size:12px;
+
+    font-size:11px;
+
     font-weight:950;
+
+    letter-spacing:1px;
 }
 
 .process-step h3{
+
     margin-top:15px;
+
     font-size:16px;
+
     font-weight:900;
 }
 
 .process-step p{
+
     margin-top:9px;
+
     color:#aeb7c5;
+
     font-size:12px;
+
     line-height:1.8;
 }
 
+
 /* =========================================================
-   EXPORT
+   EXPORT SECTION
 ========================================================= */
 
 .export-section{
+
     min-height:560px;
+
     display:flex;
+
     align-items:center;
+
     background:
-        linear-gradient(90deg,rgba(4,7,10,.96),rgba(4,7,10,.65),rgba(4,7,10,.92)),
+
+        linear-gradient(
+            90deg,
+            rgba(3,7,10,.97),
+            rgba(3,7,10,.65),
+            rgba(3,7,10,.9)
+        ),
+
         url("https://images.unsplash.com/photo-1586528116493-da8f6e3f9a53?auto=format&fit=crop&w=2000&q=90")
         center/cover no-repeat;
 }
 
 .export-box{
+
     max-width:700px;
 }
 
 .export-box h2{
-    font-size:clamp(35px,5vw,60px);
-    font-weight:950;
+
+    font-size:
+        clamp(36px,5vw,60px);
+
     line-height:1.15;
+
+    font-weight:950;
 }
 
 .export-box h2 span{
-    color:var(--yellow);
+    color:#5ecbff;
 }
 
 .export-box p{
+
     margin-top:22px;
+
     color:#d1d7df;
+
     line-height:2;
 }
 
+
 /* =========================================================
-   BIG PHONE
+   PHONE CTA
 ========================================================= */
 
 .phone-section{
-    text-align:center;
+
     padding:100px 24px;
+
+    text-align:center;
+
     background:
-        radial-gradient(circle at center,rgba(255,210,28,.09),transparent 45%),
-        #07090d;
+
+        radial-gradient(
+            circle at center,
+            rgba(255,210,28,.08),
+            transparent 45%
+        ),
+
+        #05080c;
 }
 
 .phone-section h2{
-    font-size:clamp(30px,4vw,46px);
+
+    font-size:
+        clamp(30px,4vw,46px);
+
     font-weight:950;
 }
 
 .big-phone{
+
     display:inline-flex;
+
     align-items:center;
+
     gap:15px;
+
     margin-top:25px;
+
     color:var(--yellow);
-    font-size:clamp(34px,6vw,68px);
+
+    font-size:
+        clamp(35px,6vw,68px);
+
     font-weight:950;
+
     letter-spacing:-2px;
-    animation:bigPhonePulse 1.8s ease-in-out infinite;
+
+    animation:
+        bigPhonePulse 1.8s ease-in-out infinite;
 }
 
 @keyframes bigPhonePulse{
+
     0%,100%{
+
         transform:scale(1);
-        text-shadow:0 0 5px rgba(255,210,28,.15);
-    }
-    50%{
-        transform:scale(1.025);
+
         text-shadow:
-        0 0 12px rgba(255,210,28,.8),
-        0 0 35px rgba(255,180,0,.3);
+            0 0 5px rgba(255,210,28,.15);
+    }
+
+    50%{
+
+        transform:scale(1.025);
+
+        text-shadow:
+            0 0 12px rgba(255,210,28,.8),
+            0 0 35px rgba(255,180,0,.3);
     }
 }
 
 .phone-section p{
+
     margin-top:18px;
+
     color:#9da7b5;
 }
+
 
 /* =========================================================
    FAQ
 ========================================================= */
 
 .faq{
-    background:#0a0e13;
+
+    background:#080c11;
 }
 
 .faq-list{
+
     max-width:900px;
 }
 
 .faq-item{
-    border-bottom:1px solid rgba(255,255,255,.1);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.1);
 }
 
 .faq-question{
+
     width:100%;
+
     padding:25px 0;
+
     display:flex;
+
     justify-content:space-between;
+
     gap:20px;
+
     background:none;
+
     border:0;
+
     color:#fff;
+
     text-align:left;
+
     font-size:16px;
+
     font-weight:850;
+
     cursor:pointer;
 }
 
 .faq-question span:last-child{
+
     color:var(--yellow);
+
     font-size:23px;
+
     transition:.3s;
 }
 
 .faq-answer{
+
     max-height:0;
+
     overflow:hidden;
-    transition:max-height .4s ease;
+
+    transition:
+        max-height .4s ease;
 }
 
 .faq-answer p{
-    padding:0 0 25px;
+
+    padding:
+        0 0 25px;
+
     color:#aeb7c5;
+
     font-size:14px;
+
     line-height:2;
 }
 
-.faq-item.active .faq-answer{
+.faq-item.active
+.faq-answer{
     max-height:300px;
 }
 
-.faq-item.active .faq-question span:last-child{
+.faq-item.active
+.faq-question span:last-child{
     transform:rotate(45deg);
 }
+
 
 /* =========================================================
    COMPANY
 ========================================================= */
 
 .company-grid{
+
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
+
+    grid-template-columns:
+        1fr
+        1.1fr;
+
+    gap:22px;
 }
 
+
+/* =========================================================
+   FIXED COMPANY IMAGE
+========================================================= */
+
+.company-visual{
+
+    position:relative;
+
+    min-height:580px;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    background:#10161e;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+}
+
+.company-visual img{
+
+    width:100%;
+
+    height:100%;
+
+    min-height:580px;
+
+    object-fit:cover;
+
+    transition:
+        transform .8s ease;
+}
+
+.company-visual:hover img{
+    transform:scale(1.06);
+}
+
+.company-visual::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            transparent 25%,
+            rgba(0,0,0,.9)
+        );
+}
+
+.company-visual-overlay{
+
+    position:absolute;
+
+    left:30px;
+
+    right:30px;
+
+    bottom:30px;
+
+    z-index:3;
+}
+
+.company-visual-overlay span{
+
+    display:inline-block;
+
+    padding:8px 13px;
+
+    border-radius:50px;
+
+    background:
+        rgba(255,210,28,.1);
+
+    border:
+        1px solid rgba(255,210,28,.35);
+
+    color:var(--yellow);
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+.company-visual-overlay strong{
+
+    display:block;
+
+    margin-top:12px;
+
+    color:#fff;
+
+    font-size:30px;
+
+    font-weight:950;
+}
+
+
+/* =========================================================
+   COMPANY CARD
+========================================================= */
+
 .company-card{
+
     padding:35px;
-    border-radius:22px;
-    background:#10141b;
-    border:1px solid var(--border);
+
+    border-radius:23px;
+
+    background:#10161e;
+
+    border:
+        1px solid var(--border);
 }
 
 .company-table{
+
     width:100%;
+
     border-collapse:collapse;
 }
 
 .company-table tr{
-    border-bottom:1px solid rgba(255,255,255,.07);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
 }
 
 .company-table th,
 .company-table td{
-    padding:16px 5px;
+
+    padding:17px 5px;
+
     text-align:left;
-    font-size:13px;
+
     vertical-align:top;
+
+    font-size:13px;
 }
 
 .company-table th{
-    width:32%;
-    color:var(--yellow);
-    font-weight:900;
+
+    width:31%;
+
+    color:#8491a2;
+
+    font-weight:700;
 }
 
 .company-table td{
-    color:#c4ccd6;
+
+    color:#fff;
+
+    line-height:1.7;
 }
+
 
 /* =========================================================
    CONTACT
 ========================================================= */
 
 .contact{
+
     background:
-        radial-gradient(circle at 80% 30%,rgba(255,210,28,.08),transparent 35%),
-        #07090d;
+
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(255,210,28,.07),
+            transparent 35%
+        ),
+
+        #05080c;
 }
 
 .contact-grid{
+
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:22px;
 }
 
 .contact-card{
+
     padding:38px;
+
     border-radius:23px;
-    background:#10141b;
-    border:1px solid var(--border);
+
+    background:#10161e;
+
+    border:
+        1px solid var(--border);
 }
 
 .contact-card h3{
-    font-size:25px;
-    font-weight:950;
+
     margin-bottom:20px;
+
+    font-size:25px;
+
+    font-weight:950;
 }
 
 .contact-info{
+
     display:grid;
+
     gap:15px;
 }
 
 .contact-info div{
-    padding:15px;
+
+    padding:16px;
+
     border-radius:13px;
-    background:rgba(255,255,255,.035);
+
+    background:
+        rgba(255,255,255,.035);
 }
 
 .contact-info small{
+
     display:block;
+
+    margin-bottom:6px;
+
     color:#7e8897;
+
     font-size:10px;
+
     font-weight:900;
-    margin-bottom:5px;
 }
 
 .contact-info strong{
-    font-size:14px;
+
     color:#fff;
+
+    font-size:14px;
 }
 
 .contact-info .phone{
+
     color:var(--yellow);
-    font-size:24px;
+
+    font-size:25px;
+
     font-weight:950;
 }
+
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
 .footer{
-    padding:55px 24px 30px;
-    background:#05070a;
-    border-top:1px solid rgba(255,255,255,.07);
+
+    padding:
+        55px 24px 30px;
+
+    background:#030507;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
 }
 
 .footer-grid{
+
     max-width:var(--container);
+
     margin:auto;
+
     display:grid;
-    grid-template-columns:1.5fr 1fr 1fr;
+
+    grid-template-columns:
+        1.5fr
+        1fr
+        1fr;
+
     gap:40px;
 }
 
 .footer-logo{
+
     width:150px;
+
     margin-bottom:20px;
 }
 
 .footer p{
+
     color:#8f99a8;
+
     font-size:12px;
+
     line-height:1.9;
 }
 
 .footer h4{
-    color:#fff;
+
     margin-bottom:15px;
+
     font-size:14px;
 }
 
 .footer-links{
+
     display:grid;
+
     gap:9px;
 }
 
 .footer-links a{
+
     color:#8f99a8;
+
     font-size:12px;
 }
 
@@ -1305,98 +2251,153 @@ button{
 }
 
 .footer-phone{
+
     display:inline-block;
-    margin-top:8px;
+
+    margin-top:10px;
+
     color:var(--yellow);
+
     font-size:20px;
+
     font-weight:950;
-    animation:phoneGlow 1.7s infinite;
+
+    animation:
+        phoneGlow 1.7s infinite;
 }
 
 .copyright{
+
     max-width:var(--container);
-    margin:45px auto 0;
+
+    margin:
+        45px auto 0;
+
     padding-top:20px;
-    border-top:1px solid rgba(255,255,255,.07);
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+
     color:#66707d;
+
     font-size:10px;
+
     text-align:center;
 }
+
 
 /* =========================================================
    FLOATING PHONE
 ========================================================= */
 
 .floating-phone{
+
     position:fixed;
+
     right:22px;
+
     bottom:22px;
+
     z-index:8000;
-    width:64px;
-    height:64px;
+
+    width:65px;
+
+    height:65px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     border-radius:50%;
-    background:var(--yellow);
-    color:#111;
-    font-size:27px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #25b5ff,
+            #058be9
+        );
+
+    color:#fff;
+
+    font-size:28px;
+
     box-shadow:
         0 8px 30px rgba(0,0,0,.4),
-        0 0 25px rgba(255,210,28,.3);
-    animation:floatingPhone 1.7s ease-in-out infinite;
+        0 0 28px rgba(30,170,255,.35);
+
+    animation:
+        floatingPhone 1.7s ease-in-out infinite;
 }
 
 @keyframes floatingPhone{
+
     0%,100%{
         transform:scale(1);
     }
+
     50%{
+
         transform:scale(1.09);
+
         box-shadow:
             0 8px 30px rgba(0,0,0,.4),
-            0 0 38px rgba(255,210,28,.55);
+            0 0 40px rgba(30,170,255,.6);
     }
 }
 
+
 /* =========================================================
-   SCROLL REVEAL
+   REVEAL
 ========================================================= */
 
 .reveal{
+
     opacity:0;
+
     transform:translateY(35px);
+
     transition:
         opacity .8s ease,
         transform .8s ease;
-    transition-delay:var(--delay,0s);
 }
 
 .reveal.show{
+
     opacity:1;
+
     transform:translateY(0);
 }
 
+
 /* =========================================================
-   GENERAL ANIMATION
+   GENERAL
 ========================================================= */
 
 @keyframes fadeUp{
+
     from{
+
         opacity:0;
+
         transform:translateY(25px);
     }
+
     to{
+
         opacity:1;
+
         transform:translateY(0);
     }
 }
 
+
 /* =========================================================
-   MOBILE
+   TABLET
 ========================================================= */
 
-@media(max-width:1000px){
+@media(max-width:1050px){
 
     .nav-links,
     .header-phone{
@@ -1408,36 +2409,68 @@ button{
     }
 
     .product-grid{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .reason-grid{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .process-grid{
-        grid-template-columns:repeat(3,1fr);
+        grid-template-columns:
+            repeat(3,1fr);
     }
 
-    .payment-large{
-        grid-template-columns:1fr;
+    .map-payment-layout{
+
+        grid-template-columns:
+            1fr;
+
     }
 
-    .company-grid,
+    .payment-highlight{
+
+        min-height:300px;
+
+    }
+
+    .company-grid{
+
+        grid-template-columns:
+            1fr;
+
+    }
+
     .contact-grid{
-        grid-template-columns:1fr;
+
+        grid-template-columns:
+            1fr;
+
     }
 
     .footer-grid{
-        grid-template-columns:1fr 1fr;
+
+        grid-template-columns:
+            1fr 1fr;
+
     }
 }
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width:700px){
 
     .nav{
+
         min-height:68px;
-        padding:0 17px;
+
+        padding:
+            0 17px;
     }
 
     .logo{
@@ -1445,18 +2478,31 @@ button{
     }
 
     .mobile-menu{
+
         top:68px;
-        height:calc(100vh - 68px);
+
+        height:
+            calc(100vh - 68px);
     }
 
     .hero{
+
         min-height:auto;
-        padding:125px 18px 80px;
-        background-position:60% center;
+
+        padding:
+            125px
+            18px
+            80px;
+
+        background-position:
+            60% center;
     }
 
     .hero h1{
-        font-size:clamp(37px,11vw,56px);
+
+        font-size:
+            clamp(38px,11vw,56px);
+
         letter-spacing:-1.5px;
     }
 
@@ -1465,6 +2511,7 @@ button{
     }
 
     .hero-actions{
+
         flex-direction:column;
     }
 
@@ -1473,23 +2520,7 @@ button{
     }
 
     .hero-phone{
-        font-size:23px;
-    }
-
-    .payment-highlight{
-        margin-top:30px;
-        padding:24px 19px;
-        border-radius:20px;
-        animation:paymentBoxGlowMobile 1.8s ease-in-out infinite;
-    }
-
-    .payment-title{
-        font-size:16px;
-    }
-
-    .payment-text{
-        font-size:13px;
-        line-height:1.9;
+        font-size:22px;
     }
 
     .section{
@@ -1498,7 +2529,9 @@ button{
 
     .product-grid,
     .reason-grid{
-        grid-template-columns:1fr;
+
+        grid-template-columns:
+            1fr;
     }
 
     .product-card{
@@ -1506,109 +2539,172 @@ button{
     }
 
     .process-grid{
-        grid-template-columns:1fr 1fr;
+
+        grid-template-columns:
+            1fr 1fr;
     }
 
-    .payment-panel{
-        padding:27px;
+    .map-payment-layout{
+
+        grid-template-columns:
+            1fr;
     }
 
-    .map-label{
-        left:15px;
-        top:15px;
+    .payment-highlight{
+
+        min-height:auto;
+
+        padding:
+            26px 20px;
+    }
+
+    .payment-title{
+        font-size:17px;
+    }
+
+    .payment-text{
+        font-size:13px;
+    }
+
+    .map-wrap{
+
+        min-height:360px;
     }
 
     #worldMap{
-        min-height:300px;
+
+        min-height:360px;
     }
 
-    .big-phone{
-        font-size:34px;
+    .stats{
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .stat{
+
+        min-height:120px;
+
+        border-bottom:
+            1px solid rgba(255,255,255,.07);
+    }
+
+    .stat:nth-child(2){
+        border-right:0;
+    }
+
+    .stat strong{
+        font-size:29px;
+    }
+
+    .company-visual{
+
+        min-height:360px;
+    }
+
+    .company-visual img{
+
+        min-height:360px;
     }
 
     .company-card,
     .contact-card{
-        padding:25px 20px;
-    }
 
-    .company-table th{
-        width:35%;
+        padding:
+            25px 20px;
     }
 
     .footer-grid{
-        grid-template-columns:1fr;
-        gap:30px;
+
+        grid-template-columns:
+            1fr;
     }
 
     .floating-phone{
+
         width:58px;
         height:58px;
+
         right:16px;
         bottom:16px;
     }
 }
 
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
 @media(max-width:430px){
 
     .process-grid{
-        grid-template-columns:1fr;
+
+        grid-template-columns:
+            1fr;
     }
 
     .payment-title{
+
         align-items:flex-start;
+
+        font-size:16px;
     }
 
     .hero-phone{
-        font-size:20px;
+
+        font-size:19px;
     }
 
     .hero-phone .number{
-        font-size:23px;
+
+        font-size:22px;
     }
 
     .big-phone{
-        font-size:28px;
+
+        font-size:29px;
+
         letter-spacing:-1px;
     }
-}
 
-@keyframes paymentBoxGlowMobile{
-    0%,100%{
-        transform:scale(1);
-        box-shadow:
-            0 0 10px rgba(255,210,28,.22),
-            0 0 22px rgba(255,180,0,.08);
+    .company-table th,
+    .company-table td{
+
+        font-size:12px;
     }
-    50%{
-        transform:scale(1.008);
-        box-shadow:
-            0 0 20px rgba(255,210,28,.50),
-            0 0 45px rgba(255,180,0,.20);
-    }
+
 }
 
 </style>
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      LOADER
 ===================================================== -->
 
 <div class="loader" id="loader">
+
     <div class="loader-inner">
+
         <img
             class="loader-logo"
             src="./EZ%20Logo.png"
             alt="EXPORT ZONE"
-            onerror="this.style.display='none'"
         >
+
         <div class="loader-line">
             <span></span>
         </div>
+
     </div>
+
 </div>
+
 
 <!-- =====================================================
      HEADER
@@ -1618,30 +2714,76 @@ button{
 
     <nav class="nav">
 
-        <a href="#home" class="logo">
+        <a
+            href="#home"
+            class="logo"
+        >
+
             <img
                 src="./EZ%20Logo.png"
                 alt="EXPORT ZONE 株式会社"
-                onerror="this.style.display='none'"
             >
+
         </a>
+
 
         <div class="nav-links">
-            <a href="#home">ホーム</a>
-            <a href="#products">買取品目</a>
-            <a href="#payment">買取について</a>
-            <a href="#process">買取の流れ</a>
-            <a href="#export">海外輸出</a>
-            <a href="#company">会社情報</a>
-            <a href="#contact">お問い合わせ</a>
+
+            <a href="#home">
+                ホーム
+            </a>
+
+            <a href="#products">
+                買取品目
+            </a>
+
+            <a href="#payment">
+                買取について
+            </a>
+
+            <a href="#reasons">
+                選ばれる理由
+            </a>
+
+            <a href="#process">
+                買取の流れ
+            </a>
+
+            <a href="#export">
+                海外輸出
+            </a>
+
+            <a href="#company">
+                会社情報
+            </a>
+
+            <a href="#contact">
+                お問い合わせ
+            </a>
+
         </div>
 
-        <a href="tel:0120888405" class="header-phone">
-            <span class="phone-icon">☎</span>
-            <span>0120 888 405</span>
+
+        <a
+            href="tel:0120888405"
+            class="header-phone"
+        >
+
+            <span class="phone-circle">
+                ☎
+            </span>
+
+            <span>
+                0120 888 405
+            </span>
+
         </a>
 
-        <button class="menu-btn" id="menuBtn" aria-label="メニュー">
+
+        <button
+            class="menu-btn"
+            id="menuBtn"
+        >
             ☰
         </button>
 
@@ -1649,25 +2791,57 @@ button{
 
 </header>
 
+
 <!-- =====================================================
      MOBILE MENU
 ===================================================== -->
 
-<div class="mobile-menu" id="mobileMenu">
+<div
+    class="mobile-menu"
+    id="mobileMenu"
+>
 
-    <a href="#home">ホーム</a>
-    <a href="#products">買取品目</a>
-    <a href="#payment">買取について</a>
-    <a href="#process">買取の流れ</a>
-    <a href="#export">海外輸出</a>
-    <a href="#company">会社情報</a>
-    <a href="#contact">お問い合わせ</a>
+    <a href="#home">
+        ホーム
+    </a>
 
-    <a class="mobile-phone" href="tel:0120888405">
+    <a href="#products">
+        買取品目
+    </a>
+
+    <a href="#payment">
+        買取について
+    </a>
+
+    <a href="#reasons">
+        選ばれる理由
+    </a>
+
+    <a href="#process">
+        買取の流れ
+    </a>
+
+    <a href="#export">
+        海外輸出
+    </a>
+
+    <a href="#company">
+        会社情報
+    </a>
+
+    <a href="#contact">
+        お問い合わせ
+    </a>
+
+    <a
+        class="mobile-phone"
+        href="tel:0120888405"
+    >
         ☎ 0120 888 405
     </a>
 
 </div>
+
 
 <!-- =====================================================
      HERO
@@ -1680,93 +2854,102 @@ button{
     <div class="hero-content">
 
         <div class="hero-label">
+
             <span></span>
-            日本全国から買取・海外輸出
+
+            JAPAN → WORLDWIDE EXPORT
+
         </div>
 
+
         <h1>
-            日本で集めて、<br>
-            <span class="yellow">世界へ届ける。</span>
+
+            古くても、<br>
+
+            動かなくても。<br>
+
+            <span class="yellow">
+                日本全国から買取。
+            </span>
+
         </h1>
 
+
         <p class="hero-copy">
-            EXPORT ZONE 株式会社は、
+
             中古車・トラック・建設機械・農業機械・
-            自動車部品・各種在庫品などを日本国内から買取し、
-            海外のお客様へ輸出しています。
+            自動車部品・在庫品など、日本国内の
+            さまざまな商品を買取。
+            日本から海外へ、確かなネットワークで輸出しています。
+
         </p>
+
 
         <div class="hero-actions">
 
-            <a href="tel:0120888405" class="btn btn-yellow">
+            <a
+                href="tel:0120888405"
+                class="btn btn-yellow"
+            >
                 ☎ 今すぐ無料相談
             </a>
 
-            <a href="#products" class="btn btn-dark">
+            <a
+                href="#products"
+                class="btn btn-dark"
+            >
                 買取品目を見る
             </a>
 
         </div>
 
-        <a href="tel:0120888405" class="hero-phone">
+
+        <a
+            href="tel:0120888405"
+            class="hero-phone"
+        >
+
             <span>☎</span>
-            <span class="number">0120 888 405</span>
+
+            <span class="number">
+                0120 888 405
+            </span>
+
         </a>
-
-
-        <!-- ==========================================
-             IMPORTANT PAYMENT MESSAGE
-        =========================================== -->
-
-        <div class="payment-highlight reveal" id="payment">
-
-            <span class="payment-light"></span>
-
-            <div class="payment-title">
-                買取代金は、EXPORT ZONEからお客様へ
-            </div>
-
-            <div class="payment-text">
-
-                <strong>
-                    お客様からお金をいただくのではありません。
-                </strong>
-
-                <br>
-
-                お車・トラック・建設機械などを買取する際は、
-                <strong>
-                    EXPORT ZONEがお客様へ買取代金をお支払いします。
-                </strong>
-
-            </div>
-
-        </div>
 
     </div>
 
 </section>
 
+
 <!-- =====================================================
      PRODUCTS
 ===================================================== -->
 
-<section class="section products" id="products">
+<section
+    class="section products"
+    id="products"
+>
 
     <div class="container">
 
         <div class="section-head reveal">
 
-            <div class="eyebrow">PURCHASE ITEMS</div>
+            <div class="eyebrow">
+                PURCHASE ITEMS
+            </div>
 
             <h2 class="section-title">
                 買取できるもの
             </h2>
 
             <p class="section-text">
+
                 中古車だけではありません。
-                トラック・建設機械・農業機械・部品・
-                在庫品・余剰品など、幅広く取り扱っています。
+                トラック・建設機械・農業機械・
+                自動車部品・在庫品・余剰品など、
+                幅広く取り扱っています。
+
             </p>
 
         </div>
@@ -1774,23 +2957,34 @@ button{
 
         <div class="product-grid">
 
+
             <article class="product-card reveal">
 
                 <div class="product-image">
+
                     <img
                         src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=90"
                         alt="中古車"
                         loading="lazy"
                     >
+
                 </div>
 
                 <div class="product-content">
-                    <div class="product-number">01 / VEHICLES</div>
-                    <h3>中古車・乗用車</h3>
+
+                    <div class="product-number">
+                        01 / VEHICLES
+                    </div>
+
+                    <h3>
+                        中古車・乗用車
+                    </h3>
+
                     <p>
                         国産車・中古車・輸出向け車両など、
                         幅広く買取しています。
                     </p>
+
                 </div>
 
             </article>
@@ -1799,20 +2993,30 @@ button{
             <article class="product-card reveal">
 
                 <div class="product-image">
+
                     <img
                         src="https://images.unsplash.com/photo-1597974380476-fbf652dfe188?auto=format&fit=crop&w=1200&q=85"
-                        alt="トラック・大型車"
+                        alt="トラック"
                         loading="lazy"
                     >
+
                 </div>
 
                 <div class="product-content">
-                    <div class="product-number">02 / TRUCKS</div>
-                    <h3>トラック・大型車</h3>
+
+                    <div class="product-number">
+                        02 / TRUCKS
+                    </div>
+
+                    <h3>
+                        トラック・大型車
+                    </h3>
+
                     <p>
                         トラック・ダンプ・バスなど、
                         商用車・大型車も取り扱います。
                     </p>
+
                 </div>
 
             </article>
@@ -1821,20 +3025,30 @@ button{
             <article class="product-card reveal">
 
                 <div class="product-image">
+
                     <img
-                        src="https://images.unsplash.com/photo-1778066995093-a7f7d1049f8f?auto=format&fit=crop&w=1200&q=85"
+                        src="https://images.unsplash.com/photo-1576530107941-429553b97a91?auto=format&fit=crop&w=1200&q=90"
                         alt="建設機械"
                         loading="lazy"
                     >
+
                 </div>
 
                 <div class="product-content">
-                    <div class="product-number">03 / MACHINERY</div>
-                    <h3>建設機械</h3>
+
+                    <div class="product-number">
+                        03 / MACHINERY
+                    </div>
+
+                    <h3>
+                        建設機械
+                    </h3>
+
                     <p>
                         油圧ショベル・ホイールローダー・
                         ダンプなどの建設機械。
                     </p>
+
                 </div>
 
             </article>
@@ -1843,20 +3057,30 @@ button{
             <article class="product-card reveal">
 
                 <div class="product-image">
+
                     <img
                         src="https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=1200&q=90"
                         alt="農業機械"
                         loading="lazy"
                     >
+
                 </div>
 
                 <div class="product-content">
-                    <div class="product-number">04 / AGRICULTURE</div>
-                    <h3>農業機械</h3>
+
+                    <div class="product-number">
+                        04 / AGRICULTURE
+                    </div>
+
+                    <h3>
+                        農業機械
+                    </h3>
+
                     <p>
                         トラクターなどの農業機械も
                         国内から買取しています。
                     </p>
+
                 </div>
 
             </article>
@@ -1865,20 +3089,30 @@ button{
             <article class="product-card reveal">
 
                 <div class="product-image">
+
                     <img
                         src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&q=90"
                         alt="自動車部品"
                         loading="lazy"
                     >
+
                 </div>
 
                 <div class="product-content">
-                    <div class="product-number">05 / PARTS</div>
-                    <h3>自動車部品</h3>
+
+                    <div class="product-number">
+                        05 / PARTS
+                    </div>
+
+                    <h3>
+                        自動車部品
+                    </h3>
+
                     <p>
                         中古部品・パーツ・関連商品なども
                         ご相談ください。
                     </p>
+
                 </div>
 
             </article>
@@ -1887,90 +3121,34 @@ button{
             <article class="product-card reveal">
 
                 <div class="product-image">
+
                     <img
                         src="https://images.unsplash.com/photo-1586528116493-da8f6e3f9a53?auto=format&fit=crop&w=1200&q=90"
-                        alt="在庫品・ストックロット"
+                        alt="在庫品"
                         loading="lazy"
                     >
+
                 </div>
 
                 <div class="product-content">
-                    <div class="product-number">06 / STOCK LOT</div>
-                    <h3>在庫品・ストックロット</h3>
+
+                    <div class="product-number">
+                        06 / STOCK LOT
+                    </div>
+
+                    <h3>
+                        在庫品・ストックロット
+                    </h3>
+
                     <p>
                         余剰在庫・ストックロット・
                         未使用品・各種素材など。
                     </p>
+
                 </div>
 
             </article>
 
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =====================================================
-     PAYMENT EXPLANATION
-===================================================== -->
-
-<section class="section payment-section">
-
-    <div class="container">
-
-        <div class="section-head reveal">
-
-            <div class="eyebrow">HOW PURCHASE WORKS</div>
-
-            <h2 class="section-title">
-                「買取」の意味を<br>
-                わかりやすく。
-            </h2>
-
-        </div>
-
-
-        <div class="payment-large">
-
-            <div class="payment-panel yellow reveal">
-
-                <div class="payment-badge">
-                    EXPORT ZONE → お客様
-                </div>
-
-                <h3>
-                    <span>買取代金は、</span><br>
-                    EXPORT ZONEからお客様へ。
-                </h3>
-
-                <p>
-                    お客様がお金を支払って商品を売るのではありません。
-                    お車・トラック・機械などの買取が成立した場合、
-                    EXPORT ZONEがお客様へ買取代金をお支払いします。
-                </p>
-
-            </div>
-
-
-            <div class="payment-panel reveal">
-
-                <div class="payment-badge">
-                    SIMPLE PROCESS
-                </div>
-
-                <h3>
-                    売りたいものを<br>
-                    <span>まずご相談ください。</span>
-                </h3>
-
-                <p>
-                    車両・機械・部品・在庫品など、
-                    「これは買取できる？」という段階でも大丈夫です。
-                    写真や情報をお送りいただければ確認します。
-                </p>
-
-            </div>
 
         </div>
 
@@ -1978,59 +3156,190 @@ button{
 
 </section>
 
+
 <!-- =====================================================
-     MAP
+     WORLD + PAYMENT
 ===================================================== -->
 
-<section class="section map-section" id="export">
+<section
+    class="section map-section"
+    id="export"
+>
 
     <div class="container">
 
+
         <div class="section-head reveal">
 
-            <div class="eyebrow">FROM JAPAN TO THE WORLD</div>
+            <div class="eyebrow">
+                FROM JAPAN TO THE WORLD
+            </div>
 
             <h2 class="section-title">
                 日本から、世界へ。
             </h2>
 
             <p class="section-text">
+
                 日本国内で買取した車両・機械・商品を、
                 海外のお客様へ輸出しています。
+
             </p>
 
         </div>
 
 
-        <div class="map-wrap reveal">
+        <!-- ==========================================
+             PAYMENT + MAP
+        =========================================== -->
 
-            <div class="map-label">
-                <strong>JAPAN → WORLD</strong>
-                <span>日本から海外へ輸出</span>
+        <div class="map-payment-layout">
+
+
+            <!-- PAYMENT -->
+
+            <div
+                class="payment-highlight reveal"
+                id="payment"
+            >
+
+                <span class="payment-light"></span>
+
+
+                <div class="payment-title">
+
+                    買取代金は、EXPORT ZONEからお客様へ
+
+                </div>
+
+
+                <div class="payment-text">
+
+                    <strong>
+                        お客様からお金をいただくのではありません。
+                    </strong>
+
+                    <br><br>
+
+                    お車・トラック・建設機械などを買取する際は、
+
+                    <strong>
+                        EXPORT ZONEがお客様へ買取代金をお支払いします。
+                    </strong>
+
+                </div>
+
             </div>
 
-            <svg id="worldMap"
-                 viewBox="0 0 1440 760"
-                 preserveAspectRatio="xMidYMid meet">
-            </svg>
+
+            <!-- MAP -->
+
+            <div class="map-wrap reveal">
+
+                <div class="map-label">
+
+                    <strong>
+                        JAPAN → WORLD
+                    </strong>
+
+                    <span>
+                        日本から海外へ輸出
+                    </span>
+
+                </div>
+
+
+                <svg
+                    id="worldMap"
+                    viewBox="0 0 1440 760"
+                    preserveAspectRatio="xMidYMid meet"
+                >
+                </svg>
+
+            </div>
+
 
         </div>
+
+
+        <!-- ==========================================
+             STATS
+        =========================================== -->
+
+        <div class="stats reveal">
+
+            <div class="stat">
+
+                <strong>
+                    全国
+                </strong>
+
+                <span>
+                    日本国内対応
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <strong>
+                    6+
+                </strong>
+
+                <span>
+                    主要買取カテゴリー
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <strong>
+                    WORLD
+                </strong>
+
+                <span>
+                    海外輸出ネットワーク
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <strong>
+                    0120
+                </strong>
+
+                <span>
+                    無料相談
+                </span>
+
+            </div>
+
+        </div>
+
 
     </div>
 
 </section>
 
+
 <!-- =====================================================
      REASONS
 ===================================================== -->
 
-<section class="section">
+<section
+    class="section"
+    id="reasons"
+>
 
     <div class="container">
 
         <div class="section-head reveal">
 
-            <div class="eyebrow">WHY EXPORT ZONE</div>
+            <div class="eyebrow">
+                WHY EXPORT ZONE
+            </div>
 
             <h2 class="section-title">
                 EXPORT ZONEが選ばれる理由
@@ -2041,59 +3350,117 @@ button{
 
         <div class="reason-grid">
 
-            <div class="reason reveal">
-                <div class="reason-icon">🚗</div>
-                <h3>幅広い買取品目</h3>
-                <p>
-                    中古車から大型トラック、建設機械、
-                    農業機械、部品、在庫品まで対応。
-                </p>
-            </div>
 
             <div class="reason reveal">
-                <div class="reason-icon">🌏</div>
-                <h3>海外輸出ネットワーク</h3>
+
+                <div class="reason-icon">
+                    🚗
+                </div>
+
+                <h3>
+                    幅広い買取品目
+                </h3>
+
                 <p>
-                    日本国内だけでなく海外市場を見ながら
-                    商品を取り扱っています。
+                    中古車から大型トラック、
+                    建設機械、農業機械、部品、
+                    在庫品まで対応。
                 </p>
+
             </div>
 
+
             <div class="reason reveal">
-                <div class="reason-icon">💰</div>
-                <h3>買取代金をお支払い</h3>
+
+                <div class="reason-icon">
+                    🌏
+                </div>
+
+                <h3>
+                    海外輸出ネットワーク
+                </h3>
+
+                <p>
+                    日本国内だけでなく海外市場を
+                    見ながら商品を取り扱っています。
+                </p>
+
+            </div>
+
+
+            <div class="reason reveal">
+
+                <div class="reason-icon">
+                    💰
+                </div>
+
+                <h3>
+                    買取代金をお支払い
+                </h3>
+
                 <p>
                     買取が成立した場合、
-                    EXPORT ZONEからお客様へ買取代金をお支払いします。
+                    EXPORT ZONEからお客様へ
+                    買取代金をお支払いします。
                 </p>
+
             </div>
 
+
             <div class="reason reveal">
-                <div class="reason-icon">📸</div>
-                <h3>写真からでも相談可能</h3>
+
+                <div class="reason-icon">
+                    📸
+                </div>
+
+                <h3>
+                    写真からでも相談可能
+                </h3>
+
                 <p>
                     現物をすぐに持ち込めない場合でも、
-                    写真や車両情報からご相談いただけます。
+                    写真や商品情報からご相談いただけます。
                 </p>
+
             </div>
 
+
             <div class="reason reveal">
-                <div class="reason-icon">🤝</div>
-                <h3>丁寧な対応</h3>
+
+                <div class="reason-icon">
+                    🤝
+                </div>
+
+                <h3>
+                    丁寧な対応
+                </h3>
+
                 <p>
                     初めて売却される方にも、
                     わかりやすくご案内します。
                 </p>
+
             </div>
 
+
             <div class="reason reveal">
-                <div class="reason-icon">📦</div>
-                <h3>在庫品・素材にも対応</h3>
+
+                <div class="reason-icon">
+                    📦
+                </div>
+
+                <h3>
+                    在庫品・素材にも対応
+                </h3>
+
                 <p>
-                    ストックロット、余剰品、素材なども
-                    商品内容により買取を検討します。
+                    ストックロット、余剰品、
+                    素材なども商品内容により
+                    買取を検討します。
                 </p>
+
             </div>
+
 
         </div>
 
@@ -2101,17 +3468,23 @@ button{
 
 </section>
 
+
 <!-- =====================================================
      PROCESS
 ===================================================== -->
 
-<section class="section process" id="process">
+<section
+    class="section process"
+    id="process"
+>
 
     <div class="container">
 
         <div class="section-head reveal">
 
-            <div class="eyebrow">PURCHASE PROCESS</div>
+            <div class="eyebrow">
+                PURCHASE PROCESS
+            </div>
 
             <h2 class="section-title">
                 買取の流れ
@@ -2126,51 +3499,103 @@ button{
 
         <div class="process-grid">
 
-            <div class="process-step reveal">
-                <div class="process-num">STEP 01</div>
-                <h3>お問い合わせ</h3>
-                <p>
-                    電話・メールなどでご連絡ください。
-                </p>
-            </div>
 
             <div class="process-step reveal">
-                <div class="process-num">STEP 02</div>
-                <h3>商品確認</h3>
+
+                <div class="process-num">
+                    STEP 01
+                </div>
+
+                <h3>
+                    お問い合わせ
+                </h3>
+
                 <p>
-                    写真・車両情報・商品内容などを確認します。
+                    電話・メールなどで
+                    ご連絡ください。
                 </p>
+
             </div>
 
-            <div class="process-step reveal">
-                <div class="process-num">STEP 03</div>
-                <h3>査定・ご相談</h3>
-                <p>
-                    商品内容を確認して買取についてご相談します。
-                </p>
-            </div>
 
             <div class="process-step reveal">
-                <div class="process-num">STEP 04</div>
-                <h3>買取成立</h3>
+
+                <div class="process-num">
+                    STEP 02
+                </div>
+
+                <h3>
+                    商品確認
+                </h3>
+
                 <p>
-                    条件をご確認いただき、買取を進めます。
+                    写真・車両情報・商品内容などを
+                    確認します。
                 </p>
+
             </div>
 
+
             <div class="process-step reveal">
-                <div class="process-num">STEP 05</div>
-                <h3>お支払い</h3>
+
+                <div class="process-num">
+                    STEP 03
+                </div>
+
+                <h3>
+                    査定・ご相談
+                </h3>
+
                 <p>
-                    EXPORT ZONEからお客様へ買取代金をお支払いします。
+                    商品内容を確認して
+                    買取についてご相談します。
                 </p>
+
             </div>
+
+
+            <div class="process-step reveal">
+
+                <div class="process-num">
+                    STEP 04
+                </div>
+
+                <h3>
+                    買取成立
+                </h3>
+
+                <p>
+                    条件をご確認いただき、
+                    買取を進めます。
+                </p>
+
+            </div>
+
+
+            <div class="process-step reveal">
+
+                <div class="process-num">
+                    STEP 05
+                </div>
+
+                <h3>
+                    お支払い
+                </h3>
+
+                <p>
+                    EXPORT ZONEからお客様へ
+                    買取代金をお支払いします。
+                </p>
+
+            </div>
+
 
         </div>
 
     </div>
 
 </section>
+
 
 <!-- =====================================================
      EXPORT
@@ -2203,8 +3628,9 @@ button{
 
 </section>
 
+
 <!-- =====================================================
-     PHONE CTA
+     PHONE
 ===================================================== -->
 
 <section class="phone-section">
@@ -2215,7 +3641,10 @@ button{
             買取についてお気軽にご相談ください
         </h2>
 
-        <a href="tel:0120888405" class="big-phone">
+        <a
+            href="tel:0120888405"
+            class="big-phone"
+        >
             ☎ 0120 888 405
         </a>
 
@@ -2227,6 +3656,7 @@ button{
 
 </section>
 
+
 <!-- =====================================================
      FAQ
 ===================================================== -->
@@ -2237,7 +3667,9 @@ button{
 
         <div class="section-head reveal">
 
-            <div class="eyebrow">FAQ</div>
+            <div class="eyebrow">
+                FAQ
+            </div>
 
             <h2 class="section-title">
                 よくあるご質問
@@ -2248,20 +3680,28 @@ button{
 
         <div class="faq-list">
 
+
             <div class="faq-item reveal">
 
                 <button class="faq-question">
+
                     <span>
                         買取するときに、こちらがお金を払うのですか？
                     </span>
-                    <span>＋</span>
+
+                    <span>
+                        ＋
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
                         いいえ。お客様から買取費用をいただくという意味ではありません。
                         買取が成立した場合、EXPORT ZONEからお客様へ買取代金をお支払いします。
                     </p>
+
                 </div>
 
             </div>
@@ -2270,17 +3710,25 @@ button{
             <div class="faq-item reveal">
 
                 <button class="faq-question">
+
                     <span>
                         中古車以外も買取できますか？
                     </span>
-                    <span>＋</span>
+
+                    <span>
+                        ＋
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
-                        はい。トラック、建設機械、農業機械、自動車部品、
-                        ストックロット、各種在庫品なども取り扱っています。
+                        はい。トラック、建設機械、農業機械、
+                        自動車部品、ストックロット、
+                        各種在庫品なども取り扱っています。
                     </p>
+
                 </div>
 
             </div>
@@ -2289,17 +3737,24 @@ button{
             <div class="faq-item reveal">
 
                 <button class="faq-question">
+
                     <span>
                         写真だけでも相談できますか？
                     </span>
-                    <span>＋</span>
+
+                    <span>
+                        ＋
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
-                        はい。まずは商品の写真、メーカー、年式、型式などを
-                        お送りいただければ確認いたします。
+                        はい。まずは商品の写真、メーカー、
+                        年式、型式などをお送りいただければ確認いたします。
                     </p>
+
                 </div>
 
             </div>
@@ -2308,20 +3763,29 @@ button{
             <div class="faq-item reveal">
 
                 <button class="faq-question">
+
                     <span>
                         日本全国から相談できますか？
                     </span>
-                    <span>＋</span>
+
+                    <span>
+                        ＋
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
-                        日本国内のお客様から幅広くご相談いただけます。
+                        日本国内のお客様から幅広く
+                        ご相談いただけます。
                         商品内容や場所などをお知らせください。
                     </p>
+
                 </div>
 
             </div>
+
 
         </div>
 
@@ -2329,17 +3793,23 @@ button{
 
 </section>
 
+
 <!-- =====================================================
      COMPANY
 ===================================================== -->
 
-<section class="section" id="company">
+<section
+    class="section"
+    id="company"
+>
 
     <div class="container">
 
         <div class="section-head reveal">
 
-            <div class="eyebrow">COMPANY</div>
+            <div class="eyebrow">
+                COMPANY
+            </div>
 
             <h2 class="section-title">
                 会社情報
@@ -2350,62 +3820,166 @@ button{
 
         <div class="company-grid">
 
+
+            <!-- =========================================
+                 IMAGE
+            ========================================== -->
+
+            <div class="company-visual reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1400&q=90"
+                    alt="日本の中古車・輸出車両"
+                    loading="lazy"
+                    onerror="
+                        this.onerror=null;
+                        this.src='https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1400&q=90';
+                    "
+                >
+
+
+                <div class="company-visual-overlay">
+
+                    <span>
+                        EXPORT ZONE
+                    </span>
+
+                    <strong>
+                        JAPAN → WORLD
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 COMPANY INFORMATION
+            ========================================== -->
+
             <div class="company-card reveal">
 
                 <table class="company-table">
 
-                    <tr>
-                        <th>会社名</th>
-                        <td>EXPORT ZONE 株式会社</td>
-                    </tr>
 
                     <tr>
-                        <th>所在地</th>
+
+                        <th>
+                            会社名
+                        </th>
+
+                        <td>
+                            EXPORT ZONE 株式会社
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            所在地
+                        </th>
+
                         <td>
                             〒362-0806<br>
                             埼玉県北足立郡伊奈町小室2607
                         </td>
+
                     </tr>
 
-                    <tr>
-                        <th>電話番号</th>
-                        <td>0120 888 405</td>
-                    </tr>
 
                     <tr>
-                        <th>メール</th>
-                        <td>exportzonecoltd@gmail.com</td>
+
+                        <th>
+                            事業内容
+                        </th>
+
+                        <td>
+                            中古車・トラック・建設機械・
+                            農業機械・自動車部品・
+                            在庫品の買取・輸出
+                        </td>
+
                     </tr>
 
+
                     <tr>
-                        <th>古物商許可番号</th>
-                        <td>第452750021040号</td>
+
+                        <th>
+                            古物商許可
+                        </th>
+
+                        <td>
+                            第452750021040号
+                        </td>
+
                     </tr>
+
+
+                    <tr>
+
+                        <th>
+                            電話番号
+                        </th>
+
+                        <td>
+                            0120 888 405
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            メール
+                        </th>
+
+                        <td>
+                            exportzonecoltd@gmail.com
+                        </td>
+
+                    </tr>
+
 
                 </table>
 
-            </div>
 
+                <div style="
+                    margin-top:28px;
+                    padding:22px;
+                    border-radius:16px;
+                    background:rgba(255,210,28,.06);
+                    border:1px solid rgba(255,210,28,.15);
+                ">
 
-            <div class="company-card reveal">
+                    <div
+                        style="
+                            color:#ffd21c;
+                            font-size:11px;
+                            font-weight:900;
+                            margin-bottom:9px;
+                        "
+                    >
+                        BUSINESS
+                    </div>
 
-                <div class="eyebrow">
-                    BUSINESS
+                    <div
+                        style="
+                            font-size:23px;
+                            line-height:1.5;
+                            font-weight:950;
+                        "
+                    >
+                        日本国内から仕入れ、<br>
+                        世界へ輸出。
+                    </div>
+
                 </div>
 
-                <h3 style="font-size:28px;font-weight:950;line-height:1.5;">
-                    日本国内から仕入れ、<br>
-                    海外へ輸出。
-                </h3>
-
-                <p style="margin-top:20px;color:#aeb7c5;line-height:2;font-size:14px;">
-                    中古車、トラック、建設機械、農業機械、
-                    自動車部品、在庫品などを取り扱っています。
-                    日本国内の仕入れから海外輸出まで、
-                    EXPORT ZONEが対応します。
-                </p>
-
             </div>
+
 
         </div>
 
@@ -2413,17 +3987,24 @@ button{
 
 </section>
 
+
 <!-- =====================================================
      CONTACT
 ===================================================== -->
 
-<section class="section contact" id="contact">
+<section
+    class="section contact"
+    id="contact"
+>
 
     <div class="container">
 
+
         <div class="section-head reveal">
 
-            <div class="eyebrow">CONTACT</div>
+            <div class="eyebrow">
+                CONTACT
+            </div>
 
             <h2 class="section-title">
                 お問い合わせ
@@ -2438,27 +4019,45 @@ button{
 
         <div class="contact-grid">
 
+
             <div class="contact-card reveal">
 
                 <h3>
                     お電話でお問い合わせ
                 </h3>
 
+
                 <div class="contact-info">
 
-                    <div>
-                        <small>FREE CALL</small>
-                        <a href="tel:0120888405" class="phone">
-                            0120 888 405
-                        </a>
-                    </div>
 
                     <div>
-                        <small>受付</small>
+
+                        <small>
+                            FREE CALL
+                        </small>
+
+                        <a
+                            href="tel:0120888405"
+                            class="phone"
+                        >
+                            0120 888 405
+                        </a>
+
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            ご相談
+                        </small>
+
                         <strong>
                             買取・商品についてお気軽にご相談ください。
                         </strong>
+
                     </div>
+
 
                 </div>
 
@@ -2468,34 +4067,57 @@ button{
             <div class="contact-card reveal">
 
                 <h3>
-                    メールでお問い合わせ
+                    メール・LINEでお問い合わせ
                 </h3>
+
 
                 <div class="contact-info">
 
+
                     <div>
-                        <small>EMAIL</small>
-                        <a href="mailto:exportzonecoltd@gmail.com">
+
+                        <small>
+                            EMAIL
+                        </small>
+
+                        <a
+                            href="mailto:exportzonecoltd@gmail.com"
+                        >
+
                             <strong>
                                 exportzonecoltd@gmail.com
                             </strong>
+
                         </a>
+
                     </div>
 
+
                     <div>
-                        <small>LINE</small>
-                        <a href="https://line.me/ti/p/VcqKQ0PYkN"
-                           target="_blank"
-                           rel="noopener">
+
+                        <small>
+                            LINE
+                        </small>
+
+                        <a
+                            href="https://line.me/ti/p/VcqKQ0PYkN"
+                            target="_blank"
+                            rel="noopener"
+                        >
+
                             <strong>
                                 LINEでお問い合わせ
                             </strong>
+
                         </a>
+
                     </div>
+
 
                 </div>
 
             </div>
+
 
         </div>
 
@@ -2503,7 +4125,9 @@ button{
 
 </section>
 
+
 </main>
+
 
 <!-- =====================================================
      FOOTER
@@ -2511,7 +4135,9 @@ button{
 
 <footer class="footer">
 
+
     <div class="footer-grid">
+
 
         <div>
 
@@ -2519,16 +4145,23 @@ button{
                 class="footer-logo"
                 src="./EZ%20Logo.png"
                 alt="EXPORT ZONE"
-                onerror="this.style.display='none'"
             >
 
             <p>
+
                 EXPORT ZONE 株式会社<br>
-                日本国内から中古車・トラック・建設機械・
-                各種商品を買取し、海外へ輸出しています。
+
+                日本国内から中古車・トラック・
+                建設機械・各種商品を買取し、
+                海外へ輸出しています。
+
             </p>
 
-            <a href="tel:0120888405" class="footer-phone">
+
+            <a
+                href="tel:0120888405"
+                class="footer-phone"
+            >
                 ☎ 0120 888 405
             </a>
 
@@ -2537,14 +4170,32 @@ button{
 
         <div>
 
-            <h4>MENU</h4>
+            <h4>
+                MENU
+            </h4>
 
             <div class="footer-links">
-                <a href="#home">ホーム</a>
-                <a href="#products">買取品目</a>
-                <a href="#payment">買取について</a>
-                <a href="#process">買取の流れ</a>
-                <a href="#export">海外輸出</a>
+
+                <a href="#home">
+                    ホーム
+                </a>
+
+                <a href="#products">
+                    買取品目
+                </a>
+
+                <a href="#payment">
+                    買取について
+                </a>
+
+                <a href="#process">
+                    買取の流れ
+                </a>
+
+                <a href="#export">
+                    海外輸出
+                </a>
+
             </div>
 
         </div>
@@ -2552,9 +4203,12 @@ button{
 
         <div>
 
-            <h4>CONTACT</h4>
+            <h4>
+                CONTACT
+            </h4>
 
             <div class="footer-links">
+
                 <a href="tel:0120888405">
                     0120 888 405
                 </a>
@@ -2563,31 +4217,41 @@ button{
                     exportzonecoltd@gmail.com
                 </a>
 
-                <a href="https://line.me/ti/p/VcqKQ0PYkN"
-                   target="_blank"
-                   rel="noopener">
+                <a
+                    href="https://line.me/ti/p/VcqKQ0PYkN"
+                    target="_blank"
+                    rel="noopener"
+                >
                     LINE
                 </a>
+
             </div>
 
         </div>
+
 
     </div>
 
 
     <div class="copyright">
+
         © EXPORT ZONE Co., Ltd. All Rights Reserved.
+
     </div>
 
+
 </footer>
+
 
 <!-- =====================================================
      FLOATING PHONE
 ===================================================== -->
 
-<a href="tel:0120888405"
-   class="floating-phone"
-   aria-label="電話する">
+<a
+    href="tel:0120888405"
+    class="floating-phone"
+    aria-label="電話する"
+>
     ☎
 </a>
 
@@ -2598,115 +4262,176 @@ button{
    LOADER
 ========================================================= */
 
-window.addEventListener("load",function(){
+window.addEventListener(
+    "load",
+    function(){
 
-    setTimeout(function(){
-        const loader=document.getElementById("loader");
+        setTimeout(
+            function(){
 
-        if(loader){
-            loader.classList.add("hide");
-        }
+                const loader =
+                    document.getElementById("loader");
 
-    },700);
+                if(loader){
+                    loader.classList.add("hide");
+                }
 
-});
+            },
+            700
+        );
+
+    }
+);
 
 
 /* =========================================================
    MOBILE MENU
 ========================================================= */
 
-const menuBtn=document.getElementById("menuBtn");
-const mobileMenu=document.getElementById("mobileMenu");
+const menuBtn =
+    document.getElementById("menuBtn");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
 
 if(menuBtn && mobileMenu){
 
-    menuBtn.addEventListener("click",function(){
+    menuBtn.addEventListener(
+        "click",
+        function(){
 
-        mobileMenu.classList.toggle("open");
+            mobileMenu.classList.toggle("open");
 
-        if(mobileMenu.classList.contains("open")){
-            menuBtn.textContent="✕";
-        }else{
-            menuBtn.textContent="☰";
+            if(
+                mobileMenu.classList.contains("open")
+            ){
+
+                menuBtn.textContent="✕";
+
+            }else{
+
+                menuBtn.textContent="☰";
+
+            }
+
         }
+    );
 
-    });
 
-    mobileMenu.querySelectorAll("a").forEach(function(link){
+    mobileMenu
+        .querySelectorAll("a")
+        .forEach(
+            function(link){
 
-        link.addEventListener("click",function(){
+                link.addEventListener(
+                    "click",
+                    function(){
 
-            mobileMenu.classList.remove("open");
-            menuBtn.textContent="☰";
+                        mobileMenu
+                            .classList
+                            .remove("open");
 
-        });
+                        menuBtn.textContent="☰";
 
-    });
+                    }
+                );
+
+            }
+        );
 
 }
 
 
 /* =========================================================
    SCROLL REVEAL
-   IMPORTANT:
-   We DO NOT unobserve.
-   Animation can happen again when scrolling back.
 ========================================================= */
 
-const revealObserver=new IntersectionObserver(
-    function(entries){
+const revealObserver =
+    new IntersectionObserver(
+        function(entries){
 
-        entries.forEach(function(entry){
+            entries.forEach(
+                function(entry){
 
-            if(entry.isIntersecting){
+                    if(entry.isIntersecting){
 
-                entry.target.classList.add("show");
+                        entry.target
+                            .classList
+                            .add("show");
 
-            }else{
+                    }else{
 
-                entry.target.classList.remove("show");
+                        entry.target
+                            .classList
+                            .remove("show");
 
-            }
+                    }
 
-        });
+                }
+            );
 
-    },
-    {
-        threshold:.12
-    }
-);
+        },
+        {
+            threshold:.12
+        }
+    );
 
-document.querySelectorAll(".reveal").forEach(function(element){
 
-    revealObserver.observe(element);
+document
+    .querySelectorAll(".reveal")
+    .forEach(
+        function(element){
 
-});
+            revealObserver.observe(element);
+
+        }
+    );
 
 
 /* =========================================================
    FAQ
 ========================================================= */
 
-document.querySelectorAll(".faq-question").forEach(function(button){
+document
+    .querySelectorAll(".faq-question")
+    .forEach(
+        function(button){
 
-    button.addEventListener("click",function(){
+            button.addEventListener(
+                "click",
+                function(){
 
-        const item=button.parentElement;
+                    const item =
+                        button.parentElement;
 
-        document.querySelectorAll(".faq-item").forEach(function(other){
 
-            if(other!==item){
-                other.classList.remove("active");
-            }
+                    document
+                        .querySelectorAll(".faq-item")
+                        .forEach(
+                            function(other){
 
-        });
+                                if(other !== item){
 
-        item.classList.toggle("active");
+                                    other
+                                        .classList
+                                        .remove("active");
 
-    });
+                                }
 
-});
+                            }
+                        );
+
+
+                    item
+                        .classList
+                        .toggle("active");
+
+                }
+            );
+
+        }
+    );
 
 
 /* =========================================================
@@ -2715,226 +4440,422 @@ document.querySelectorAll(".faq-question").forEach(function(button){
 
 async function createWorldMap(){
 
-    const svg=d3.select("#worldMap");
+    const svg =
+        d3.select("#worldMap");
+
 
     if(svg.empty()){
         return;
     }
 
+
     const width=1440;
     const height=760;
 
-    const projection=d3.geoNaturalEarth1()
-        .scale(235)
-        .translate([width/2,height/2 + 15]);
 
-    const path=d3.geoPath()
+    const projection =
+        d3.geoNaturalEarth1()
+        .scale(235)
+        .translate([
+            width/2,
+            height/2 + 15
+        ]);
+
+
+    const path =
+        d3.geoPath()
         .projection(projection);
+
 
     try{
 
-        const world=await d3.json(
-            "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
-        );
+        const world =
+            await d3.json(
+                "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
+            );
 
-        const countries=topojson.feature(
-            world,
-            world.objects.countries
-        );
 
-        svg.selectAll(".country")
+        const countries =
+            topojson.feature(
+                world,
+                world.objects.countries
+            );
+
+
+        svg
+            .selectAll(".country")
             .data(countries.features)
             .enter()
             .append("path")
             .attr("class","country")
             .attr("d",path);
 
-        /*
-         * Approximate geographic locations.
-         * Japan is the origin.
-         */
+
+        /* Japan */
 
         const japan=[
             138.2529,
             36.2048
         ];
 
+
+        /* Destinations */
+
         const destinations=[
-            [127.7669,35.9078],   // Korea
-            [100.5018,13.7563],   // Thailand
-            [103.8198,1.3521],   // Singapore
-            [55.2708,25.2048],   // UAE
-            [46.6753,24.7136],   // Saudi Arabia
-            [13.4050,52.5200],   // Germany
-            [2.3522,48.8566],    // France
-            [-3.7038,40.4168],   // Spain
-            [31.2357,30.0444],   // Egypt
-            [-74.0060,40.7128],  // USA
-            [-58.3816,-34.6037], // Argentina
-            [151.2093,-33.8688]  // Australia
+
+            [127.7669,35.9078],
+
+            [100.5018,13.7563],
+
+            [103.8198,1.3521],
+
+            [55.2708,25.2048],
+
+            [46.6753,24.7136],
+
+            [13.4050,52.5200],
+
+            [2.3522,48.8566],
+
+            [-3.7038,40.4168],
+
+            [31.2357,30.0444],
+
+            [-74.0060,40.7128],
+
+            [-58.3816,-34.6037],
+
+            [151.2093,-33.8688]
+
         ];
 
-        const japanPoint=projection(japan);
 
-        /* glow pulse around Japan */
+        const japanPoint =
+            projection(japan);
 
-        const defs=svg.append("defs");
 
-        const glow=defs.append("filter")
+        /* =================================================
+           GLOW FILTER
+        ================================================= */
+
+        const defs =
+            svg.append("defs");
+
+
+        const glow =
+            defs.append("filter")
             .attr("id","mapGlow");
 
-        glow.append("feGaussianBlur")
+
+        glow
+            .append("feGaussianBlur")
             .attr("stdDeviation","5")
             .attr("result","blur");
 
-        const merge=glow.append("feMerge");
 
-        merge.append("feMergeNode")
+        const merge =
+            glow.append("feMerge");
+
+
+        merge
+            .append("feMergeNode")
             .attr("in","blur");
 
-        merge.append("feMergeNode")
+
+        merge
+            .append("feMergeNode")
             .attr("in","SourceGraphic");
 
 
-        /*
-         * Route generator
-         */
+        /* =================================================
+           ROUTES
+        ================================================= */
 
-        destinations.forEach(function(destination,index){
+        destinations.forEach(
+            function(destination,index){
 
-            const end=projection(destination);
+                const end =
+                    projection(destination);
 
-            const midX=(japanPoint[0]+end[0])/2;
-            const midY=(japanPoint[1]+end[1])/2;
 
-            const distance=Math.sqrt(
-                Math.pow(end[0]-japanPoint[0],2)+
-                Math.pow(end[1]-japanPoint[1],2)
-            );
+                const midX =
+                    (japanPoint[0]+end[0])/2;
 
-            const curve=Math.min(
-                170,
-                Math.max(45,distance*.22)
-            );
 
-            const controlY=
-                midY-curve;
+                const midY =
+                    (japanPoint[1]+end[1])/2;
 
-            const d=
-                `M ${japanPoint[0]} ${japanPoint[1]}
-                 Q ${midX} ${controlY}
-                 ${end[0]} ${end[1]}`;
 
-            const route=svg.append("path")
-                .attr("class","route")
-                .attr("d",d);
+                const distance =
+                    Math.sqrt(
 
-            /*
-             * Moving dot.
-             */
+                        Math.pow(
+                            end[0]-japanPoint[0],
+                            2
+                        )
 
-            const dot=svg.append("circle")
-                .attr("class","route-dot")
-                .attr("r",3.5);
+                        +
 
-            const totalLength=route.node().getTotalLength();
+                        Math.pow(
+                            end[1]-japanPoint[1],
+                            2
+                        )
 
-            function animateDot(){
+                    );
 
-                dot
-                    .attr("transform",
-                        `translate(
-                            ${japanPoint[0]},
-                            ${japanPoint[1]}
-                        )`
-                    )
-                    .transition()
-                    .delay(index*180)
-                    .duration(2800 + index*100)
-                    .ease(d3.easeLinear)
-                    .attrTween(
-                        "transform",
-                        function(){
 
-                            return function(t){
+                const curve =
+                    Math.min(
+                        170,
+                        Math.max(
+                            45,
+                            distance*.22
+                        )
+                    );
 
-                                const point=
-                                    route.node().getPointAtLength(
-                                        t*totalLength
-                                    );
 
-                                return `translate(${point.x},${point.y})`;
+                const controlY =
+                    midY-curve;
 
-                            };
 
-                        }
-                    )
-                    .on("end",animateDot);
+                const d =
+                    `M ${japanPoint[0]} ${japanPoint[1]}
+                     Q ${midX} ${controlY}
+                     ${end[0]} ${end[1]}`;
+
+
+                const route =
+                    svg
+                    .append("path")
+                    .attr("class","route")
+                    .attr("d",d);
+
+
+                const dot =
+                    svg
+                    .append("circle")
+                    .attr("class","route-dot")
+                    .attr("r",3.5);
+
+
+                const totalLength =
+                    route
+                    .node()
+                    .getTotalLength();
+
+
+                function animateDot(){
+
+                    dot
+
+                        .attr(
+                            "transform",
+                            `translate(
+                                ${japanPoint[0]},
+                                ${japanPoint[1]}
+                            )`
+                        )
+
+                        .transition()
+
+                        .delay(index*170)
+
+                        .duration(
+                            2600 +
+                            index*90
+                        )
+
+                        .ease(
+                            d3.easeLinear
+                        )
+
+                        .attrTween(
+                            "transform",
+                            function(){
+
+                                return function(t){
+
+                                    const point =
+                                        route
+                                        .node()
+                                        .getPointAtLength(
+                                            t*totalLength
+                                        );
+
+
+                                    return `
+                                        translate(
+                                            ${point.x},
+                                            ${point.y}
+                                        )
+                                    `;
+
+                                };
+
+                            }
+                        )
+
+                        .on(
+                            "end",
+                            animateDot
+                        );
+
+                }
+
+
+                animateDot();
 
             }
-
-            animateDot();
-
-        });
+        );
 
 
-        /*
-         * Japan origin glow.
-         */
+        /* =================================================
+           JAPAN GLOW
+        ================================================= */
 
-        svg.append("circle")
-            .attr("class","japan-point")
-            .attr("cx",japanPoint[0])
-            .attr("cy",japanPoint[1])
-            .attr("r",6)
-            .style("filter","url(#mapGlow)");
+        svg
+            .append("circle")
+            .attr(
+                "class",
+                "japan-point"
+            )
+            .attr(
+                "cx",
+                japanPoint[0]
+            )
+            .attr(
+                "cy",
+                japanPoint[1]
+            )
+            .attr(
+                "r",
+                6
+            )
+            .style(
+                "filter",
+                "url(#mapGlow)"
+            );
 
-        svg.append("circle")
-            .attr("cx",japanPoint[0])
-            .attr("cy",japanPoint[1])
-            .attr("r",12)
-            .attr("fill","none")
-            .attr("stroke","#ffd21c")
-            .attr("stroke-width",2)
-            .attr("opacity",.45)
+
+        const pulse =
+            svg
+            .append("circle")
+            .attr(
+                "cx",
+                japanPoint[0]
+            )
+            .attr(
+                "cy",
+                japanPoint[1]
+            )
+            .attr(
+                "r",
+                8
+            )
+            .attr(
+                "fill",
+                "none"
+            )
+            .attr(
+                "stroke",
+                "#ffd21c"
+            )
+            .attr(
+                "stroke-width",
+                2
+            );
+
+
+        pulse
             .append("animate")
-            .attr("attributeName","r")
-            .attr("from","7")
-            .attr("to","25")
-            .attr("dur","1.8s")
-            .attr("repeatCount","indefinite");
+            .attr(
+                "attributeName",
+                "r"
+            )
+            .attr(
+                "from",
+                "8"
+            )
+            .attr(
+                "to",
+                "30"
+            )
+            .attr(
+                "dur",
+                "1.8s"
+            )
+            .attr(
+                "repeatCount",
+                "indefinite"
+            );
 
-        svg.append("circle")
-            .attr("cx",japanPoint[0])
-            .attr("cy",japanPoint[1])
-            .attr("r",12)
-            .attr("fill","none")
-            .attr("stroke","#ffd21c")
-            .attr("stroke-width",2)
-            .attr("opacity",.45)
+
+        pulse
             .append("animate")
-            .attr("attributeName","opacity")
-            .attr("from",".7")
-            .attr("to","0")
-            .attr("dur","1.8s")
-            .attr("repeatCount","indefinite");
+            .attr(
+                "attributeName",
+                "opacity"
+            )
+            .attr(
+                "from",
+                ".8"
+            )
+            .attr(
+                "to",
+                "0"
+            )
+            .attr(
+                "dur",
+                "1.8s"
+            )
+            .attr(
+                "repeatCount",
+                "indefinite"
+            );
+
 
     }catch(error){
 
-        console.error("World map loading error:",error);
+        console.error(
+            "World map loading error:",
+            error
+        );
 
-        svg.append("text")
-            .attr("x",width/2)
-            .attr("y",height/2)
-            .attr("text-anchor","middle")
-            .attr("fill","#ffd21c")
-            .attr("font-size","22")
-            .attr("font-weight","900")
-            .text("JAPAN → WORLD");
+
+        svg
+            .append("text")
+            .attr(
+                "x",
+                width/2
+            )
+            .attr(
+                "y",
+                height/2
+            )
+            .attr(
+                "text-anchor",
+                "middle"
+            )
+            .attr(
+                "fill",
+                "#ffd21c"
+            )
+            .attr(
+                "font-size",
+                "22"
+            )
+            .attr(
+                "font-weight",
+                "900"
+            )
+            .text(
+                "JAPAN → WORLD"
+            );
 
     }
 
 }
+
 
 createWorldMap();
 
@@ -2943,20 +4864,36 @@ createWorldMap();
    IMAGE FALLBACK
 ========================================================= */
 
-document.querySelectorAll("img").forEach(function(img){
+document
+    .querySelectorAll("img")
+    .forEach(
+        function(img){
 
-    img.addEventListener("error",function(){
+            img.addEventListener(
+                "error",
+                function(){
 
-        if(img.classList.contains("loader-logo") ||
-           img.classList.contains("footer-logo")){
+                    /*
+                     * If the company image fails,
+                     * use the port/export image.
+                     */
 
-            img.style.display="none";
+                    if(
+                        img.classList.contains(
+                            "company-main-image"
+                        )
+                    ){
+
+                        img.src =
+                            "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1400&q=90";
+
+                    }
+
+                }
+            );
 
         }
-
-    });
-
-});
+    );
 
 </script>
 
