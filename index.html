@@ -1,2900 +1,2821 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>中古車・トラック・建設機械の買取｜EXPORT ZONE 株式会社</title>
-
-<meta name="description" content="EXPORT ZONE 株式会社は、日本全国から中古車・トラック・建設機械・農業機械・自動車部品・在庫品などを買取。日本から海外へ輸出しています。埼玉県を拠点に全国対応。">
-
-<meta name="keywords" content="中古車 買取,トラック 買取,建設機械 買取,農業機械 買取,中古車 輸出,建設機械 輸出,埼玉 中古車 買取,日本全国 買取,EXPORT ZONE">
-
-<meta name="robots" content="index, follow">
-
-<link rel="canonical" href="https://agmrifkan-collab.github.io/exportzone/">
-
-<meta property="og:title" content="中古車・トラック・建設機械の買取｜EXPORT ZONE 株式会社">
-<meta property="og:description" content="日本全国から中古車・トラック・建設機械・在庫品を買取。日本から海外へ輸出しています。">
-<meta property="og:url" content="https://agmrifkan-collab.github.io/exportzone/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="EXPORT ZONE 株式会社">
-
-<meta name="theme-color" content="#06101d">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
-
-<style>
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:"Noto Sans JP",sans-serif;
-  background:#06101d;
-  color:#fff;
-  line-height:1.8;
-  overflow-x:hidden;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-img{
-  max-width:100%;
-  display:block;
-}
-
-/* =========================
-LOADER
-========================= */
-
-#loader{
-  position:fixed;
-  inset:0;
-  background:#06101d;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  transition:.6s;
-}
-
-#loader.hide{
-  opacity:0;
-  visibility:hidden;
-}
-
-.loader-inner{
-  text-align:center;
-}
-
-.loader-logo{
-  width:110px;
-  margin:auto auto 25px;
-  animation:loaderPulse 1.5s infinite;
-}
-
-.loader-text{
-  font-size:14px;
-  letter-spacing:4px;
-  color:#ffd83d;
-}
-
-@keyframes loaderPulse{
-  0%,100%{
-    transform:scale(1);
-    opacity:.7;
-  }
-  50%{
-    transform:scale(1.08);
-    opacity:1;
-  }
-}
-
-/* =========================
-HEADER
-========================= */
-
-header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:5000;
-  background:rgba(4,12,23,.84);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.nav{
-  max-width:1450px;
-  margin:auto;
-  padding:14px 30px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:25px;
-}
-
-.logo img{
-  width:145px;
-}
-
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
-
-.nav-links a{
-  position:relative;
-  font-size:13px;
-  font-weight:800;
-  color:rgba(255,255,255,.86);
-  transition:.3s;
-}
-
-.nav-links a:hover{
-  color:#ffd83d;
-}
-
-.nav-links a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-7px;
-  width:0;
-  height:2px;
-  background:#ffd83d;
-  transition:.3s;
-}
-
-.nav-links a:hover::after{
-  width:100%;
-}
-
-.header-phone{
-  white-space:nowrap;
-  padding:10px 17px;
-  border-radius:30px;
-  background:linear-gradient(135deg,#ffd83d,#ffae00);
-  color:#07111f;
-  font-size:14px;
-  font-weight:900;
-  animation:phoneGlow 2s infinite;
-}
-
-@keyframes phoneGlow{
-  0%,100%{
-    box-shadow:0 0 15px rgba(255,196,0,.25);
-  }
-  50%{
-    box-shadow:0 0 35px rgba(255,196,0,.65);
-  }
-}
-
-.menu-btn{
-  display:none;
-  border:0;
-  background:none;
-  color:white;
-  font-size:30px;
-  cursor:pointer;
-}
-
-/* =========================
-HERO
-========================= */
-
-.hero{
-  min-height:100vh;
-  padding:150px 6% 80px;
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 15% 20%,rgba(0,180,255,.15),transparent 35%),
-    radial-gradient(circle at 90% 30%,rgba(255,190,0,.12),transparent 35%),
-    linear-gradient(135deg,#06101d,#091827 60%,#03101c);
-}
-
-.hero-grid{
-  max-width:1450px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1fr 1.05fr;
-  align-items:center;
-  gap:45px;
-  position:relative;
-  z-index:2;
-}
-
-.hero-label{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  color:#ffd83d;
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:2px;
-  margin-bottom:20px;
-}
-
-.hero-label::before{
-  content:"";
-  width:32px;
-  height:2px;
-  background:#ffd83d;
-}
-
-.hero h1{
-  font-size:clamp(40px,5vw,76px);
-  line-height:1.15;
-  font-weight:900;
-  letter-spacing:-2px;
-  margin-bottom:25px;
-}
-
-.hero h1 span{
-  color:#ffd83d;
-  text-shadow:0 0 30px rgba(255,216,61,.25);
-}
-
-.hero-description{
-  max-width:650px;
-  color:rgba(255,255,255,.72);
-  font-size:16px;
-  margin-bottom:28px;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-bottom:25px;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:52px;
-  padding:0 25px;
-  border-radius:12px;
-  font-weight:900;
-  transition:.3s;
-}
-
-.btn-primary{
-  background:linear-gradient(135deg,#ffd83d,#ffad00);
-  color:#07111f;
-  box-shadow:0 12px 35px rgba(255,190,0,.25);
-}
-
-.btn-primary:hover{
-  transform:translateY(-4px);
-  box-shadow:0 18px 45px rgba(255,190,0,.4);
-}
-
-.btn-outline{
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(255,255,255,.04);
-}
-
-.btn-outline:hover{
-  border-color:#ffd83d;
-  color:#ffd83d;
-  transform:translateY(-4px);
-}
-
-.hero-phone{
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  font-size:26px;
-  font-weight:900;
-  animation:heroPhonePulse 2s infinite;
-}
-
-.hero-phone-icon{
-  width:43px;
-  height:43px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#ffd83d;
-  color:#07111f;
-}
-
-@keyframes heroPhonePulse{
-  0%,100%{
-    transform:scale(1);
-  }
-  50%{
-    transform:scale(1.035);
-    text-shadow:0 0 25px rgba(255,216,61,.55);
-  }
-}
-
-/* =========================
-PAYMENT
-========================= */
-
-.hero-payment{
-  margin-top:30px;
-  position:relative;
-  border-radius:20px;
-  padding:2px;
-  overflow:hidden;
-  background:conic-gradient(
-    from 0deg,
-    #ffd83d,
-    #fff3a1,
-    #ffae00,
-    #ffe76b,
-    #ffd83d
-  );
-  animation:paymentRotate 4s linear infinite,
-             paymentGlow 2s ease-in-out infinite;
-}
-
-@keyframes paymentRotate{
-  to{
-    filter:hue-rotate(360deg);
-  }
-}
-
-@keyframes paymentGlow{
-  0%,100%{
-    box-shadow:0 0 15px rgba(255,205,0,.25);
-  }
-  50%{
-    box-shadow:
-      0 0 35px rgba(255,205,0,.7),
-      0 0 70px rgba(255,170,0,.25);
-  }
-}
-
-.payment-inner{
-  position:relative;
-  overflow:hidden;
-  border-radius:18px;
-  padding:22px 25px;
-  background:linear-gradient(135deg,#171b0a,#0b1017);
-}
-
-.payment-shine{
-  position:absolute;
-  top:0;
-  left:-120%;
-  width:70%;
-  height:100%;
-  background:linear-gradient(
-    100deg,
-    transparent,
-    rgba(255,255,255,.22),
-    transparent
-  );
-  transform:skewX(-20deg);
-  animation:paymentShine 3s infinite;
-}
-
-@keyframes paymentShine{
-  0%{
-    left:-120%;
-  }
-  55%,100%{
-    left:150%;
-  }
-}
-
-.payment-title{
-  position:relative;
-  z-index:2;
-  color:#ffd83d;
-  font-size:18px;
-  font-weight:900;
-  margin-bottom:7px;
-  animation:titleGlow 1.5s infinite;
-}
-
-.payment-title::before{
-  content:"💰";
-  margin-right:8px;
-  display:inline-block;
-  animation:moneyBounce 1.2s infinite;
-}
-
-@keyframes moneyBounce{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-5px) rotate(-5deg);
-  }
-}
-
-@keyframes titleGlow{
-  0%,100%{
-    text-shadow:0 0 5px rgba(255,216,61,.2);
-  }
-  50%{
-    text-shadow:
-      0 0 12px rgba(255,216,61,.9),
-      0 0 25px rgba(255,174,0,.5);
-  }
-}
-
-.payment-text{
-  position:relative;
-  z-index:2;
-  font-size:13px;
-  line-height:1.9;
-  color:rgba(255,255,255,.9);
-}
-
-/* =========================
-WORLD MAP
-========================= */
-
-.hero-map{
-  position:relative;
-  min-height:590px;
-  border-radius:35px;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 50%,rgba(0,170,255,.1),transparent 65%),
-    rgba(255,255,255,.025);
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:
-    inset 0 0 80px rgba(0,160,255,.05),
-    0 30px 80px rgba(0,0,0,.25);
-}
-
-#heroMap{
-  width:100%;
-  height:590px;
-  display:block;
-}
-
-.map-title{
-  position:absolute;
-  top:25px;
-  left:28px;
-  z-index:5;
-}
-
-.map-title strong{
-  display:block;
-  font-size:18px;
-}
-
-.map-title span{
-  color:#ffd83d;
-  font-size:12px;
-  letter-spacing:2px;
-}
-
-.map-badge{
-  position:absolute;
-  bottom:25px;
-  left:25px;
-  z-index:5;
-  padding:10px 15px;
-  border-radius:30px;
-  background:rgba(0,0,0,.4);
-  border:1px solid rgba(255,216,61,.35);
-  color:#ffd83d;
-  font-size:12px;
-  font-weight:800;
-}
-
-/* =========================
-SECTIONS
-========================= */
-
-section{
-  padding:100px 6%;
-}
-
-.section-head{
-  max-width:800px;
-  margin:0 auto 55px;
-  text-align:center;
-}
-
-.section-label{
-  color:#ffd83d;
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:3px;
-  margin-bottom:10px;
-}
-
-.section-head h2{
-  font-size:clamp(30px,4vw,52px);
-  line-height:1.3;
-  margin-bottom:15px;
-}
-
-.section-head p{
-  color:rgba(255,255,255,.6);
-}
-
-/* =========================
-PRODUCTS
-========================= */
-
-.products{
-  background:#081522;
-}
-
-.product-grid{
-  max-width:1400px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:22px;
-}
-
-.product-card{
-  position:relative;
-  min-height:330px;
-  overflow:hidden;
-  border-radius:20px;
-  background:#101e2c;
-  border:1px solid rgba(255,255,255,.08);
-  transition:.4s;
-}
-
-.product-card:hover{
-  transform:translateY(-10px);
-  border-color:rgba(255,216,61,.45);
-  box-shadow:0 25px 55px rgba(0,0,0,.3);
-}
-
-.product-card img{
-  width:100%;
-  height:100%;
-  min-height:330px;
-  object-fit:cover;
-  opacity:.7;
-  transition:.5s;
-}
-
-.product-card:hover img{
-  transform:scale(1.07);
-  opacity:.85;
-}
-
-.product-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    transparent 25%,
-    rgba(3,10,18,.9)
-  );
-}
-
-.product-content{
-  position:absolute;
-  left:25px;
-  right:25px;
-  bottom:22px;
-}
-
-.product-number{
-  color:#ffd83d;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.product-content h3{
-  font-size:23px;
-  margin:4px 0;
-}
-
-.product-content p{
-  font-size:13px;
-  color:rgba(255,255,255,.68);
-}
-
-/* =========================
-REASONS
-========================= */
-
-.reasons{
-  background:
-    radial-gradient(circle at 20% 50%,rgba(255,200,0,.05),transparent 35%),
-    #06101d;
-}
-
-.reason-grid{
-  max-width:1250px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-
-.reason-card{
-  padding:35px 28px;
-  border-radius:18px;
-  background:rgba(255,255,255,.035);
-  border:1px solid rgba(255,255,255,.07);
-  transition:.35s;
-}
-
-.reason-card:hover{
-  transform:translateY(-7px);
-  border-color:rgba(255,216,61,.35);
-}
-
-.reason-icon{
-  font-size:35px;
-  margin-bottom:15px;
-}
-
-.reason-card h3{
-  font-size:20px;
-  margin-bottom:8px;
-}
-
-.reason-card p{
-  color:rgba(255,255,255,.62);
-  font-size:14px;
-}
-
-/* =========================
-PROCESS
-========================= */
-
-.process{
-  background:#081522;
-}
-
-.process-grid{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-}
-
-.process-card{
-  padding:30px 20px;
-  border-radius:18px;
-  background:rgba(255,255,255,.035);
-  border:1px solid rgba(255,255,255,.08);
-  text-align:center;
-}
-
-.process-number{
-  width:48px;
-  height:48px;
-  margin:0 auto 15px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:#ffd83d;
-  color:#07111f;
-  font-weight:900;
-}
-
-.process-card h3{
-  margin-bottom:8px;
-}
-
-.process-card p{
-  color:rgba(255,255,255,.6);
-  font-size:13px;
-}
-
-/* =========================
-EXPORT
-========================= */
-
-.export-section{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(0,155,255,.14),transparent 50%),
-    #06101d;
-}
-
-.export-box{
-  max-width:1200px;
-  margin:auto;
-  padding:60px;
-  border-radius:30px;
-  background:linear-gradient(
-    135deg,
-    rgba(255,255,255,.06),
-    rgba(255,255,255,.02)
-  );
-  border:1px solid rgba(255,255,255,.09);
-  text-align:center;
-}
-
-.export-box h2{
-  font-size:clamp(30px,4vw,52px);
-  margin-bottom:20px;
-}
-
-.export-box h2 span{
-  color:#ffd83d;
-}
-
-.export-box p{
-  max-width:750px;
-  margin:auto;
-  color:rgba(255,255,255,.65);
-}
-
-.export-flow{
-  margin-top:35px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.flow-item{
-  padding:15px 22px;
-  border-radius:12px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.08);
-  font-weight:800;
-}
-
-.flow-arrow{
-  color:#ffd83d;
-  font-size:25px;
-}
-
-/* =========================
-COMPANY
-========================= */
-
-.company{
-  background:#081522;
-}
-
-.company-grid{
-  max-width:1100px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:45px;
-  align-items:center;
-}
-
-.company-intro h2{
-  font-size:40px;
-  line-height:1.35;
-  margin-bottom:20px;
-}
-
-.company-intro h2 span{
-  color:#ffd83d;
-}
-
-.company-intro p{
-  color:rgba(255,255,255,.62);
-}
-
-.company-table{
-  border-radius:20px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.company-row{
-  display:grid;
-  grid-template-columns:150px 1fr;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-
-.company-row:last-child{
-  border-bottom:0;
-}
-
-.company-row div{
-  padding:15px 18px;
-}
-
-.company-row div:first-child{
-  color:#ffd83d;
-  font-weight:800;
-  background:rgba(255,255,255,.025);
-}
-
-.company-row div:last-child{
-  color:rgba(255,255,255,.78);
-}
-
-/* =========================
-CONTACT
-========================= */
-
-.contact{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(255,210,0,.09),transparent 45%),
-    #06101d;
-}
-
-.contact-box{
-  max-width:1050px;
-  margin:auto;
-  text-align:center;
-}
-
-.contact-box h2{
-  font-size:clamp(32px,5vw,60px);
-  margin-bottom:15px;
-}
-
-.contact-box>p{
-  color:rgba(255,255,255,.62);
-  margin-bottom:35px;
-}
-
-.contact-phone{
-  display:inline-block;
-  font-size:clamp(38px,6vw,72px);
-  font-weight:900;
-  color:#ffd83d;
-  line-height:1.2;
-  animation:contactPhone 2s infinite;
-}
-
-@keyframes contactPhone{
-  0%,100%{
-    text-shadow:0 0 10px rgba(255,216,61,.15);
-  }
-  50%{
-    text-shadow:
-      0 0 25px rgba(255,216,61,.7),
-      0 0 55px rgba(255,180,0,.35);
-  }
-}
-
-.contact-buttons{
-  margin-top:30px;
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.map-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:14px 22px;
-  border-radius:12px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  transition:.3s;
-  font-weight:800;
-}
-
-.map-btn:hover{
-  border-color:#ffd83d;
-  color:#ffd83d;
-  transform:translateY(-3px);
-}
-
-/* =========================
-FAQ
-========================= */
-
-.faq{
-  background:#081522;
-}
-
-.faq-list{
-  max-width:900px;
-  margin:auto;
-}
-
-.faq-item{
-  border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.faq-question{
-  width:100%;
-  padding:22px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:none;
-  border:0;
-  color:white;
-  font-family:inherit;
-  text-align:left;
-  font-size:16px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.faq-question span:last-child{
-  color:#ffd83d;
-  font-size:25px;
-  transition:.3s;
-}
-
-.faq-answer{
-  max-height:0;
-  overflow:hidden;
-  color:rgba(255,255,255,.62);
-  font-size:14px;
-  transition:max-height .4s ease;
-}
-
-.faq-answer-inner{
-  padding-bottom:20px;
-}
-
-.faq-item.active .faq-answer{
-  max-height:300px;
-}
-
-.faq-item.active .faq-question span:last-child{
-  transform:rotate(45deg);
-}
-
-/* =========================
-FOOTER
-========================= */
-
-footer{
-  padding:45px 6%;
-  background:#030a12;
-  border-top:1px solid rgba(255,255,255,.07);
-}
-
-.footer-inner{
-  max-width:1300px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  gap:30px;
-  align-items:center;
-}
-
-.footer-logo{
-  width:140px;
-}
-
-.footer-copy{
-  color:rgba(255,255,255,.45);
-  font-size:12px;
-}
-
-.footer-links{
-  display:flex;
-  gap:18px;
-  font-size:12px;
-  color:rgba(255,255,255,.6);
-}
-
-/* =========================
-FLOATING PHONE
-========================= */
-
-.floating-phone{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:4500;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:13px 20px;
-  border-radius:50px;
-  background:linear-gradient(135deg,#ffd83d,#ffae00);
-  color:#07111f;
-  font-weight:900;
-  box-shadow:0 10px 40px rgba(255,180,0,.35);
-  animation:floatingPhone 2s infinite;
-}
-
-@keyframes floatingPhone{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-5px);
-  }
-}
-
-/* =========================
-REVEAL
-========================= */
-
-.reveal{
-  opacity:0;
-  transform:translateY(35px);
-  transition:opacity .8s ease,transform .8s ease;
-}
-
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:1050px){
-
-  .nav-links{
-    display:none;
-    position:absolute;
-    top:75px;
-    left:15px;
-    right:15px;
-    padding:20px;
-    flex-direction:column;
-    align-items:stretch;
-    background:rgba(4,12,23,.97);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:15px;
-  }
-
-  .nav-links.open{
-    display:flex;
-  }
-
-  .nav-links a{
-    padding:10px;
-  }
-
-  .menu-btn{
-    display:block;
-  }
-
-  .header-phone{
-    display:none;
-  }
-
-  .hero-grid{
-    grid-template-columns:1fr;
-  }
-
-  .hero-map{
-    min-height:480px;
-  }
-
-  #heroMap{
-    height:480px;
-  }
-
-  .company-grid{
-    grid-template-columns:1fr;
-  }
-
-}
-
-@media(max-width:800px){
-
-  section{
-    padding:75px 5%;
-  }
-
-  .hero{
-    padding:125px 5% 60px;
-  }
-
-  .product-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .reason-grid{
-    grid-template-columns:1fr;
-  }
-
-  .process-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .export-box{
-    padding:40px 25px;
-  }
-
-  .footer-inner{
-    flex-direction:column;
-    text-align:center;
-  }
-
-}
-
-@media(max-width:560px){
-
-  .nav{
-    padding:12px 18px;
-  }
-
-  .logo img{
-    width:120px;
-  }
-
-  .hero h1{
-    font-size:39px;
-  }
-
-  .hero-description{
-    font-size:14px;
-  }
-
-  .hero-buttons{
-    flex-direction:column;
-  }
-
-  .btn{
-    width:100%;
-  }
-
-  .hero-phone{
-    font-size:21px;
-  }
-
-  .payment-inner{
-    padding:18px;
-  }
-
-  .payment-title{
-    font-size:15px;
-  }
-
-  .payment-text{
-    font-size:12px;
-  }
-
-  .hero-map{
-    min-height:350px;
-    border-radius:22px;
-  }
-
-  #heroMap{
-    height:350px;
-  }
-
-  .product-grid{
-    grid-template-columns:1fr;
-  }
-
-  .process-grid{
-    grid-template-columns:1fr;
-  }
-
-  .company-row{
-    grid-template-columns:105px 1fr;
-  }
-
-  .company-row div{
-    padding:12px;
-    font-size:12px;
-  }
-
-  .floating-phone{
-    right:12px;
-    bottom:12px;
-    font-size:13px;
-    padding:11px 15px;
-  }
-
-  .footer-links{
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-
-}
-
-</style>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>中古車・トラック・建設機械の買取｜EXPORT ZONE 株式会社</title>
+
+  <meta name="description"
+        content="EXPORT ZONE 株式会社は、日本全国から中古車、トラック、建設機械、農業機械、自動車部品、在庫品・ストックロットなどを買取し、海外へ輸出しています。">
+
+  <meta name="keywords"
+        content="中古車買取, トラック買取, 建設機械買取, 農業機械買取, 自動車部品, 在庫品, ストックロット, 輸出, 埼玉, EXPORT ZONE">
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical"
+        href="https://agmrifkan-collab.github.io/exportzone/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title"
+        content="EXPORT ZONE 株式会社｜日本から世界へ">
+  <meta property="og:description"
+        content="中古車・トラック・建設機械・農業機械・自動車部品・在庫品を日本全国から買取・海外輸出。">
+  <meta property="og:url"
+        content="https://agmrifkan-collab.github.io/exportzone/">
+  <meta property="og:image"
+        content="https://agmrifkan-collab.github.io/exportzone/EZ%20Logo.png">
+
+  <meta name="theme-color" content="#07111f">
+
+  <link rel="icon"
+        href="./EZ%20Logo.png"
+        type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+  <style>
+
+    :root {
+      --bg: #050b14;
+      --bg2: #091321;
+      --panel: rgba(14, 27, 43, 0.72);
+      --panel2: rgba(18, 34, 52, 0.88);
+      --gold: #d9ad52;
+      --gold-light: #f4d487;
+      --white: #f7f9fc;
+      --muted: #aab7c7;
+      --line: rgba(255,255,255,.09);
+      --blue: #3c91ff;
+      --shadow: 0 25px 80px rgba(0,0,0,.38);
+      --radius: 24px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(60,145,255,.08), transparent 30%),
+        radial-gradient(circle at 85% 25%, rgba(217,173,82,.08), transparent 30%),
+        var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.8;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: #06101c;
+    }
+
+    /* =========================
+       LOADER
+    ========================= */
+
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #040912;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .7s ease, visibility .7s ease;
+    }
+
+    #loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-box {
+      text-align: center;
+    }
+
+    .loader-logo {
+      width: 150px;
+      margin: 0 auto 28px;
+      filter: drop-shadow(0 0 25px rgba(217,173,82,.25));
+      animation: loaderPulse 1.8s ease-in-out infinite;
+    }
+
+    .loader-line {
+      width: 180px;
+      height: 2px;
+      margin: auto;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .loader-line span {
+      display: block;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: loaderMove 1.1s infinite;
+    }
+
+    @keyframes loaderMove {
+      from { transform: translateX(-120%); }
+      to { transform: translateX(320%); }
+    }
+
+    @keyframes loaderPulse {
+      50% { transform: scale(1.04); }
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      border-bottom: 1px solid transparent;
+      transition: .35s ease;
+    }
+
+    header.scrolled {
+      background: rgba(4,10,18,.88);
+      backdrop-filter: blur(20px);
+      border-bottom-color: var(--line);
+    }
+
+    .nav {
+      width: min(1240px, calc(100% - 40px));
+      height: 84px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .brand img {
+      width: 145px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      position: relative;
+      font-size: 13px;
+      color: #dce4ed;
+      font-weight: 500;
+      transition: .3s;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: .3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold-light);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-phone {
+      padding: 11px 17px;
+      border: 1px solid rgba(217,173,82,.45);
+      border-radius: 50px;
+      color: var(--gold-light);
+      font-weight: 700;
+      font-size: 13px;
+      transition: .3s;
+      white-space: nowrap;
+    }
+
+    .nav-phone:hover {
+      background: rgba(217,173,82,.1);
+      box-shadow: 0 0 25px rgba(217,173,82,.12);
+    }
+
+    .menu-btn {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      color: white;
+      cursor: pointer;
+    }
+
+    .menu-btn span,
+    .menu-btn::before,
+    .menu-btn::after {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 1px;
+      margin: 5px auto;
+      background: white;
+      transition: .3s;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg,
+          rgba(4,10,18,.98) 0%,
+          rgba(4,10,18,.85) 40%,
+          rgba(4,10,18,.4) 72%,
+          rgba(4,10,18,.88) 100%);
+      z-index: -1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      right: -300px;
+      top: 5%;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(60,145,255,.16),
+        transparent 65%);
+      animation: heroGlow 7s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    @keyframes heroGlow {
+      to {
+        transform: translate(-80px, 50px) scale(1.15);
+      }
+    }
+
+    .hero-grid {
+      width: min(1240px, calc(100% - 40px));
+      margin: auto;
+      padding: 145px 0 90px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold-light);
+      font-size: 12px;
+      letter-spacing: .2em;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 35px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 6vw, 82px);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+      font-weight: 800;
+      max-width: 750px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--gold-light);
+      text-shadow: 0 0 40px rgba(217,173,82,.14);
+    }
+
+    .hero-copy {
+      margin-top: 25px;
+      color: #c1ccd8;
+      max-width: 650px;
+      font-size: 16px;
+    }
+
+    .hero-copy strong {
+      color: white;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 34px;
+    }
+
+    .btn {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      border-radius: 13px;
+      border: 1px solid var(--line);
+      transition: .35s ease;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f1d184, #b98b34);
+      color: #08111d;
+      border-color: transparent;
+      box-shadow: 0 15px 35px rgba(217,173,82,.14);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 45px rgba(217,173,82,.25);
+    }
+
+    .btn-outline {
+      background: rgba(255,255,255,.035);
+      color: white;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(217,173,82,.5);
+      color: var(--gold-light);
+      transform: translateY(-3px);
+    }
+
+    .hero-note {
+      margin-top: 25px;
+      color: #8796a8;
+      font-size: 12px;
+    }
+
+    .hero-note strong {
+      color: var(--gold-light);
+    }
+
+    /* Globe */
+
+    .globe-wrap {
+      position: relative;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+    }
+
+    .globe {
+      position: relative;
+      width: min(460px, 82vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%,
+          rgba(76,153,255,.25),
+          rgba(19,54,88,.1) 42%,
+          rgba(5,12,21,.95) 70%);
+      border: 1px solid rgba(91,153,218,.25);
+      box-shadow:
+        inset -40px -20px 90px rgba(0,0,0,.75),
+        0 0 80px rgba(52,135,220,.08);
+      overflow: hidden;
+    }
+
+    .globe::before,
+    .globe::after {
+      content: "";
+      position: absolute;
+      inset: 7%;
+      border: 1px solid rgba(98,157,215,.14);
+      border-radius: 50%;
+    }
+
+    .globe::after {
+      inset: 20% 7%;
+      transform: rotate(90deg);
+    }
+
+    .latitude {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      height: 28%;
+      top: 36%;
+      border: 1px solid rgba(98,157,215,.13);
+      border-radius: 50%;
+    }
+
+    .latitude.two {
+      top: 25%;
+      height: 50%;
+    }
+
+    .route {
+      position: absolute;
+      width: 72%;
+      height: 42%;
+      left: 17%;
+      top: 29%;
+      border-top: 1px dashed rgba(217,173,82,.65);
+      border-radius: 50%;
+      transform: rotate(-18deg);
+    }
+
+    .route.reverse {
+      transform: rotate(25deg);
+      border-color: rgba(60,145,255,.5);
+    }
+
+    .route-dot {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 18px var(--gold);
+      animation: travel 4s linear infinite;
+    }
+
+    .route-dot.two {
+      animation-delay: 2s;
+      background: #67b4ff;
+      box-shadow: 0 0 18px #3c91ff;
+    }
+
+    @keyframes travel {
+      0% {
+        left: 0;
+        top: 50%;
+      }
+      50% {
+        left: 50%;
+        top: 8%;
+      }
+      100% {
+        left: 100%;
+        top: 50%;
+      }
+    }
+
+    .japan-point {
+      position: absolute;
+      right: 17%;
+      top: 35%;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 0 7px rgba(217,173,82,.08),
+                  0 0 25px rgba(217,173,82,.9);
+    }
+
+    .japan-label {
+      position: absolute;
+      right: 8%;
+      top: 28%;
+      font-size: 10px;
+      letter-spacing: .16em;
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .globe-tag {
+      position: absolute;
+      left: 0;
+      bottom: 55px;
+      padding: 13px 17px;
+      border-radius: 14px;
+      background: rgba(10,21,34,.8);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(15px);
+      box-shadow: var(--shadow);
+    }
+
+    .globe-tag small {
+      display: block;
+      color: #8494a8;
+      font-size: 9px;
+      letter-spacing: .15em;
+    }
+
+    .globe-tag strong {
+      color: white;
+      font-size: 14px;
+    }
+
+    /* =========================
+       COMMON
+    ========================= */
+
+    section {
+      position: relative;
+    }
+
+    .section {
+      width: min(1240px, calc(100% - 40px));
+      margin: auto;
+      padding: 115px 0;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 55px;
+    }
+
+    .section-label {
+      color: var(--gold-light);
+      letter-spacing: .2em;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 13px;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.15;
+      letter-spacing: -.035em;
+      font-weight: 800;
+    }
+
+    .section-title span {
+      color: var(--gold-light);
+    }
+
+    .section-desc {
+      margin-top: 17px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =========================
+       PRODUCTS
+    ========================= */
+
+    .products-section {
+      background:
+        linear-gradient(180deg,
+          transparent,
+          rgba(14,28,45,.35),
+          transparent);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .product-card {
+      position: relative;
+      min-height: 270px;
+      padding: 30px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg,
+          rgba(23,39,57,.72),
+          rgba(7,17,29,.88));
+      transition: .45s ease;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      right: -70px;
+      top: -70px;
+      border-radius: 50%;
+      background: rgba(217,173,82,.07);
+      transition: .5s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(217,173,82,.35);
+      box-shadow: 0 25px 60px rgba(0,0,0,.3);
+    }
+
+    .product-card:hover::before {
+      transform: scale(2);
+      background: rgba(217,173,82,.1);
+    }
+
+    .product-number {
+      color: rgba(255,255,255,.28);
+      font-size: 12px;
+      letter-spacing: .15em;
+      font-weight: 700;
+    }
+
+    .product-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      margin: 28px 0 22px;
+      border: 1px solid rgba(217,173,82,.3);
+      border-radius: 15px;
+      color: var(--gold-light);
+      font-size: 24px;
+      background: rgba(217,173,82,.06);
+    }
+
+    .product-card h3 {
+      font-size: 21px;
+      margin-bottom: 7px;
+    }
+
+    .product-card p {
+      color: #8999aa;
+      font-size: 12px;
+    }
+
+    .product-arrow {
+      position: absolute;
+      right: 25px;
+      bottom: 25px;
+      color: var(--gold);
+      font-size: 20px;
+      transition: .3s;
+    }
+
+    .product-card:hover .product-arrow {
+      transform: translateX(7px);
+    }
+
+    /* =========================
+       WHY
+    ========================= */
+
+    .why-section {
+      background: rgba(255,255,255,.015);
+      border-top: 1px solid rgba(255,255,255,.03);
+      border-bottom: 1px solid rgba(255,255,255,.03);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .why-card {
+      padding: 31px;
+      min-height: 220px;
+      border: 1px solid var(--line);
+      background: rgba(10,22,35,.6);
+      border-radius: 20px;
+      transition: .35s;
+    }
+
+    .why-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(60,145,255,.28);
+      background: rgba(14,29,46,.85);
+    }
+
+    .why-icon {
+      color: var(--gold-light);
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .why-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .why-card p {
+      color: #8797a8;
+      font-size: 12px;
+    }
+
+    /* =========================
+       PROCESS
+    ========================= */
+
+    .process {
+      position: relative;
+    }
+
+    .process-line {
+      position: absolute;
+      left: 12.5%;
+      right: 12.5%;
+      top: 228px;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(217,173,82,.45),
+        rgba(217,173,82,.45),
+        transparent);
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      position: relative;
+    }
+
+    .process-card {
+      text-align: center;
+      position: relative;
+    }
+
+    .process-number {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      margin: auto;
+      border-radius: 50%;
+      border: 1px solid rgba(217,173,82,.55);
+      background: #08121e;
+      color: var(--gold-light);
+      font-size: 15px;
+      font-weight: 800;
+      box-shadow: 0 0 30px rgba(217,173,82,.08);
+      position: relative;
+      z-index: 2;
+    }
+
+    .process-card h3 {
+      margin-top: 24px;
+      font-size: 17px;
+    }
+
+    .process-card p {
+      margin-top: 8px;
+      color: #8797a8;
+      font-size: 12px;
+    }
+
+    /* =========================
+       WORLD EXPORT
+    ========================= */
+
+    .world-section {
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 70% 50%,
+          rgba(60,145,255,.08),
+          transparent 35%),
+        #06101c;
+    }
+
+    .world-content {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .world-flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .flow-item {
+      padding: 11px 15px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+      border-radius: 10px;
+      font-size: 11px;
+      color: #d6dee7;
+    }
+
+    .flow-arrow {
+      color: var(--gold);
+    }
+
+    .world-visual {
+      position: relative;
+      min-height: 430px;
+      display: grid;
+      place-items: center;
+    }
+
+    .world-ring {
+      width: 390px;
+      height: 390px;
+      max-width: 85vw;
+      border-radius: 50%;
+      border: 1px solid rgba(60,145,255,.25);
+      box-shadow:
+        0 0 80px rgba(60,145,255,.06),
+        inset 0 0 80px rgba(60,145,255,.04);
+      position: relative;
+      animation: ringFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes ringFloat {
+      50% { transform: translateY(-12px); }
+    }
+
+    .ring-orbit {
+      position: absolute;
+      inset: 11%;
+      border: 1px dashed rgba(217,173,82,.35);
+      border-radius: 50%;
+      transform: rotate(-25deg);
+      animation: orbitSpin 12s linear infinite;
+    }
+
+    @keyframes orbitSpin {
+      to { transform: rotate(335deg); }
+    }
+
+    .world-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      width: 100px;
+      height: 100px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(217,173,82,.18),
+        rgba(6,16,28,.95) 70%);
+      border: 1px solid rgba(217,173,82,.4);
+      box-shadow: 0 0 45px rgba(217,173,82,.1);
+    }
+
+    .world-center strong {
+      display: block;
+      color: var(--gold-light);
+      font-size: 14px;
+    }
+
+    .world-center small {
+      display: block;
+      color: #8495a7;
+      font-size: 8px;
+      letter-spacing: .1em;
+    }
+
+    .orbit-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 20px var(--gold);
+    }
+
+    .orbit-dot.a {
+      left: 9%;
+      top: 42%;
+    }
+
+    .orbit-dot.b {
+      right: 12%;
+      bottom: 19%;
+      background: #61adff;
+      box-shadow: 0 0 20px #3c91ff;
+    }
+
+    .orbit-dot.c {
+      right: 22%;
+      top: 10%;
+    }
+
+    /* =========================
+       COMPANY
+    ========================= */
+
+    .company-grid {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 55px;
+      align-items: stretch;
+    }
+
+    .company-intro {
+      padding: 40px;
+      border-radius: 25px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 80% 15%,
+          rgba(217,173,82,.12),
+          transparent 35%),
+        rgba(10,22,35,.72);
+      box-shadow: var(--shadow);
+    }
+
+    .company-intro .mini {
+      color: var(--gold-light);
+      font-size: 11px;
+      letter-spacing: .18em;
+      font-weight: 800;
+    }
+
+    .company-intro h3 {
+      font-size: 31px;
+      margin-top: 18px;
+      line-height: 1.3;
+    }
+
+    .company-intro p {
+      color: #8c9bac;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    .company-table {
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      overflow: hidden;
+      background: rgba(10,22,35,.62);
+    }
+
+    .company-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .company-row:last-child {
+      border-bottom: 0;
+    }
+
+    .company-row div {
+      padding: 20px 23px;
+      font-size: 13px;
+    }
+
+    .company-row div:first-child {
+      color: var(--gold-light);
+      background: rgba(217,173,82,.035);
+      font-weight: 700;
+    }
+
+    .company-row div:last-child {
+      color: #d2dbe5;
+    }
+
+    /* =========================
+       CONTACT
+    ========================= */
+
+    .contact-section {
+      background:
+        radial-gradient(circle at 50% 100%,
+          rgba(217,173,82,.09),
+          transparent 40%);
+    }
+
+    .contact-box {
+      padding: 65px;
+      border-radius: 30px;
+      border: 1px solid rgba(217,173,82,.2);
+      background:
+        linear-gradient(145deg,
+          rgba(18,33,50,.9),
+          rgba(6,15,26,.9));
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr .9fr;
+      gap: 60px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .contact-box::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      right: -200px;
+      top: -200px;
+      border-radius: 50%;
+      border: 1px solid rgba(217,173,82,.1);
+      box-shadow:
+        0 0 0 50px rgba(217,173,82,.025),
+        0 0 0 100px rgba(217,173,82,.015);
+    }
+
+    .contact-phone {
+      font-size: clamp(35px, 5vw, 62px);
+      line-height: 1.1;
+      margin-top: 20px;
+      color: var(--gold-light);
+      letter-spacing: -.04em;
+    }
+
+    .contact-description {
+      color: #9aa9ba;
+      font-size: 13px;
+      margin-top: 15px;
+      max-width: 520px;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 28px;
+    }
+
+    .contact-info {
+      display: grid;
+      gap: 13px;
+    }
+
+    .info-card {
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(255,255,255,.025);
+    }
+
+    .info-icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 11px;
+      color: var(--gold-light);
+      border: 1px solid rgba(217,173,82,.2);
+    }
+
+    .info-card small {
+      color: #718195;
+      display: block;
+      font-size: 9px;
+      letter-spacing: .12em;
+    }
+
+    .info-card strong {
+      color: #dce5ee;
+      font-size: 12px;
+      word-break: break-word;
+    }
+
+    /* =========================
+       FAQ
+    ========================= */
+
+    .faq-wrap {
+      max-width: 920px;
+      margin: auto;
+    }
+
+    .faq {
+      border-top: 1px solid var(--line);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 25px 4px;
+      border: 0;
+      background: transparent;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .faq-question span:last-child {
+      color: var(--gold);
+      font-size: 23px;
+      font-weight: 300;
+      transition: .3s;
+    }
+
+    .faq-item.active .faq-question span:last-child {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .45s ease;
+    }
+
+    .faq-answer p {
+      padding: 0 35px 25px 4px;
+      color: #8797a8;
+      font-size: 12px;
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .final-cta {
+      width: min(1000px, calc(100% - 40px));
+      margin: 0 auto 100px;
+      padding: 70px 35px;
+      text-align: center;
+      border: 1px solid rgba(217,173,82,.2);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at center,
+          rgba(217,173,82,.09),
+          rgba(8,18,30,.92) 65%);
+    }
+
+    .final-cta h2 {
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.2;
+    }
+
+    .final-cta p {
+      color: #8999aa;
+      font-size: 13px;
+      margin: 15px auto 28px;
+      max-width: 650px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      position: relative;
+      border-top: 1px solid var(--line);
+      background: #030810;
+    }
+
+    .footer-main {
+      width: min(1240px, calc(100% - 40px));
+      margin: auto;
+      padding: 65px 0 45px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr .8fr;
+      gap: 60px;
+    }
+
+    .footer-brand img {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .footer-brand p {
+      color: #758598;
+      font-size: 12px;
+      max-width: 360px;
+    }
+
+    .footer-title {
+      color: var(--gold-light);
+      font-size: 11px;
+      letter-spacing: .16em;
+      margin-bottom: 17px;
+      font-weight: 800;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 9px;
+    }
+
+    .footer-links a {
+      color: #8e9dad;
+      font-size: 12px;
+      transition: .25s;
+    }
+
+    .footer-links a:hover {
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .footer-contact {
+      display: grid;
+      gap: 8px;
+      color: #8e9dad;
+      font-size: 12px;
+    }
+
+    .footer-bottom {
+      width: min(1240px, calc(100% - 40px));
+      margin: auto;
+      padding: 20px 0 25px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: #596879;
+      font-size: 10px;
+    }
+
+    /* =========================
+       FLOATING BUTTONS
+    ========================= */
+
+    .top-btn {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      width: 46px;
+      height: 46px;
+      z-index: 900;
+      border: 1px solid rgba(217,173,82,.3);
+      border-radius: 50%;
+      background: rgba(5,13,23,.85);
+      color: var(--gold-light);
+      backdrop-filter: blur(15px);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(15px);
+      transition: .3s;
+    }
+
+    .top-btn.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .mobile-contact {
+      display: none;
+    }
+
+    /* =========================
+       REVEAL
+    ========================= */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1000px) {
+
+      .nav-links {
+        gap: 17px;
+      }
+
+      .nav-phone {
+        display: none;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        padding-top: 145px;
+      }
+
+      .globe-wrap {
+        min-height: 390px;
+      }
+
+      .globe {
+        width: 380px;
+      }
+
+      .product-grid,
+      .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .world-content,
+      .company-grid,
+      .contact-box {
+        grid-template-columns: 1fr;
+      }
+
+      .process-line {
+        display: none;
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 45px 25px;
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+
+      .nav {
+        width: calc(100% - 28px);
+        height: 70px;
+      }
+
+      .brand img {
+        width: 120px;
+      }
+
+      .nav-links {
+        position: fixed;
+        inset: 70px 0 0;
+        background: rgba(3,9,16,.97);
+        backdrop-filter: blur(25px);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 30px 25px;
+        gap: 0;
+        transform: translateX(100%);
+        transition: .4s ease;
+      }
+
+      .nav-links.open {
+        transform: translateX(0);
+      }
+
+      .nav-links a {
+        padding: 18px 4px;
+        border-bottom: 1px solid var(--line);
+        font-size: 15px;
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .hero-grid {
+        width: calc(100% - 28px);
+        padding-top: 125px;
+      }
+
+      .hero h1 {
+        font-size: clamp(41px, 12vw, 62px);
+      }
+
+      .hero-copy {
+        font-size: 14px;
+      }
+
+      .globe-wrap {
+        min-height: 330px;
+      }
+
+      .globe {
+        width: 300px;
+      }
+
+      .globe-tag {
+        bottom: 15px;
+      }
+
+      .section {
+        width: calc(100% - 28px);
+        padding: 80px 0;
+      }
+
+      .section-head {
+        margin-bottom: 35px;
+      }
+
+      .product-grid,
+      .why-grid,
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-card {
+        min-height: 235px;
+      }
+
+      .process-grid {
+        gap: 30px;
+      }
+
+      .world-ring {
+        width: 310px;
+        height: 310px;
+      }
+
+      .company-row {
+        grid-template-columns: 1fr;
+      }
+
+      .company-row div {
+        padding: 13px 18px;
+      }
+
+      .company-row div:first-child {
+        padding-bottom: 5px;
+      }
+
+      .company-row div:last-child {
+        padding-top: 5px;
+      }
+
+      .contact-box {
+        padding: 35px 22px;
+        gap: 35px;
+      }
+
+      .contact-phone {
+        font-size: 38px;
+      }
+
+      .final-cta {
+        width: calc(100% - 28px);
+        padding: 55px 22px;
+        margin-bottom: 65px;
+      }
+
+      .footer-main {
+        width: calc(100% - 28px);
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .footer-bottom {
+        width: calc(100% - 28px);
+        flex-direction: column;
+      }
+
+      .top-btn {
+        display: none;
+      }
+
+      .mobile-contact {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        z-index: 950;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding: 7px;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 17px;
+        background: rgba(4,11,19,.9);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 15px 50px rgba(0,0,0,.45);
+      }
+
+      .mobile-contact a {
+        height: 45px;
+        display: grid;
+        place-items: center;
+        border-radius: 11px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .mobile-call {
+        background: linear-gradient(135deg, #f1d184, #b98b34);
+        color: #07101b;
+      }
+
+      .mobile-line {
+        background: rgba(255,255,255,.06);
+        color: #f0f4f8;
+        border: 1px solid rgba(217,173,82,.2);
+      }
+
+      body {
+        padding-bottom: 70px;
+      }
+    }
+
+    @media (max-width: 400px) {
+
+      .hero h1 {
+        font-size: 39px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .globe {
+        width: 265px;
+      }
+
+      .world-ring {
+        width: 275px;
+        height: 275px;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
 
-<!-- LOADER -->
+<!-- =========================
+     LOADER
+========================= -->
 
 <div id="loader">
+  <div class="loader-box">
+    <img class="loader-logo"
+         src="./EZ%20Logo.png"
+         alt="EXPORT ZONE 株式会社">
+    <div class="loader-line">
+      <span></span>
+    </div>
+  </div>
+</div>
 
-  <div class="loader-inner">
 
-    <img
-      src="./EZ%20Logo.png"
-      alt="EXPORT ZONE"
-      class="loader-logo">
+<!-- =========================
+     HEADER
+========================= -->
 
-    <div class="loader-text">
-      JAPAN → WORLDWIDE
+<header id="header">
+
+  <nav class="nav">
+
+    <a href="#home" class="brand">
+      <img src="./EZ%20Logo.png"
+           alt="EXPORT ZONE 株式会社">
+    </a>
+
+    <div class="nav-links" id="navLinks">
+
+      <a href="#home">HOME</a>
+      <a href="#products">買取商品</a>
+      <a href="#why">EXPORT ZONE</a>
+      <a href="#process">買取の流れ</a>
+      <a href="#world">日本から世界へ</a>
+      <a href="#company">会社情報</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">CONTACT</a>
+
     </div>
 
-  </div>
+    <a href="tel:0120888405" class="nav-phone">
+      📞 0120 888 405
+    </a>
 
-</div>
+    <button class="menu-btn"
+            id="menuBtn"
+            aria-label="メニュー">
+      <span></span>
+    </button>
 
-
-<!-- HEADER -->
-
-<header>
-
-<nav class="nav">
-
-<a href="#home" class="logo">
-
-<img
-  src="./EZ%20Logo.png"
-  alt="EXPORT ZONE 株式会社">
-
-</a>
-
-
-<div class="nav-links" id="navLinks">
-
-<a href="#home">ホーム</a>
-<a href="#products">買取品目</a>
-<a href="#reasons">買取について</a>
-<a href="#reasons">選ばれる理由</a>
-<a href="#process">買取の流れ</a>
-<a href="#export">海外輸出</a>
-<a href="#company">会社情報</a>
-<a href="#contact">お問い合わせ</a>
-
-</div>
-
-
-<a
-href="tel:0120888405"
-class="header-phone">
-☎ 0120 888 405
-</a>
-
-
-<button
-class="menu-btn"
-id="menuBtn">
-☰
-</button>
-
-</nav>
+  </nav>
 
 </header>
 
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
-<main id="home">
+<main>
 
-<section class="hero">
+<section class="hero" id="home">
 
-<div class="hero-grid">
+  <div class="hero-grid">
 
+    <div class="reveal">
 
-<div class="hero-content reveal">
+      <div class="eyebrow">
+        FROM JAPAN
+      </div>
 
-<div class="hero-label">
-JAPAN → WORLDWIDE EXPORT
-</div>
+      <h1>
+        日本から
+        <span>世界へ。</span>
+      </h1>
 
+      <p class="hero-copy">
+        <strong>中古車・トラック・建設機械・農業機械・自動車部品・在庫品</strong>
+        などを日本全国から買取。
+        日本で仕入れた商品を世界へ輸出しています。
+      </p>
 
-<h1>
+      <div class="hero-actions">
 
-動かなくても。<br>
+        <a href="tel:0120888405"
+           class="btn btn-gold">
+          📞 今すぐお問い合わせ
+        </a>
 
-<span>日本全国から買取。</span>
+        <a href="#products"
+           class="btn btn-outline">
+          買取商品を見る →
+        </a>
 
-</h1>
+      </div>
 
+      <p class="hero-note">
+        <strong>全国対応</strong> ・ お気軽にご相談ください
+      </p>
 
-<p class="hero-description">
-
-中古車・トラック・建設機械・農業機械・
-自動車部品・在庫品など、日本全国から幅広く買取しています。
-買取した商品は、日本から海外へ輸出しています。
-
-</p>
-
-
-<div class="hero-buttons">
-
-<a
-href="tel:0120888405"
-class="btn btn-primary">
-☎ 今すぐ無料相談
-</a>
-
-<a
-href="#products"
-class="btn btn-outline">
-買取品目を見る
-</a>
-
-</div>
+    </div>
 
 
-<a
-href="tel:0120888405"
-class="hero-phone">
+    <div class="globe-wrap reveal">
 
-<span class="hero-phone-icon">
-☎
-</span>
+      <div class="globe">
 
-<span>
-0120 888 405
-</span>
+        <div class="latitude"></div>
+        <div class="latitude two"></div>
 
-</a>
+        <div class="route">
+          <div class="route-dot"></div>
+        </div>
 
+        <div class="route reverse">
+          <div class="route-dot two"></div>
+        </div>
 
-<!-- PAYMENT -->
+        <div class="japan-point"></div>
 
-<div class="hero-payment">
+        <div class="japan-label">
+          JAPAN
+        </div>
 
-<div class="payment-inner">
+      </div>
 
-<div class="payment-shine"></div>
+      <div class="globe-tag">
+        <small>GLOBAL EXPORT</small>
+        <strong>JAPAN → WORLDWIDE</strong>
+      </div>
 
-<div class="payment-title">
-買取代金は、EXPORT ZONEからお客様へ
-</div>
+    </div>
 
-<div class="payment-text">
-
-お客様からお金をいただくのではありません。<br>
-
-お車・トラック・建設機械などを買取する際は、<br>
-
-EXPORT ZONEがお客様へ買取代金をお支払いします。
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- WORLD MAP -->
-
-<div class="hero-map reveal">
-
-<div class="map-title">
-
-<strong>
-日本から世界へ
-</strong>
-
-<span>
-JAPAN TO WORLDWIDE
-</span>
-
-</div>
-
-
-<svg
-id="heroMap"
-viewBox="0 0 1440 760"
-preserveAspectRatio="xMidYMid meet">
-</svg>
-
-
-<div class="map-badge">
-🌏 JAPAN → WORLD
-</div>
-
-</div>
-
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- PRODUCTS -->
-
-<section
-class="products"
-id="products">
-
-<div class="section-head reveal">
-
-<div class="section-label">
-WHAT WE BUY
-</div>
-
-<h2>
-幅広い商品を買取しています
-</h2>
-
-<p>
-古い車両・使用済み機械・在庫品など、
-まずはお気軽にご相談ください。
-</p>
-
-</div>
-
-
-<div class="product-grid">
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=90"
-alt="中古車 買取"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-01 / VEHICLES
-</div>
-
-<h3>
-中古車
-</h3>
-
-<p>
-乗用車・商用車・古い車・動かない車など
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1597974380476-fbf652dfe188?auto=format&fit=crop&w=1200&q=85"
-alt="トラック 買取"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-02 / TRUCKS
-</div>
-
-<h3>
-トラック
-</h3>
-
-<p>
-大型・中型・小型トラック・特殊車両など
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1778066995093-a7f7d1049f8f?auto=format&fit=crop&w=1200&q=85"
-alt="建設機械 買取"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-03 / MACHINERY
-</div>
-
-<h3>
-建設機械
-</h3>
-
-<p>
-油圧ショベル・ホイールローダーなど
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=1200&q=90"
-alt="農業機械 買取"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-04 / AGRICULTURE
-</div>
-
-<h3>
-農業機械
-</h3>
-
-<p>
-農機・作業機械・関連設備など
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&q=90"
-alt="自動車部品"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-05 / AUTO PARTS
-</div>
-
-<h3>
-自動車部品
-</h3>
-
-<p>
-中古部品・パーツ・各種自動車用品など
-</p>
-
-</div>
-
-</article>
-
-
-<article class="product-card reveal">
-
-<img
-src="https://images.unsplash.com/photo-1586528116493-da8f6e3f9a53?auto=format&fit=crop&w=1200&q=90"
-alt="在庫品 ストックロット"
-loading="lazy">
-
-<div class="product-overlay"></div>
-
-<div class="product-content">
-
-<div class="product-number">
-06 / STOCK LOT
-</div>
-
-<h3>
-在庫品・ストックロット
-</h3>
-
-<p>
-余剰在庫・デッドストック・未使用品など
-</p>
-
-</div>
-
-</article>
-
-
-</div>
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<section class="products-section" id="products">
+
+  <div class="section">
+
+    <div class="section-head reveal">
+
+      <div class="section-label">
+        WHAT WE BUY
+      </div>
+
+      <h2 class="section-title">
+        幅広い商品を
+        <span>買取。</span>
+      </h2>
+
+      <p class="section-desc">
+        車両・機械・部品・在庫品など、
+        さまざまな商品についてお気軽にご相談ください。
+      </p>
+
+    </div>
+
+
+    <div class="product-grid">
+
+      <article class="product-card reveal">
+        <div class="product-number">01 / VEHICLES</div>
+        <div class="product-icon">🚗</div>
+        <h3>中古車</h3>
+        <p>Used Cars</p>
+        <div class="product-arrow">→</div>
+      </article>
+
+      <article class="product-card reveal">
+        <div class="product-number">02 / TRUCKS</div>
+        <div class="product-icon">🚚</div>
+        <h3>トラック・バス</h3>
+        <p>Trucks & Buses</p>
+        <div class="product-arrow">→</div>
+      </article>
+
+      <article class="product-card reveal">
+        <div class="product-number">03 / MACHINERY</div>
+        <div class="product-icon">🏗</div>
+        <h3>建設機械</h3>
+        <p>Construction Machinery</p>
+        <div class="product-arrow">→</div>
+      </article>
+
+      <article class="product-card reveal">
+        <div class="product-number">04 / AGRICULTURE</div>
+        <div class="product-icon">🚜</div>
+        <h3>農業機械</h3>
+        <p>Agricultural Machinery</p>
+        <div class="product-arrow">→</div>
+      </article>
+
+      <article class="product-card reveal">
+        <div class="product-number">05 / PARTS</div>
+        <div class="product-icon">🔧</div>
+        <h3>自動車部品</h3>
+        <p>Auto Parts</p>
+        <div class="product-arrow">→</div>
+      </article>
+
+      <article class="product-card reveal">
+        <div class="product-number">06 / STOCK</div>
+        <div class="product-icon">📦</div>
+        <h3>在庫品・ストックロット</h3>
+        <p>Stock Materials & Lots</p>
+        <div class="product-arrow">→</div>
+      </article>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- REASONS -->
+<!-- =========================
+     WHY EXPORT ZONE
+========================= -->
 
-<section
-class="reasons"
-id="reasons">
+<section class="why-section" id="why">
 
-<div class="section-head reveal">
+  <div class="section">
 
-<div class="section-label">
-WHY EXPORT ZONE
-</div>
+    <div class="section-head reveal">
 
-<h2>
-EXPORT ZONEが選ばれる理由
-</h2>
+      <div class="section-label">
+        WHY EXPORT ZONE
+      </div>
 
-</div>
+      <h2 class="section-title">
+        日本から世界へ、
+        <span>確かな取引を。</span>
+      </h2>
 
+      <p class="section-desc">
+        日本国内での商品仕入れから海外輸出まで、
+        幅広い商品を取り扱っています。
+      </p>
 
-<div class="reason-grid">
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-🇯🇵
-</div>
-
-<h3>
-日本全国対応
-</h3>
-
-<p>
-埼玉県を拠点に、日本全国から
-中古車・トラック・機械などを買取しています。
-</p>
-
-</div>
+    </div>
 
 
-<div class="reason-card reveal">
+    <div class="why-grid">
 
-<div class="reason-icon">
-💰
-</div>
+      <article class="why-card reveal">
+        <div class="why-icon">🇯🇵</div>
+        <h3>Japan Nationwide</h3>
+        <p>
+          日本全国から買取のご相談を承ります。
+        </p>
+      </article>
 
-<h3>
-買取代金をお支払い
-</h3>
+      <article class="why-card reveal">
+        <div class="why-icon">🤝</div>
+        <h3>Direct Purchase</h3>
+        <p>
+          車両・機械・商品を直接仕入れています。
+        </p>
+      </article>
 
-<p>
-買取が成立した場合、
-EXPORT ZONEからお客様へ買取代金をお支払いします。
-</p>
+      <article class="why-card reveal">
+        <div class="why-icon">🌍</div>
+        <h3>Worldwide Export</h3>
+        <p>
+          日本で仕入れた商品を海外へ輸出しています。
+        </p>
+      </article>
 
-</div>
+      <article class="why-card reveal">
+        <div class="why-icon">▦</div>
+        <h3>Wide Range</h3>
+        <p>
+          車両から機械、部品、在庫品まで幅広く対応。
+        </p>
+      </article>
 
+      <article class="why-card reveal">
+        <div class="why-icon">◈</div>
+        <h3>Professional Service</h3>
+        <p>
+          お客様のご相談内容に合わせて対応します。
+        </p>
+      </article>
 
-<div class="reason-card reveal">
+      <article class="why-card reveal">
+        <div class="why-icon">📦</div>
+        <h3>Bulk Stock</h3>
+        <p>
+          大量在庫・ストックロットについてもご相談ください。
+        </p>
+      </article>
 
-<div class="reason-icon">
-🌏
-</div>
+    </div>
 
-<h3>
-海外輸出ネットワーク
-</h3>
-
-<p>
-日本で買取した商品を海外市場へ。
-日本品質の商品を世界へ届けています。
-</p>
-
-</div>
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-🚛
-</div>
-
-<h3>
-幅広い買取品目
-</h3>
-
-<p>
-車・トラックだけでなく、
-建設機械・農業機械・部品・在庫品にも対応。
-</p>
-
-</div>
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-🤝
-</div>
-
-<h3>
-丁寧な対応
-</h3>
-
-<p>
-商品の状態や数量などを確認し、
-一件一件丁寧に対応します。
-</p>
-
-</div>
-
-
-<div class="reason-card reveal">
-
-<div class="reason-icon">
-📦
-</div>
-
-<h3>
-大量在庫も相談可能
-</h3>
-
-<p>
-車両・機械・部品・材料など、
-まとまった数量の在庫もご相談ください。
-</p>
-
-</div>
-
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- PROCESS -->
+<!-- =========================
+     PROCESS
+========================= -->
 
-<section
-class="process"
-id="process">
+<section id="process">
 
-<div class="section-head reveal">
+  <div class="section process">
 
-<div class="section-label">
-PURCHASE FLOW
-</div>
+    <div class="section-head reveal">
 
-<h2>
-買取の流れ
-</h2>
+      <div class="section-label">
+        PURCHASE PROCESS
+      </div>
 
-</div>
+      <h2 class="section-title">
+        買取の
+        <span>流れ。</span>
+      </h2>
 
+      <p class="section-desc">
+        お問い合わせから買取まで、シンプルな流れで対応します。
+      </p>
 
-<div class="process-grid">
-
-
-<div class="process-card reveal">
-
-<div class="process-number">
-01
-</div>
-
-<h3>
-お問い合わせ
-</h3>
-
-<p>
-電話・メール・LINEから
-お気軽にご連絡ください。
-</p>
-
-</div>
+    </div>
 
 
-<div class="process-card reveal">
+    <div class="process-line"></div>
 
-<div class="process-number">
-02
-</div>
+    <div class="process-grid">
 
-<h3>
-商品確認
-</h3>
+      <article class="process-card reveal">
+        <div class="process-number">01</div>
+        <h3>お問い合わせ</h3>
+        <p>
+          電話・LINE・メールからお気軽にご連絡ください。
+        </p>
+      </article>
 
-<p>
-車両・機械・在庫品などの
-状態や数量を確認します。
-</p>
+      <article class="process-card reveal">
+        <div class="process-number">02</div>
+        <h3>確認・査定</h3>
+        <p>
+          商品の状態・内容などを確認します。
+        </p>
+      </article>
 
-</div>
+      <article class="process-card reveal">
+        <div class="process-number">03</div>
+        <h3>お見積り</h3>
+        <p>
+          内容を確認した上でお見積りをご案内します。
+        </p>
+      </article>
 
+      <article class="process-card reveal">
+        <div class="process-number">04</div>
+        <h3>買取・お支払い</h3>
+        <p>
+          条件確認後、買取・お支払いへ進みます。
+        </p>
+      </article>
 
-<div class="process-card reveal">
+    </div>
 
-<div class="process-number">
-03
-</div>
-
-<h3>
-査定・お見積り
-</h3>
-
-<p>
-商品内容を確認して
-買取条件をご案内します。
-</p>
-
-</div>
-
-
-<div class="process-card reveal">
-
-<div class="process-number">
-04
-</div>
-
-<h3>
-買取・お支払い
-</h3>
-
-<p>
-買取成立後、
-EXPORT ZONEがお客様へお支払いします。
-</p>
-
-</div>
-
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- EXPORT -->
+<!-- =========================
+     WORLD
+========================= -->
 
-<section
-class="export-section"
-id="export">
+<section class="world-section" id="world">
 
-<div class="export-box reveal">
+  <div class="section">
 
-<div class="section-label">
-JAPAN TO WORLDWIDE
-</div>
+    <div class="world-content">
 
-<h2>
-日本から<span>世界へ</span>
-</h2>
+      <div class="reveal">
 
-<p>
-EXPORT ZONEは日本国内で買取した
-中古車・トラック・建設機械・農業機械・
-自動車部品・在庫品などを海外市場へ輸出しています。
-</p>
+        <div class="section-label">
+          FROM JAPAN TO THE WORLD
+        </div>
 
+        <h2 class="section-title">
+          日本から
+          <span>世界へ。</span>
+        </h2>
 
-<div class="export-flow">
+        <p class="section-desc">
+          日本で買取した商品を、
+          世界のマーケットへ。
+        </p>
 
-<div class="flow-item">
-🇯🇵 日本
-</div>
+        <div class="world-flow">
 
-<div class="flow-arrow">
-→
-</div>
+          <div class="flow-item">🇯🇵 Japan</div>
+          <div class="flow-arrow">→</div>
 
-<div class="flow-item">
-🚗 買取
-</div>
+          <div class="flow-item">Purchase</div>
+          <div class="flow-arrow">→</div>
 
-<div class="flow-arrow">
-→
-</div>
+          <div class="flow-item">Inspection</div>
+          <div class="flow-arrow">→</div>
 
-<div class="flow-item">
-🚢 輸出
-</div>
+          <div class="flow-item">Export</div>
+          <div class="flow-arrow">→</div>
 
-<div class="flow-arrow">
-→
-</div>
+          <div class="flow-item">🌍 Worldwide</div>
 
-<div class="flow-item">
-🌏 世界
-</div>
+        </div>
 
-</div>
+        <p class="hero-note">
+          Cars • Trucks • Construction Machinery •
+          Agricultural Machinery • Auto Parts • Stock Materials
+        </p>
 
-</div>
-
-</section>
+      </div>
 
 
-<!-- COMPANY -->
+      <div class="world-visual reveal">
 
-<section
-class="company"
-id="company">
+        <div class="world-ring">
 
-<div class="company-grid">
+          <div class="ring-orbit"></div>
 
+          <div class="orbit-dot a"></div>
+          <div class="orbit-dot b"></div>
+          <div class="orbit-dot c"></div>
 
-<div class="company-intro reveal">
+          <div class="world-center">
+            <div>
+              <strong>JAPAN</strong>
+              <small>EXPORT</small>
+            </div>
+          </div>
 
-<div class="section-label">
-COMPANY
-</div>
+        </div>
 
-<h2>
-日本から<br>
-<span>世界へ。</span>
-</h2>
+      </div>
 
-<p>
-EXPORT ZONE 株式会社は、
-日本国内で中古車・トラック・建設機械・
-農業機械・自動車部品・在庫品などを取り扱い、
-海外市場へ輸出しています。
-</p>
+    </div>
 
-</div>
-
-
-<div class="company-table reveal">
-
-
-<div class="company-row">
-<div>会社名</div>
-<div>EXPORT ZONE 株式会社</div>
-</div>
-
-
-<div class="company-row">
-<div>所在地</div>
-<div>
-〒362-0806<br>
-埼玉県北足立郡伊奈町小室2607
-</div>
-</div>
-
-
-<div class="company-row">
-<div>電話番号</div>
-<div>
-0120 888 405
-</div>
-</div>
-
-
-<div class="company-row">
-<div>メール</div>
-<div>
-exportzonecoltd@gmail.com
-</div>
-</div>
-
-
-<div class="company-row">
-<div>LINE</div>
-<div>
-exportzonecoltd
-</div>
-</div>
-
-
-<div class="company-row">
-<div>古物商許可</div>
-<div>
-第452750021040号
-</div>
-</div>
-
-
-<div class="company-row">
-<div>事業内容</div>
-<div>
-中古車・トラック・建設機械・農業機械・
-自動車部品・在庫品の買取・輸出
-</div>
-</div>
-
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- CONTACT -->
+<!-- =========================
+     COMPANY
+========================= -->
 
-<section
-class="contact"
-id="contact">
+<section id="company">
 
-<div class="contact-box reveal">
+  <div class="section">
 
-<div class="section-label">
-CONTACT
-</div>
+    <div class="section-head reveal">
 
-<h2>
-まずはお気軽に<br>
-ご相談ください
-</h2>
+      <div class="section-label">
+        COMPANY
+      </div>
 
-<p>
-「これも売れる？」というご相談でも大丈夫です。
-</p>
+      <h2 class="section-title">
+        EXPORT ZONE
+        <span>株式会社</span>
+      </h2>
 
+      <p class="section-desc">
+        日本・埼玉を拠点に、車両・機械・部品・
+        在庫品などの買取・輸出を行っています。
+      </p>
 
-<a
-href="tel:0120888405"
-class="contact-phone">
-0120 888 405
-</a>
+    </div>
 
 
-<div class="contact-buttons">
+    <div class="company-grid">
+
+      <div class="company-intro reveal">
+
+        <div class="mini">
+          JAPAN / SAITAMA
+        </div>
+
+        <h3>
+          日本から世界へ。<br>
+          信頼できる取引を。
+        </h3>
+
+        <p>
+          中古車、トラック、建設機械、農業機械、
+          自動車部品、在庫品・ストックロットなど、
+          幅広い商品についてご相談ください。
+        </p>
+
+      </div>
 
 
-<a
-href="mailto:exportzonecoltd@gmail.com"
-class="btn btn-primary">
-✉ メールでお問い合わせ
-</a>
+      <div class="company-table reveal">
 
+        <div class="company-row">
+          <div>会社名</div>
+          <div>EXPORT ZONE 株式会社</div>
+        </div>
 
-<a
-href="https://line.me/ti/p/VcqKQ0PYkN"
-target="_blank"
-rel="noopener"
-class="btn btn-outline">
-LINEで相談
-</a>
+        <div class="company-row">
+          <div>所在地</div>
+          <div>
+            〒362-0806<br>
+            埼玉県北足立郡伊奈町小室2607
+          </div>
+        </div>
 
+        <div class="company-row">
+          <div>電話番号</div>
+          <div>
+            <a href="tel:0120888405">
+              0120 888 405
+            </a>
+          </div>
+        </div>
 
-<a
-href="https://maps.app.goo.gl/P173Hs525vH4QBvS6?g_st=ic"
-target="_blank"
-rel="noopener"
-class="map-btn">
-📍 Googleマップで見る
-</a>
+        <div class="company-row">
+          <div>E-mail</div>
+          <div>
+            <a href="mailto:exportzonecoltd@gmail.com">
+              exportzonecoltd@gmail.com
+            </a>
+          </div>
+        </div>
 
+        <div class="company-row">
+          <div>LINE</div>
+          <div>
+            exportzonecoltd
+          </div>
+        </div>
 
-</div>
+        <div class="company-row">
+          <div>古物商許可番号</div>
+          <div>
+            第452750021040号
+          </div>
+        </div>
 
-</div>
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- FAQ -->
+<!-- =========================
+     CONTACT
+========================= -->
 
-<section class="faq">
+<section class="contact-section" id="contact">
 
-<div class="section-head reveal">
+  <div class="section">
 
-<div class="section-label">
-FAQ
-</div>
+    <div class="contact-box reveal">
 
-<h2>
-よくあるご質問
-</h2>
+      <div>
 
-</div>
+        <div class="section-label">
+          CONTACT US
+        </div>
 
+        <h2 class="section-title">
+          お気軽に
+          <span>ご相談ください。</span>
+        </h2>
 
-<div class="faq-list">
+        <div class="contact-phone">
+          0120 888 405
+        </div>
 
+        <p class="contact-description">
+          中古車・トラック・建設機械・農業機械・
+          自動車部品・在庫品など、
+          買取についてお気軽にお問い合わせください。
+        </p>
 
-<div class="faq-item reveal">
+        <div class="contact-actions">
 
-<button class="faq-question">
+          <a href="tel:0120888405"
+             class="btn btn-gold">
+            📞 電話でお問い合わせ
+          </a>
 
-<span>
-動かない車でも買取できますか？
-</span>
+          <a href="https://line.me/ti/p/VcqKQ0PYkN"
+             target="_blank"
+             rel="noopener"
+             class="btn btn-outline">
+            LINEでお問い合わせ
+          </a>
 
-<span>
-+
-</span>
+          <a href="mailto:exportzonecoltd@gmail.com"
+             class="btn btn-outline">
+            ✉ メール
+          </a>
 
-</button>
+        </div>
 
+      </div>
 
-<div class="faq-answer">
 
-<div class="faq-answer-inner">
-はい。車両の状態を確認したうえで
-買取についてご相談いただけます。
-</div>
+      <div class="contact-info">
 
-</div>
+        <div class="info-card">
 
-</div>
+          <div class="info-icon">📍</div>
 
+          <div>
+            <small>ADDRESS</small>
+            <strong>
+              〒362-0806<br>
+              埼玉県北足立郡伊奈町小室2607
+            </strong>
+          </div>
 
-<div class="faq-item reveal">
+        </div>
 
-<button class="faq-question">
 
-<span>
-トラックや建設機械も買取できますか？
-</span>
+        <div class="info-card">
 
-<span>
-+
-</span>
+          <div class="info-icon">✉</div>
 
-</button>
+          <div>
+            <small>EMAIL</small>
+            <strong>
+              exportzonecoltd@gmail.com
+            </strong>
+          </div>
 
+        </div>
 
-<div class="faq-answer">
 
-<div class="faq-answer-inner">
-はい。トラック・建設機械・農業機械なども
-買取対象です。
-</div>
+        <div class="info-card">
 
-</div>
+          <div class="info-icon">LINE</div>
 
-</div>
+          <div>
+            <small>LINE ID</small>
+            <strong>
+              exportzonecoltd
+            </strong>
+          </div>
 
+        </div>
 
-<div class="faq-item reveal">
 
-<button class="faq-question">
+        <a href="https://maps.app.goo.gl/P173Hs525vH4QBvS6?g_st=ic"
+           target="_blank"
+           rel="noopener"
+           class="btn btn-outline">
+          📍 Google Mapsで所在地を見る →
+        </a>
 
-<span>
-日本全国から問い合わせできますか？
-</span>
+      </div>
 
-<span>
-+
-</span>
+    </div>
 
-</button>
-
-
-<div class="faq-answer">
-
-<div class="faq-answer-inner">
-はい。日本全国からお問い合わせいただけます。
-まずは電話・メール・LINEでご相談ください。
-</div>
-
-</div>
-
-</div>
-
-
-<div class="faq-item reveal">
-
-<button class="faq-question">
-
-<span>
-在庫品や大量の商品も相談できますか？
-</span>
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<div class="faq-answer-inner">
-はい。在庫品・余剰品・部品・材料など、
-まとまった数量についてもご相談ください。
-</div>
-
-</div>
-
-</div>
-
-
-<div class="faq-item reveal">
-
-<button class="faq-question">
-
-<span>
-買取のときにお金を払う必要がありますか？
-</span>
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<div class="faq-answer-inner">
-お客様から買取代金をいただくのではありません。
-買取が成立した場合、EXPORT ZONEがお客様へ
-買取代金をお支払いします。
-</div>
-
-</div>
-
-</div>
-
-
-</div>
+  </div>
 
 </section>
 
+
+<!-- =========================
+     FAQ
+========================= -->
+
+<section id="faq">
+
+  <div class="section">
+
+    <div class="section-head reveal">
+
+      <div class="section-label">
+        FAQ
+      </div>
+
+      <h2 class="section-title">
+        よくある
+        <span>ご質問。</span>
+      </h2>
+
+      <p class="section-desc">
+        買取・輸出について、よくいただくご質問をご案内します。
+      </p>
+
+    </div>
+
+
+    <div class="faq-wrap">
+
+      <div class="faq">
+
+        <div class="faq-item reveal">
+
+          <button class="faq-question">
+            <span>
+              どの地域から買取できますか？
+            </span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              日本全国から買取のご相談を承ります。
+              まずは商品情報をお知らせください。
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item reveal">
+
+          <button class="faq-question">
+            <span>
+              動かない車でも買取できますか？
+            </span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              車両の状態を確認したうえで、
+              買取についてご相談いただけます。
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item reveal">
+
+          <button class="faq-question">
+            <span>
+              トラック・建設機械も買取できますか？
+            </span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              トラック、建設機械、農業機械など
+              幅広い商品を取り扱っています。
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item reveal">
+
+          <button class="faq-question">
+            <span>
+              自動車部品も買取できますか？
+            </span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              自動車部品・各種パーツについても
+              ご相談いただけます。
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item reveal">
+
+          <button class="faq-question">
+            <span>
+              在庫品・ストックロットも対応できますか？
+            </span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              はい。在庫品・ストックロットなどの
+              大量商品についてもご相談ください。
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item reveal">
+
+          <button class="faq-question">
+            <span>
+              海外への輸出も行っていますか？
+            </span>
+            <span>+</span>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              日本で買取した車両・機械・部品・商品を
+              海外へ輸出しています。
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     FINAL CTA
+========================= -->
+
+<section>
+
+  <div class="final-cta reveal">
+
+    <div class="section-label">
+      EXPORT ZONE 株式会社
+    </div>
+
+    <h2>
+      日本から世界へ。
+    </h2>
+
+    <p>
+      買取・輸出について、
+      まずはお気軽にお問い合わせください。
+    </p>
+
+    <div class="hero-actions"
+         style="justify-content:center;">
+
+      <a href="tel:0120888405"
+         class="btn btn-gold">
+        📞 0120 888 405
+      </a>
+
+      <a href="https://line.me/ti/p/VcqKQ0PYkN"
+         target="_blank"
+         rel="noopener"
+         class="btn btn-outline">
+        LINEでお問い合わせ
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
 
 </main>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
-<div class="footer-inner">
+  <div class="footer-main">
+
+    <div class="footer-brand">
+
+      <img src="./EZ%20Logo.png"
+           alt="EXPORT ZONE 株式会社">
+
+      <p>
+        FROM JAPAN → TO THE WORLD.<br><br>
+        中古車・トラック・建設機械・農業機械・
+        自動車部品・在庫品などを日本全国から買取。
+      </p>
+
+    </div>
 
 
-<img
-src="./EZ%20Logo.png"
-alt="EXPORT ZONE 株式会社"
-class="footer-logo">
+    <div>
+
+      <div class="footer-title">
+        NAVIGATION
+      </div>
+
+      <div class="footer-links">
+
+        <a href="#home">HOME</a>
+        <a href="#products">買取商品</a>
+        <a href="#why">EXPORT ZONE</a>
+        <a href="#process">買取の流れ</a>
+        <a href="#world">日本から世界へ</a>
+        <a href="#company">会社情報</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">CONTACT</a>
+
+      </div>
+
+    </div>
 
 
-<div class="footer-copy">
-© EXPORT ZONE 株式会社. All Rights Reserved.
-</div>
+    <div>
+
+      <div class="footer-title">
+        CONTACT
+      </div>
+
+      <div class="footer-contact">
+
+        <a href="tel:0120888405">
+          📞 0120 888 405
+        </a>
+
+        <a href="mailto:exportzonecoltd@gmail.com">
+          ✉ exportzonecoltd@gmail.com
+        </a>
+
+        <span>
+          LINE ID: exportzonecoltd
+        </span>
+
+        <span>
+          〒362-0806
+        </span>
+
+        <span>
+          埼玉県北足立郡伊奈町小室2607
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
 
 
-<div class="footer-links">
+  <div class="footer-bottom">
 
-<a href="#home">
-ホーム
-</a>
+    <span>
+      © EXPORT ZONE Co., Ltd. All Rights Reserved.
+    </span>
 
-<a href="#products">
-買取品目
-</a>
+    <span>
+      古物商許可番号：第452750021040号
+    </span>
 
-<a href="#company">
-会社情報
-</a>
-
-<a href="#contact">
-お問い合わせ
-</a>
-
-</div>
-
-
-</div>
+  </div>
 
 </footer>
 
 
-<!-- FLOATING PHONE -->
+<!-- =========================
+     FLOATING TOP
+========================= -->
 
-<a
-href="tel:0120888405"
-class="floating-phone">
-☎ 0120 888 405
-</a>
+<button class="top-btn"
+        id="topBtn"
+        aria-label="ページトップへ">
+  ↑
+</button>
 
+
+<!-- =========================
+     MOBILE CONTACT
+========================= -->
+
+<div class="mobile-contact">
+
+  <a href="tel:0120888405"
+     class="mobile-call">
+    📞 CALL
+  </a>
+
+  <a href="https://line.me/ti/p/VcqKQ0PYkN"
+     target="_blank"
+     rel="noopener"
+     class="mobile-line">
+    LINE
+  </a>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
 
 <script>
 
-/* =========================
-LOADER
-========================= */
+  /* =========================
+     LOADER
+  ========================= */
 
-window.addEventListener("load",function(){
+  window.addEventListener("load", function () {
 
-  setTimeout(function(){
-
-    document
-      .getElementById("loader")
-      .classList.add("hide");
-
-  },700);
-
-});
-
-
-/* =========================
-MOBILE MENU
-========================= */
-
-const menuBtn =
-  document.getElementById("menuBtn");
-
-const navLinks =
-  document.getElementById("navLinks");
-
-
-menuBtn.addEventListener("click",function(){
-
-  navLinks.classList.toggle("open");
-
-});
-
-
-document
-.querySelectorAll(".nav-links a")
-.forEach(function(link){
-
-  link.addEventListener("click",function(){
-
-    navLinks.classList.remove("open");
+    setTimeout(function () {
+      document.getElementById("loader")
+        .classList.add("hide");
+    }, 650);
 
   });
 
-});
+
+  /* =========================
+     HEADER SCROLL
+  ========================= */
+
+  const header = document.getElementById("header");
+  const topBtn = document.getElementById("topBtn");
+
+  window.addEventListener("scroll", function () {
+
+    if (window.scrollY > 30) {
+      header.classList.add("scrolled");
+      topBtn.classList.add("show");
+    } else {
+      header.classList.remove("scrolled");
+      topBtn.classList.remove("show");
+    }
+
+  });
 
 
-/* =========================
-SCROLL REVEAL
-========================= */
+  /* =========================
+     MOBILE MENU
+  ========================= */
 
-const revealObserver =
-  new IntersectionObserver(
-    function(entries){
+  const menuBtn = document.getElementById("menuBtn");
+  const navLinks = document.getElementById("navLinks");
 
-      entries.forEach(function(entry){
+  menuBtn.addEventListener("click", function () {
 
-        if(entry.isIntersecting){
+    navLinks.classList.toggle("open");
+    document.body.classList.toggle("menu-open");
 
-          entry.target.classList.add("visible");
+  });
 
-        }else{
 
-          entry.target.classList.remove("visible");
+  document.querySelectorAll(".nav-links a")
+    .forEach(function (link) {
+
+      link.addEventListener("click", function () {
+
+        navLinks.classList.remove("open");
+        document.body.classList.remove("menu-open");
+
+      });
+
+    });
+
+
+  /* =========================
+     BACK TO TOP
+  ========================= */
+
+  topBtn.addEventListener("click", function () {
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  });
+
+
+  /* =========================
+     FAQ
+  ========================= */
+
+  document.querySelectorAll(".faq-question")
+    .forEach(function (button) {
+
+      button.addEventListener("click", function () {
+
+        const item = button.parentElement;
+        const answer = item.querySelector(".faq-answer");
+
+        document.querySelectorAll(".faq-item")
+          .forEach(function (other) {
+
+            if (other !== item) {
+              other.classList.remove("active");
+
+              const otherAnswer =
+                other.querySelector(".faq-answer");
+
+              otherAnswer.style.maxHeight = null;
+            }
+
+          });
+
+
+        item.classList.toggle("active");
+
+        if (item.classList.contains("active")) {
+
+          answer.style.maxHeight =
+            answer.scrollHeight + "px";
+
+        } else {
+
+          answer.style.maxHeight = null;
 
         }
 
       });
 
-    },
-    {
-      threshold:.12
-    }
-  );
+    });
 
 
-document
-.querySelectorAll(".reveal")
-.forEach(function(element){
+  /* =========================
+     SCROLL REVEAL
+  ========================= */
 
-  revealObserver.observe(element);
+  const revealObserver =
+    new IntersectionObserver(
 
-});
+      function (entries) {
 
+        entries.forEach(function (entry) {
 
-/* =========================
-FAQ
-========================= */
+          if (entry.isIntersecting) {
 
-document
-.querySelectorAll(".faq-question")
-.forEach(function(button){
+            entry.target.classList.add("visible");
 
-  button.addEventListener("click",function(){
+            revealObserver.unobserve(entry.target);
 
-    const item =
-      button.parentElement;
+          }
 
-    document
-    .querySelectorAll(".faq-item")
-    .forEach(function(other){
+        });
 
-      if(other !== item){
+      },
 
-        other.classList.remove("active");
-
+      {
+        threshold: 0.12
       }
+
+    );
+
+
+  document.querySelectorAll(".reveal")
+    .forEach(function (element) {
+
+      revealObserver.observe(element);
 
     });
 
-    item.classList.toggle("active");
-
-  });
-
-});
-
-
-/* =========================
-WORLD MAP
-========================= */
-
-const svg =
-  d3.select("#heroMap");
-
-const width = 1440;
-const height = 760;
-
-
-const projection =
-  d3.geoNaturalEarth1()
-    .scale(225)
-    .translate([
-      width / 2,
-      height / 2 + 25
-    ]);
-
-
-const path =
-  d3.geoPath()
-    .projection(projection);
-
-
-const mapGroup =
-  svg.append("g");
-
-const routesGroup =
-  svg.append("g");
-
-const pointsGroup =
-  svg.append("g");
-
-
-const japan =
-  [138.2529,36.2048];
-
-
-const destinations = [
-
-  {
-    name:"Korea",
-    coordinates:[127.7669,35.9078]
-  },
-
-  {
-    name:"Thailand",
-    coordinates:[100.5018,13.7563]
-  },
-
-  {
-    name:"Singapore",
-    coordinates:[103.8198,1.3521]
-  },
-
-  {
-    name:"UAE",
-    coordinates:[54.3773,24.4539]
-  },
-
-  {
-    name:"Saudi Arabia",
-    coordinates:[46.6753,24.7136]
-  },
-
-  {
-    name:"Germany",
-    coordinates:[10.4515,51.1657]
-  },
-
-  {
-    name:"France",
-    coordinates:[2.2137,46.2276]
-  },
-
-  {
-    name:"Spain",
-    coordinates:[-3.7038,40.4168]
-  },
-
-  {
-    name:"Egypt",
-    coordinates:[31.2357,30.0444]
-  },
-
-  {
-    name:"USA",
-    coordinates:[-100,38]
-  },
-
-  {
-    name:"South America",
-    coordinates:[-58.3816,-34.6037]
-  },
-
-  {
-    name:"Australia",
-    coordinates:[151.2093,-33.8688]
-  }
-
-];
-
-
-/* =========================
-SVG FILTER
-========================= */
-
-const defs =
-  svg.append("defs");
-
-
-const routeGlow =
-  defs
-    .append("filter")
-    .attr("id","routeGlow")
-    .attr("x","-100%")
-    .attr("y","-100%")
-    .attr("width","300%")
-    .attr("height","300%");
-
-
-routeGlow
-  .append("feGaussianBlur")
-  .attr("stdDeviation","3")
-  .attr("result","blur");
-
-
-const merge =
-  routeGlow.append("feMerge");
-
-
-merge
-  .append("feMergeNode")
-  .attr("in","blur");
-
-
-merge
-  .append("feMergeNode")
-  .attr("in","SourceGraphic");
-
-
-/* =========================
-LOAD MAP
-========================= */
-
-d3.json(
-  "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
-)
-.then(function(world){
-
-  const countries =
-    topojson.feature(
-      world,
-      world.objects.countries
-    );
-
-
-  /* COUNTRIES */
-
-  mapGroup
-    .selectAll("path")
-    .data(countries.features)
-    .join("path")
-    .attr("d",path)
-    .attr("fill","rgba(35,120,160,.25)")
-    .attr("stroke","rgba(130,210,255,.25)")
-    .attr("stroke-width",.8);
-
-
-  const start =
-    projection(japan);
-
-
-  if(!start){
-
-    console.error(
-      "Japan projection failed"
-    );
-
-    return;
-
-  }
-
 
   /* =========================
-  ROUTES
+     STAGGER PRODUCT / WHY
   ========================= */
 
-  destinations.forEach(function(destination){
+  document.querySelectorAll(
+    ".product-card, .why-card, .process-card"
+  ).forEach(function (card, index) {
 
-    const end =
-      projection(destination.coordinates);
-
-
-    if(!end) return;
-
-
-    const midX =
-      (start[0] + end[0]) / 2;
-
-
-    const distance =
-      Math.abs(
-        end[0] - start[0]
-      );
-
-
-    const curveHeight =
-      Math.max(
-        50,
-        distance * .18
-      );
-
-
-    const midY =
-      Math.min(
-        start[1],
-        end[1]
-      ) - curveHeight;
-
-
-    const curvePath = `
-      M ${start[0]} ${start[1]}
-      Q ${midX} ${midY}
-      ${end[0]} ${end[1]}
-    `;
-
-
-    /* ROUTE */
-
-    const route =
-      routesGroup
-        .append("path")
-        .attr("d",curvePath)
-        .attr("fill","none")
-        .attr("stroke","#ffd83d")
-        .attr("stroke-width",1.5)
-        .attr("stroke-opacity",.38)
-        .attr("stroke-dasharray","6 8");
-
-
-    /* =========================
-    DASH ANIMATION
-    ========================= */
-
-    function animateRoute(){
-
-      route
-        .attr("stroke-dashoffset",0)
-        .transition()
-        .duration(3000)
-        .ease(d3.easeLinear)
-        .attr("stroke-dashoffset",-100)
-        .on("end",function(){
-
-          animateRoute();
-
-        });
-
-    }
-
-
-    animateRoute();
-
-
-    /* =========================
-    MOVING DOT
-    ========================= */
-
-    const dot =
-      routesGroup
-        .append("circle")
-        .attr("r",4)
-        .attr("fill","#ffd83d")
-        .attr("filter","url(#routeGlow)");
-
-
-    function animateDot(){
-
-      const pathNode =
-        route.node();
-
-
-      const totalLength =
-        pathNode.getTotalLength();
-
-
-      dot
-        .interrupt()
-        .attr(
-          "transform",
-          `translate(${start[0]},${start[1]})`
-        );
-
-
-      dot
-        .transition()
-        .duration(
-          3000 + Math.random() * 1500
-        )
-        .ease(d3.easeLinear)
-        .attrTween(
-          "transform",
-          function(){
-
-            return function(t){
-
-              const point =
-                pathNode.getPointAtLength(
-                  t * totalLength
-                );
-
-
-              return `
-                translate(
-                  ${point.x},
-                  ${point.y}
-                )
-              `;
-
-            };
-
-          }
-        )
-        .on("end",function(){
-
-          setTimeout(
-            animateDot,
-            500 + Math.random() * 1000
-          );
-
-        });
-
-    }
-
-
-    animateDot();
-
-
-    /* DESTINATION POINT */
-
-    pointsGroup
-      .append("circle")
-      .attr("cx",end[0])
-      .attr("cy",end[1])
-      .attr("r",4)
-      .attr("fill","#8eeaff")
-      .attr("opacity",.9);
-
-
-    pointsGroup
-      .append("circle")
-      .attr("cx",end[0])
-      .attr("cy",end[1])
-      .attr("r",10)
-      .attr("fill","none")
-      .attr("stroke","#8eeaff")
-      .attr("stroke-width",1)
-      .attr("opacity",.35)
-      .attr("class","destination-pulse");
-
+    card.style.transitionDelay =
+      (index % 3) * 80 + "ms";
 
   });
 
 
   /* =========================
-  JAPAN
+     SMOOTH ANCHOR OFFSET
   ========================= */
 
-  pointsGroup
-    .append("circle")
-    .attr("cx",start[0])
-    .attr("cy",start[1])
-    .attr("r",15)
-    .attr("fill","#ff4d4d")
-    .attr("opacity",.18)
-    .attr("class","japan-pulse");
+  document.querySelectorAll('a[href^="#"]')
+    .forEach(function (anchor) {
 
+      anchor.addEventListener("click", function (event) {
 
-  pointsGroup
-    .append("circle")
-    .attr("cx",start[0])
-    .attr("cy",start[1])
-    .attr("r",6)
-    .attr("fill","#ff5555");
+        const targetId =
+          anchor.getAttribute("href");
 
+        if (targetId === "#") return;
 
-  pointsGroup
-    .append("text")
-    .attr("x",start[0]+14)
-    .attr("y",start[1]+5)
-    .attr("fill","#fff")
-    .attr("font-size","16")
-    .attr("font-weight","800")
-    .text("JAPAN");
+        const target =
+          document.querySelector(targetId);
 
+        if (!target) return;
 
-})
-.catch(function(error){
+        event.preventDefault();
 
-  console.error(
-    "World map loading error:",
-    error
-  );
+        const offset = 78;
 
-});
+        const position =
+          target.getBoundingClientRect().top +
+          window.scrollY -
+          offset;
 
+        window.scrollTo({
+          top: position,
+          behavior: "smooth"
+        });
 
-/* =========================
-MAP ANIMATION CSS
-========================= */
+      });
 
-const mapStyle =
-  document.createElement("style");
-
-
-mapStyle.textContent = `
-
-.japan-pulse{
-
-  transform-box:fill-box;
-  transform-origin:center;
-
-  animation:
-    japanPulse
-    1.8s
-    ease-in-out
-    infinite;
-
-}
-
-.destination-pulse{
-
-  transform-box:fill-box;
-  transform-origin:center;
-
-  animation:
-    destinationPulse
-    2s
-    ease-out
-    infinite;
-
-}
-
-
-@keyframes japanPulse{
-
-  0%,100%{
-
-    transform:scale(1);
-    opacity:.35;
-
-  }
-
-  50%{
-
-    transform:scale(2);
-    opacity:.03;
-
-  }
-
-}
-
-
-@keyframes destinationPulse{
-
-  0%{
-
-    transform:scale(.7);
-    opacity:.5;
-
-  }
-
-  70%{
-
-    transform:scale(1.8);
-    opacity:.05;
-
-  }
-
-  100%{
-
-    transform:scale(1.8);
-    opacity:0;
-
-  }
-
-}
-
-`;
-
-
-document.head.appendChild(mapStyle);
+    });
 
 </script>
 
