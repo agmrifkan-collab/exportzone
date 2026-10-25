@@ -26,3 +26,10 @@ https://agmrifkan-collab.github.io/exportzone/auto-parts-buying.html
 https://agmrifkan-collab.github.io/exportzone/stock-lot-buying.html
 
 Note: Search indexing and ranking are not immediate or guaranteed.
+
+
+Font setup:
+- MaruFoPro Regular, Medium, Bold, and Heavy are stored in /fonts.
+- Homepage keeps Panton for Latin text and uses MaruFoPro for Japanese fallback.
+- All six service pages use MaruFoPro.
+- Before publishing the font files publicly, confirm your font licence allows web embedding and redistribution. If the licence does not allow it, use a web-embedding licensed copy or a permitted webfont format.

@@ -13,3 +13,10 @@ GitHub Pages-ல் சேர்ப்பது:
 8. Google Search Console > Sitemaps-ல் sitemap.xml submit செய்யவும். பிறகு URL Inspection மூலம் புதிய URL-களை test செய்து Request Indexing செய்யலாம்.
 
 முக்கியம்: index.html-ஐ இந்த ZIP-இல் உள்ள கோப்புகளால் மாற்ற வேண்டாம். Sitemap-ல் homepage மற்றும் 6 புதிய பக்கங்களும் சேர்க்கப்பட்டுள்ளன. Logo file பெயர் வேறாக இருந்தால் logo path-ஐ சரிசெய்யவும். Google indexing/ranking உடனடியாக அல்லது உறுதியாக நடக்கும் என உத்தரவாதம் இல்லை.
+
+
+## MaruFoPro Font
+- `fonts` folder-ல் Regular, Medium, Bold, Heavy font files சேர்க்கப்பட்டுள்ளன.
+- Homepage-ல் Latin எழுத்துகளுக்கு Panton தொடரும்; Japanese எழுத்துகளுக்கு MaruFoPro பயன்படுத்தப்படும்.
+- ஆறு SEO service pages-லும் MaruFoPro பயன்படுத்தப்படும்.
+- இணையத்தில் font files-ஐ வெளியிடும் முன், உங்கள் font licence web embedding மற்றும் redistribution-ஐ அனுமதிக்கிறதா என்பதை உறுதிசெய்யவும்.
