@@ -1,19 +1,21 @@
-MaruFoPro font fix — தமிழில்
+EXPORT ZONE — COMPLETE WEBSITE UPLOAD (Tamil)
 
-இந்த version-ல் MaruFoPro font primary font ஆக மாற்றப்பட்டுள்ளது.
+இந்த ZIP-ல் முழு website-மும் `fonts` folder-மும் உள்ளன.
 
-GitHub-ல் அவசியம் upload செய்ய வேண்டியவை:
-1. index.html (overwrite)
-2. service-pages.css (overwrite)
-3. fonts/MaruFoPro-Regular.otf
-4. fonts/MaruFoPro-Medium.otf
-5. fonts/MaruFoPro-Bold.otf
-6. fonts/MaruFoPro-Heavy.otf
+Upload செய்யும் முறை:
+1. ZIP-ஐ உங்கள் கணினியில் Extract செய்யவும்.
+2. GitHub repository: https://github.com/agmrifkan-collab/exportzone/
+3. Add file -> Upload files தேர்வு செய்யவும்.
+4. Extract செய்த folder-க்குள் உள்ள எல்லா website files-ஐயும் தேர்வு செய்து upload செய்யவும். `fonts` folder-ஐயும் சேர்க்கவும்.
+5. `index.html` மற்றும் `service-pages.css` பழைய கோப்புகளை புதிய கோப்புகளால் மாற்றவும்.
+6. GitHub-ல் `fonts/MaruFoPro-Regular.otf` போன்ற நான்கு font files உள்ளனவா பார்க்கவும்.
+7. Commit changes செய்து GitHub Pages deployment முடியும் வரை காத்திருக்கவும்.
+8. இந்த URL-ஐத் திறந்து font file load ஆகிறதா சோதிக்கவும்:
+   https://agmrifkan-collab.github.io/exportzone/fonts/MaruFoPro-Regular.otf
+9. Website-ஐ திறந்து Ctrl+F5 அழுத்தவும்.
 
-முக்கியம்: `fonts` என்ற folder-ஐ repository root-ல் அதே spelling/case-இல் வைத்திருக்க வேண்டும்.
-Folder-ஐ திறந்து உள்ளே உள்ள font files-ஐ மட்டும் root-ல் upload செய்ய வேண்டாம்.
-
-பின்னர் Commit changes செய்யவும். Deploy முடிந்ததும் website-ஐத் திறந்து Ctrl+F5 அழுத்தவும்.
-இன்னும் மாறவில்லை என்றால் DevTools > Network-ல் MaruFoPro-Regular.otf status 200 ஆக உள்ளதா பார்க்க வேண்டும்.
-404 என்றால் font path அல்லது upload location தவறு.
-Font licence web embedding மற்றும் redistribution-ஐ அனுமதிக்கிறதா உறுதிப்படுத்தவும்.
+கவனம்:
+- ZIP-ஐ repository-க்கு நேரடியாக upload செய்ய வேண்டாம்; முதலில் Extract செய்யவும்.
+- `fonts` folder-ஐ அதன் பெயருடன் repository root-ல் வைத்திருக்க வேண்டும்.
+- `EZ Logo.png` கோப்பை நீக்க வேண்டாம்.
+- Public website-ல் font files வெளியிட உங்கள் font licence அனுமதிக்கிறதா உறுதிப்படுத்தவும்.
