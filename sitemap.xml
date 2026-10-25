@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://agmrifkan-collab.github.io/exportzone/</loc>
-  </url>
-
+  <url><loc>https://agmrifkan-collab.github.io/exportzone/</loc></url>
+  <url><loc>https://agmrifkan-collab.github.io/exportzone/used-car-buying.html</loc></url>
+  <url><loc>https://agmrifkan-collab.github.io/exportzone/truck-bus-buying.html</loc></url>
+  <url><loc>https://agmrifkan-collab.github.io/exportzone/construction-machinery-buying.html</loc></url>
+  <url><loc>https://agmrifkan-collab.github.io/exportzone/agricultural-machinery-buying.html</loc></url>
+  <url><loc>https://agmrifkan-collab.github.io/exportzone/auto-parts-buying.html</loc></url>
+  <url><loc>https://agmrifkan-collab.github.io/exportzone/stock-lot-buying.html</loc></url>
 </urlset>
