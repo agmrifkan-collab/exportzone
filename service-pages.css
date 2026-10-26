@@ -1,25 +1,25 @@
 
 @font-face {
   font-family: "MaruFoPro";
-  src: url("./fonts/MaruFoPro-Regular.otf") format("opentype");
+  src: url("./fonts/MaruFoPro-Regular.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "MaruFoPro";
-  src: url("./fonts/MaruFoPro-Medium.otf") format("opentype");
+  src: url("./fonts/MaruFoPro-Medium.woff2") format("woff2");
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: "MaruFoPro";
-  src: url("./fonts/MaruFoPro-Bold.otf") format("opentype");
+  src: url("./fonts/MaruFoPro-Bold.woff2") format("woff2");
   font-weight: 700;
   font-display: swap;
 }
 @font-face {
   font-family: "MaruFoPro";
-  src: url("./fonts/MaruFoPro-Heavy.otf") format("opentype");
+  src: url("./fonts/MaruFoPro-Heavy.woff2") format("woff2");
   font-weight: 900;
   font-display: swap;
 }
