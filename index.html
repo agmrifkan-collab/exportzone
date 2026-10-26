@@ -394,10 +394,17 @@ footer{background:#03060c;border-top:1px solid var(--line);padding:70px 0 40px;}
 .js .rv.on{opacity:1;transform:none;}
 
 /* ================= RESPONSIVE ================= */
-@media(max-width:1180px){
-  .nav{gap:20px;}
-  .nav a[href="#export"],.nav a[href="#company"]{display:none;}
+/* header: hide extras step by step so the phone button always fits */
+@media(max-width:1560px){
+  .nav{gap:22px;}
   .line-btn-s{display:none;}
+}
+@media(max-width:1360px){
+  .nav a[href="#export"],.nav a[href="#company"]{display:none;}
+}
+@media(max-width:1180px){
+  .nav{gap:18px;}
+  .nav a[href="#faq"]{display:none;}
 }
 @media(max-width:1000px){
   .hero-grid,.haisha,.export,.company,.cta{grid-template-columns:1fr;}
