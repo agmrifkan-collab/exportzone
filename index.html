@@ -173,7 +173,7 @@ ul,ol{list-style:none}
   background:radial-gradient(circle,#232428 0,#232428 92.5%,#2f3035 100%);box-shadow:inset 0 0 0 1px #3d3f44,0 30px 60px rgba(0,0,0,.35)}
 .dome{width:calc(var(--r-dome)*2);height:calc(var(--r-dome)*2);margin-left:calc(var(--r-dome)*-1);top:calc(var(--cy) - var(--r-dome));
   background:#4a0408 radial-gradient(1100px 720px at 50% 93%,#ff5252 0,#e3131d 32%,#a20b13 68%,#4a0408 100%);
-  box-shadow:0 0 0 3px rgba(255,90,90,.55),0 0 70px rgba(227,19,29,.5);animation:glow 5s ease-in-out infinite}
+  box-shadow:0 0 0 3px rgba(255,90,90,.55),0 0 40px rgba(227,19,29,.45)}
 .seg{position:absolute;left:50%;top:var(--cy);width:2px;margin-left:-1px;height:var(--r-ring);transform-origin:50% 0;
   transform:rotate(calc(var(--i) * var(--step) * -1));background:linear-gradient(transparent calc(var(--r-dome) + 4px),#3d3f44 0)}
 .hero-in{position:relative;z-index:3}
@@ -243,7 +243,7 @@ a.fact:hover{border-color:#77797f}
 .pan .go{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;font-weight:700;color:#fff;border-bottom:1px solid var(--red)}
 
 /* ---------- section heads ---------- */
-.sec{padding:110px 0 0}
+.sec{padding:110px 0 0;content-visibility:auto;contain-intrinsic-size:auto 1100px}
 .sh{display:flex;align-items:center;gap:24px;margin-bottom:34px}
 .sh h2,.h2{font-size:clamp(23px,2.6vw,30px);font-weight:900;line-height:1.35;letter-spacing:.04em}
 .sh h2{padding-left:16px;border-left:4px solid var(--red)}
@@ -532,6 +532,7 @@ a.fact:hover{border-color:#77797f}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js .rv{opacity:1;transform:none}
   html{scroll-behavior:auto}
+  .cars img{transition:opacity .8s ease!important;transform:none!important}
 }
 </style>
 </head>
@@ -1078,8 +1079,8 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const imgs = [...document.querySelectorAll("#cars img")], dots = [...document.querySelectorAll("#dots i")], now = document.getElementById("now");
   if (imgs.length < 2) return;
   const load = i => { const im = imgs[i]; if (im.dataset.src){ im.src = im.dataset.src; im.removeAttribute("data-src"); } };
-  addEventListener("load", () => setTimeout(() => imgs.forEach((_, i) => load(i)), 600));
-  if (RM) return;
+  const loadAll = () => imgs.forEach((_, i) => load(i));
+  setTimeout(loadAll, 1200); addEventListener("load", loadAll);
   let k = 0;
   const label = i => { const [m, n] = imgs[i].dataset.name.split("|"); now.style.opacity = 0;
     setTimeout(() => { now.querySelector("b").textContent = m; now.querySelector("span").textContent = n; now.style.opacity = 1; }, 350); };
