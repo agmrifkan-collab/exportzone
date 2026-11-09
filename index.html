@@ -575,6 +575,54 @@ a.fact:hover{border-color:#77797f}
 .pick a.on{border-color:rgba(255,90,90,.6)}
 .pick a>span:not(.go){text-align:left}
 @media (max-width:760px){.pick{grid-template-columns:1fr;gap:10px;margin-bottom:22px}.pick a{min-height:92px;padding:12px 14px 12px 12px}.pick img{width:92px;height:68px}.pick b{font-size:21px}.pick small{font-size:11.5px}.pick .go{width:38px;height:38px}}
+
+
+/* ---- more cinematic (preview) ---- */
+.streak{position:absolute;z-index:2;left:-20%;right:-20%;top:calc(var(--hd) + 100px);height:2px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,120,120,.0) 10%,rgba(255,255,255,.95) 50%,rgba(255,120,120,0) 90%,transparent);
+  box-shadow:0 0 22px 6px rgba(255,80,80,.45),0 0 60px 14px rgba(255,40,40,.25);opacity:0;transform:scaleX(.2);animation:streak 2.4s cubic-bezier(.3,0,.2,1) 1.35s both}
+@keyframes streak{0%{opacity:0;transform:scaleX(.1)}25%{opacity:1}60%{opacity:.8;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1.2)}}
+.pt .c{animation:focusIn 1.1s var(--ease) both;animation-delay:calc(3.4s + var(--k) * .28s)}
+@keyframes focusIn{from{opacity:0;filter:blur(10px);transform:translateY(12px) scale(1.06)}to{opacity:1;filter:none;transform:none}}
+.js .kara .nw{color:rgba(255,255,255,.14);transition:color .6s ease,text-shadow .6s ease;transition-delay:calc(var(--i) * .45s)}
+.js .kara.in .nw{color:#fff;text-shadow:0 0 22px rgba(255,59,66,.35)}
+.lightup .p-num{animation:neon 1.8s steps(1) 3.6s both}
+@keyframes neon{0%{opacity:.15}8%{opacity:1}12%{opacity:.2}20%{opacity:1}24%{opacity:.35}30%,100%{opacity:1}}
+.lightup::after{}
+@media (prefers-reduced-motion:reduce){.streak{display:none}.js .kara .nw{color:#fff}.lightup .p-num{animation:none}}
+/* ================= cinematic letters (preview) ================= */
+.frame h1.cine-t{font-family:var(--ja);font-weight:900;animation:none;letter-spacing:.06em;filter:drop-shadow(0 8px 12px rgba(0,0,0,.45))}
+.cine-t .ch{display:inline-block;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:chIn 1.5s var(--ease) both;animation-delay:calc(.25s + var(--i) * .22s)}
+@keyframes chIn{0%{opacity:0;filter:blur(18px);transform:translateY(18px) scale(1.25);letter-spacing:.5em}
+  60%{opacity:1;filter:blur(2px) brightness(1.8)}100%{opacity:1;filter:blur(0) brightness(1);transform:none;letter-spacing:0}}
+.frame h1.cine-t::after{animation-delay:2.6s}
+.cine-t .flare{position:absolute;top:50%;left:0;width:100%;height:0;pointer-events:none;z-index:3}
+.cine-t .flare::before{content:"";position:absolute;top:-2px;left:-30%;width:60%;height:4px;border-radius:4px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 45%,#fff 50%,rgba(255,170,170,.9) 55%,transparent);filter:blur(1.5px);
+  box-shadow:0 0 18px 4px rgba(255,255,255,.55);opacity:0;animation:flare 1.6s cubic-bezier(.4,0,.2,1) 1.45s both}
+.cine-t .flare::after{content:"";position:absolute;top:-55px;left:-10%;width:110px;height:110px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.95) 0,rgba(255,200,200,.5) 18%,rgba(255,60,60,.15) 40%,transparent 70%);
+  opacity:0;animation:flareDot 1.6s cubic-bezier(.4,0,.2,1) 1.45s both}
+@keyframes flare{0%{opacity:0;transform:translateX(0)}15%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translateX(220%)}}
+@keyframes flareDot{0%{opacity:0;transform:translateX(0) scale(.6)}20%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translateX(min(780px,85vw)) scale(1.1)}}
+.cine-lead .nw{display:inline-block;animation:subIn 1.3s var(--ease) both;animation-delay:calc(2.1s + var(--i) * .55s)}
+.cine-sub{animation:subIn 1.3s var(--ease) 3.2s both}
+@keyframes subIn{from{opacity:0;filter:blur(8px);transform:translateY(10px);letter-spacing:.2em}to{opacity:1;filter:none;transform:none}}
+.cine-now b,.cine-now span{display:inline-block;transition:opacity .5s,filter .5s,letter-spacing .7s,transform .5s}
+.cine-now.swap b,.cine-now.swap span{opacity:0;filter:blur(6px);letter-spacing:.35em;transform:translateY(4px)}
+.now.cine-now{opacity:1!important}
+.cap{position:absolute;right:20px;bottom:20px;z-index:4;max-width:60%;margin:0;text-align:right;font-size:14px;color:#fff;
+  text-shadow:0 2px 6px #000,0 0 2px #000;transition:opacity .6s,filter .6s,transform .6s}
+.cap.swap{opacity:0;filter:blur(6px);transform:translateY(6px)}
+.sh h2{position:relative}
+.js .sh h2.wipe{clip-path:inset(0 100% 0 0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1)}
+.js .sh h2.wipe::after{content:"";position:absolute;top:0;bottom:0;left:0;width:3px;background:var(--red-hi);box-shadow:0 0 14px var(--red-hi);opacity:0}
+.js .sh h2.wipe.in{clip-path:inset(0 0 0 0)}
+.js .sh h2.wipe.in::after{animation:wipeBar 1.1s cubic-bezier(.7,0,.2,1) both}
+@keyframes wipeBar{0%{opacity:1;left:0}90%{opacity:1;left:100%}100%{opacity:0;left:100%}}
+@media (max-width:760px){.cap{left:12px;right:12px;bottom:44px;max-width:none;text-align:center;font-size:12.5px}}
+@media (prefers-reduced-motion:reduce){.cine-t .ch,.cine-lead .nw,.cine-sub{animation:none}.cine-t .flare{display:none}.js .sh h2.wipe{clip-path:none}}
 </style>
 </head>
 <body>
@@ -635,29 +683,31 @@ a.fact:hover{border-color:#77797f}
     <span class="seg" style="--i:.5"></span><span class="seg" style="--i:1.5"></span><span class="seg" style="--i:2.5"></span>
   </div>
 
+  <i class="streak" aria-hidden="true"></i>
   <div class="hero-in">
     <div class="side l" id="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="side r" aria-hidden="true"><i></i><i class="on"></i><i></i></div>
 
     <div class="frame">
-      <h1 class="chrome" data-t="廃車買取">廃車買取</h1>
+      <h1 class="cine-t" data-t="廃車買取" aria-label="廃車買取"><span class="ch" style="--i:0" aria-hidden="true">廃</span><span class="ch" style="--i:1" aria-hidden="true">車</span><span class="ch" style="--i:2" aria-hidden="true">買</span><span class="ch" style="--i:3" aria-hidden="true">取</span><i class="flare" aria-hidden="true"></i></h1>
       <div class="cars" id="cars">
-        <img src="./img/porsche-964.webp" alt="取扱車両 ポルシェ911（964）" width="1000" height="747" class="on" style="object-position:50% 60%" fetchpriority="high" data-name="PORSCHE|911（964）">
-        <img data-src="./img/honda-nsx.webp" alt="取扱車両 ホンダ NSX" width="750" height="1000" style="object-position:50% 39%" data-name="HONDA|NSX">
-        <img data-src="./img/porsche-930.webp" alt="取扱車両 ポルシェ911" width="1000" height="750" style="object-position:50% 62%" data-name="PORSCHE|911">
-        <img data-src="./img/toyota-supra.webp" alt="取扱車両 トヨタ スープラ" width="1000" height="750" style="object-position:50% 60%" data-name="TOYOTA|スープラ">
-        <img data-src="./img/porsche-912w.webp" alt="取扱車両 ポルシェ912" width="1000" height="750" style="object-position:50% 60%" data-name="PORSCHE|912">
-        <img data-src="./img/nissan-s30z.webp" alt="取扱車両 日産 フェアレディZ（S30）" width="750" height="1000" style="object-position:50% 72%" data-name="NISSAN|フェアレディZ（S30）">
-        <img data-src="./img/toyota-mr2.webp" alt="取扱車両 トヨタ MR2" width="1000" height="750" style="object-position:50% 60%" data-name="TOYOTA|MR2">
-        <img data-src="./img/kobelco-excavator.webp" alt="取扱車両 コベルコ 油圧ショベル" width="750" height="1000" style="object-position:50% 50%" data-name="KOBELCO|油圧ショベル">
-        <img data-src="./img/porsche-garage.webp" alt="取扱車両 ポルシェ911（保管車両）" width="750" height="1000" style="object-position:50% 62%" data-name="PORSCHE|911">
+        <img src="./img/porsche-964.webp" alt="取扱車両 ポルシェ911（964）" width="1000" height="747" class="on" style="object-position:50% 60%" fetchpriority="high" data-name="PORSCHE|911（964）" data-cap="長く眠っていた一台に、もう一度、道を。">
+        <img data-src="./img/honda-nsx.webp" alt="取扱車両 ホンダ NSX" width="750" height="1000" style="object-position:50% 39%" data-name="HONDA|NSX" data-cap="動かなくても、価値は残っています。">
+        <img data-src="./img/porsche-930.webp" alt="取扱車両 ポルシェ911" width="1000" height="750" style="object-position:50% 62%" data-name="PORSCHE|911" data-cap="古い年式ほど、海の向こうで待つ人がいます。">
+        <img data-src="./img/toyota-supra.webp" alt="取扱車両 トヨタ スープラ" width="1000" height="750" style="object-position:50% 60%" data-name="TOYOTA|スープラ" data-cap="事故車でも、査定は写真一枚から。">
+        <img data-src="./img/porsche-912w.webp" alt="取扱車両 ポルシェ912" width="1000" height="750" style="object-position:50% 60%" data-name="PORSCHE|912" data-cap="埼玉県内は、引取り無料。">
+        <img data-src="./img/nissan-s30z.webp" alt="取扱車両 日産 フェアレディZ（S30）" width="750" height="1000" style="object-position:50% 72%" data-name="NISSAN|フェアレディZ（S30）" data-cap="名車も、毎日の車も、同じように大切に。">
+        <img data-src="./img/toyota-mr2.webp" alt="取扱車両 トヨタ MR2" width="1000" height="750" style="object-position:50% 60%" data-name="TOYOTA|MR2" data-cap="車検切れでも、そのままご相談ください。">
+        <img data-src="./img/kobelco-excavator.webp" alt="取扱車両 コベルコ 油圧ショベル" width="750" height="1000" style="object-position:50% 50%" data-name="KOBELCO|油圧ショベル" data-cap="トラック・重機は、日本全国から。">
+        <img data-src="./img/porsche-garage.webp" alt="取扱車両 ポルシェ911（保管車両）" width="750" height="1000" style="object-position:50% 62%" data-name="PORSCHE|911" data-cap="EXPORT ZONE が、次の道へつなぎます。">
       </div>
-      <p class="now" id="now" aria-hidden="true"><i>取扱車両</i><b>PORSCHE</b><span>911（964）</span></p>
+      <p class="now cine-now" id="now" aria-hidden="true"><i>取扱車両</i><b>PORSCHE</b><span>911（964）</span></p>
+      <p class="cap" id="cap" aria-hidden="true">長く眠っていた一台に、もう一度、道を。</p>
     </div>
 
     <div class="hero-txt">
-      <p class="hero-lead"><span class="nw">事故車・動かない車も、</span><span class="nw">お金を払わず買取します。</span></p>
-      <p class="hero-sub">古い車、車検切れ、トラックや重機まで。埼玉県内は引取り無料。トラック・建設機械・農業機械は日本全国から買取し、海外へ輸出しています。</p>
+      <p class="hero-lead cine-lead"><span class="nw" style="--i:0">事故車・動かない車も、</span><span class="nw" style="--i:1">お金を払わず買取します。</span></p>
+      <p class="hero-sub cine-sub">古い車、車検切れ、トラックや重機まで。埼玉県内は引取り無料。トラック・建設機械・農業機械は日本全国から買取し、海外へ輸出しています。</p>
     </div>
   </div>
 
@@ -678,12 +728,12 @@ a.fact:hover{border-color:#77797f}
       <a href="./kenki.html"><img src="./img/cat-320.webp" alt="" width="118" height="86"><span><b>重機買取</b><small>建設機械・トラック<br>日本全国から買取</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
     </nav>
     <div class="cta-btns">
-      <a href="tel:0120888405" class="plate xl" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span></a>
+      <a href="tel:0120888405" class="plate xl lightup" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span></a>
       <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line sweep"><svg class="icon"><use href="#i-line"/></svg>LINEで写真を送って査定</a>
     </div>
     <div class="facts rv">
-      <a class="fact" href="https://maps.app.goo.gl/dpudcrUdkBES1sjY6" target="_blank" rel="noopener"><span class="stars" id="stars" style="--v:86%"><i></i></span><b>4.3</b><small>Googleマップの口コミ</small></a>
-      <div class="fact"><b>2016</b><small>年に創業</small></div>
+      <a class="fact" href="https://maps.app.goo.gl/dpudcrUdkBES1sjY6" target="_blank" rel="noopener"><span class="stars" id="stars" style="--v:86%"><i></i></span><b class="count" data-to="4.3" data-dec="1">4.3</b><small>Googleマップの口コミ</small></a>
+      <div class="fact"><b class="count" data-to="2016" data-from="1990">2016</b><small>年に創業</small></div>
       <div class="fact"><b class="ja">引取り無料</b><small>埼玉県内</small></div>
       <div class="fact"><b class="ja">古物商許可</b><small>第452750021040号</small></div>
     </div>
@@ -706,7 +756,7 @@ a.fact:hover{border-color:#77797f}
     <div class="say rv">
       <figure class="say-ph cham"><img src="./img/nissan-s30z-white.webp" alt="長く乗っていない旧車（日産 フェアレディZ S30）" width="1000" height="750" loading="lazy"><figcaption>乗らなくなった車も、まずは写真で</figcaption></figure>
       <div>
-        <h2 class="say-big"><span class="nw">お金を</span><span class="nw">いただくのではなく、</span><br><span class="nw">買取して、</span><span class="nw">お支払いします。</span></h2>
+        <h2 class="say-big kara"><span class="nw" style="--i:0">お金を</span><span class="nw" style="--i:1">いただくのではなく、</span><br><span class="nw" style="--i:2">買取して、</span><span class="nw" style="--i:3">お支払いします。</span></h2>
         <p>廃車にすると費用がかかると思われがちですが、EXPORT ZONE は車や機械を買い取る会社です。海外へ輸出するルートがあるので、国内では値段がつきにくい車にも価値を見いだせます。</p>
         <ul class="pros">
           <li class="pro"><svg class="icon"><use href="#i-yen"/></svg><h3>査定・ご相談は無料</h3><p>電話・LINEで、写真だけでも査定できます。</p></li>
@@ -1165,8 +1215,10 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const loadAll = () => imgs.forEach((_, i) => load(i));
   setTimeout(loadAll, 1200); addEventListener("load", loadAll);
   let k = 0;
-  const label = i => { const [m, n] = imgs[i].dataset.name.split("|"); now.style.opacity = 0;
-    setTimeout(() => { now.querySelector("b").textContent = m; now.querySelector("span").textContent = n; now.style.opacity = 1; }, 350); };
+  const cap = document.getElementById("cap");
+  const label = i => { const [m, n] = imgs[i].dataset.name.split("|"); now.classList.add("swap"); cap.classList.add("swap");
+    setTimeout(() => { now.querySelector("b").textContent = m; now.querySelector("span").textContent = n; cap.textContent = imgs[i].dataset.cap || "";
+      now.classList.remove("swap"); setTimeout(() => cap.classList.remove("swap"), 250); }, 550); };
   setInterval(() => {
     if (document.hidden) return;
     const next = (k + 1) % imgs.length; load(next);
@@ -1211,6 +1263,20 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- reveal on scroll + star rating ---------- */
 (function(){
+  const hs = [...document.querySelectorAll(".sh h2")];
+  if (!RM && "IntersectionObserver" in window){ hs.forEach(h => h.classList.add("wipe"));
+    const ho = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.querySelector("h2").classList.add("in"); ho.unobserve(e.target); } }), { threshold:.2 });
+    hs.forEach(h => ho.observe(h.parentElement)); }
+
+  /* kara + count-up */
+  const kara = document.querySelectorAll(".kara"), cnt = document.querySelectorAll(".count");
+  const run = b => { const to = +b.dataset.to, from = +(b.dataset.from || 0), dec = +(b.dataset.dec || 0), t0 = performance.now(), D = 1600;
+    const st = t => { const p = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - p, 3); b.textContent = (from + (to - from) * e).toFixed(dec); if (p < 1) requestAnimationFrame(st); };
+    requestAnimationFrame(st); };
+  if (RM || !("IntersectionObserver" in window)){ kara.forEach(k => k.classList.add("in")); }
+  else { const ko = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ const t = e.target;
+      if (t.classList.contains("count")) run(t); else t.classList.add("in"); ko.unobserve(t); } }), { threshold:.5 });
+    kara.forEach(k => ko.observe(k)); cnt.forEach(c => ko.observe(c)); }
   const els = document.querySelectorAll(".rv, #stars");
   if (!("IntersectionObserver" in window) || RM){ els.forEach(e => e.classList.add("in")); return; }
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold:.12, rootMargin:"0px 0px -40px 0px" });
