@@ -579,7 +579,7 @@ a.fact:hover{border-color:#77797f}
 
 /* ---- title: living chrome (preview) ---- */
 .frame h1.cine-t{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s ease-out}
-.cine-t .ch{background:linear-gradient(calc(180deg + var(--ry,0deg) * 4),#fff 0%,#f0f0f0 38%,#8f9196 50%,#f5f5f5 64%,#b9bbbf 100%);
+.cine-t .g{background:linear-gradient(calc(180deg + var(--ry,0deg) * 4),#fff 0%,#f0f0f0 38%,#8f9196 50%,#f5f5f5 64%,#b9bbbf 100%);
   background-size:100% 100%;-webkit-background-clip:text;background-clip:text}
 .cine-t .ch::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:12px;opacity:0;
   background:radial-gradient(closest-side,rgba(255,40,40,.55),transparent);filter:blur(18px);animation:rim 4.5s ease-in-out infinite;animation-delay:calc(3s + var(--i) * .35s)}
@@ -599,17 +599,18 @@ a.fact:hover{border-color:#77797f}
   background:linear-gradient(90deg,transparent,rgba(255,120,120,.0) 10%,rgba(255,255,255,.95) 50%,rgba(255,120,120,0) 90%,transparent);
   box-shadow:0 0 22px 6px rgba(255,80,80,.45),0 0 60px 14px rgba(255,40,40,.25);opacity:0;transform:scaleX(.2);animation:streak 2.4s cubic-bezier(.3,0,.2,1) 1.35s both}
 @keyframes streak{0%{opacity:0;transform:scaleX(.1)}25%{opacity:1}60%{opacity:.8;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1.2)}}
-.pt .c{animation:focusIn 1.1s var(--ease) both;animation-delay:calc(3.4s + var(--k) * .28s)}
+.pt .c{animation:focusIn 1.1s var(--ease) both;animation-delay:calc(1.6s + var(--k) * .18s)}
 @keyframes focusIn{from{opacity:0;filter:blur(10px);transform:translateY(12px) scale(1.06)}to{opacity:1;filter:none;transform:none}}
 .js .kara .nw{color:rgba(255,255,255,.14);transition:color .6s ease,text-shadow .6s ease;transition-delay:calc(var(--i) * .45s)}
 .js .kara.in .nw{color:#fff;text-shadow:0 0 22px rgba(255,59,66,.35)}
-.lightup .p-num{animation:neon 1.8s steps(1) 3.6s both}
+.lightup .p-num{animation:neon 1.8s steps(1) 2.2s both}
 @keyframes neon{0%{opacity:.15}8%{opacity:1}12%{opacity:.2}20%{opacity:1}24%{opacity:.35}30%,100%{opacity:1}}
 .lightup::after{}
 @media (prefers-reduced-motion:reduce){.streak{display:none}.js .kara .nw{color:#fff}.lightup .p-num{animation:none}}
 /* ================= cinematic letters (preview) ================= */
 .frame h1.cine-t{font-family:var(--ja);font-weight:900;animation:none;letter-spacing:.06em;filter:drop-shadow(0 8px 12px rgba(0,0,0,.45))}
-.cine-t .ch{display:inline-block;padding:.12em .02em .2em;margin:-.12em -.02em -.2em;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent;
+.cine-t .g{display:inline-block;font-weight:inherit;padding:.12em .02em .2em;margin:-.12em -.02em -.2em;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.cine-t .ch{display:inline-block;
   animation:chIn 1.5s var(--ease) both;animation-delay:calc(.25s + var(--i) * .22s)}
 @keyframes chIn{0%{opacity:0;filter:blur(18px);transform:translateY(18px) scale(1.25);letter-spacing:.5em}
   60%{opacity:1;filter:blur(2px) brightness(1.8)}100%{opacity:1;filter:none;transform:none;letter-spacing:0}}
@@ -625,8 +626,8 @@ a.fact:hover{border-color:#77797f}
   opacity:0;animation:flareDot 1.6s cubic-bezier(.4,0,.2,1) 1.45s both}
 @keyframes flare{0%{opacity:0;transform:translateX(0)}15%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translateX(220%)}}
 @keyframes flareDot{0%{opacity:0;transform:translateX(0) scale(.6)}20%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translateX(min(780px,85vw)) scale(1.1)}}
-.cine-lead .nw{display:inline-block;animation:subIn 1.3s var(--ease) both;animation-delay:calc(2.1s + var(--i) * .55s)}
-.cine-sub{animation:subIn 1.3s var(--ease) 3.2s both}
+.cine-lead .nw{display:inline-block;animation:subIn 1.3s var(--ease) both;animation-delay:calc(1.1s + var(--i) * .4s)}
+.cine-sub{animation:subIn 1.3s var(--ease) 1.8s both}
 @keyframes subIn{from{opacity:0;filter:blur(8px);transform:translateY(10px);letter-spacing:.2em}to{opacity:1;filter:none;transform:none}}
 .cine-now b,.cine-now span{display:inline-block;transition:opacity .5s,filter .5s,letter-spacing .7s,transform .5s}
 .cine-now.swap b,.cine-now.swap span{opacity:0;filter:blur(6px);letter-spacing:.35em;transform:translateY(4px)}
@@ -708,7 +709,7 @@ a.fact:hover{border-color:#77797f}
     <div class="side r" aria-hidden="true"><i></i><i class="on"></i><i></i></div>
 
     <div class="frame">
-      <h1 class="cine-t" data-t="廃車買取" aria-label="廃車買取"><span class="ch" style="--i:0" aria-hidden="true">廃</span><span class="ch" style="--i:1" aria-hidden="true">車</span><span class="ch" style="--i:2" aria-hidden="true">買</span><span class="ch" style="--i:3" aria-hidden="true">取</span><i class="flare" aria-hidden="true"></i><i class="glint" aria-hidden="true"></i></h1>
+      <h1 class="cine-t" data-t="廃車買取" aria-label="廃車買取"><span class="ch" style="--i:0" aria-hidden="true"><b class="g">廃</b></span><span class="ch" style="--i:1" aria-hidden="true"><b class="g">車</b></span><span class="ch" style="--i:2" aria-hidden="true"><b class="g">買</b></span><span class="ch" style="--i:3" aria-hidden="true"><b class="g">取</b></span><i class="flare" aria-hidden="true"></i><i class="glint" aria-hidden="true"></i></h1>
       <div class="cars" id="cars">
         <img src="./img/porsche-964.webp" alt="取扱車両 ポルシェ911（964）" width="1000" height="747" class="on" style="object-position:50% 60%" fetchpriority="high" data-name="PORSCHE|911（964）" data-cap="長く眠っていた一台に、もう一度、道を。">
         <img data-src="./img/honda-nsx.webp" alt="取扱車両 ホンダ NSX" width="750" height="1000" style="object-position:50% 39%" data-name="HONDA|NSX" data-cap="動かなくても、価値は残っています。">
@@ -744,7 +745,7 @@ a.fact:hover{border-color:#77797f}
   <div class="wrap">
     <nav class="pick" aria-label="買取の種類を選ぶ">
       <a href="#haisha" class="on"><img src="./img/porsche-964.webp" alt="" width="118" height="86"><span><b>廃車買取</b><small>乗用車・事故車・不動車<br>埼玉県内は引取り無料</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
-      <a href="./kenki.html"><img src="./img/cat-320.webp" alt="" width="118" height="86"><span><b>重機買取</b><small>建設機械・トラック<br>日本全国から買取</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
+      <a href="./kenki.html"><img src="./img/cat-320-th.webp" alt="" width="118" height="86"><span><b>重機買取</b><small>建設機械・トラック<br>日本全国から買取</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
     </nav>
     <div class="cta-btns">
       <a href="tel:0120888405" class="plate xl lightup" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span></a>
@@ -1229,8 +1230,9 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const imgs = [...document.querySelectorAll("#cars img")], dots = [...document.querySelectorAll("#dots i")], now = document.getElementById("now");
   if (imgs.length < 2) return;
   const load = i => { const im = imgs[i]; if (im.dataset.src){ im.src = im.dataset.src; im.removeAttribute("data-src"); } };
-  const loadAll = () => imgs.forEach((_, i) => load(i));
-  setTimeout(loadAll, 1200); addEventListener("load", loadAll);
+  /* fetch only the next slide, not all of them at once */
+  const pre = () => load(1);
+  if (document.readyState === "complete") setTimeout(pre, 600); else addEventListener("load", () => setTimeout(pre, 300));
   let k = 0;
   const cap = document.getElementById("cap");
   const label = i => { const [m, n] = imgs[i].dataset.name.split("|"); now.classList.add("swap"); cap.classList.add("swap");
@@ -1240,6 +1242,7 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (document.hidden) return;
     const next = (k + 1) % imgs.length; load(next);
     if (!imgs[next].complete) return;
+    load((next + 1) % imgs.length);
     const a = imgs[k]; a.classList.remove("on"); a.classList.add("out"); setTimeout(() => a.classList.remove("out"), 1100);
     k = next; imgs[k].classList.add("on"); dots.forEach((d, j) => d.classList.toggle("on", j === k)); label(k);
   }, 3400);
