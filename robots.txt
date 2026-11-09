@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://agmrifkan-collab.github.io/exportzone/sitemap.xml
+Sitemap: https://exportzone.jp/sitemap.xml
