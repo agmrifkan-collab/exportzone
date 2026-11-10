@@ -22,9 +22,8 @@
 <link rel="icon" type="image/webp" href="./logo.webp">
 <link rel="apple-touch-icon" href="https://exportzone.jp/EZ%20Logo.png">
 
-<link rel="preload" href="./fonts/MaruFoPro-Heavy.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="./fonts/Panton-Black.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" href="./fonts/MaruFoPro-Heavy.s.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/Panton-Black.s.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./img/porsche-964.webp" as="image">
 
 <script type="application/ld+json">
@@ -79,12 +78,12 @@
 
 <style>
 /* ---------- fonts (self-hosted in /fonts) ---------- */
-@font-face{font-family:"MaruFoPro";src:url("./fonts/MaruFoPro-Medium.woff2") format("woff2");font-weight:400 500;font-display:swap}
-@font-face{font-family:"MaruFoPro";src:url("./fonts/MaruFoPro-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"MaruFoPro";src:url("./fonts/MaruFoPro-Heavy.woff2") format("woff2");font-weight:900;font-display:swap}
-@font-face{font-family:"Panton";src:url("./fonts/Panton-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"Panton";src:url("./fonts/Panton-ExtraBold.woff2") format("woff2");font-weight:800;font-display:swap}
-@font-face{font-family:"Panton";src:url("./fonts/Panton-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"MaruFoPro";src:url("./fonts/MaruFoPro-Medium.s.woff2") format("woff2");font-weight:400 500;font-display:swap}
+@font-face{font-family:"MaruFoPro";src:url("./fonts/MaruFoPro-Bold.s.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"MaruFoPro";src:url("./fonts/MaruFoPro-Heavy.s.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Panton";src:url("./fonts/Panton-Bold.s.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Panton";src:url("./fonts/Panton-ExtraBold.s.woff2") format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Panton";src:url("./fonts/Panton-Black.s.woff2") format("woff2");font-weight:900;font-display:swap}
 
 /* =========================================================
    EXPORT ZONE — "Red Line" theme (v5)
@@ -577,12 +576,12 @@ a.fact:hover{border-color:#77797f}
 
 
 
-/* ---- title: living chrome (preview) ---- */
+/* ---- title: living chrome ---- */
 .frame h1.cine-t{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s ease-out}
 .cine-t .g{background:linear-gradient(calc(180deg + var(--ry,0deg) * 4),#fff 0%,#f0f0f0 38%,#8f9196 50%,#f5f5f5 64%,#b9bbbf 100%);
   background-size:100% 100%;-webkit-background-clip:text;background-clip:text}
 .cine-t .ch::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:12px;opacity:0;
-  background:radial-gradient(closest-side,rgba(255,40,40,.55),transparent);filter:blur(18px);animation:rim 4.5s ease-in-out infinite;animation-delay:calc(3s + var(--i) * .35s)}
+  background:radial-gradient(closest-side,rgba(255,40,40,.55),transparent);filter:blur(18px);animation:rim 4.5s ease-in-out infinite;animation-delay:calc(2s + var(--i) * .35s)}
 .cine-t .ch{position:relative}
 @keyframes rim{0%,100%{opacity:0}50%{opacity:.9}}
 .cine-t.refocus .ch{animation:refocus .9s ease both;animation-delay:calc(var(--i) * .07s)}
@@ -594,40 +593,40 @@ a.fact:hover{border-color:#77797f}
 .glint.on{animation:glint .9s ease-out both}
 @keyframes glint{0%{opacity:0;transform:scale(.2) rotate(0)}40%{opacity:1;transform:scale(1) rotate(45deg)}100%{opacity:0;transform:scale(.4) rotate(90deg)}}
 @media (prefers-reduced-motion:reduce){.frame h1.cine-t{transform:none}.cine-t .ch::before,.glint{display:none}.cine-t.refocus .ch{animation:none}}
-/* ---- more cinematic (preview) ---- */
+/* ---- more cinematic ---- */
 .streak{position:absolute;z-index:2;left:-20%;right:-20%;top:calc(var(--hd) + 100px);height:2px;pointer-events:none;
   background:linear-gradient(90deg,transparent,rgba(255,120,120,.0) 10%,rgba(255,255,255,.95) 50%,rgba(255,120,120,0) 90%,transparent);
-  box-shadow:0 0 22px 6px rgba(255,80,80,.45),0 0 60px 14px rgba(255,40,40,.25);opacity:0;transform:scaleX(.2);animation:streak 2.4s cubic-bezier(.3,0,.2,1) 1.35s both}
+  box-shadow:0 0 22px 6px rgba(255,80,80,.45),0 0 60px 14px rgba(255,40,40,.25);opacity:0;transform:scaleX(.2);animation:streak 1.5s cubic-bezier(.3,0,.2,1) .65s both}
 @keyframes streak{0%{opacity:0;transform:scaleX(.1)}25%{opacity:1}60%{opacity:.8;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1.2)}}
-.pt .c{animation:focusIn 1.1s var(--ease) both;animation-delay:calc(1.6s + var(--k) * .18s)}
+.pt .c{animation:focusIn .7s var(--ease) both;animation-delay:calc(.65s + var(--k) * .08s)}
 @keyframes focusIn{from{opacity:0;filter:blur(10px);transform:translateY(12px) scale(1.06)}to{opacity:1;filter:none;transform:none}}
 .js .kara .nw{color:rgba(255,255,255,.14);transition:color .6s ease,text-shadow .6s ease;transition-delay:calc(var(--i) * .45s)}
 .js .kara.in .nw{color:#fff;text-shadow:0 0 22px rgba(255,59,66,.35)}
-.lightup .p-num{animation:neon 1.8s steps(1) 2.2s both}
+.lightup .p-num{animation:neon 1.4s steps(1) 1.2s both}
 @keyframes neon{0%{opacity:.15}8%{opacity:1}12%{opacity:.2}20%{opacity:1}24%{opacity:.35}30%,100%{opacity:1}}
 .lightup::after{}
 @media (prefers-reduced-motion:reduce){.streak{display:none}.js .kara .nw{color:#fff}.lightup .p-num{animation:none}}
-/* ================= cinematic letters (preview) ================= */
+/* ================= cinematic letters ================= */
 .frame h1.cine-t{font-family:var(--ja);font-weight:900;animation:none;letter-spacing:.06em;filter:drop-shadow(0 8px 12px rgba(0,0,0,.45))}
 .cine-t .g{display:inline-block;font-weight:inherit;padding:.12em .02em .2em;margin:-.12em -.02em -.2em;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .cine-t .ch{display:inline-block;
-  animation:chIn 1.5s var(--ease) both;animation-delay:calc(.25s + var(--i) * .22s)}
-@keyframes chIn{0%{opacity:0;filter:blur(18px);transform:translateY(18px) scale(1.25);letter-spacing:.5em}
+  animation:chIn .85s var(--ease) both;animation-delay:calc(.05s + var(--i) * .09s)}
+@keyframes chIn{0%{opacity:0;filter:blur(12px);transform:translateY(14px) scale(1.18);letter-spacing:.4em}
   60%{opacity:1;filter:blur(2px) brightness(1.8)}100%{opacity:1;filter:none;transform:none;letter-spacing:0}}
 .frame h1.cine-t{filter:drop-shadow(0 3px 1px rgba(0,0,0,.55)) drop-shadow(0 10px 14px rgba(0,0,0,.45))}
 @media (min-width:1000px){.frame .cars{top:126px;height:300px}}
-.frame h1.cine-t::after{animation-delay:2.6s}
+.frame h1.cine-t::after{animation-delay:1.7s}
 .cine-t .flare{position:absolute;top:50%;left:0;width:100%;height:0;pointer-events:none;z-index:3}
 .cine-t .flare::before{content:"";position:absolute;top:-2px;left:-30%;width:60%;height:4px;border-radius:4px;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 45%,#fff 50%,rgba(255,170,170,.9) 55%,transparent);filter:blur(1.5px);
-  box-shadow:0 0 18px 4px rgba(255,255,255,.55);opacity:0;animation:flare 1.6s cubic-bezier(.4,0,.2,1) 1.45s both}
+  box-shadow:0 0 18px 4px rgba(255,255,255,.55);opacity:0;animation:flare 1.1s cubic-bezier(.4,0,.2,1) .7s both}
 .cine-t .flare::after{content:"";position:absolute;top:-55px;left:-10%;width:110px;height:110px;border-radius:50%;
   background:radial-gradient(circle,rgba(255,255,255,.95) 0,rgba(255,200,200,.5) 18%,rgba(255,60,60,.15) 40%,transparent 70%);
-  opacity:0;animation:flareDot 1.6s cubic-bezier(.4,0,.2,1) 1.45s both}
+  opacity:0;animation:flareDot 1.1s cubic-bezier(.4,0,.2,1) .7s both}
 @keyframes flare{0%{opacity:0;transform:translateX(0)}15%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translateX(220%)}}
 @keyframes flareDot{0%{opacity:0;transform:translateX(0) scale(.6)}20%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translateX(min(780px,85vw)) scale(1.1)}}
-.cine-lead .nw{display:inline-block;animation:subIn 1.3s var(--ease) both;animation-delay:calc(1.1s + var(--i) * .4s)}
-.cine-sub{animation:subIn 1.3s var(--ease) 1.8s both}
+.cine-lead .nw{display:inline-block;animation:subIn .75s var(--ease) both;animation-delay:calc(.3s + var(--i) * .16s)}
+.cine-sub{animation:subIn .75s var(--ease) .6s both}
 @keyframes subIn{from{opacity:0;filter:blur(8px);transform:translateY(10px);letter-spacing:.2em}to{opacity:1;filter:none;transform:none}}
 .cine-now b,.cine-now span{display:inline-block;transition:opacity .5s,filter .5s,letter-spacing .7s,transform .5s}
 .cine-now.swap b,.cine-now.swap span{opacity:0;filter:blur(6px);letter-spacing:.35em;transform:translateY(4px)}
@@ -643,6 +642,71 @@ a.fact:hover{border-color:#77797f}
 @keyframes wipeBar{0%{opacity:1;left:0}90%{opacity:1;left:100%}100%{opacity:0;left:100%}}
 @media (max-width:760px){.cap{left:12px;right:12px;bottom:44px;max-width:none;text-align:center;font-size:12.5px}}
 @media (prefers-reduced-motion:reduce){.cine-t .ch,.cine-lead .nw,.cine-sub{animation:none}.cine-t .flare{display:none}.js .sh h2.wipe{clip-path:none}}
+
+/* ================= premium pass: film frame, grain, bar ================= */
+:root{--grain:url("./img/grain.png")}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:var(--grain) 0 0/80px 80px;opacity:.5}
+.frame{border:0}
+.frame::before{content:"";position:absolute;inset:0;z-index:5;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:linear-gradient(140deg,#fff 0%,rgba(255,255,255,.3) 20%,rgba(255,255,255,.08) 48%,rgba(255,255,255,.3) 80%,#fff 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;
+  background:radial-gradient(115% 95% at 50% 42%,transparent 52%,rgba(48,0,5,.42) 100%),var(--grain) 0 0/80px 80px}
+.cap{font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP","Noto Serif CJK JP",serif;font-weight:600;font-size:15.5px;letter-spacing:.12em}
+.now em{font-style:normal;font-family:var(--en);font-weight:900;font-size:11px;letter-spacing:.08em;font-variant-numeric:tabular-nums;
+  padding-right:8px;border-right:1px solid rgba(255,255,255,.4);transition:opacity .5s}
+.cine-now.swap em{opacity:.35}
+.tl{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:4;pointer-events:none;background:rgba(255,255,255,.16)}
+.tl i{display:block;height:100%;background:linear-gradient(90deg,rgba(255,255,255,.5),#fff);transform-origin:0 50%;transform:scaleX(0)}
+.tl.run i{animation:tl 3.4s linear both}
+@keyframes tl{to{transform:scaleX(1)}}
+/* cards: image settles and catches the light once when the row arrives */
+.card .ph{position:relative}
+.js .cards.rv.in .ph img{animation:settle 1.4s var(--ease) backwards}
+@keyframes settle{from{transform:scale(1.12)}}
+.card .ph::after{content:"";position:absolute;inset:0;pointer-events:none;transform:translateX(-120%);
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.42) 50%,transparent 60%)}
+.js .cards.rv.in .ph::after{animation:phSheen 1.1s ease-out .35s backwards}
+.js .cards.rv.in .card:nth-child(3n+2) .ph::after{animation-delay:.5s}
+.js .cards.rv.in .card:nth-child(3n) .ph::after{animation-delay:.65s}
+@keyframes phSheen{from{transform:translateX(-120%)}to{transform:translateX(120%)}}
+/* light passing over a plate */
+.sheen{position:absolute;top:-25%;bottom:-25%;left:0;width:34%;pointer-events:none;transform:translateX(-150%) skewX(-18deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 50%,transparent)}
+@keyframes sheen{0%,15%{transform:translateX(-150%) skewX(-18deg)}27%,100%{transform:translateX(450%) skewX(-18deg)}}
+.lightup{overflow:hidden}
+.lightup .sheen{animation:sheen 8s ease-in-out 2.6s infinite}
+/* mobile bar: the phone rings, light crosses the plate, then LINE answers. One 8s loop, transform and opacity only */
+.mbar{background:linear-gradient(180deg,rgba(31,32,36,.97),rgba(15,16,18,.98));-webkit-backdrop-filter:none;backdrop-filter:none;border-top:0;
+  box-shadow:0 -12px 32px rgba(0,0,0,.5);animation:mbIn .7s cubic-bezier(.2,.9,.25,1.12) .2s both}
+.mbar::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3) 18%,rgba(255,86,86,.95) 50%,rgba(255,255,255,.3) 82%,transparent)}
+@keyframes mbIn{from{transform:translateY(115%)}to{transform:none}}
+.mbar a:active{transform:scale(.97)}
+.mbar .plate{padding:4px 10px 4px 42px;overflow:hidden}
+.mbar .plate::before,.mbar .plate::after{display:none}
+.mb-ic{position:absolute;left:8px;top:50%;width:28px;height:28px;margin-top:-14px;border-radius:50%;background:var(--plate-ink);color:#fff;
+  display:grid;place-items:center;font-size:15px}
+.mb-ic .icon{animation:mbWig 8s ease-in-out 1.3s infinite;transform-origin:50% 55%}
+.mb-ic::before,.mb-ic::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--plate-ink);opacity:0;animation:mbPulse 8s ease-out 1.3s infinite}
+.mb-ic::after{animation-delay:1.65s}
+@keyframes mbWig{0%,11%,100%{transform:none}1.5%{transform:rotate(-18deg)}3%{transform:rotate(16deg)}4.5%{transform:rotate(-14deg)}6%{transform:rotate(12deg)}7.5%{transform:rotate(-8deg)}9%{transform:rotate(5deg)}}
+@keyframes mbPulse{0%{opacity:0;transform:scale(.8)}1.5%{opacity:.6}9%,100%{opacity:0;transform:scale(1.85)}}
+.mbar .sheen{animation:sheen 8s ease-in-out 1.3s infinite}
+.mbar .btn-line{position:relative;gap:8px;padding:0 14px 0 12px;background:linear-gradient(180deg,#1bd568,#06b54d);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 16px rgba(0,0,0,.4)}
+.mbar .btn-line .icon{font-size:25px;animation:mbPop 8s ease-in-out 1.3s infinite}
+.mbar .btn-line .tx{display:flex;flex-direction:column;align-items:flex-start;line-height:1.08;font-size:16px;letter-spacing:.06em}
+.mbar .btn-line .tx small{margin-top:3px;font-size:9.5px;font-weight:700;letter-spacing:.04em}
+.mb-halo{position:absolute;inset:0;border-radius:inherit;border:2px solid #6dffa6;box-shadow:0 0 12px rgba(6,199,85,.85);opacity:0;pointer-events:none;animation:mbHalo 8s ease-out 1.3s infinite}
+@keyframes mbHalo{0%,50%{opacity:0;transform:none}51.5%{opacity:.9}58%{opacity:0;transform:scale(1.15,1.32)}58.1%{opacity:0;transform:none}60%{opacity:.7}67%,100%{opacity:0;transform:scale(1.15,1.32)}}
+@keyframes mbPop{0%,50%,63%,100%{transform:none}52.5%{transform:scale(1.25) rotate(-10deg)}55.5%{transform:scale(.95)}58.5%{transform:scale(1.12) rotate(6deg)}}
+@media (max-width:760px){.cap{font-size:13px;letter-spacing:.08em}.now em{font-size:10px;padding-right:6px}}
+@media (max-width:380px){.mbar .btn-line{padding:0 10px;gap:6px}.mbar .btn-line .icon{font-size:22px}.mbar .plate{padding:4px 8px 4px 38px}
+  .mb-ic{left:7px;width:26px;height:26px;margin-top:-13px;font-size:14px}.mbar .plate .p-num{font-size:23px}}
+@media (max-width:340px){.mb-ic{display:none}.mbar .plate{padding:4px 8px}.mbar .plate .p-num{font-size:21px}}
+@media (prefers-reduced-motion:reduce){.tl{display:none}.js .cards.rv.in .ph img,.js .cards.rv.in .ph::after,.lightup .sheen,
+  .mbar,.mb-ic .icon,.mb-ic::before,.mb-ic::after,.mbar .sheen,.mbar .btn-line .icon,.mb-halo{animation:none}}
 </style>
 </head>
 <body>
@@ -721,8 +785,9 @@ a.fact:hover{border-color:#77797f}
         <img data-src="./img/kobelco-excavator.webp" alt="取扱車両 コベルコ 油圧ショベル" width="750" height="1000" style="object-position:50% 50%" data-name="KOBELCO|油圧ショベル" data-cap="トラック・重機は、日本全国から。">
         <img data-src="./img/porsche-garage.webp" alt="取扱車両 ポルシェ911（保管車両）" width="750" height="1000" style="object-position:50% 62%" data-name="PORSCHE|911" data-cap="EXPORT ZONE が、次の道へつなぎます。">
       </div>
-      <p class="now cine-now" id="now" aria-hidden="true"><i>取扱車両</i><b>PORSCHE</b><span>911（964）</span></p>
+      <p class="now cine-now" id="now" aria-hidden="true"><i>取扱車両</i><em id="cnt">01/09</em><b>PORSCHE</b><span>911（964）</span></p>
       <p class="cap" id="cap" aria-hidden="true">長く眠っていた一台に、もう一度、道を。</p>
+      <div class="tl run" id="tl" aria-hidden="true"><i></i></div>
     </div>
 
     <div class="hero-txt">
@@ -748,7 +813,7 @@ a.fact:hover{border-color:#77797f}
       <a href="./kenki.html"><img src="./img/cat-320-th.webp" alt="" width="118" height="86"><span><b>重機買取</b><small>建設機械・トラック<br>日本全国から買取</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
     </nav>
     <div class="cta-btns">
-      <a href="tel:0120888405" class="plate xl lightup" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span></a>
+      <a href="tel:0120888405" class="plate xl lightup" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span><i class="sheen" aria-hidden="true"></i></a>
       <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line sweep"><svg class="icon"><use href="#i-line"/></svg>LINEで写真を送って査定</a>
     </div>
     <div class="facts rv">
@@ -1194,8 +1259,8 @@ a.fact:hover{border-color:#77797f}
 <!-- ================= MOBILE BAR ================= -->
 <div class="mbar">
   <div class="in">
-    <a href="tel:0120888405" class="plate" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">通話無料・タップで電話</span><span class="p-num">0120-888-405</span></a>
-    <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line"><svg class="icon"><use href="#i-line"/></svg>LINE</a>
+    <a href="tel:0120888405" class="plate" aria-label="電話する 0120-888-405（通話無料）"><i class="mb-ic" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></i><span class="p-top">通話無料・タップで電話</span><span class="p-num">0120-888-405</span><i class="sheen" aria-hidden="true"></i></a>
+    <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line"><i class="mb-halo" aria-hidden="true"></i><svg class="icon"><use href="#i-line"/></svg><span class="tx">LINE<small>写真で査定</small></span></a>
   </div>
 </div>
 
@@ -1234,9 +1299,9 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pre = () => load(1);
   if (document.readyState === "complete") setTimeout(pre, 600); else addEventListener("load", () => setTimeout(pre, 300));
   let k = 0;
-  const cap = document.getElementById("cap");
+  const cap = document.getElementById("cap"), cnt = document.getElementById("cnt"), tl = document.getElementById("tl"), pad = n => String(n).padStart(2, "0");
   const label = i => { const [m, n] = imgs[i].dataset.name.split("|"); now.classList.add("swap"); cap.classList.add("swap");
-    setTimeout(() => { now.querySelector("b").textContent = m; now.querySelector("span").textContent = n; cap.textContent = imgs[i].dataset.cap || "";
+    setTimeout(() => { now.querySelector("b").textContent = m; now.querySelector("span").textContent = n; cap.textContent = imgs[i].dataset.cap || ""; if (cnt) cnt.textContent = pad(i + 1) + "/" + pad(imgs.length);
       now.classList.remove("swap"); setTimeout(() => cap.classList.remove("swap"), 250); }, 550); };
   setInterval(() => {
     if (document.hidden) return;
@@ -1245,6 +1310,7 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
     load((next + 1) % imgs.length);
     const a = imgs[k]; a.classList.remove("on"); a.classList.add("out"); setTimeout(() => a.classList.remove("out"), 1100);
     k = next; imgs[k].classList.add("on"); dots.forEach((d, j) => d.classList.toggle("on", j === k)); label(k);
+    if (tl){ tl.classList.remove("run"); void tl.offsetWidth; tl.classList.add("run"); }
   }, 3400);
 })();
 
@@ -1260,7 +1326,7 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const spots = [[11,18],[36,12],[62,16],[88,14],[24,70],[75,66]];
   setTimeout(function tw(){ if (!document.hidden){ const p = spots[Math.random() * spots.length | 0];
       g.style.setProperty("--gx", p[0] + "%"); g.style.setProperty("--gy", p[1] + "%"); g.classList.remove("on"); void g.offsetWidth; g.classList.add("on"); }
-    setTimeout(tw, 2200 + Math.random() * 1800); }, 3800);
+    setTimeout(tw, 2200 + Math.random() * 1800); }, 2400);
   if (document.getElementById("now")) new MutationObserver(() => { t.classList.remove("refocus"); void t.offsetWidth; t.classList.add("refocus"); })
     .observe(document.getElementById("now"), { childList:true, subtree:true, characterData:true });
 })();
