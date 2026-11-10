@@ -24,7 +24,7 @@
 
 <link rel="preload" href="./fonts/MaruFoPro-Heavy.s.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./fonts/Panton-Black.s.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="./img/porsche-964.webp" as="image">
+<link rel="preload" href="./img/flood-cars.webp" as="image">
 
 <script type="application/ld+json">
 {
@@ -776,7 +776,8 @@ a.fact:hover{border-color:#77797f}
     <div class="frame">
       <h1 class="cine-t" data-t="廃車買取" aria-label="廃車買取"><span class="ch" style="--i:0" aria-hidden="true"><b class="g">廃</b></span><span class="ch" style="--i:1" aria-hidden="true"><b class="g">車</b></span><span class="ch" style="--i:2" aria-hidden="true"><b class="g">買</b></span><span class="ch" style="--i:3" aria-hidden="true"><b class="g">取</b></span><i class="flare" aria-hidden="true"></i><i class="glint" aria-hidden="true"></i></h1>
       <div class="cars" id="cars">
-        <img src="./img/porsche-964.webp" alt="取扱車両 ポルシェ911（964）" width="1000" height="747" class="on" style="object-position:50% 60%" fetchpriority="high" data-name="PORSCHE|911（964）" data-cap="長く眠っていた一台に、もう一度、道を。">
+        <img src="./img/flood-cars.webp" alt="台風・大雨で水に浸かった車" width="390" height="259" class="on" style="object-position:50% 60%" fetchpriority="high" data-tag="買取対象" data-name="水没車|冠水車・浸水車もOK" data-cap="水に浸かった車も、あきらめないでください。">
+        <img data-src="./img/porsche-964.webp" alt="取扱車両 ポルシェ911（964）" width="1000" height="747" style="object-position:50% 60%" data-name="PORSCHE|911（964）" data-cap="長く眠っていた一台に、もう一度、道を。">
         <img data-src="./img/honda-nsx.webp" alt="取扱車両 ホンダ NSX" width="750" height="1000" style="object-position:50% 39%" data-name="HONDA|NSX" data-cap="動かなくても、価値は残っています。">
         <img data-src="./img/porsche-930.webp" alt="取扱車両 ポルシェ911" width="1000" height="750" style="object-position:50% 62%" data-name="PORSCHE|911" data-cap="古い年式ほど、海の向こうで待つ人がいます。">
         <img data-src="./img/toyota-supra.webp" alt="取扱車両 トヨタ スープラ" width="1000" height="750" style="object-position:50% 60%" data-name="TOYOTA|スープラ" data-cap="事故車でも、査定は写真一枚から。">
@@ -786,8 +787,8 @@ a.fact:hover{border-color:#77797f}
         <img data-src="./img/kobelco-excavator.webp" alt="取扱車両 コベルコ 油圧ショベル" width="750" height="1000" style="object-position:50% 50%" data-name="KOBELCO|油圧ショベル" data-cap="トラック・重機は、日本全国から。">
         <img data-src="./img/porsche-garage.webp" alt="取扱車両 ポルシェ911（保管車両）" width="750" height="1000" style="object-position:50% 62%" data-name="PORSCHE|911" data-cap="EXPORT ZONE が、次の道へつなぎます。">
       </div>
-      <p class="now cine-now" id="now" aria-hidden="true"><i>取扱車両</i><em id="cnt">01/09</em><b>PORSCHE</b><span>911（964）</span></p>
-      <p class="cap" id="cap" aria-hidden="true">長く眠っていた一台に、もう一度、道を。</p>
+      <p class="now cine-now" id="now" aria-hidden="true"><i>買取対象</i><em id="cnt">01/10</em><b>水没車</b><span>冠水車・浸水車もOK</span></p>
+      <p class="cap" id="cap" aria-hidden="true">水に浸かった車も、あきらめないでください。</p>
       <div class="tl run" id="tl" aria-hidden="true"><i></i></div>
     </div>
 
@@ -1303,7 +1304,7 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let k = 0;
   const cap = document.getElementById("cap"), cnt = document.getElementById("cnt"), tl = document.getElementById("tl"), pad = n => String(n).padStart(2, "0");
   const label = i => { const [m, n] = imgs[i].dataset.name.split("|"); now.classList.add("swap"); cap.classList.add("swap");
-    setTimeout(() => { now.querySelector("b").textContent = m; now.querySelector("span").textContent = n; cap.textContent = imgs[i].dataset.cap || ""; if (cnt) cnt.textContent = pad(i + 1) + "/" + pad(imgs.length);
+    setTimeout(() => { now.querySelector("i").textContent = imgs[i].dataset.tag || "取扱車両"; now.querySelector("b").textContent = m; now.querySelector("span").textContent = n; cap.textContent = imgs[i].dataset.cap || ""; if (cnt) cnt.textContent = pad(i + 1) + "/" + pad(imgs.length);
       now.classList.remove("swap"); setTimeout(() => cap.classList.remove("swap"), 250); }, 550); };
   setInterval(() => {
     if (document.hidden) return;
