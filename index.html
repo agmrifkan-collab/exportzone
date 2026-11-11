@@ -758,11 +758,13 @@ a.fact:hover{border-color:#77797f}
 .cf-bar em{font-style:normal;color:#fff}
 .cf-tl{width:140px;height:2px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
 .cf-tl i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff3b42,#ff8a8e);transform-origin:left;transform:scaleX(0)}
-.cf-tl i.run{animation:cfTl 3.6s linear both}@keyframes cfTl{to{transform:scaleX(1)}}
+.cf-tl i.run{animation:cfTl 2.5s linear both}@keyframes cfTl{to{transform:scaleX(1)}}
 .cf-nav{position:absolute;top:calc(var(--h)/2 - 8px);width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(20,20,24,.45);backdrop-filter:blur(6px);color:#fff;font-size:20px;cursor:pointer;z-index:200;display:grid;place-items:center}
 .cf-nav:hover{background:rgba(227,19,29,.7)}.cf-nav.p{left:max(16px,calc(50% - var(--w)*1.55))}.cf-nav.n{right:max(16px,calc(50% - var(--w)*1.55))}
 @media(max-width:600px){.cf{--w:230px}.cf-nav{display:none}.cf-cap .cf-md{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.cf-c,.cf-cap>*{transition:none;animation:none}}
+
+.cta-row #jisseki>.wrap{margin-left:0;margin-right:0;padding-left:0;padding-right:0;max-width:none}
 </style>
 </head>
 <body>
@@ -871,6 +873,23 @@ a.fact:hover{border-color:#77797f}
       <a href="./kenki.html"><span class="th"><img src="./img/th-cat.webp" alt="" width="120" height="88" class="on"><img data-src="./img/th-kobelco.webp" alt="" width="120" height="88"><img data-src="./img/th-hino.webp" alt="" width="120" height="88"></span><span><b>重機買取</b><small>建設機械・トラック<br>日本全国から買取</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
       <a href="./flood-car-buying.html" class="fl"><span class="th"><img src="./img/th-flood.webp" alt="" width="120" height="88" class="on"></span><span><b>水没車買取</b><small>台風・大雨で浸水した<br>車・トラック・重機も</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
     </nav>
+<section class="sec" id="jisseki" style="padding-top:34px;padding-bottom:10px">
+  <div class="wrap">
+    <div class="sh">
+      <h2>買取<span>実績</span></h2>
+      
+    </div>
+    <div class="cf" id="cf" aria-roledescription="carousel" aria-label="買取実績">
+  <div class="cf-wm" id="cfWm" aria-hidden="true"></div>
+  <div class="cf-stage" id="cfSt"><div class="cf-floor"></div></div>
+  <button class="cf-nav p" id="cfP" aria-label="前へ">‹</button><button class="cf-nav n" id="cfN" aria-label="次へ">›</button>
+  <div class="cf-cap" id="cfCap" aria-live="polite"></div>
+  <div class="cf-bar"><em id="cfNo">01</em><span class="cf-tl"><i id="cfTl"></i></span><span id="cfAll">14</span></div>
+</div>
+    <p class="cards-note">※掲載している車両は、当社がこれまでに取り扱った車両の一部です。</p>
+  </div>
+</section>
+
     <div class="cta-btns">
       <a href="tel:0120888405" class="plate xl lightup" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span><i class="sheen" aria-hidden="true"></i></a>
       <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line sweep"><svg class="icon"><use href="#i-line"/></svg>LINEで写真を送って査定</a>
@@ -985,22 +1004,7 @@ a.fact:hover{border-color:#77797f}
 </section>
 
 <!-- ================= 買取実績 ================= -->
-<section class="sec" id="jisseki">
-  <div class="wrap">
-    <div class="sh">
-      <h2>買取<span>実績</span></h2>
-      
-    </div>
-    <div class="cf" id="cf" aria-roledescription="carousel" aria-label="買取実績">
-  <div class="cf-wm" id="cfWm" aria-hidden="true"></div>
-  <div class="cf-stage" id="cfSt"><div class="cf-floor"></div></div>
-  <button class="cf-nav p" id="cfP" aria-label="前へ">‹</button><button class="cf-nav n" id="cfN" aria-label="次へ">›</button>
-  <div class="cf-cap" id="cfCap" aria-live="polite"></div>
-  <div class="cf-bar"><em id="cfNo">01</em><span class="cf-tl"><i id="cfTl"></i></span><span id="cfAll">14</span></div>
-</div>
-    <p class="cards-note">※掲載している車両は、当社がこれまでに取り扱った車両の一部です。</p>
-  </div>
-</section>
+
 
 
 <!-- ================= 重機・トラック 買取実績 ================= -->
@@ -1514,10 +1518,10 @@ function lay(){const w=parseFloat(getComputedStyle(st.parentNode).getPropertyVal
   c.style.zIndex=100-a;c.style.filter=k?"brightness("+Math.max(.28,.7-a*.08)+") blur("+Math.min(3,(a-1)*.7)+"px)":"none";c.style.opacity=a>6?0:1;c.classList.toggle("on",!k)});
  const d=D[cur];cap.innerHTML='<span class="cf-mk">'+d[1]+'</span><span class="cf-md">'+d[2]+'</span><i class="cf-tg">'+d[3]+'</i>';
  wm.textContent=d[1];no.textContent=String(cur+1).padStart(2,"0");tl.classList.remove("run");void tl.offsetWidth;if(!rm&&!location.search.includes("cf="))tl.classList.add("run");else tl.style.transform="scaleX(.6)"}
-function go(i){cur=(i+D.length)%D.length;lay();clearInterval(t);if(!rm)t=setInterval(()=>go(cur+1),3600)}
+function go(i){cur=(i+D.length)%D.length;lay();clearInterval(t);if(!rm)t=setInterval(()=>go(cur+1),2500)}
 document.getElementById("cfP").onclick=()=>go(cur-1);document.getElementById("cfN").onclick=()=>go(cur+1);
 let sx=null;st.addEventListener("pointerdown",e=>sx=e.clientX);st.addEventListener("pointerup",e=>{if(sx!==null&&Math.abs(e.clientX-sx)>30)go(cur+(e.clientX<sx?1:-1));sx=null});
-addEventListener("resize",lay);lay();if(!rm&&!location.search.includes("cf="))t=setInterval(()=>go(cur+1),3600)})();
+addEventListener("resize",lay);lay();if(!rm&&!location.search.includes("cf="))t=setInterval(()=>go(cur+1),2500)})();
 </script>
 </body>
 </html>
