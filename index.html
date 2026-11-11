@@ -708,6 +708,29 @@ a.fact:hover{border-color:#77797f}
 @media (max-width:340px){.mb-ic{display:none}.mbar .plate{padding:4px 8px}.mbar .plate .p-num{font-size:21px}}
 @media (prefers-reduced-motion:reduce){.tl{display:none}.js .cards.rv.in .ph img,.js .cards.rv.in .ph::after,.lightup .sheen,
   .mbar,.mb-ic .icon,.mb-ic::before,.mb-ic::after,.mbar .sheen,.mbar .btn-line .icon,.mb-halo{animation:none}}
+
+.pick{grid-template-columns:1fr;max-width:640px}
+@media (min-width:1180px){.pick{grid-template-columns:repeat(3,1fr);max-width:1200px}}
+@media (min-width:901px){.pick .th{width:104px;height:76px}.pick .go{width:40px;height:40px}.pick b{font-size:24px}.pick small{font-size:12px}.pick a{gap:14px}}
+.pick .th{position:relative;flex:none;width:118px;height:86px;border-radius:12px;overflow:hidden;background:#222;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.pick .th img{position:absolute;inset:0;width:100%;height:100%;border-radius:0;object-fit:cover;opacity:0;transition:opacity 1.1s ease}
+.pick .th img.on{opacity:1}
+.pick .th::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%)}
+.pick a.fl{border-color:rgba(90,170,255,.45)}
+.pick a.fl .go{background:#1f6fd1}
+@media (prefers-reduced-motion:no-preference){
+ .pick.run .th img.on{animation:thZoom 6s ease-out both}
+ @keyframes thZoom{from{transform:scale(1.12)}to{transform:scale(1)}}
+ .pick.run .th::after{animation:thSheen 7s ease-in-out infinite}
+ .pick.run a:nth-child(2) .th::after{animation-delay:1.5s}.pick.run a:nth-child(3) .th::after{animation-delay:3s}
+ @keyframes thSheen{0%,70%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+ .pick.run .go{animation:goNudge 3.5s ease-in-out infinite}
+ .pick.run a:nth-child(2) .go{animation-delay:.6s}.pick.run a:nth-child(3) .go{animation-delay:1.2s}
+ @keyframes goNudge{0%,78%,100%{transform:none}86%{transform:translateX(5px)}93%{transform:translateX(-1px)}}
+ .pick.run a.fl .th img{animation:thFlood 9s ease-in-out infinite alternate}
+ @keyframes thFlood{from{transform:scale(1.02) translateX(0)}to{transform:scale(1.14) translateX(-4%)}}
+}
+@media (max-width:900px){.pick .th{width:92px;height:68px}}
 </style>
 </head>
 <body>
@@ -812,8 +835,9 @@ a.fact:hover{border-color:#77797f}
 <section class="cta-row" aria-label="お問い合わせ">
   <div class="wrap">
     <nav class="pick" aria-label="買取の種類を選ぶ">
-      <a href="#haisha" class="on"><img src="./img/porsche-964.webp" alt="" width="118" height="86"><span><b>廃車買取</b><small>乗用車・事故車・不動車<br>埼玉県内は引取り無料</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
-      <a href="./kenki.html"><img src="./img/cat-320-th.webp" alt="" width="118" height="86"><span><b>重機買取</b><small>建設機械・トラック<br>日本全国から買取</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
+      <a href="#haisha" class="on"><span class="th"><img src="./img/th-porsche.webp" alt="" width="120" height="88" class="on"><img data-src="./img/th-nsx.webp" alt="" width="120" height="88"><img data-src="./img/th-supra.webp" alt="" width="120" height="88"></span><span><b>廃車買取</b><small>乗用車・事故車・不動車<br>埼玉県内は引取り無料</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
+      <a href="./kenki.html"><span class="th"><img src="./img/th-cat.webp" alt="" width="120" height="88" class="on"><img data-src="./img/th-kobelco.webp" alt="" width="120" height="88"><img data-src="./img/th-hino.webp" alt="" width="120" height="88"></span><span><b>重機買取</b><small>建設機械・トラック<br>日本全国から買取</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
+      <a href="./flood-car-buying.html" class="fl"><span class="th"><img src="./img/th-flood.webp" alt="" width="120" height="88" class="on"></span><span><b>水没車買取</b><small>台風・大雨で浸水した<br>車・トラック・重機も</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
     </nav>
     <div class="cta-btns">
       <a href="tel:0120888405" class="plate xl lightup" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span><i class="sheen" aria-hidden="true"></i></a>
@@ -1518,6 +1542,17 @@ function globe(){
 })();
 }
 })();
+</script>
+<script>
+(()=>{const nav=document.querySelector(".pick");if(!nav)return;
+const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;let started=false;
+const start=()=>{if(started)return;started=true;nav.classList.add("run");
+ nav.querySelectorAll(".th").forEach((th,k)=>{const im=[...th.querySelectorAll("img")];
+  im.forEach(i=>{if(i.dataset.src){i.src=i.dataset.src;i.removeAttribute("data-src")}});
+  if(im.length<2||rm)return;let n=0;
+  setTimeout(()=>setInterval(()=>{if(document.hidden)return;im[n].classList.remove("on");n=(n+1)%im.length;
+   const e=im[n];e.style.animation="none";e.offsetWidth;e.style.animation="";e.classList.add("on")},3600),k*1500)})};
+if("IntersectionObserver"in window){const o=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){start();o.disconnect()}},{rootMargin:"200px"});o.observe(nav)}else start()})();
 </script>
 </body>
 </html>
