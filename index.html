@@ -731,6 +731,38 @@ a.fact:hover{border-color:#77797f}
  @keyframes thFlood{from{transform:scale(1.02) translateX(0)}to{transform:scale(1.14) translateX(-4%)}}
 }
 @media (max-width:900px){.pick .th{width:92px;height:68px}}
+
+.cf{--w:360px;--h:calc(var(--w)*.68);position:relative;margin-top:10px;padding:10px 0 8px;overflow:hidden;isolation:isolate;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.cf::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(38% 34% at 50% 26%,rgba(255,255,255,.10),transparent 100%),radial-gradient(34% 22% at 50% 62%,rgba(227,19,29,.32),transparent 100%)}
+.cf-wm{position:absolute;left:0;right:0;top:calc(var(--h) + 34px);text-align:center;z-index:-1;font-family:"Panton",sans-serif;font-weight:900;font-size:calc(var(--w)*.42);line-height:1;letter-spacing:.06em;
+ color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.13);white-space:nowrap;transition:opacity .6s}
+.cf-stage{position:relative;height:calc(var(--h) + 30px);perspective:1200px;touch-action:pan-y}
+.cf-floor{position:absolute;left:8%;right:8%;top:calc(var(--h) + 18px);height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent)}
+.cf-c{position:absolute;left:50%;top:14px;width:var(--w);height:var(--h);margin-left:calc(var(--w)/-2);border-radius:12px;cursor:pointer;
+ -webkit-box-reflect:below 8px linear-gradient(transparent 60%,rgba(255,255,255,.18));transition:transform 1s cubic-bezier(.16,.84,.2,1),filter 1s,opacity 1s}
+.cf-c .cf-fr{position:absolute;inset:0;border-radius:inherit;padding:2px;background:linear-gradient(135deg,#fff 0%,#8b8e95 22%,#2a2b30 50%,#9a9da4 78%,#fff 100%);box-shadow:0 30px 60px -10px rgba(0,0,0,.8),0 10px 20px rgba(0,0,0,.4)}
+.cf-c img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px}
+.cf-c .cf-sh{position:absolute;inset:2px;border-radius:10px;overflow:hidden;pointer-events:none}
+.cf-c .cf-sh::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.35) 48%,transparent 62%);transform:translateX(-120%)}
+.cf-c.on .cf-sh::after{animation:cfSheen 1.4s .5s cubic-bezier(.3,.6,.2,1) both}
+@keyframes cfSheen{to{transform:translateX(120%)}}
+.cf-c.on{cursor:default}
+.cf-cap{text-align:center;margin-top:calc(var(--h)*.28)}
+.cf-cap .cf-mk{display:block;font-family:"Panton",sans-serif;font-weight:900;font-size:clamp(26px,4.4vw,40px);letter-spacing:.08em;line-height:1.1;
+ background:linear-gradient(180deg,#fff 0%,#e9e9ea 45%,#8e9097 55%,#f4f4f5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cf-cap .cf-md{display:block;font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-weight:600;font-size:17px;letter-spacing:.12em;color:#d9dadd;margin-top:4px}
+.cf-cap .cf-tg{display:inline-block;font-style:normal;margin-top:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#ffb3b6;border:1px solid rgba(255,90,96,.55);border-radius:99px;padding:3px 14px}
+.cf-cap>*{animation:cfUp .7s cubic-bezier(.2,.7,.2,1) both}.cf-cap .cf-md{animation-delay:.08s}.cf-cap .cf-tg{animation-delay:.16s}
+@keyframes cfUp{from{opacity:0;transform:translateY(10px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.cf-bar{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:18px;font-family:"Panton",sans-serif;font-weight:900;font-size:13px;letter-spacing:.12em;color:#9a9ca3;font-variant-numeric:tabular-nums}
+.cf-bar em{font-style:normal;color:#fff}
+.cf-tl{width:140px;height:2px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.cf-tl i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff3b42,#ff8a8e);transform-origin:left;transform:scaleX(0)}
+.cf-tl i.run{animation:cfTl 3.6s linear both}@keyframes cfTl{to{transform:scaleX(1)}}
+.cf-nav{position:absolute;top:calc(var(--h)/2 - 8px);width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(20,20,24,.45);backdrop-filter:blur(6px);color:#fff;font-size:20px;cursor:pointer;z-index:200;display:grid;place-items:center}
+.cf-nav:hover{background:rgba(227,19,29,.7)}.cf-nav.p{left:max(16px,calc(50% - var(--w)*1.55))}.cf-nav.n{right:max(16px,calc(50% - var(--w)*1.55))}
+@media(max-width:600px){.cf{--w:230px}.cf-nav{display:none}.cf-cap .cf-md{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.cf-c,.cf-cap>*{transition:none;animation:none}}
 </style>
 </head>
 <body>
@@ -957,99 +989,15 @@ a.fact:hover{border-color:#77797f}
   <div class="wrap">
     <div class="sh">
       <h2>買取<span>実績</span></h2>
-      <div class="tabs" id="filter" aria-label="区分で絞り込む">
-        <button aria-pressed="true" data-f="all">すべて</button>
-        <button aria-pressed="false" data-f="classic">旧車・スポーツカー</button>
-        <button aria-pressed="false" data-f="damaged">事故車・不動車</button>
-        <button aria-pressed="false" data-f="work">トラック・バス・重機</button>
-      </div>
+      
     </div>
-    <div class="cards rv" id="cards">
-      <article class="card" data-cat="classic">
-        <div class="ph"><img src="./img/honda-nsx.webp" alt="買取実績 ホンダ NSX" width="750" height="1000" loading="lazy" style="object-position:50% 30%"></div>
-        <h3><b>HONDA</b><span>NSX</span></h3>
-        <dl><dt>区分</dt><dd>スポーツカー</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="classic">
-        <div class="ph"><img src="./img/toyota-supra.webp" alt="買取実績 トヨタ スープラ" width="1000" height="750" loading="lazy"></div>
-        <h3><b>TOYOTA</b><span>スープラ</span></h3>
-        <dl><dt>区分</dt><dd>旧車・スポーツカー</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="classic damaged">
-        <div class="ph"><img src="./img/haisha-gtr.webp" alt="買取実績 日産 スカイラインGT-R 放置車両" width="900" height="1125" loading="lazy" style="object-position:50% 45%"></div>
-        <h3><b>NISSAN</b><span>スカイラインGT-R</span></h3>
-        <dl><dt>区分</dt><dd>旧車・放置車両</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="classic">
-        <div class="ph"><img src="./img/nissan-s30z.webp" alt="買取実績 日産 フェアレディZ（S30）" width="750" height="1000" loading="lazy" style="object-position:50% 62%"></div>
-        <h3><b>NISSAN</b><span>フェアレディZ（S30）</span></h3>
-        <dl><dt>区分</dt><dd>旧車</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="classic">
-        <div class="ph"><img src="./img/porsche-964.webp" alt="買取実績 ポルシェ911（964）" width="1000" height="747" loading="lazy"></div>
-        <h3><b>PORSCHE</b><span>911（964）</span></h3>
-        <dl><dt>区分</dt><dd>輸入車・旧車</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="classic">
-        <div class="ph"><img src="./img/toyota-mr2.webp" alt="買取実績 トヨタ MR2" width="1000" height="750" loading="lazy"></div>
-        <h3><b>TOYOTA</b><span>MR2</span></h3>
-        <dl><dt>区分</dt><dd>旧車</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="damaged">
-        <div class="ph"><img src="./img/g-hiace.webp" alt="買取実績 トヨタ ハイエース 事故車" width="800" height="600" loading="lazy"></div>
-        <h3><b>TOYOTA</b><span>ハイエース</span></h3>
-        <dl><dt>区分</dt><dd>事故車</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="damaged">
-        <div class="ph"><img src="./img/g-vwbus.webp" alt="買取実績 フォルクスワーゲン タイプ2 不動車" width="800" height="600" loading="lazy"></div>
-        <h3><b>VOLKSWAGEN</b><span>タイプ2</span></h3>
-        <dl><dt>区分</dt><dd>輸入車・不動車</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="damaged work">
-        <div class="ph"><img src="./img/g-isuzu.webp" alt="買取実績 いすゞ フォワード 事故車" width="800" height="600" loading="lazy"></div>
-        <h3><b>ISUZU</b><span>フォワード</span></h3>
-        <dl><dt>区分</dt><dd>トラック・事故車</dd><dt>エリア</dt><dd>日本全国</dd></dl>
-        <a class="btn-o" href="./truck-bus-buying.html">トラック・バス買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="work">
-        <div class="ph"><img src="./img/truck-supergreat.webp" alt="買取実績 三菱ふそう スーパーグレート" width="640" height="400" loading="lazy"></div>
-        <h3><b>MITSUBISHI FUSO</b><span>スーパーグレート</span></h3>
-        <dl><dt>区分</dt><dd>大型トラック</dd><dt>エリア</dt><dd>日本全国</dd></dl>
-        <a class="btn-o" href="./truck-bus-buying.html">トラック・バス買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="work">
-        <div class="ph"><img src="./img/g-pc60.webp" alt="買取実績 コマツ PC60 油圧ショベル" width="640" height="480" loading="lazy"></div>
-        <h3><b>KOMATSU</b><span>PC60（油圧ショベル）</span></h3>
-        <dl><dt>区分</dt><dd>建設機械</dd><dt>エリア</dt><dd>日本全国</dd></dl>
-        <a class="btn-o" href="./kenki.html">建設機械買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="work">
-        <div class="ph"><img src="./img/kobelco-excavator.webp" alt="買取実績 コベルコ 油圧ショベル" width="750" height="1000" loading="lazy" style="object-position:50% 45%"></div>
-        <h3><b>KOBELCO</b><span>油圧ショベル</span></h3>
-        <dl><dt>区分</dt><dd>建設機械</dd><dt>エリア</dt><dd>日本全国</dd></dl>
-        <a class="btn-o" href="./kenki.html">建設機械買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="classic damaged">
-        <div class="ph"><img src="./img/gtr-r32-purple.webp" alt="買取実績 日産 スカイラインGT-R（R32）長期保管車" width="900" height="1200" loading="lazy" style="object-position:50% 60%"></div>
-        <h3><b>NISSAN</b><span>スカイラインGT-R（R32）</span></h3>
-        <dl><dt>区分</dt><dd>旧車・長期保管車</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-      <article class="card" data-cat="classic damaged">
-        <div class="ph"><img src="./img/porsche-928.webp" alt="買取実績 ポルシェ928 不動車" width="1200" height="900" loading="lazy"></div>
-        <h3><b>PORSCHE</b><span>928</span></h3>
-        <dl><dt>区分</dt><dd>輸入車・不動車</dd><dt>エリア</dt><dd>埼玉県・関東</dd></dl>
-        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
-      </article>
-    </div>
+    <div class="cf" id="cf" aria-roledescription="carousel" aria-label="買取実績">
+  <div class="cf-wm" id="cfWm" aria-hidden="true"></div>
+  <div class="cf-stage" id="cfSt"><div class="cf-floor"></div></div>
+  <button class="cf-nav p" id="cfP" aria-label="前へ">‹</button><button class="cf-nav n" id="cfN" aria-label="次へ">›</button>
+  <div class="cf-cap" id="cfCap" aria-live="polite"></div>
+  <div class="cf-bar"><em id="cfNo">01</em><span class="cf-tl"><i id="cfTl"></i></span><span id="cfAll">14</span></div>
+</div>
     <p class="cards-note">※掲載している車両は、当社がこれまでに取り扱った車両の一部です。</p>
   </div>
 </section>
@@ -1553,6 +1501,23 @@ const start=()=>{if(started)return;started=true;nav.classList.add("run");
   setTimeout(()=>setInterval(()=>{if(document.hidden)return;im[n].classList.remove("on");n=(n+1)%im.length;
    const e=im[n];e.style.animation="none";e.offsetWidth;e.style.animation="";e.classList.add("on")},3600),k*1500)})};
 if("IntersectionObserver"in window){const o=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){start();o.disconnect()}},{rootMargin:"200px"});o.observe(nav)}else start()})();
+</script>
+<script>
+(()=>{const D=[["./img/honda-nsx.webp", "HONDA", "NSX", "スポーツカー"], ["./img/toyota-supra.webp", "TOYOTA", "スープラ", "旧車・スポーツカー"], ["./img/haisha-gtr.webp", "NISSAN", "スカイラインGT-R", "旧車・放置車両"], ["./img/nissan-s30z.webp", "NISSAN", "フェアレディZ（S30）", "旧車"], ["./img/porsche-964.webp", "PORSCHE", "911（964）", "輸入車・旧車"], ["./img/toyota-mr2.webp", "TOYOTA", "MR2", "旧車"], ["./img/g-hiace.webp", "TOYOTA", "ハイエース", "事故車"], ["./img/g-vwbus.webp", "VOLKSWAGEN", "タイプ2", "輸入車・不動車"], ["./img/g-isuzu.webp", "ISUZU", "フォワード", "トラック・事故車"], ["./img/truck-supergreat.webp", "MITSUBISHI FUSO", "スーパーグレート", "大型トラック"], ["./img/g-pc60.webp", "KOMATSU", "PC60（油圧ショベル）", "建設機械"], ["./img/kobelco-excavator.webp", "KOBELCO", "油圧ショベル", "建設機械"], ["./img/gtr-r32-purple.webp", "NISSAN", "スカイラインGT-R（R32）", "旧車・長期保管車"], ["./img/porsche-928.webp", "PORSCHE", "928", "輸入車・不動車"]];const st=document.getElementById("cfSt");if(!st)return;const cap=document.getElementById("cfCap"),wm=document.getElementById("cfWm"),no=document.getElementById("cfNo"),tl=document.getElementById("cfTl");
+document.getElementById("cfAll").textContent=String(D.length).padStart(2,"0");
+const cs=D.map((d,i)=>{const c=document.createElement("div");c.className="cf-c";c.innerHTML='<span class="cf-fr"><img src="'+d[0]+'" alt="買取実績 '+d[1]+' '+d[2]+'" loading="lazy"></span><span class="cf-sh"></span>';c.onclick=()=>go(i);st.appendChild(c);return c});
+let cur=+(new URLSearchParams(location.search).get("cf")||0),t;const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function lay(){const w=parseFloat(getComputedStyle(st.parentNode).getPropertyValue("--w"));const n=D.length;
+ cs.forEach((c,i)=>{let k=((i-cur)%n+n)%n;if(k>n/2)k-=n;const a=Math.abs(k);
+  const x=k?Math.sign(k)*(w*.66+(a-1)*w*.22):0,ry=k?-Math.sign(k)*58:0,z=k?-a*60-40:80;
+  c.style.transform="translateX("+x+"px) translateZ("+z+"px) rotateY("+ry+"deg)";
+  c.style.zIndex=100-a;c.style.filter=k?"brightness("+Math.max(.28,.7-a*.08)+") blur("+Math.min(3,(a-1)*.7)+"px)":"none";c.style.opacity=a>6?0:1;c.classList.toggle("on",!k)});
+ const d=D[cur];cap.innerHTML='<span class="cf-mk">'+d[1]+'</span><span class="cf-md">'+d[2]+'</span><i class="cf-tg">'+d[3]+'</i>';
+ wm.textContent=d[1];no.textContent=String(cur+1).padStart(2,"0");tl.classList.remove("run");void tl.offsetWidth;if(!rm&&!location.search.includes("cf="))tl.classList.add("run");else tl.style.transform="scaleX(.6)"}
+function go(i){cur=(i+D.length)%D.length;lay();clearInterval(t);if(!rm)t=setInterval(()=>go(cur+1),3600)}
+document.getElementById("cfP").onclick=()=>go(cur-1);document.getElementById("cfN").onclick=()=>go(cur+1);
+let sx=null;st.addEventListener("pointerdown",e=>sx=e.clientX);st.addEventListener("pointerup",e=>{if(sx!==null&&Math.abs(e.clientX-sx)>30)go(cur+(e.clientX<sx?1:-1));sx=null});
+addEventListener("resize",lay);lay();if(!rm&&!location.search.includes("cf="))t=setInterval(()=>go(cur+1),3600)})();
 </script>
 </body>
 </html>
