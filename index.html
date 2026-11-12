@@ -666,7 +666,7 @@ a.fact:hover{border-color:#77797f}
 .cine-now.swap em{opacity:.35}
 .tl{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:4;pointer-events:none;background:rgba(255,255,255,.16)}
 .tl i{display:block;height:100%;background:linear-gradient(90deg,rgba(255,255,255,.5),#fff);transform-origin:0 50%;transform:scaleX(0)}
-.tl.run i{animation:tl 3.4s linear both}
+.tl.run i{animation:tl 2.5s linear both}
 @keyframes tl{to{transform:scaleX(1)}}
 /* cards: image settles and catches the light once when the row arrives */
 .card .ph{position:relative}
@@ -772,6 +772,27 @@ a.fact:hover{border-color:#77797f}
 @media(prefers-reduced-motion:reduce){.cf-c,.cf-cap>*{transition:none;animation:none}}
 
 .cta-row #jisseki>.wrap{margin-left:0;margin-right:0;padding-left:0;padding-right:0;max-width:none}
+
+#cars{display:none}
+.hcf{--w:340px;margin-top:170px!important;--h:calc(var(--w)*.66);position:relative;height:calc(var(--h) + 46px);perspective:1100px;touch-action:pan-y;margin:6px 0 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.hcf .c{position:absolute;left:50%;top:8px;width:var(--w);height:var(--h);margin-left:calc(var(--w)/-2);border-radius:12px;
+ -webkit-box-reflect:below 6px linear-gradient(transparent 70%,rgba(255,255,255,.16));transition:transform .75s cubic-bezier(.16,.84,.2,1),filter .75s,opacity .75s}
+.hcf .c .fr{position:absolute;inset:0;border-radius:inherit;padding:2px;background:linear-gradient(135deg,#fff 0%,#9a9da4 22%,#3a3b40 50%,#a8abb2 78%,#fff 100%);box-shadow:0 26px 50px -12px rgba(0,0,0,.75)}
+.hcf .c img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px;background:#2a1012}
+.hcf .c .sw{position:absolute;inset:2px;border-radius:10px;overflow:hidden;pointer-events:none}
+.hcf .c .sw::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.35) 48%,transparent 62%);transform:translateX(-120%)}
+.hcf .c.on .sw::after{animation:hcfS 1.3s .45s cubic-bezier(.3,.6,.2,1) both}@keyframes hcfS{to{transform:translateX(120%)}}
+@media(max-width:600px){.hcf{--w:206px;margin-top:118px!important}}
+.frame h1.cine-t{z-index:5}
+
+.frame{background:radial-gradient(60% 50% at 50% 55%,#3a3c42 0%,#1d1e22 60%,#121316 100%)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25),0 20px 50px rgba(0,0,0,.45)}
+.frame::after{background:none!important}
+.hcf{-webkit-mask-image:none!important;mask-image:none!important}
+
+.dome{background:radial-gradient(70% 60% at 50% 30%,#34363c 0,#222327 40%,#141518 75%,#0d0e10 100%)!important;box-shadow:0 0 0 2px rgba(227,19,29,.85),0 0 60px rgba(227,19,29,.45)!important}
+.hero::before{content:"";position:absolute;left:50%;top:38%;width:900px;height:500px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(227,19,29,.28),transparent);z-index:0;pointer-events:none}
+.frame{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 0 0 1px rgba(227,19,29,.6),0 24px 60px rgba(0,0,0,.6)!important}
+.flood-link{background:rgba(227,19,29,.22)!important;border-color:rgba(255,90,96,.7)!important}
 </style>
 </head>
 <body>
@@ -851,6 +872,7 @@ a.fact:hover{border-color:#77797f}
         <img data-src="./img/kobelco-excavator.webp" alt="取扱車両 コベルコ 油圧ショベル" width="750" height="1000" style="object-position:50% 50%" data-name="KOBELCO|油圧ショベル" data-cap="トラック・重機は、日本全国から。">
         <img data-src="./img/porsche-garage.webp" alt="取扱車両 ポルシェ911（保管車両）" width="750" height="1000" style="object-position:50% 62%" data-name="PORSCHE|911" data-cap="EXPORT ZONE が、次の道へつなぎます。">
       </div>
+      <div class="hcf" id="hcf" aria-hidden="true"></div>
       <p class="now cine-now" id="now" aria-hidden="true"><i>買取対象</i><em id="cnt">01/10</em><b>水没車</b><span>冠水車・浸水車もOK</span></p>
       <p class="cap" id="cap" aria-hidden="true">水に浸かった車も、あきらめないでください。</p>
       <div class="tl run" id="tl" aria-hidden="true"><i></i></div>
@@ -1300,7 +1322,7 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const a = imgs[k]; a.classList.remove("on"); a.classList.add("out"); setTimeout(() => a.classList.remove("out"), 1100);
     k = next; imgs[k].classList.add("on"); dots.forEach((d, j) => d.classList.toggle("on", j === k)); label(k);
     if (tl){ tl.classList.remove("run"); void tl.offsetWidth; tl.classList.add("run"); }
-  }, 3400);
+  }, 2500);
 })();
 
 
@@ -1532,6 +1554,20 @@ function go(i){cur=(i+D.length)%D.length;lay();clearInterval(t);if(!rm)t=setInte
 document.getElementById("cfP").onclick=()=>go(cur-1);document.getElementById("cfN").onclick=()=>go(cur+1);
 let sx=null;st.addEventListener("pointerdown",e=>sx=e.clientX);st.addEventListener("pointerup",e=>{if(sx!==null&&Math.abs(e.clientX-sx)>30)go(cur+(e.clientX<sx?1:-1));sx=null});
 addEventListener("resize",lay);lay();if(!rm&&!location.search.includes("cf="))t=setInterval(()=>go(cur+1),2500)})();
+</script>
+<script>
+(()=>{const box=document.getElementById("hcf"),src=[...document.querySelectorAll("#cars img")];if(!box||!src.length)return;
+const cs=src.map((im,i)=>{const c=document.createElement("div");c.className="c";const u=im.getAttribute("src")||im.dataset.src;
+ c.innerHTML='<span class="fr"><img alt="" '+(i===0?'src="'+u+'"':'data-u="'+u+'"')+' style="object-position:'+(im.style.objectPosition||"50% 50%")+'"></span><span class="sw"></span>';box.appendChild(c);return c});
+addEventListener("load",()=>setTimeout(()=>box.querySelectorAll("img[data-u]").forEach(m=>{m.src=m.dataset.u;m.removeAttribute("data-u")}),300));
+let cur=0;function lay(){const w=parseFloat(getComputedStyle(box).getPropertyValue("--w"));const n=cs.length;
+ cs.forEach((c,i)=>{let k=((i-cur)%n+n)%n;if(k>n/2)k-=n;const a=Math.abs(k);
+  const ph=innerWidth<600,x=k?Math.sign(k)*(w*(ph?.5:.6)+(a-1)*w*(ph?.075:.16)):0,ry=k?-Math.sign(k)*(ph?66:56):0,z=k?-a*(ph?45:60)-40:60;
+  c.style.transform="translateX("+x+"px) translateZ("+z+"px) rotateY("+ry+"deg)";c.style.zIndex=100-a;
+  c.style.filter=k?"brightness("+Math.max(.55,.9-a*.07)+")":"none";c.style.opacity=1;c.classList.toggle("on",!k)})}
+const sync=()=>{const i=src.findIndex(m=>m.classList.contains("on"));if(i>=0&&i!==cur){cur=i;lay()}};
+new MutationObserver(sync).observe(document.getElementById("cars"),{subtree:true,attributes:true,attributeFilter:["class"]});
+addEventListener("resize",lay);lay()})();
 </script>
 </body>
 </html>
