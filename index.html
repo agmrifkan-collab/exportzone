@@ -790,6 +790,15 @@ a.fact:hover{border-color:#77797f}
 .hcf .c.on .fr{padding:3px;background:conic-gradient(from var(--ga),transparent 0deg,transparent 200deg,#ff3b42 260deg,#fff 300deg,#ff3b42 320deg,transparent 360deg),linear-gradient(135deg,#55575e,#1a1b1f);animation:hcfRun 2.5s linear infinite;box-shadow:0 0 22px rgba(227,19,29,.45),0 26px 50px -12px rgba(0,0,0,.8)}
 @keyframes hcfRun{to{--ga:360deg}}
 @media(prefers-reduced-motion:reduce){.hcf .c.on .fr{animation:none}}
+.plate.xl,.btn-line.sweep,.mbar .plate,.mbar .btn-line{position:relative}
+.runb{position:absolute;inset:-3px;border-radius:inherit;padding:3px;pointer-events:none;z-index:2;
+ background:conic-gradient(from var(--ga),transparent 0deg,transparent 210deg,#ff3b42 265deg,#fff 300deg,#ff3b42 325deg,transparent 360deg);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+ animation:hcfRun 2.5s linear infinite;filter:drop-shadow(0 0 4px rgba(255,59,66,.8))}
+.btn-line .runb{background:conic-gradient(from var(--ga),transparent 0deg,transparent 210deg,#b9ffd3 265deg,#fff 300deg,#b9ffd3 325deg,transparent 360deg);filter:drop-shadow(0 0 4px rgba(120,255,170,.8))}
+.btn-line.sweep{overflow:visible}.btn-line.sweep::after{display:none}
+@media(prefers-reduced-motion:reduce){.runb{animation:none}}
+.plate .runb,.mbar .btn-line .runb{inset:0;padding:3.5px}.runb{z-index:5}
 </style>
 </head>
 <body>
@@ -904,8 +913,8 @@ a.fact:hover{border-color:#77797f}
 
 
     <div class="cta-btns">
-      <a href="tel:0120888405" class="plate xl lightup" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span><i class="sheen" aria-hidden="true"></i></a>
-      <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line sweep"><svg class="icon"><use href="#i-line"/></svg>LINEで写真を送って査定</a>
+      <a href="tel:0120888405" class="plate xl lightup" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span><i class="sheen" aria-hidden="true"></i><i class="runb" aria-hidden="true"></i></a>
+      <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line sweep"><svg class="icon"><use href="#i-line"/></svg>LINEで写真を送って査定<i class="runb" aria-hidden="true"></i></a>
     </div>
     <div class="facts rv">
       <a class="fact" href="https://maps.app.goo.gl/dpudcrUdkBES1sjY6" target="_blank" rel="noopener"><span class="stars" id="stars" style="--v:86%"><i></i></span><b class="count" data-to="4.3" data-dec="1">4.3</b><small>Googleマップの口コミ</small></a>
@@ -1355,8 +1364,8 @@ a.fact:hover{border-color:#77797f}
 <!-- ================= MOBILE BAR ================= -->
 <div class="mbar">
   <div class="in">
-    <a href="tel:0120888405" class="plate" aria-label="電話する 0120-888-405（通話無料）"><i class="mb-ic" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></i><span class="p-top">通話無料・タップで電話</span><span class="p-num">0120-888-405</span><i class="sheen" aria-hidden="true"></i></a>
-    <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line"><i class="mb-halo" aria-hidden="true"></i><svg class="icon"><use href="#i-line"/></svg><span class="tx">LINE<small>写真で査定</small></span></a>
+    <a href="tel:0120888405" class="plate" aria-label="電話する 0120-888-405（通話無料）"><i class="mb-ic" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></i><span class="p-top">通話無料・タップで電話</span><span class="p-num">0120-888-405</span><i class="sheen" aria-hidden="true"></i><i class="runb" aria-hidden="true"></i></a>
+    <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line"><i class="mb-halo" aria-hidden="true"></i><svg class="icon"><use href="#i-line"/></svg><span class="tx">LINE<small>写真で査定</small></span><i class="runb" aria-hidden="true"></i></a>
   </div>
 </div>
 
