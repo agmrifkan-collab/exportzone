@@ -784,6 +784,12 @@ a.fact:hover{border-color:#77797f}
 @media(prefers-reduced-motion:reduce){.hx-in>*{animation:none}}
 @media(min-width:901px){.hero{height:1190px!important;--cy:-1460px!important}.hcf{--w:330px}.hx-wm{font-size:120px;top:-30%}}
 .frame{background:transparent!important;box-shadow:none!important;border:0!important;outline:0!important}.frame::before,.frame::after{display:none!important}
+
+.hero{background:#07070a!important}.dome{background:radial-gradient(70% 60% at 50% 30%,#1a1b1f 0,#101114 40%,#09090b 75%,#050506 100%)!important}
+@property --ga{syntax:"<angle>";initial-value:0deg;inherits:false}
+.hcf .c.on .fr{padding:3px;background:conic-gradient(from var(--ga),transparent 0deg,transparent 200deg,#ff3b42 260deg,#fff 300deg,#ff3b42 320deg,transparent 360deg),linear-gradient(135deg,#55575e,#1a1b1f);animation:hcfRun 2.5s linear infinite;box-shadow:0 0 22px rgba(227,19,29,.45),0 26px 50px -12px rgba(0,0,0,.8)}
+@keyframes hcfRun{to{--ga:360deg}}
+@media(prefers-reduced-motion:reduce){.hcf .c.on .fr{animation:none}}
 </style>
 </head>
 <body>
@@ -844,6 +850,7 @@ a.fact:hover{border-color:#77797f}
     <span class="seg" style="--i:.5"></span><span class="seg" style="--i:1.5"></span><span class="seg" style="--i:2.5"></span>
   </div>
 
+  
   <i class="streak" aria-hidden="true"></i>
   <div class="hero-in">
     <div class="side l" id="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -1619,7 +1626,7 @@ if("IntersectionObserver"in window){const o=new IntersectionObserver(es=>{if(es.
 
 
 <script>
-(()=>{const D=[["./img/flood-cars.webp", "水没車", "冠水車・浸水車も買取", "買取対象"], ["./img/honda-nsx.webp", "HONDA", "NSX", "スポーツカー"], ["./img/toyota-supra.webp", "TOYOTA", "スープラ", "旧車・スポーツカー"], ["./img/haisha-gtr.webp", "NISSAN", "スカイラインGT-R", "旧車・放置車両"], ["./img/nissan-s30z.webp", "NISSAN", "フェアレディZ（S30）", "旧車"], ["./img/porsche-964.webp", "PORSCHE", "911（964）", "輸入車・旧車"], ["./img/toyota-mr2.webp", "TOYOTA", "MR2", "旧車"], ["./img/g-hiace.webp", "TOYOTA", "ハイエース", "事故車"], ["./img/g-vwbus.webp", "VOLKSWAGEN", "タイプ2", "輸入車・不動車"], ["./img/g-isuzu.webp", "ISUZU", "フォワード", "トラック・事故車"], ["./img/truck-supergreat.webp", "MITSUBISHI FUSO", "スーパーグレート", "大型トラック"], ["./img/g-pc60.webp", "KOMATSU", "PC60（油圧ショベル）", "建設機械"], ["./img/kobelco-excavator.webp", "KOBELCO", "油圧ショベル", "建設機械"], ["./img/gtr-r32-purple.webp", "NISSAN", "スカイラインGT-R（R32）", "旧車・長期保管車"], ["./img/porsche-928.webp", "PORSCHE", "928", "輸入車・不動車"]];const box=document.getElementById("hcf");if(!box)return;
+(()=>{const D=[["./img/flood-cars.webp", "水没車", "冠水車・浸水車も買取", "買取対象"], ["./img/mazda-bongo-camper.webp", "MAZDA", "ボンゴ キャンピングカー", "キャンピングカー"], ["./img/honda-nsx.webp", "HONDA", "NSX", "スポーツカー"], ["./img/toyota-supra.webp", "TOYOTA", "スープラ", "旧車・スポーツカー"], ["./img/haisha-gtr.webp", "NISSAN", "スカイラインGT-R", "旧車・放置車両"], ["./img/nissan-s30z.webp", "NISSAN", "フェアレディZ（S30）", "旧車"], ["./img/porsche-964.webp", "PORSCHE", "911（964）", "輸入車・旧車"], ["./img/toyota-mr2.webp", "TOYOTA", "MR2", "旧車"], ["./img/g-hiace.webp", "TOYOTA", "ハイエース", "事故車"], ["./img/g-vwbus.webp", "VOLKSWAGEN", "タイプ2", "輸入車・不動車"], ["./img/g-isuzu.webp", "ISUZU", "フォワード", "トラック・事故車"], ["./img/truck-supergreat.webp", "MITSUBISHI FUSO", "スーパーグレート", "大型トラック"], ["./img/g-pc60.webp", "KOMATSU", "PC60（油圧ショベル）", "建設機械"], ["./img/kobelco-excavator.webp", "KOBELCO", "油圧ショベル", "建設機械"], ["./img/gtr-r32-purple.webp", "NISSAN", "スカイラインGT-R（R32）", "旧車・長期保管車"], ["./img/porsche-928.webp", "PORSCHE", "928", "輸入車・不動車"]];const box=document.getElementById("hcf");if(!box)return;
 const tx=document.getElementById("hxTx"),wm=document.getElementById("hxWm"),no=document.getElementById("hxNo"),tl=document.getElementById("hxTl");
 document.getElementById("hxAll").textContent=String(D.length).padStart(2,"0");
 const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
