@@ -25,8 +25,8 @@
 :root{
   --line-app:#06c755;
   --line-ic:#ffffff;
-  --line-bg:#06c755;
-  --line-bg-h:#05b54d;
+  --line-bg:#05873a;
+  --line-bg-h:#047a34;
   --cta-pattern:none;
 
   --ink:#17181b; --ink-2:#1f2024; --ink-3:#121315;
@@ -40,7 +40,7 @@
   --frame-grad:linear-gradient(135deg,#fdfdfd 0%,#9c9ea3 30%,#f4f4f5 52%,#7b7d82 78%,#e4e5e7 100%);
   --bolt-mid:#c9cbcf; --bolt-dark:#7d7f84;
   --tag-bg:#e3131d; --tag-fg:#ffffff;
-  --line-fg:#ffffff; --line-bd:#06c755;
+  --line-fg:#ffffff; --line-bd:#05873a;
   --accent-p:#ff6a70;
   --cta-bg:radial-gradient(900px 520px at 50% 0%,#ff4a4a 0,#e3131d 30%,#a20b13 68%,#5a060a 100%);
   --cta-soft:#fbe0e2;
@@ -146,7 +146,7 @@ html:has(link[rel="canonical"][href$="stock-lot-buying.html"]){--hero-img:none;}
 .tag-top{top:12px;left:12px;}
 .tag-bottom{right:12px;bottom:12px;}
 
-.eyebrow{display:flex;align-items:center;gap:10px;margin:0 0 14px;color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.06em;}
+.eyebrow{display:flex;align-items:center;gap:10px;margin:0 0 14px;color:var(--accent-p);font-size:13px;font-weight:700;letter-spacing:.06em;}
 .eyebrow-line{display:inline-block;width:22px;height:2px;border-radius:2px;background:var(--accent);}
 .section-number{margin:0 0 6px;font-family:var(--en);font-weight:900;color:var(--muted-d);}
 .section-number span{margin-left:8px;font-family:var(--ja);font-size:14px;}
@@ -213,7 +213,7 @@ a.btn[href*="line.me"]:hover,.btn-line:hover{background:var(--line-bg-h);}
 .process-item > span{position:relative;z-index:1;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--ink);border:6px solid var(--accent);
   color:var(--accent);font-family:var(--en);font-size:16px;font-weight:900;}
 .section-alt .process-item::before{background:var(--brand);}
-.section-alt .process-item > span{background:var(--card-p);border-color:var(--brand);color:var(--brand);}
+.section-alt .process-item > span{background:var(--card-p);border-color:var(--accent-p);color:var(--accent-p);}
 .process-item h3{margin:10px 0 4px;font-size:18px;font-weight:900;}
 .process-item p{margin:0;color:var(--muted-d);font-size:14.5px;}
 .section-alt .process-item p{color:var(--muted-p);}
