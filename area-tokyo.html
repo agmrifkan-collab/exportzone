@@ -453,5 +453,8 @@
   <a class="mobile-line" href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener noreferrer">LINEで相談</a>
 </div>
 
+<button class="ez-top" id="ezTop" type="button" aria-label="ページの先頭へ戻る">▲<span>TOP</span></button>
+<style>.ez-top{position:fixed;right:16px;bottom:24px;z-index:90;width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.85);background:#e3131d;color:#fff;font-size:15px;line-height:1;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 6px 18px rgba(0,0,0,.4);cursor:pointer;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .25s,visibility .25s}.ez-top span{font-size:10px;letter-spacing:.05em}.ez-top.show{opacity:1;visibility:visible;transform:none}.ez-top:hover{background:#b80f17}@media(max-width:900px){.ez-top{bottom:calc(84px + env(safe-area-inset-bottom));right:12px;width:48px;height:48px}}</style>
+<script>(()=>{const b=document.getElementById("ezTop");if(!b)return;const f=()=>b.classList.toggle("show",scrollY>600);addEventListener("scroll",f,{passive:true});f();b.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));})();</script>
 </body>
 </html>
