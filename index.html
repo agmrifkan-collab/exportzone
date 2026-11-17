@@ -840,6 +840,7 @@ a.fact:hover{border-color:#77797f}
 #satei .ez-lock{font-size:13px;color:#a9d9bd;border-top:1px solid #1f7a45;padding-top:10px;margin-top:6px}
 #satei .ez-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 #satei [hidden]{display:none!important}
+#satei .ez-more{border:1px dashed #4a4d55;border-radius:12px;padding:0 12px;margin:0 0 16px}#satei .ez-more[open]{padding-bottom:4px}#satei .ez-more>summary{cursor:pointer;list-style:none;padding:14px 0;font-weight:700;color:#fff;font-size:15px}#satei .ez-more>summary::-webkit-details-marker{display:none}#satei .ez-more>summary small{display:block;font-weight:400;color:var(--mut);font-size:12.5px;margin-top:2px}#satei .ez-more[open]>summary{color:#ffc828}#satei details.ez-guide>summary{cursor:pointer;font-weight:700;color:#fff}#satei details.ez-guide[open]>summary{margin-bottom:6px}#satei .ez-quick{text-align:center;color:#ffc828;font-weight:700;font-size:14px;margin:14px 0 8px}
 #satei .ez-guide{background:#1b1d21;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:13.5px;color:#d7d8dc}
 #satei .ez-guide ol{margin:6px 0 6px 1.4em;display:grid;grid-template-columns:1fr 1fr;gap:2px 12px}
 #satei .ez-guide b{color:#fff}
@@ -991,21 +992,23 @@ a.fact:hover{border-color:#77797f}
  <div data-for="個人">
   <div class="ez-f"><span class="ez-lb">お車・機械の種類<span class="ez-req">必須</span></span><div class="ez-seg"><label><input type="radio" name="kind" value="乗用車・軽自動車" checked><span>乗用車・軽自動車</span></label><label><input type="radio" name="kind" value="トラック・バス"><span>トラック・バス</span></label><label><input type="radio" name="kind" value="重機・建設機械"><span>重機・建設機械</span></label><label><input type="radio" name="kind" value="フォークリフト"><span>フォークリフト</span></label><label><input type="radio" name="kind" value="農機具"><span>農機具</span></label><label><input type="radio" name="kind" value="その他"><span>その他</span></label></div></div>
   <div class="ez-f"><label for="ez-maker">メーカー<span class="ez-req">必須</span></label><input type="text" id="ez-maker" name="maker" list="ez-makers" autocomplete="off" placeholder="例：トヨタ"><datalist id="ez-makers"><option value="トヨタ"><option value="日産"><option value="ホンダ"><option value="マツダ"><option value="スバル"><option value="三菱"><option value="スズキ"><option value="ダイハツ"><option value="いすゞ"><option value="日野"><option value="三菱ふそう"><option value="UDトラックス"><option value="レクサス"><option value="コマツ"><option value="日立建機"><option value="コベルコ"><option value="キャタピラー"><option value="クボタ"><option value="ヤンマー"><option value="イセキ"><option value="住友"><option value="ニチユ"><option value="TCM"><option value="タダノ"><option value="メルセデス・ベンツ"><option value="BMW"><option value="フォルクスワーゲン"></datalist></div>
+  <details class="ez-more"><summary>＋ もっと詳しく入力する（任意）<small>車種・年式・走行距離・事故歴・車検など</small></summary>
   <div class="ez-f"><label for="ez-model">車種・型式<span class="ez-opt">任意</span></label><input type="text" id="ez-model" name="model" placeholder="例：プリウス / 2tダンプ / PC200"></div>
   <div class="ez-f"><label for="ez-year">年式<span class="ez-opt">任意</span></label><input type="text" id="ez-year" name="year" placeholder="例：2012年 / 平成24年 / わからない"></div>
   <div class="ez-f"><label for="ez-mileage">走行距離・アワーメーター<span class="ez-opt">任意</span></label><input type="text" id="ez-mileage" name="mileage" placeholder="例：15万km / 5000時間"></div>
-  <div class="ez-f"><span class="ez-lb">事故歴<span class="ez-req">必須</span></span><div class="ez-seg"><label><input type="radio" name="accident" value="なし" checked><span>なし</span></label><label><input type="radio" name="accident" value="あり"><span>あり</span></label><label><input type="radio" name="accident" value="わからない"><span>わからない</span></label></div></div>
-  <div class="ez-f"><span class="ez-lb">自走できますか<span class="ez-req">必須</span></span><div class="ez-seg"><label><input type="radio" name="runs" value="動く" checked><span>動く</span></label><label><input type="radio" name="runs" value="動かない"><span>動かない</span></label><label><input type="radio" name="runs" value="わからない"><span>わからない</span></label></div></div>
+  <div class="ez-f"><span class="ez-lb">事故歴<span class="ez-opt">任意</span></span><div class="ez-seg"><label><input type="radio" name="accident" value="なし"><span>なし</span></label><label><input type="radio" name="accident" value="あり"><span>あり</span></label><label><input type="radio" name="accident" value="わからない" checked><span>わからない</span></label></div></div>
+  <div class="ez-f"><span class="ez-lb">自走できますか<span class="ez-opt">任意</span></span><div class="ez-seg"><label><input type="radio" name="runs" value="動く"><span>動く</span></label><label><input type="radio" name="runs" value="動かない"><span>動かない</span></label><label><input type="radio" name="runs" value="わからない" checked><span>わからない</span></label></div></div>
   <div class="ez-f"><span class="ez-lb">車検<span class="ez-opt">任意</span></span><div class="ez-seg"><label><input type="radio" name="shaken_valid" value="残っている"><span>残っている</span></label><label><input type="radio" name="shaken_valid" value="切れている"><span>切れている</span></label><label><input type="radio" name="shaken_valid" value="わからない" checked><span>わからない</span></label></div></div>
   <div class="ez-f"><span class="ez-lb">車検証の写真<span class="ez-opt">任意</span></span>
    <label class="ez-up">📄 <b>車検証を選ぶ・撮影する</b><br><small>写真またはPDF（機械の場合は銘板の写真）</small><input type="file" id="ez-shaken" accept="image/*,application/pdf"></label>
    <div class="ez-thumbs" id="ez-sthumbs"></div></div>
+  </details>
  </div>
 
  <div class="ez-f"><span class="ez-lb">写真<span class="ez-opt">1枚だけでもOK・10枚まで</span></span>
-  <div class="ez-guide"><p>📷 できれば、次の写真があると<b>より正確に査定</b>できます。</p>
+  <details class="ez-guide"><summary>📷 どんな写真を撮ればいい？（タップで表示）</summary><p>次の写真があると<b>より正確に査定</b>できます。</p>
    <ol><li>前から全体</li><li>後ろから全体</li><li>左右の横から</li><li>メーター（走行距離）</li><li>室内・運転席</li><li>エンジンルーム</li><li>キズ・へこみ・故障の所</li></ol>
-   <p class="ez-small">重機・フォークリフト・農機具は、全体・銘板（プレート）・アワーメーターの写真をお願いします。</p></div>
+   <p class="ez-small">重機・フォークリフト・農機具は、全体・銘板（プレート）・アワーメーターの写真をお願いします。</p></details>
   <label class="ez-up">📷 <b>写真を選ぶ・撮影する</b><br><small>まとめて選べます</small><input type="file" id="ez-photos" accept="image/*" multiple></label>
   <div class="ez-thumbs" id="ez-pthumbs"></div>
   <p class="ez-small" id="ez-pcount"></p>
@@ -1014,12 +1017,14 @@ a.fact:hover{border-color:#77797f}
   <input type="text" name="city" placeholder="市区町村（例：上尾市）" style="margin-top:8px" aria-label="市区町村"></div>
  <div class="ez-f"><label for="ez-name"><span data-for="個人">お名前</span><span data-for="法人" hidden>ご担当者名</span><span class="ez-req">必須</span></label><input type="text" id="ez-name" name="name" autocomplete="name" placeholder="例：山田 太郎"></div>
  <div class="ez-f"><label for="ez-phone">電話番号<span class="ez-req">必須</span></label><input type="tel" id="ez-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="例：090-1234-5678"></div>
+ <details class="ez-more" id="ez-more2"><summary>＋ メールアドレス・ご質問（任意）</summary>
  <div class="ez-f"><label for="ez-email">メールアドレス<span data-for="個人" class="ez-opt">任意</span><span data-for="法人" class="ez-req" hidden>必須</span></label><input type="email" id="ez-email" name="email" autocomplete="email" placeholder="例：taro@example.com"></div>
  <div class="ez-f"><label for="ez-note">ご質問・ご要望<span class="ez-opt">任意</span></label><textarea id="ez-note" name="note" placeholder="例：鍵なし、工場の閉鎖でまとめて売りたい、平日の夕方に連絡がほしい など"></textarea></div>
+ </details>
  <div class="ez-hp" aria-hidden="true"><label>website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
  <div class="ez-privacy"><b>個人情報の取り扱い</b><br>お預かりした個人情報・写真・書類は、査定とご連絡、お取引の手続きのためにのみ使用し、法令に基づく場合を除き第三者に提供しません。当社サーバー上のデータは7日後に自動で削除されます。お取引に至らなかった場合は、担当者の端末に届いた写真・書類も削除いたします。</div>
  <label class="ez-consent"><input type="checkbox" id="ez-consent"> 上記の個人情報の取り扱いに同意します</label>
- <div style="height:14px"></div>
+ <p class="ez-quick">⏱ 入力は1分ほどで完了します</p>
  <button class="ez-send" type="submit" id="ez-send">無料で査定を依頼する</button>
  <div class="ez-msg" id="ez-msg" role="alert"></div>
 </form>
@@ -1791,7 +1796,7 @@ const API="https://globalstock-railway-python-production.up.railway.app/api/ez/l
 const t0=Date.now(),photos=[],shaken=[],list=[];
 const $=id=>document.getElementById(id),fm=$("ez");if(!fm)return;
 const mode=()=>fm.querySelector('input[name=ctype]:checked').value;
-function setMode(){const m=mode();fm.querySelectorAll("[data-for]").forEach(el=>{el.hidden=el.dataset.for!==m;});}
+function setMode(){const m=mode();fm.querySelectorAll("[data-for]").forEach(el=>{el.hidden=el.dataset.for!==m;});const d=$("ez-more2");if(d&&m==="法人")d.open=true;}
 fm.querySelectorAll("input[name=ctype]").forEach(r=>r.addEventListener("change",setMode));setMode();
 function shrink(file){return new Promise(res=>{
   if(!file.type.startsWith("image/")||(file.size<350000&&file.type==="image/jpeg")){res(file);return;}
