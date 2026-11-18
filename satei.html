@@ -1,4 +1,7 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J9476L6JZD"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-J9476L6JZD");document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";if(h.indexOf("tel:")===0)gtag("event","phone_click",{link_url:h,page:location.pathname});else if(h.indexOf("line.me")>-1)gtag("event","line_click",{link_url:h,page:location.pathname});else if(h.indexOf("mailto:")===0)gtag("event","email_click",{page:location.pathname});},true);</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>無料査定フォーム｜写真を送るだけで車・トラック・重機を査定｜EXPORT ZONE</title><meta name="description" content="車・トラック・重機・フォークリフト・農機具の無料査定フォーム。メーカー・年式・走行距離と写真を送るだけで、担当者が通常24時間以内にご連絡します。日本全国対応、埼玉県内は引取り無料。"><meta name="robots" content="index,follow"><meta name="theme-color" content="#e3131d"><link rel="canonical" href="https://exportzone.jp/satei.html">
 <meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><meta property="og:title" content="無料査定フォーム｜写真を送るだけで車・トラック・重機を査定｜EXPORT ZONE"><meta property="og:description" content="車・トラック・重機・フォークリフト・農機具の無料査定フォーム。メーカー・年式・走行距離と写真を送るだけで、担当者が通常24時間以内にご連絡します。日本全国対応、埼玉県内は引取り無料。"><meta property="og:url" content="https://exportzone.jp/satei.html">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "無料査定フォーム｜写真を送るだけで車・トラック・重機を査定｜EXPORT ZONE", "description": "車・トラック・重機・フォークリフト・農機具の無料査定フォーム。メーカー・年式・走行距離と写真を送るだけで、担当者が通常24時間以内にご連絡します。日本全国対応、埼玉県内は引取り無料。", "url": "https://exportzone.jp/satei.html", "inLanguage": "ja"}</script>
@@ -253,7 +256,7 @@ fm.addEventListener("submit",async e=>{e.preventDefault();$("ez-msg").className=
   $("ez-send").disabled=true;$("ez-send").textContent="送信中…";
   try{const r=await fetch(API,{method:"POST",body:fd});const j=await r.json().catch(()=>({}));
     if(!r.ok||!j.ok)return fail(j.error||"送信できませんでした。お手数ですが 0120-888-405 までお電話ください。");
-    fm.style.display="none";$("ez-done").style.display="block";$("ez-done").focus();$("ez-done").scrollIntoView({behavior:"smooth",block:"center"});
+    fm.style.display="none";$("ez-done").style.display="block";if(window.gtag)gtag("event","generate_lead",{form:"satei",page:location.pathname});$("ez-done").focus();$("ez-done").scrollIntoView({behavior:"smooth",block:"center"});
   }catch(_){fail("送信できませんでした。通信状況をご確認のうえ、もう一度お試しいただくか、0120-888-405 までお電話ください。");}
 });
 })();
