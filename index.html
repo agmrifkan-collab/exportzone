@@ -326,6 +326,12 @@ a.fact:hover{border-color:#77797f}
 .card dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:12px;margin-top:10px;color:#c6c7cb;line-height:1.7}
 .card dt{font-weight:700;color:#fff}
 .card .btn-o{margin:16px 6px 0;position:relative;z-index:2}
+@media (min-width:761px){#cards.lim .card:nth-child(n+10){display:none}}
+.cards-more{display:flex;justify-content:center;margin-top:26px}
+.cards-more button{min-height:50px;padding:0 30px;border-radius:99px;border:1px solid #5a5c62;background:linear-gradient(180deg,#2c2d31,#1e1f22);color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:border-color .25s}
+.cards-more button:hover{border-color:var(--red)}
+.cards-more[hidden]{display:none}
+@media (max-width:760px){.cards-more{display:none}}
 .cards-note{text-align:center;font-size:12.5px;color:var(--mut2);margin-top:22px}
 
 /* ---------- products ---------- */
@@ -577,6 +583,26 @@ a.fact:hover{border-color:#77797f}
 @media (max-width:999px){.kg{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px}.b2b{grid-template-columns:1fr}.items{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:760px){.kg{grid-auto-rows:150px;gap:8px}.kg figure.w{grid-column:span 2}.kg figcaption b{font-size:12.5px}.kg figcaption span{font-size:11px}}
 
+/* ---------- 対応エリア ---------- */
+.zones{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1040px;margin-inline:auto}
+.zone{position:relative;padding:22px 22px 20px;border-radius:14px;background:linear-gradient(180deg,#2a2b2f,#1d1e21);border:1px solid #3e4046}
+.zone.z1{border-top:3px solid var(--red)}
+.zone.z2{border-top:3px solid #8b8e96}
+.zt{display:inline-block;font-size:12px;font-weight:700;padding:3px 12px;border-radius:99px;background:var(--red);color:#fff}
+.z2 .zt{background:#4a4c52}
+.zone h3{margin-top:12px;font-size:21px;font-weight:900;letter-spacing:.03em}
+.zp{margin-top:6px;font-size:13px;color:var(--mut);line-height:1.6}
+.zone ul{margin-top:14px;display:grid;gap:6px}
+.zone li{position:relative;padding-left:20px;font-size:14px;line-height:1.6}
+.zone li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;height:9px;border-radius:2px;background:var(--red)}
+.z2 li::before{background:#8b8e96}
+.zpay{margin-top:16px;padding-top:12px;border-top:1px solid #3a3c41;font-size:13px;line-height:1.6;color:#d6d7da}
+.zpay b{display:inline-block;margin-right:8px;color:#fff}
+.zone-note{max-width:1040px;margin:18px auto 0;font-size:12.5px;color:var(--mut2)}
+@media (max-width:860px){.zones{grid-template-columns:1fr}}
+.ez-zone{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13.5px;line-height:1.6;border:1px solid #4a4d55;background:#24252a;color:#e6e7ea}
+.ez-zone.ok{border-color:rgba(76,175,80,.6);background:rgba(76,175,80,.12)}
+.ez-zone.info{border-color:rgba(255,200,40,.55);background:rgba(255,200,40,.10)}
 /* ---------- 廃車 / 重機 switch ---------- */
 .pick{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:860px;margin:0 auto 26px}
 .pick a{position:relative;display:flex;align-items:center;gap:16px;min-height:118px;padding:16px 22px 16px 16px;border-radius:18px;overflow:hidden;
@@ -823,6 +849,14 @@ a.fact:hover{border-color:#77797f}
 #satei .ez-mode{margin-bottom:18px}
 #satei .ez-mode label{flex:1 1 45%}
 #satei .ez-mode span{padding:14px 6px;font-size:16px;font-weight:700}
+#satei .ez-mode{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:0;flex-wrap:nowrap;height:72px;padding:6px;border-radius:12px;background:linear-gradient(#0e0f12,#1a1b1f);box-shadow:inset 0 3px 8px rgba(0,0,0,.75),inset 0 -1px 0 rgba(255,255,255,.06)}
+#satei .ez-mode::before{content:"";position:absolute;z-index:0;top:6px;left:6px;width:calc(50% - 6px);height:54px;border-radius:8px;background:linear-gradient(180deg,#e53935 0%,#d32f2f 60%,#b71c1c 100%);box-shadow:0 6px 0 #7a1414,0 14px 22px rgba(211,47,47,.45),inset 0 2px 0 rgba(255,255,255,.35),inset 0 -3px 6px rgba(0,0,0,.25);transform:translateY(-2px);transition:left .45s cubic-bezier(.65,-.25,.3,1.35),transform .2s,box-shadow .2s}
+#satei .ez-mode:has(label:nth-child(2) input:checked)::before{left:50%}
+#satei .ez-mode:active::before{transform:translateY(2px);box-shadow:0 2px 0 #7a1414,0 6px 12px rgba(211,47,47,.35),inset 0 2px 0 rgba(255,255,255,.3)}
+#satei .ez-mode label{position:relative;z-index:1;min-width:0}
+#satei .ez-mode span{display:flex;align-items:center;justify-content:center;height:100%;padding:0 4px 6px;border:0;border-radius:8px;background:none!important;color:#8b8e96;font-size:16px;font-weight:700;transition:color .35s}
+#satei .ez-mode input:checked+span{background:none;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+@media (max-width:400px){#satei .ez-mode span{font-size:14px}}
 #satei .ez-up{display:block;border:2px dashed #5a5d66;border-radius:12px;padding:16px;text-align:center;color:#d7d8dc;cursor:pointer;font-size:14.5px}
 #satei .ez-up input{display:none}
 #satei .ez-up b{color:#fff}
@@ -1020,6 +1054,7 @@ a.fact:hover{border-color:#77797f}
   <p class="ez-small">💡 写真がうまく送れない場合は、写真なしで送信してください。後から<a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">LINE</a>で送っていただいても大丈夫です。</p></div>
  <div class="ez-f"><label for="ez-zip">郵便番号<span class="ez-opt">任意</span></label><input type="text" id="ez-zip" inputmode="numeric" autocomplete="postal-code" maxlength="8" placeholder="例：3620806（数字だけでOK）"><p class="ez-small" id="ez-zipmsg">7桁を入力すると、住所が自動で入ります。</p></div>
  <div class="ez-f"><label for="ez-pref">車両・機械の所在地<span class="ez-req">必須</span></label><select id="ez-pref" name="pref"><option value="北海道">北海道</option><option value="青森県">青森県</option><option value="岩手県">岩手県</option><option value="宮城県">宮城県</option><option value="秋田県">秋田県</option><option value="山形県">山形県</option><option value="福島県">福島県</option><option value="茨城県">茨城県</option><option value="栃木県">栃木県</option><option value="群馬県">群馬県</option><option value="埼玉県" selected>埼玉県</option><option value="千葉県">千葉県</option><option value="東京都">東京都</option><option value="神奈川県">神奈川県</option><option value="新潟県">新潟県</option><option value="富山県">富山県</option><option value="石川県">石川県</option><option value="福井県">福井県</option><option value="山梨県">山梨県</option><option value="長野県">長野県</option><option value="岐阜県">岐阜県</option><option value="静岡県">静岡県</option><option value="愛知県">愛知県</option><option value="三重県">三重県</option><option value="滋賀県">滋賀県</option><option value="京都府">京都府</option><option value="大阪府">大阪府</option><option value="兵庫県">兵庫県</option><option value="奈良県">奈良県</option><option value="和歌山県">和歌山県</option><option value="鳥取県">鳥取県</option><option value="島根県">島根県</option><option value="岡山県">岡山県</option><option value="広島県">広島県</option><option value="山口県">山口県</option><option value="徳島県">徳島県</option><option value="香川県">香川県</option><option value="愛媛県">愛媛県</option><option value="高知県">高知県</option><option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option><option value="長崎県">長崎県</option><option value="熊本県">熊本県</option><option value="大分県">大分県</option><option value="宮崎県">宮崎県</option><option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option></select>
+  <div class="ez-zone" id="ez-zone" aria-live="polite" hidden></div>
   <input type="text" name="city" id="ez-city" placeholder="市区町村・町名（例：上尾市本町）" style="margin-top:8px" aria-label="市区町村・町名"><input type="text" id="ez-addr" autocomplete="address-line2" placeholder="番地・建物名（例：1-2-3 ○○マンション101）" style="margin-top:8px" aria-label="番地・建物名"></div>
  <div class="ez-f"><label for="ez-name"><span data-for="個人">お名前</span><span data-for="法人" hidden>ご担当者名</span><span class="ez-req">必須</span></label><input type="text" id="ez-name" name="name" autocomplete="name" placeholder="例：山田 太郎"></div>
  <div class="ez-f"><label for="ez-phone">電話番号<span class="ez-req">必須</span></label><input type="tel" id="ez-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="例：090-1234-5678"></div>
@@ -1169,7 +1204,115 @@ a.fact:hover{border-color:#77797f}
         <button aria-pressed="false" data-f="work">トラック・バス・重機</button>
       </div>
     </div>
-    <div class="cards rv" id="cards">
+    <div class="cards rv lim" id="cards">
+      <article class="card" data-cat="work">
+        <div class="ph"><img src="./img/j-cat311f-sm.webp" srcset="./img/j-cat311f-sm.webp 640w, ./img/j-cat311f.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 キャタピラー 311F L 油圧ショベル" width="640" height="830" loading="lazy" style="object-position:50% 45%"></div>
+        <h3><b>CAT</b><span>311F L（油圧ショベル）</span></h3>
+        <dl><dt>区分</dt><dd>建設機械</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./kenki.html">建設機械買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="classic damaged">
+        <div class="ph"><img src="./img/j-bmw-e9-sm.webp" srcset="./img/j-bmw-e9-sm.webp 640w, ./img/j-bmw-e9.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 BMW E9 クーペ 旧車" width="640" height="825" loading="lazy" style="object-position:50% 55%"></div>
+        <h3><b>BMW</b><span>E9 クーペ</span></h3>
+        <dl><dt>区分</dt><dd>旧車・長期保管車</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work">
+        <div class="ph"><img src="./img/j-hino-profia-sm.webp" srcset="./img/j-hino-profia-sm.webp 640w, ./img/j-hino-profia.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 日野 プロフィア 大型トラック" width="640" height="830" loading="lazy" style="object-position:50% 45%"></div>
+        <h3><b>HINO</b><span>プロフィア</span></h3>
+        <dl><dt>区分</dt><dd>大型トラック</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./truck-bus-buying.html">トラック・バス買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="damaged">
+        <div class="ph"><img src="./img/j-rx8-sm.webp" srcset="./img/j-rx8-sm.webp 640w, ./img/j-rx8.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 マツダ RX-8 事故車" width="640" height="818" loading="lazy" style="object-position:50% 55%"></div>
+        <h3><b>MAZDA</b><span>RX-8</span></h3>
+        <dl><dt>区分</dt><dd>事故車</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work">
+        <div class="ph"><img src="./img/j-forward-unic-sm.webp" srcset="./img/j-forward-unic-sm.webp 640w, ./img/j-forward-unic.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 いすゞ フォワード ユニック クレーン付トラック" width="640" height="825" loading="lazy" style="object-position:50% 45%"></div>
+        <h3><b>ISUZU</b><span>フォワード（クレーン付）</span></h3>
+        <dl><dt>区分</dt><dd>ユニック車</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./truck-bus-buying.html">トラック・バス買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work">
+        <div class="ph"><img src="./img/j-pc40-sm.webp" srcset="./img/j-pc40-sm.webp 640w, ./img/j-pc40.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 コマツ PC40 ミニショベル" width="640" height="821" loading="lazy" style="object-position:50% 50%"></div>
+        <h3><b>KOMATSU</b><span>PC40（ミニショベル）</span></h3>
+        <dl><dt>区分</dt><dd>建設機械</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./kenki.html">建設機械買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="van">
+        <div class="ph"><img src="./img/j-hiace-4wd-sm.webp" srcset="./img/j-hiace-4wd-sm.webp 640w, ./img/j-hiace-4wd.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 トヨタ ハイエース ワゴン 4WD" width="640" height="828" loading="lazy" style="object-position:50% 55%"></div>
+        <h3><b>TOYOTA</b><span>ハイエース ワゴン 4WD</span></h3>
+        <dl><dt>区分</dt><dd>ワンボックス</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work damaged">
+        <div class="ph"><img src="./img/j-civilian-bus-sm.webp" srcset="./img/j-civilian-bus-sm.webp 640w, ./img/j-civilian-bus.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 日産 シビリアン 幼児バス マイクロバス" width="640" height="825" loading="lazy" style="object-position:50% 50%"></div>
+        <h3><b>NISSAN</b><span>シビリアン（幼児バス）</span></h3>
+        <dl><dt>区分</dt><dd>マイクロバス・不動車</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./truck-bus-buying.html">トラック・バス買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work damaged">
+        <div class="ph"><img src="./img/j-sakai-roller-sm.webp" srcset="./img/j-sakai-roller-sm.webp 640w, ./img/j-sakai-roller.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 酒井重工業 ロードローラー" width="640" height="821" loading="lazy" style="object-position:50% 45%"></div>
+        <h3><b>SAKAI</b><span>ロードローラー</span></h3>
+        <dl><dt>区分</dt><dd>建設機械・不動</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./kenki.html">建設機械買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="damaged">
+        <div class="ph"><img src="./img/j-granvia-sm.webp" srcset="./img/j-granvia-sm.webp 640w, ./img/j-granvia.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 トヨタ グランビア 長期保管車" width="640" height="813" loading="lazy" style="object-position:50% 45%"></div>
+        <h3><b>TOYOTA</b><span>グランビア</span></h3>
+        <dl><dt>区分</dt><dd>長期保管車</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work damaged">
+        <div class="ph"><img src="./img/j-hitachi-ex-sm.webp" srcset="./img/j-hitachi-ex-sm.webp 640w, ./img/j-hitachi-ex.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 日立建機 油圧ショベル" width="640" height="817" loading="lazy" style="object-position:50% 30%"></div>
+        <h3><b>HITACHI</b><span>油圧ショベル</span></h3>
+        <dl><dt>区分</dt><dd>建設機械・不動</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./kenki.html">建設機械買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work damaged">
+        <div class="ph"><img src="./img/j-isuzu-elf-sm.webp" srcset="./img/j-isuzu-elf-sm.webp 640w, ./img/j-isuzu-elf.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 いすゞ エルフ 小型トラック 不動車" width="640" height="825" loading="lazy" style="object-position:50% 60%"></div>
+        <h3><b>ISUZU</b><span>エルフ</span></h3>
+        <dl><dt>区分</dt><dd>小型トラック・不動車</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./truck-bus-buying.html">トラック・バス買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="van">
+        <div class="ph"><img src="./img/j-hilux-sm.webp" srcset="./img/j-hilux-sm.webp 640w, ./img/j-hilux.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 トヨタ ハイラックス ピックアップ" width="640" height="822" loading="lazy" style="object-position:50% 65%"></div>
+        <h3><b>TOYOTA</b><span>ハイラックス</span></h3>
+        <dl><dt>区分</dt><dd>ピックアップ</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work damaged">
+        <div class="ph"><img src="./img/j-kawasaki-loader-sm.webp" srcset="./img/j-kawasaki-loader-sm.webp 640w, ./img/j-kawasaki-loader.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 川崎 ホイールローダー 不動" width="640" height="819" loading="lazy" style="object-position:50% 45%"></div>
+        <h3><b>KAWASAKI</b><span>ホイールローダー</span></h3>
+        <dl><dt>区分</dt><dd>建設機械・不動</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./kenki.html">建設機械買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="van">
+        <div class="ph"><img src="./img/j-hiace-wagon-sm.webp" srcset="./img/j-hiace-wagon-sm.webp 640w, ./img/j-hiace-wagon.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 トヨタ ハイエース ワゴン" width="640" height="823" loading="lazy" style="object-position:50% 55%"></div>
+        <h3><b>TOYOTA</b><span>ハイエース ワゴン</span></h3>
+        <dl><dt>区分</dt><dd>ワンボックス</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work damaged">
+        <div class="ph"><img src="./img/j-elf-auger-sm.webp" srcset="./img/j-elf-auger-sm.webp 640w, ./img/j-elf-auger.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 いすゞ エルフ 穴掘建柱車 旧車" width="640" height="828" loading="lazy" style="object-position:50% 55%"></div>
+        <h3><b>ISUZU</b><span>エルフ（穴掘建柱車）</span></h3>
+        <dl><dt>区分</dt><dd>作業車・旧車</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./truck-bus-buying.html">トラック・バス買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="work damaged">
+        <div class="ph"><img src="./img/j-sakai-tire-sm.webp" srcset="./img/j-sakai-tire-sm.webp 640w, ./img/j-sakai-tire.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 酒井重工業 タイヤローラー" width="640" height="822" loading="lazy" style="object-position:50% 55%"></div>
+        <h3><b>SAKAI</b><span>タイヤローラー</span></h3>
+        <dl><dt>区分</dt><dd>建設機械・不動</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./kenki.html">建設機械買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-cat="van">
+        <div class="ph"><img src="./img/j-caravan-sm.webp" srcset="./img/j-caravan-sm.webp 640w, ./img/j-caravan.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 日産 キャラバン 商用バン" width="640" height="827" loading="lazy" style="object-position:50% 50%"></div>
+        <h3><b>NISSAN</b><span>キャラバン</span></h3>
+        <dl><dt>区分</dt><dd>商用バン</dd><dt>エリア</dt><dd>日本全国</dd></dl>
+        <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </article>
       <article class="card" data-cat="classic">
         <div class="ph"><img src="./img/honda-nsx-sm.webp" srcset="./img/honda-nsx-sm.webp 640w, ./img/honda-nsx.webp 750w" sizes="(max-width:600px) 92vw, 570px" alt="買取実績 ホンダ NSX" width="640" height="853" loading="lazy" style="object-position:50% 30%"></div>
         <h3><b>HONDA</b><span>NSX</span></h3>
@@ -1255,6 +1398,7 @@ a.fact:hover{border-color:#77797f}
         <a class="btn-o" href="./used-car-buying.html">中古車・廃車買取を見る<svg class="icon"><use href="#i-arrow"/></svg></a>
       </article>
     </div>
+    <div class="cards-more" id="cardsMore"><button type="button" id="moreBtn">もっと見る（全32台）</button></div>
     <p class="cards-note">※掲載している車両は、当社がこれまでに取り扱った車両の一部です。</p>
   </div>
 </section>
@@ -1334,6 +1478,38 @@ a.fact:hover{border-color:#77797f}
       <li class="stop"><span class="st">4</span><h3>引取り・お支払い</h3><p>条件に合意後、引取りとお支払いの手続きを進めます。</p><span class="free">埼玉県内は引取り無料</span></li>
       <li class="track-end" aria-hidden="true"><svg class="icon"><use href="#i-ship"/></svg><span>その後、<br>車両は海外へ</span></li>
     </ol>
+  </div>
+</section>
+
+<!-- ================= 対応エリア ================= -->
+<section class="sec" id="area">
+  <div class="wrap">
+    <div class="sh"><h2>買取・引取り<span>対応エリア</span></h2></div>
+    <p class="sh-lead">お車・機械の所在地によって、対応内容が異なります。</p>
+    <div class="zones rv">
+      <div class="zone z1">
+        <span class="zt">無料引取り</span>
+        <h3>関東エリア</h3>
+        <p class="zp">埼玉県・東京都・神奈川県・千葉県・群馬県・栃木県・茨城県</p>
+        <ul><li>乗用車・事故車・不動車</li><li>トラック・バス・建設機械・重機</li><li>農業機械・フォークリフト</li></ul>
+        <p class="zpay"><b>お支払い</b>埼玉県・東京都は引取り当日に現金。その他の県はお振込み。</p>
+      </div>
+      <div class="zone z1">
+        <span class="zt">無料引取り</span>
+        <h3>愛知県</h3>
+        <p class="zp">名古屋市ほか愛知県全域</p>
+        <ul><li>乗用車・事故車・不動車</li><li>トラック・バス・建設機械・重機</li><li>農業機械・フォークリフト</li></ul>
+        <p class="zpay"><b>お支払い</b>お振込み</p>
+      </div>
+      <div class="zone z2">
+        <span class="zt">全国対応</span>
+        <h3>その他の地域</h3>
+        <p class="zp">北海道・東北・中部（愛知県以外）・近畿・中国・四国・九州・沖縄</p>
+        <ul><li>トラック・バス・建設機械・重機・農業機械は全国から買取</li><li>乗用車は写真を拝見してから、対応をご相談させていただきます</li></ul>
+        <p class="zpay"><b>引取り</b>方法・費用は査定時にご案内します。</p>
+      </div>
+    </div>
+    <p class="zone-note">※車両・機械の種類、状態、所在地によって条件が異なる場合があります。まずはお気軽にご相談ください。</p>
   </div>
 </section>
 
@@ -1597,9 +1773,24 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
     bs.forEach(x => x.setAttribute("aria-pressed", x === b));
     const f = b.dataset.f;
     cards.forEach(c => c.hidden = !(f === "all" || c.dataset.cat.split(" ").includes(f)));
+    const box = document.getElementById("cards"), more = document.getElementById("cardsMore");
+    if (f !== "all") { box.classList.remove("lim"); more.hidden = true; }
+    else if (!box.dataset.open) { box.classList.add("lim"); more.hidden = false; }
     document.getElementById("cards").scrollLeft = 0;
   }));
 })();
+
+(function(){const b=document.getElementById("moreBtn");if(!b)return;b.addEventListener("click",()=>{const box=document.getElementById("cards");box.classList.remove("lim");box.dataset.open="1";document.getElementById("cardsMore").hidden=true;});})();
+
+/* ---------- 所在地 → 対応内容 ---------- */
+(function(){const p=document.getElementById("ez-pref"),z=document.getElementById("ez-zone");if(!p||!z)return;
+const cash=["埼玉県","東京都"],kanto=["神奈川県","千葉県","群馬県","栃木県","茨城県"];
+const up=()=>{const v=p.value;let c,t;
+if(cash.includes(v)){c="ok";t="✅ "+v+"は<b>無料引取り</b>・<b>引取り当日に現金払い</b>に対応しています。";}
+else if(kanto.includes(v)||v==="愛知県"){c="ok";t="✅ "+v+"は<b>無料引取り</b>に対応しています（お支払いはお振込み）。";}
+else{c="info";t="ℹ️ "+v+"は、<b>トラック・バス・建設機械・重機・農業機械</b>を買取しています。乗用車は写真を拝見してから、対応をご相談させていただきます。";}
+z.className="ez-zone "+c;z.innerHTML=t;z.hidden=false;};
+p.addEventListener("change",up);up();})();
 
 /* ---------- card light follows the cursor ---------- */
 (function(){
@@ -1817,7 +2008,7 @@ function draw(arr,box){box.innerHTML="";arr.forEach((f,i)=>{const d=document.cre
 $("ez-photos").addEventListener("change",async e=>{for(const f of [...e.target.files]){if(photos.length>=10)break;photos.push(await shrink(f));}e.target.value="";draw(photos,$("ez-pthumbs"));$("ez-pcount").textContent=photos.length?photos.length+"枚選択中（10枚まで）":"";});
 $("ez-shaken").addEventListener("change",async e=>{const f=e.target.files[0];if(f){shaken.length=0;shaken.push(await shrink(f));}e.target.value="";draw(shaken,$("ez-sthumbs"));});
 $("ez-list").addEventListener("change",async e=>{const f=e.target.files[0];if(f){list.length=0;list.push(await shrink(f));}e.target.value="";draw(list,$("ez-lthumbs"));});
-const zipEl=$("ez-zip"),zmsg=$("ez-zipmsg");let zipT=null;function zipLookup(){const z=(zipEl.value||"").replace(/[^0-9０-９]/g,"").replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248));if(z.length!==7)return;const cb="ezZip"+Date.now();const sc=document.createElement("script");const done=()=>{delete window[cb];sc.remove();clearTimeout(zipT);};window[cb]=d=>{done();const r=d&&d.results&&d.results[0];if(!r){zmsg.textContent="住所が見つかりませんでした。手入力してください。";return;}const p=$("ez-pref");const i=[...p.options].findIndex(o=>o.getAttribute("value")===r.address1);if(i>=0)p.selectedIndex=i;$("ez-city").value=r.address2+r.address3;zmsg.textContent="✅ "+r.address1+r.address2+r.address3+"　続けて番地を入力してください。";$("ez-addr").focus();};zipT=setTimeout(()=>{done();zmsg.textContent="自動入力できませんでした。手入力してください。";},6000);sc.src="https://zipcloud.ibsnet.co.jp/api/search?zipcode="+z+"&callback="+cb;sc.onerror=()=>{done();zmsg.textContent="自動入力できませんでした。手入力してください。";};document.head.appendChild(sc);}zipEl.addEventListener("input",zipLookup);
+const zipEl=$("ez-zip"),zmsg=$("ez-zipmsg");let zipT=null;function zipLookup(){const z=(zipEl.value||"").replace(/[^0-9０-９]/g,"").replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248));if(z.length!==7)return;const cb="ezZip"+Date.now();const sc=document.createElement("script");const done=()=>{delete window[cb];sc.remove();clearTimeout(zipT);};window[cb]=d=>{done();const r=d&&d.results&&d.results[0];if(!r){zmsg.textContent="住所が見つかりませんでした。手入力してください。";return;}const p=$("ez-pref");const i=[...p.options].findIndex(o=>o.getAttribute("value")===r.address1);if(i>=0){p.selectedIndex=i;p.dispatchEvent(new Event("change"));}$("ez-city").value=r.address2+r.address3;zmsg.textContent="✅ "+r.address1+r.address2+r.address3+"　続けて番地を入力してください。";$("ez-addr").focus();};zipT=setTimeout(()=>{done();zmsg.textContent="自動入力できませんでした。手入力してください。";},6000);sc.src="https://zipcloud.ibsnet.co.jp/api/search?zipcode="+z+"&callback="+cb;sc.onerror=()=>{done();zmsg.textContent="自動入力できませんでした。手入力してください。";};document.head.appendChild(sc);}zipEl.addEventListener("input",zipLookup);
 function fail(m){const b=$("ez-msg");b.className="ez-msg ez-err";b.textContent=m;$("ez-send").disabled=false;$("ez-send").textContent="無料で査定を依頼する";}
 fm.addEventListener("submit",async e=>{e.preventDefault();$("ez-msg").className="ez-msg";
   const m=mode(),v=n=>(fm.elements[n]&&fm.elements[n].value||"").trim();

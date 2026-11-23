@@ -87,9 +87,20 @@ footer a{text-decoration:underline}
 #satei .ez-seg span{display:block;text-align:center;padding:10px 6px;border:1px solid #4a4d55;border-radius:10px;color:#d7d8dc;font-size:14.5px;cursor:pointer;height:100%}
 #satei .ez-seg input:checked+span{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
 #satei .ez-seg input:focus-visible+span{outline:2px solid #fff;outline-offset:2px}
+.ez-zone{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13.5px;line-height:1.6;border:1px solid #4a4d55;background:#24252a;color:#e6e7ea}
+.ez-zone.ok{border-color:rgba(76,175,80,.6);background:rgba(76,175,80,.12)}
+.ez-zone.info{border-color:rgba(255,200,40,.55);background:rgba(255,200,40,.10)}
 #satei .ez-mode{margin-bottom:18px}
 #satei .ez-mode label{flex:1 1 45%}
 #satei .ez-mode span{padding:14px 6px;font-size:16px;font-weight:700}
+#satei .ez-mode{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:0;flex-wrap:nowrap;height:72px;padding:6px;border-radius:12px;background:linear-gradient(#0e0f12,#1a1b1f);box-shadow:inset 0 3px 8px rgba(0,0,0,.75),inset 0 -1px 0 rgba(255,255,255,.06)}
+#satei .ez-mode::before{content:"";position:absolute;z-index:0;top:6px;left:6px;width:calc(50% - 6px);height:54px;border-radius:8px;background:linear-gradient(180deg,#e53935 0%,#d32f2f 60%,#b71c1c 100%);box-shadow:0 6px 0 #7a1414,0 14px 22px rgba(211,47,47,.45),inset 0 2px 0 rgba(255,255,255,.35),inset 0 -3px 6px rgba(0,0,0,.25);transform:translateY(-2px);transition:left .45s cubic-bezier(.65,-.25,.3,1.35),transform .2s,box-shadow .2s}
+#satei .ez-mode:has(label:nth-child(2) input:checked)::before{left:50%}
+#satei .ez-mode:active::before{transform:translateY(2px);box-shadow:0 2px 0 #7a1414,0 6px 12px rgba(211,47,47,.35),inset 0 2px 0 rgba(255,255,255,.3)}
+#satei .ez-mode label{position:relative;z-index:1;min-width:0}
+#satei .ez-mode span{display:flex;align-items:center;justify-content:center;height:100%;padding:0 4px 6px;border:0;border-radius:8px;background:none!important;color:#8b8e96;font-size:16px;font-weight:700;transition:color .35s}
+#satei .ez-mode input:checked+span{background:none;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+@media (max-width:400px){#satei .ez-mode span{font-size:14px}}
 #satei .ez-up{display:block;border:2px dashed #5a5d66;border-radius:12px;padding:16px;text-align:center;color:#d7d8dc;cursor:pointer;font-size:14.5px}
 #satei .ez-up input{display:none}
 #satei .ez-up b{color:#fff}
@@ -170,6 +181,7 @@ footer a{text-decoration:underline}
   <p class="ez-small" id="ez-pcount"></p>
   <p class="ez-small">💡 写真がうまく送れない場合は、写真なしで送信してください。後から<a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">LINE</a>で送っていただいても大丈夫です。</p></div>
  <div class="ez-f"><label for="ez-pref">車両・機械の所在地<span class="ez-req">必須</span></label><select id="ez-pref" name="pref"><option>北海道</option><option>青森県</option><option>岩手県</option><option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option><option>茨城県</option><option>栃木県</option><option>群馬県</option><option selected>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option><option>新潟県</option><option>富山県</option><option>石川県</option><option>福井県</option><option>山梨県</option><option>長野県</option><option>岐阜県</option><option>静岡県</option><option>愛知県</option><option>三重県</option><option>滋賀県</option><option>京都府</option><option>大阪府</option><option>兵庫県</option><option>奈良県</option><option>和歌山県</option><option>鳥取県</option><option>島根県</option><option>岡山県</option><option>広島県</option><option>山口県</option><option>徳島県</option><option>香川県</option><option>愛媛県</option><option>高知県</option><option>福岡県</option><option>佐賀県</option><option>長崎県</option><option>熊本県</option><option>大分県</option><option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option></select>
+  <div class="ez-zone" id="ez-zone" aria-live="polite" hidden></div>
   <input type="text" name="city" placeholder="市区町村（例：上尾市）" style="margin-top:8px" aria-label="市区町村"></div>
  <div class="ez-f"><label for="ez-name"><span data-for="個人">お名前</span><span data-for="法人" hidden>ご担当者名</span><span class="ez-req">必須</span></label><input type="text" id="ez-name" name="name" autocomplete="name" placeholder="例：山田 太郎"></div>
  <div class="ez-f"><label for="ez-phone">電話番号<span class="ez-req">必須</span></label><input type="tel" id="ez-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="例：090-1234-5678"></div>
@@ -215,6 +227,17 @@ footer a{text-decoration:underline}
 </div>
 </main>
 <footer><p><strong>EXPORT ZONE 株式会社</strong></p><p>〒362-0806 埼玉県北足立郡伊奈町小室2607</p><p>電話：0120-888-405 ｜ メール：<a href="mailto:purchase@exportzone.jp">purchase@exportzone.jp</a></p><p>古物商許可番号：第452750021040号</p><p><a href="./">トップページ</a> ｜ <a href="./zenkoku.html">全国対応</a> ｜ <a href="./haisha-tetsuzuki.html">廃車手続き</a></p></footer>
+<script>
+/* ---------- 所在地 → 対応内容 ---------- */
+(function(){const p=document.getElementById("ez-pref"),z=document.getElementById("ez-zone");if(!p||!z)return;
+const cash=["埼玉県","東京都"],kanto=["神奈川県","千葉県","群馬県","栃木県","茨城県"];
+const up=()=>{const v=p.value;let c,t;
+if(cash.includes(v)){c="ok";t="✅ "+v+"は<b>無料引取り</b>・<b>引取り当日に現金払い</b>に対応しています。";}
+else if(kanto.includes(v)||v==="愛知県"){c="ok";t="✅ "+v+"は<b>無料引取り</b>に対応しています（お支払いはお振込み）。";}
+else{c="info";t="ℹ️ "+v+"は、<b>トラック・バス・建設機械・重機・農業機械</b>を買取しています。乗用車は写真を拝見してから、対応をご相談させていただきます。";}
+z.className="ez-zone "+c;z.innerHTML=t;z.hidden=false;};
+p.addEventListener("change",up);up();})();
+</script>
 <script>
 (()=>{
 const API="https://globalstock-railway-python-production.up.railway.app/api/ez/lead";
