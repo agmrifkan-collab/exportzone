@@ -39,7 +39,7 @@
   "@type": "AutomotiveBusiness",
   "name": "EXPORT ZONE 株式会社",
   "alternateName": "EXPORT ZONE",
-  "description": "廃車・事故車・不動車・中古車・トラック・建設機械・農業機械・自動車部品の買取・輸出。日本全国から買取。埼玉県内は引取り無料、引取り当日に現金払い、抹消登録は無料で代行。",
+  "description": "廃車・事故車・不動車・中古車・トラック・建設機械・農業機械・自動車部品の買取・輸出。日本全国から買取。関東・愛知県は引取り無料、埼玉県・東京都は引取り当日に現金払い、抹消登録は無料で代行。",
   "founder": { "@type": "Person", "name": "リフカーン ガフール", "jobTitle": "代表取締役" },
   "url": "https://exportzone.jp/",
   "logo": "https://exportzone.jp/EZ%20Logo.png",
@@ -56,6 +56,7 @@
     "addressCountry": "JP"
   },
   "hasMap": "https://maps.app.goo.gl/dpudcrUdkBES1sjY6",
+  "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "08:00", "closes": "17:00" }],
   "areaServed": { "@type": "Country", "name": "日本" },
   "knowsAbout": ["廃車買取", "中古車買取", "事故車買取", "水没車買取", "不動車買取", "トラック買取", "建設機械買取", "農業機械買取", "中古車輸出"],
   "sameAs": ["https://line.me/ti/p/VcqKQ0PYkN"]
@@ -63,28 +64,154 @@
 </script>
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": "廃車予定の車でも買取できますか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "はい。廃車予定の車、古い車、過走行の車でもご相談ください。海外へ輸出するルートがあるため、日本で値段がつきにくい車でも買取できる場合があります。" } },
-    { "@type": "Question", "name": "事故車や動かない車（不動車）でも大丈夫ですか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "はい。事故車・不動車・車検切れの車もご相談いただけます。車の状態によっては買取が難しい場合もありますので、まずは写真をお送りください。" } },
-    { "@type": "Question", "name": "廃車の手続きはどうすればいいですか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "抹消登録などの廃車手続きは当社が無料で代行します。車検証の内容や車の状態を確認したうえでご案内します。" } },
-    { "@type": "Question", "name": "どのような商品を買取していますか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "廃車、中古車、トラック、バス、建設機械、農業機械、自動車部品、在庫品・ストックロットなど、幅広い商品を取り扱っています。" } },
-    { "@type": "Question", "name": "車の引取りに費用はかかりますか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "埼玉県内であれば、引取りは無料です。車の状態や保管場所を確認したうえで、日程をご案内します。" } },
-    { "@type": "Question", "name": "査定に費用はかかりますか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "商品の内容を確認するためのお問い合わせ・ご相談は無料です。" } },
-    { "@type": "Question", "name": "支払いはいつですか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "引取り当日に現金でお支払いします。" } },
-    { "@type": "Question", "name": "建設会社ですが、使わなくなった重機やトラックをまとめて売れますか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "はい。ユンボ、ダンプ、ユニック車など、使わなくなった重機・トラックをまとめて査定します。日本全国から買取のご相談を承ります。お問い合わせは purchase@exportzone.jp または 0120-888-405 まで。" } },
-    { "@type": "Question", "name": "紹介制度はありますか？",
-      "acceptedAnswer": { "@type": "Answer", "text": "はい。ご紹介いただいた会社様との取引が成立した場合、紹介料をお支払いします。" } }
-  ]
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "廃車予定の車でも買取できますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "はい。廃車予定の車、古い車、過走行の車でもご相談ください。海外へ輸出するルートがあるため、日本で値段がつきにくい車でも買取できる場合があります。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "事故車や動かない車（不動車）でも大丈夫ですか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "はい。事故車・不動車・水没車・車検切れの車も、原則0円以上で買取します。動かない車もレッカーで引取りに伺います。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "廃車の手続きはどうすればいいですか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "抹消登録などの廃車手続きは当社が無料で代行します。車検証の内容や車の状態を確認したうえでご案内します。廃車手続きの方法・費用・必要書類を詳しく見る"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "どのような商品を買取していますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "廃車、中古車、トラック、バス、建設機械、農業機械、自動車部品、在庫品・ストックロットなど、幅広い商品を取り扱っています。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "査定に費用はかかりますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "商品の内容を確認するためのお問い合わせ・ご相談は無料です。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "車の引取りに費用はかかりますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "関東（埼玉・東京・神奈川・千葉・群馬・栃木・茨城）と愛知県は、レッカー代・引取り費用は無料です。その他の地域は、引取り方法と費用を査定時にご案内します。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "支払いはいつですか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "埼玉県・東京都は、引取り当日に現金でお支払いします。その他の地域はお振込みでお支払いします。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "査定のあとで買取金額が減額されることはありますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "ありません。お伝えした査定額から、後で減額することはありません。事前に伺っていなかった大きな欠品などがある場合のみ、ご相談させていただきます。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "しつこい営業の電話はありませんか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "ありません。査定額を知りたいだけのご相談も歓迎です。売るかどうかは、ゆっくりお決めください。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "他社で値段がつかなかった車でも売れますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "はい。他社で断られた車や0円と言われた車も、海外輸出ルートがあるため原則0円以上で買取します。相見積もりも歓迎です。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "土日祝日も対応していますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "はい。年中無休で、土日祝日もご相談・引取りに対応しています（8:00〜17:00）。お電話またはLINEでご希望の日時をお知らせください。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "最短でいつ引取りに来てもらえますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "最短即日で引取りに伺います。お車の場所と状態、ご希望の日時をお知らせください。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "ローンが残っている車でも売れますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "状況によって対応が異なりますので、まずはご相談ください。ローン会社や残債の状況を確認したうえでご案内します。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "建設会社ですが、使わなくなった重機やトラックをまとめて売れますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "はい。ユンボ、ダンプ、ユニック車など、使わなくなった重機・トラックをまとめて査定します。日本全国から買取のご相談を承ります。お問い合わせは purchase@exportzone.jp または 0120-888-405 まで。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "紹介制度はありますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "はい。ご紹介いただいた会社様との取引が成立した場合、紹介料をお支払いします。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "商品の写真だけでも相談できますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "はい。車検証や商品の写真、メーカー、型式、数量、状態などをお送りいただければ確認できます。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "遠方からでも相談できますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "トラック・バス・建設機械・重機・農業機械は、日本全国から買取します。関東・愛知県以外の乗用車は、写真を拝見してから対応をご相談させていただきます。引取り方法と費用は査定時にご案内します。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "在庫品や余剰品も買取できますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "商品の種類、数量、状態などを確認したうえで対応します。まずはお気軽にお問い合わせください。"
+   }
+  }
+ ]
 }
 </script>
 
@@ -583,6 +710,14 @@ a.fact:hover{border-color:#77797f}
 @media (max-width:999px){.kg{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px}.b2b{grid-template-columns:1fr}.items{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:760px){.kg{grid-auto-rows:150px;gap:8px}.kg figure.w{grid-column:span 2}.kg figcaption b{font-size:12.5px}.kg figcaption span{font-size:11px}}
 
+/* ---------- 安心のお約束 ---------- */
+.vow{margin-top:70px}
+.vows{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
+.vows li{position:relative;padding:18px 16px 16px 16px;border:1px solid var(--line2);border-radius:14px;background:var(--bg2);border-top:3px solid var(--red)}
+.vows b{display:block;font-size:16px;font-weight:900;line-height:1.4}
+.vows span{display:block;margin-top:6px;font-size:12.5px;color:var(--mut);line-height:1.7}
+@media (max-width:999px){.vows{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.vows{grid-template-columns:1fr}}
 /* ---------- 対応エリア ---------- */
 .zones{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1040px;margin-inline:auto}
 .zone{position:relative;padding:22px 22px 20px;border-radius:14px;background:linear-gradient(180deg,#2a2b2f,#1d1e21);border:1px solid #3e4046}
@@ -972,7 +1107,7 @@ a.fact:hover{border-color:#77797f}
 
     <div class="hero-txt">
       <p class="hero-lead cine-lead"><span class="nw" style="--i:0">事故車・動かない車も、</span><span class="nw" style="--i:1">お金を払わず買取します。</span></p>
-      <p class="hero-sub cine-sub">古い車、車検切れ、トラックや重機まで。日本全国から買取し、海外へ輸出しています。埼玉県内は引取り無料。</p>
+      <p class="hero-sub cine-sub">古い車、車検切れ、トラックや重機まで。日本全国から買取し、海外へ輸出しています。関東・愛知県は引取り無料。</p>
       <a class="flood-link" href="./flood-car-buying.html">台風・大雨で水に浸かった車・重機も買取します</a>
       <a class="flood-link" href="./car-condition.html">事故車・不動車・ローン中の車の売り方ガイド</a>
       <a class="flood-link" href="./truck-trade-in.html">今のトラックを下取りして低走行トラックへ乗り換え</a>
@@ -981,7 +1116,7 @@ a.fact:hover{border-color:#77797f}
 
   <ol class="dial" aria-label="EXPORT ZONEの5つの特長">
     <li class="pt" style="--i:-2;--k:0"><span class="n">01</span><div class="c"><svg class="icon"><use href="#i-camera"/></svg><b>査定無料</b><small>写真を送るだけ</small></div></li>
-    <li class="pt" style="--i:-1;--k:1"><span class="n">02</span><div class="c"><svg class="icon"><use href="#i-tow"/></svg><b>引取り無料</b><small>埼玉県内</small></div></li>
+    <li class="pt" style="--i:-1;--k:1"><span class="n">02</span><div class="c"><svg class="icon"><use href="#i-tow"/></svg><b>引取り無料</b><small>関東・愛知県</small></div></li>
     <li class="pt" style="--i:0;--k:2"><span class="n">03</span><div class="c"><svg class="icon"><use href="#i-alert"/></svg><b>事故車・不動車OK</b><small>車検切れも可</small></div></li>
     <li class="pt" style="--i:1;--k:3"><span class="n">04</span><div class="c"><svg class="icon"><use href="#i-doc"/></svg><b>書類もご案内</b><small>わかりやすく説明</small></div></li>
     <li class="pt" style="--i:2;--k:4"><span class="n">05</span><div class="c"><svg class="icon"><use href="#i-globe"/></svg><b>海外へ輸出</b><small>だから値段がつく</small></div></li>
@@ -992,7 +1127,7 @@ a.fact:hover{border-color:#77797f}
 <section class="cta-row" aria-label="お問い合わせ">
   <div class="wrap">
     <nav class="pick" aria-label="買取の種類を選ぶ">
-      <a href="#haisha" class="on"><span class="th"><img src="./img/th-porsche.webp" alt="廃車買取 ポルシェ" width="120" height="88" class="on"><img data-src="./img/th-nsx.webp" alt="廃車買取 ホンダ NSX" width="120" height="88"><img data-src="./img/th-supra.webp" alt="廃車買取 トヨタ スープラ" width="120" height="88"></span><span><b>廃車買取</b><small>乗用車・事故車・不動車<br>埼玉県内は引取り無料</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
+      <a href="#haisha" class="on"><span class="th"><img src="./img/th-porsche.webp" alt="廃車買取 ポルシェ" width="120" height="88" class="on"><img data-src="./img/th-nsx.webp" alt="廃車買取 ホンダ NSX" width="120" height="88"><img data-src="./img/th-supra.webp" alt="廃車買取 トヨタ スープラ" width="120" height="88"></span><span><b>廃車買取</b><small>乗用車・事故車・不動車<br>関東・愛知県は引取り無料</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
       <a href="./kenki.html"><span class="th"><img src="./img/th-cat.webp" alt="重機買取 CAT 建設機械" width="120" height="88" class="on"><img data-src="./img/th-kobelco.webp" alt="重機買取 コベルコ 建設機械" width="120" height="88"><img data-src="./img/th-hino.webp" alt="トラック買取 日野" width="120" height="88"></span><span><b>重機買取</b><small>建設機械・トラック<br>日本全国から買取</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
       <a href="./flood-car-buying.html" class="fl"><span class="th"><img src="./img/th-flood.webp" alt="水没車買取" width="120" height="88" class="on"></span><span><b>水没車買取</b><small>台風・大雨で浸水した<br>車・トラック・重機も</small></span><span class="go"><svg class="icon"><use href="#i-arrow"/></svg></span></a>
     </nav>
@@ -1082,7 +1217,7 @@ a.fact:hover{border-color:#77797f}
     <div class="facts rv">
       <a class="fact" href="https://maps.app.goo.gl/dpudcrUdkBES1sjY6" target="_blank" rel="noopener"><span class="stars" id="stars" style="--v:86%"><i></i></span><b class="count" data-to="4.3" data-dec="1">4.3</b><small>Googleマップの口コミ</small></a>
       <div class="fact"><b class="count" data-to="2016" data-from="1990">2016</b><small>年に創業</small></div>
-      <div class="fact"><b class="ja">引取り無料</b><small>埼玉県内</small></div>
+      <div class="fact"><b class="ja">引取り無料</b><small>関東・愛知県</small></div>
       <div class="fact"><b class="ja">古物商許可</b><small>第452750021040号</small></div>
     </div>
     <div class="duo rv">
@@ -1108,10 +1243,25 @@ a.fact:hover{border-color:#77797f}
         <p>廃車にすると費用がかかると思われがちですが、EXPORT ZONE は車や機械を買い取る会社です。海外へ輸出するルートがあるので、国内では値段がつきにくい車にも価値を見いだせます。</p>
         <ul class="pros">
           <li class="pro"><svg class="icon"><use href="#i-yen"/></svg><h3>査定・ご相談は無料</h3><p>電話・LINEで、写真だけでも査定できます。</p></li>
-          <li class="pro"><svg class="icon"><use href="#i-truck"/></svg><h3>埼玉県内は引取り無料</h3><p>動かない車も、日程を合わせて引取りに伺います。</p></li>
+          <li class="pro"><svg class="icon"><use href="#i-truck"/></svg><h3>レッカー代・引取り無料</h3><p>関東・愛知県は、動かない車も日程を合わせて無料で引取ります。</p></li>
           <li class="pro"><svg class="icon"><use href="#i-globe"/></svg><h3>トラック・重機は全国から</h3><p>トラック・バス・建設機械・農業機械は日本全国から買取します。</p></li>
         </ul>
       </div>
+    </div>
+
+    <div class="vow rv">
+      <h2 class="h2"><span class="nw">EXPORT ZONEの</span><span class="nw">安心のお約束</span></h2>
+      <p class="lead">2016年創業。自社で海外へ輸出している会社だからできる、8つのお約束です。</p>
+      <ul class="vows">
+        <li><b>原則0円以上で買取</b><span>どんな車も、処分費用をいただくことはありません。</span></li>
+        <li><b>レッカー代無料・最短即日引取り</b><span>関東・愛知県は、動かない車も無料で、最短即日で引取ります。</span></li>
+        <li><b>査定後の減額なし</b><span>お伝えした査定額から、後で減額することはありません。</span></li>
+        <li><b>中間マージンなし</b><span>自社で海外へ直接輸出するので、その分を買取額に還元します。</span></li>
+        <li><b>しつこい営業なし</b><span>査定だけでもOK。何度もお電話することはありません。</span></li>
+        <li><b>他社で断られた車もOK</b><span>相見積もりも歓迎です。比べてからお決めください。</span></li>
+        <li><b>LINEで写真を送るだけ</b><span>最短1分で査定依頼。車検証と写真を送れば、来店不要で査定できます。</span></li>
+        <li><b>年中無休・土日祝も対応</b><span>8:00〜17:00。お仕事がお休みの日も、ご相談・引取りに対応します。</span></li>
+      </ul>
     </div>
 
     <div class="hx rv">
@@ -1127,7 +1277,7 @@ a.fact:hover{border-color:#77797f}
         <li><span class="ck"><svg class="icon"><use href="#i-check"/></svg></span><span><b>商用車・トラック</b><span>バン・軽トラ・大型トラックなど</span></span></li>
         <li><span class="ck"><svg class="icon"><use href="#i-check"/></svg></span><span><b>廃車手続き</b><span>手続きについてもご相談ください</span></span></li>
       </ul>
-      <p class="note">※車の状態・車種によっては買取が難しい場合もあります。車検証と車の写真をお送りいただければ、確認のうえご案内します。</p>
+      <p class="note">※どんな状態の車も原則0円以上で買取します。車検証と車の写真をお送りいただければ、確認のうえ査定額をご案内します。</p>
       <div class="act">
         <a href="tel:0120888405" class="plate" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">フリーダイヤル・通話無料</span><span class="p-num">0120-888-405</span></a>
         <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" class="btn btn-line"><svg class="icon"><use href="#i-line"/></svg>LINEで写真を送る</a>
@@ -1430,11 +1580,11 @@ a.fact:hover{border-color:#77797f}
 <section class="sec" id="products">
   <div class="wrap">
     <div class="sh"><h2>買取<span>品目</span></h2></div>
-    <p class="sh-lead">乗用車・廃車からトラック・バス・建設機械・農業機械まで、日本全国から買取します（埼玉県内は引取り無料）。各品目の詳しい内容もご覧ください。</p>
+    <p class="sh-lead">乗用車・廃車からトラック・バス・建設機械・農業機械まで、日本全国から買取します（関東・愛知県は引取り無料）。各品目の詳しい内容もご覧ください。</p>
     <div class="prods rv">
       <a class="prod" href="./used-car-buying.html">
         <img src="./img/used-z31-sm.webp" srcset="./img/used-z31-sm.webp 640w, ./img/used-z31.webp 1000w" sizes="(max-width:600px) 92vw, 570px" alt="中古車・廃車買取（フェアレディZ Z31）" width="640" height="400" loading="lazy">
-        <span class="area-chip">日本全国<em>｜埼玉県内は引取り無料</em></span>
+        <span class="area-chip">日本全国<em>｜関東・愛知県は引取り無料</em></span>
         <div class="prod-t"><h3>中古車・廃車<svg class="icon"><use href="#i-arrow"/></svg></h3><p>事故車・不動車・古い年式・過走行車・商用車</p></div>
       </a>
       <a class="prod" href="./truck-bus-buying.html">
@@ -1475,7 +1625,7 @@ a.fact:hover{border-color:#77797f}
       <li class="stop"><span class="st">1</span><h3>お問い合わせ</h3><p>電話・LINE・メールからご連絡ください。車検証や車の写真があるとスムーズです。</p></li>
       <li class="stop"><span class="st">2</span><h3>車両・商品の確認</h3><p>車両・機械・部品・在庫品などの状態や数量を確認します。</p></li>
       <li class="stop"><span class="st">3</span><h3>査定・お見積り</h3><p>内容を確認したうえで、買取条件をご案内します。</p></li>
-      <li class="stop"><span class="st">4</span><h3>引取り・お支払い</h3><p>条件に合意後、引取りとお支払いの手続きを進めます。</p><span class="free">埼玉県内は引取り無料</span></li>
+      <li class="stop"><span class="st">4</span><h3>引取り・お支払い</h3><p>条件に合意後、引取りとお支払いの手続きを進めます。</p><span class="free">関東・愛知県は引取り無料</span></li>
       <li class="track-end" aria-hidden="true"><svg class="icon"><use href="#i-ship"/></svg><span>その後、<br>車両は海外へ</span></li>
     </ol>
   </div>
@@ -1557,16 +1707,22 @@ a.fact:hover{border-color:#77797f}
     <p class="sh-lead">ここにないご質問も、お電話・LINEでお気軽にどうぞ。</p>
     <div class="faq">
       <details><summary><i class="q">Q</i>廃車予定の車でも買取できますか？<span class="pm"></span></summary><div class="faq-a">はい。廃車予定の車、古い車、過走行の車でもご相談ください。海外へ輸出するルートがあるため、日本で値段がつきにくい車でも買取できる場合があります。</div></details>
-      <details><summary><i class="q">Q</i>事故車や動かない車（不動車）でも大丈夫ですか？<span class="pm"></span></summary><div class="faq-a">はい。事故車・不動車・車検切れの車もご相談いただけます。車の状態によっては買取が難しい場合もありますので、まずは写真をお送りください。</div></details>
+      <details><summary><i class="q">Q</i>事故車や動かない車（不動車）でも大丈夫ですか？<span class="pm"></span></summary><div class="faq-a">はい。事故車・不動車・水没車・車検切れの車も、原則0円以上で買取します。動かない車もレッカーで引取りに伺います。</div></details>
       <details><summary><i class="q">Q</i>廃車の手続きはどうすればいいですか？<span class="pm"></span></summary><div class="faq-a">抹消登録などの廃車手続きは当社が無料で代行します。車検証の内容や車の状態を確認したうえでご案内します。<br><a href="./haisha-tetsuzuki.html" style="text-decoration:underline">廃車手続きの方法・費用・必要書類を詳しく見る</a></div></details>
       <details><summary><i class="q">Q</i>どのような商品を買取していますか？<span class="pm"></span></summary><div class="faq-a">廃車、中古車、トラック、バス、建設機械、農業機械、自動車部品、在庫品・ストックロットなど、幅広い商品を取り扱っています。</div></details>
       <details><summary><i class="q">Q</i>査定に費用はかかりますか？<span class="pm"></span></summary><div class="faq-a">商品の内容を確認するためのお問い合わせ・ご相談は無料です。</div></details>
-      <details><summary><i class="q">Q</i>車の引取りに費用はかかりますか？<span class="pm"></span></summary><div class="faq-a">埼玉県内であれば、引取りは無料です。車の状態や保管場所を確認したうえで、日程をご案内します。</div></details>
-      <details><summary><i class="q">Q</i>支払いはいつですか？<span class="pm"></span></summary><div class="faq-a">引取り当日に現金でお支払いします。</div></details>
+      <details><summary><i class="q">Q</i>車の引取りに費用はかかりますか？<span class="pm"></span></summary><div class="faq-a">関東（埼玉・東京・神奈川・千葉・群馬・栃木・茨城）と愛知県は、レッカー代・引取り費用は無料です。その他の地域は、引取り方法と費用を査定時にご案内します。</div></details>
+      <details><summary><i class="q">Q</i>支払いはいつですか？<span class="pm"></span></summary><div class="faq-a">埼玉県・東京都は、引取り当日に現金でお支払いします。その他の地域はお振込みでお支払いします。</div></details>
+      <details><summary><i class="q">Q</i>査定のあとで買取金額が減額されることはありますか？<span class="pm"></span></summary><div class="faq-a">ありません。お伝えした査定額から、後で減額することはありません。事前に伺っていなかった大きな欠品などがある場合のみ、ご相談させていただきます。</div></details>
+      <details><summary><i class="q">Q</i>しつこい営業の電話はありませんか？<span class="pm"></span></summary><div class="faq-a">ありません。査定額を知りたいだけのご相談も歓迎です。売るかどうかは、ゆっくりお決めください。</div></details>
+      <details><summary><i class="q">Q</i>他社で値段がつかなかった車でも売れますか？<span class="pm"></span></summary><div class="faq-a">はい。他社で断られた車や0円と言われた車も、海外輸出ルートがあるため原則0円以上で買取します。相見積もりも歓迎です。</div></details>
+      <details><summary><i class="q">Q</i>土日祝日も対応していますか？<span class="pm"></span></summary><div class="faq-a">はい。年中無休で、土日祝日もご相談・引取りに対応しています（8:00〜17:00）。お電話またはLINEでご希望の日時をお知らせください。</div></details>
+      <details><summary><i class="q">Q</i>最短でいつ引取りに来てもらえますか？<span class="pm"></span></summary><div class="faq-a">最短即日で引取りに伺います。お車の場所と状態、ご希望の日時をお知らせください。</div></details>
+      <details><summary><i class="q">Q</i>ローンが残っている車でも売れますか？<span class="pm"></span></summary><div class="faq-a">状況によって対応が異なりますので、まずはご相談ください。ローン会社や残債の状況を確認したうえでご案内します。</div></details>
       <details><summary><i class="q">Q</i>建設会社ですが、使わなくなった重機やトラックをまとめて売れますか？<span class="pm"></span></summary><div class="faq-a">はい。ユンボ、ダンプ、ユニック車など、使わなくなった重機・トラックをまとめて査定します。日本全国から買取のご相談を承ります。お問い合わせは purchase@exportzone.jp または 0120-888-405 まで。</div></details>
       <details><summary><i class="q">Q</i>紹介制度はありますか？<span class="pm"></span></summary><div class="faq-a">はい。ご紹介いただいた会社様との取引が成立した場合、紹介料をお支払いします。</div></details>
       <details><summary><i class="q">Q</i>商品の写真だけでも相談できますか？<span class="pm"></span></summary><div class="faq-a">はい。車検証や商品の写真、メーカー、型式、数量、状態などをお送りいただければ確認できます。</div></details>
-      <details><summary><i class="q">Q</i>遠方からでも相談できますか？<span class="pm"></span></summary><div class="faq-a">乗用車・廃車・トラック・バス・建設機械・農業機械は、日本全国から買取のご相談を承ります。埼玉県内は引取り無料です。遠方の引取り方法は査定時にご案内しています。</div></details>
+      <details><summary><i class="q">Q</i>遠方からでも相談できますか？<span class="pm"></span></summary><div class="faq-a">トラック・バス・建設機械・重機・農業機械は、日本全国から買取します。関東・愛知県以外の乗用車は、写真を拝見してから対応をご相談させていただきます。引取り方法と費用は査定時にご案内します。</div></details>
       <details><summary><i class="q">Q</i>在庫品や余剰品も買取できますか？<span class="pm"></span></summary><div class="faq-a">商品の種類、数量、状態などを確認したうえで対応します。まずはお気軽にお問い合わせください。</div></details>
     </div>
   </div>
@@ -1581,11 +1737,12 @@ a.fact:hover{border-color:#77797f}
         <div class="c-row"><dt>会社名</dt><dd>EXPORT ZONE 株式会社</dd></div>
         <div class="c-row"><dt>所在地</dt><dd>〒362-0806<br>埼玉県北足立郡伊奈町小室2607</dd></div>
         <div class="c-row"><dt>電話番号</dt><dd><a href="tel:0120888405" class="big">0120-888-405</a>（通話無料）</dd></div>
+        <div class="c-row"><dt>営業時間</dt><dd>8:00〜17:00（年中無休・土日祝も対応）</dd></div>
         <div class="c-row"><dt>メール</dt><dd><a href="mailto:purchase@exportzone.jp">purchase@exportzone.jp</a></dd></div>
         <div class="c-row"><dt>LINE</dt><dd><a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener">exportzonecoltd</a></dd></div>
         <div class="c-row"><dt>創業</dt><dd>2016年</dd></div>
         <div class="c-row"><dt>古物商許可</dt><dd>第452750021040号</dd></div>
-        <div class="c-row"><dt>対応地域</dt><dd>日本全国（乗用車・廃車・トラック・バス・建設機械・農業機械）<br>埼玉県内は引取り無料</dd></div>
+        <div class="c-row"><dt>対応地域</dt><dd>日本全国（乗用車・廃車・トラック・バス・建設機械・農業機械）<br>関東・愛知県は引取り無料</dd></div>
         <div class="c-row"><dt>事業内容</dt><dd>廃車・中古車・事故車・不動車・トラック・建設機械・農業機械・自動車部品・在庫品等の買取・輸出</dd></div>
       </dl>
       <div>
@@ -1598,7 +1755,7 @@ a.fact:hover{border-color:#77797f}
 
     <div class="areas">
       <h3>廃車・中古車の対応エリア</h3>
-      <p><a href="./zenkoku.html" style="text-decoration:underline">日本全国に対応</a>しています。埼玉県内は引取り無料です。埼玉県内の主な地域のページはこちら：</p>
+      <p><a href="./zenkoku.html" style="text-decoration:underline">日本全国に対応</a>しています。関東・愛知県は引取り無料です。埼玉県内の主な地域のページはこちら：</p>
       <div class="area-links">
         <a href="./area-ina.html"><svg class="icon"><use href="#i-pin"/></svg>伊奈町</a>
         <a href="./area-ageo.html"><svg class="icon"><use href="#i-pin"/></svg>上尾市</a>
@@ -1634,7 +1791,7 @@ a.fact:hover{border-color:#77797f}
     <div class="f-grid">
       <div>
         <a href="#top" class="brand"><img src="./logo.webp" alt="EXPORT ZONE 株式会社" width="51" height="42" loading="lazy"><span class="brand-t"><b>EXPORT ZONE</b><small>株式会社</small></span></a>
-        <p class="f-text">廃車・中古車・トラック・建設機械・農業機械を日本全国から買取し（埼玉県内は引取り無料）、海外市場へ輸出しています。</p>
+        <p class="f-text">廃車・中古車・トラック・建設機械・農業機械を日本全国から買取し（関東・愛知県は引取り無料）、海外市場へ輸出しています。</p>
         <a href="tel:0120888405" class="plate sm" aria-label="電話する 0120-888-405（通話無料）"><span class="p-top">通話無料</span><span class="p-num">0120-888-405</span></a>
       </div>
       <div>
