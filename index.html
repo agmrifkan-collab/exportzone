@@ -553,7 +553,11 @@ a.fact:hover{border-color:#77797f}
 .f-links a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
 .f-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:11.5px;color:var(--mut2)}
 .f-social{display:flex;gap:10px}
-.f-social a{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#17181b;font-size:18px;transition:transform .2s}
+.f-social a{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;transition:transform .2s}
+.f-social a svg{width:36px;height:36px;display:block}
+.c-sns{display:flex;flex-wrap:wrap;gap:10px}
+.c-sns a{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border:1px solid var(--line);border-radius:999px;color:inherit;text-decoration:none;font-size:14px}
+.c-sns svg{width:28px;height:28px;flex:none}
 .f-social a:hover{transform:translateY(-2px)}
 
 /* ---------- mobile bar ---------- */
@@ -1032,6 +1036,7 @@ a.fact:hover{border-color:#77797f}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ezIg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FEDA75"/><stop offset=".3" stop-color="#FA7E1E"/><stop offset=".55" stop-color="#D62976"/><stop offset=".8" stop-color="#962FBF"/><stop offset="1" stop-color="#4F5BD5"/></linearGradient></defs></svg>
 <div id="ezLoad" aria-hidden="true"><div class="lg">EXPORT ZONE<small>株式会社</small></div><div class="bar"><i></i></div></div>
 <script>(function(){var e=document.getElementById("ezLoad");if(!e)return;setTimeout(function(){e.parentNode&&e.parentNode.removeChild(e)},2300);})();</script>
 
@@ -1754,6 +1759,7 @@ a.fact:hover{border-color:#77797f}
         <div class="c-row"><dt>営業時間</dt><dd>8:00〜17:00（年中無休・土日祝も対応）</dd></div>
         <div class="c-row"><dt>メール</dt><dd><a href="mailto:purchase@exportzone.jp">purchase@exportzone.jp</a></dd></div>
         <div class="c-row"><dt>LINE</dt><dd><a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener">exportzonecoltd</a></dd></div>
+        <div class="c-row"><dt>SNS</dt><dd><div class="c-sns"><a href="https://www.instagram.com/export.zone_co_ltd/" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="url(#ezIg)"/><g fill="none" stroke="#fff" stroke-width="1.7"><rect x="5.5" y="5.5" width="13" height="13" rx="4"/><circle cx="12" cy="12" r="3.1"/></g><circle cx="16.1" cy="7.9" r=".95" fill="#fff"/></svg>Instagram</a><a href="https://www.facebook.com/profile.php?id=100091944885657" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#1877F2"/><path fill="#fff" d="M13.1 20.5v-6.6h2.2l.35-2.6h-2.55V9.65c0-.75.2-1.25 1.28-1.25h1.37V6.1c-.24-.03-1.05-.1-2-.1-1.98 0-3.33 1.2-3.33 3.43v1.87H8.2v2.6h2.22v6.6z"/></svg>Facebook</a><a href="https://www.tiktok.com/@export.zone0" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#000"/><path fill="#25F4EE" d="M15.2 6.2a3.5 3.5 0 0 0 2.7 3V11a5.6 5.6 0 0 1-2.7-.8v4.6a4.1 4.1 0 1 1-4.1-4.1h.5v2a2.1 2.1 0 1 0 1.6 2.05V4.5h2z" transform="translate(-.5 -.4)"/><path fill="#FE2C55" d="M15.2 6.2a3.5 3.5 0 0 0 2.7 3V11a5.6 5.6 0 0 1-2.7-.8v4.6a4.1 4.1 0 1 1-4.1-4.1h.5v2a2.1 2.1 0 1 0 1.6 2.05V4.5h2z" transform="translate(.5 .4)"/><path fill="#fff" d="M15.2 6.2a3.5 3.5 0 0 0 2.7 3V11a5.6 5.6 0 0 1-2.7-.8v4.6a4.1 4.1 0 1 1-4.1-4.1h.5v2a2.1 2.1 0 1 0 1.6 2.05V4.5h2z"/></svg>TikTok</a></div></dd></div>
         <div class="c-row"><dt>創業</dt><dd>2016年</dd></div>
         <div class="c-row"><dt>古物商許可</dt><dd>第452750021040号</dd></div>
         <div class="c-row"><dt>対応地域</dt><dd>日本全国（乗用車・廃車・トラック・バス・建設機械・農業機械）<br>関東・愛知県は引取り無料</dd></div>
@@ -1855,12 +1861,12 @@ a.fact:hover{border-color:#77797f}
     <div class="f-bottom">
       <p>© 2026 EXPORT ZONE 株式会社｜廃車買取・中古車買取・輸出｜古物商許可 第452750021040号</p>
       <div class="f-social">
-        <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener" aria-label="LINE"><svg class="icon"><use href="#i-line"/></svg></a>
-        <a href="https://maps.app.goo.gl/dpudcrUdkBES1sjY6" target="_blank" rel="noopener" aria-label="Googleマップ"><svg class="icon"><use href="#i-pin"/></svg></a>
-        <a href="https://www.instagram.com/export.zone_co_ltd/" target="_blank" rel="noopener me" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/></g><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg></a>
-        <a href="https://www.facebook.com/profile.php?id=100091944885657" target="_blank" rel="noopener me" aria-label="Facebook"><svg class="icon" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 21v-7.5h2.5l.5-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.5v3h2.5V21z"/></svg></a>
-        <a href="https://www.tiktok.com/@export.zone0" target="_blank" rel="noopener me" aria-label="TikTok"><svg class="icon" viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 3h-3v11.6a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9a5.7 5.7 0 1 0 4.8 5.6V8.7a7 7 0 0 0 4 1.3V7a4.2 4.2 0 0 1-4-4z"/></svg></a>
-        <a href="mailto:purchase@exportzone.jp" aria-label="メール"><svg class="icon"><use href="#i-mail"/></svg></a>
+        <a href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener me" aria-label="LINE"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#06C755"/><path fill="#fff" d="M12 4.6c-4.3 0-7.8 2.7-7.8 6.1 0 3 2.7 5.5 6.4 6 .25.05.6.17.69.38.08.2.05.5.02.7l-.1.65c-.03.2-.16.8.7.43s4.7-2.8 6.4-4.8c1.2-1.3 1.7-2.6 1.7-3.4 0-3.4-3.5-6.1-7.8-6.1z"/></svg></a>
+        <a href="https://maps.app.goo.gl/dpudcrUdkBES1sjY6" target="_blank" rel="noopener me" aria-label="Googleマップ"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#fff"/><path fill="#EA4335" d="M12 3.8a5.3 5.3 0 0 0-5.3 5.3c0 3.9 5.3 10.9 5.3 10.9s5.3-7 5.3-10.9A5.3 5.3 0 0 0 12 3.8z"/><circle cx="12" cy="9.1" r="2" fill="#fff"/></svg></a>
+        <a href="https://www.instagram.com/export.zone_co_ltd/" target="_blank" rel="noopener me" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="url(#ezIg)"/><g fill="none" stroke="#fff" stroke-width="1.7"><rect x="5.5" y="5.5" width="13" height="13" rx="4"/><circle cx="12" cy="12" r="3.1"/></g><circle cx="16.1" cy="7.9" r=".95" fill="#fff"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=100091944885657" target="_blank" rel="noopener me" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#1877F2"/><path fill="#fff" d="M13.1 20.5v-6.6h2.2l.35-2.6h-2.55V9.65c0-.75.2-1.25 1.28-1.25h1.37V6.1c-.24-.03-1.05-.1-2-.1-1.98 0-3.33 1.2-3.33 3.43v1.87H8.2v2.6h2.22v6.6z"/></svg></a>
+        <a href="https://www.tiktok.com/@export.zone0" target="_blank" rel="noopener me" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#000"/><path fill="#25F4EE" d="M15.2 6.2a3.5 3.5 0 0 0 2.7 3V11a5.6 5.6 0 0 1-2.7-.8v4.6a4.1 4.1 0 1 1-4.1-4.1h.5v2a2.1 2.1 0 1 0 1.6 2.05V4.5h2z" transform="translate(-.5 -.4)"/><path fill="#FE2C55" d="M15.2 6.2a3.5 3.5 0 0 0 2.7 3V11a5.6 5.6 0 0 1-2.7-.8v4.6a4.1 4.1 0 1 1-4.1-4.1h.5v2a2.1 2.1 0 1 0 1.6 2.05V4.5h2z" transform="translate(.5 .4)"/><path fill="#fff" d="M15.2 6.2a3.5 3.5 0 0 0 2.7 3V11a5.6 5.6 0 0 1-2.7-.8v4.6a4.1 4.1 0 1 1-4.1-4.1h.5v2a2.1 2.1 0 1 0 1.6 2.05V4.5h2z"/></svg></a>
+        <a href="mailto:purchase@exportzone.jp" aria-label="メール"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#444"/><g fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.8" y="6.5" width="14.4" height="11" rx="2.2"/><path d="m5.5 8 6.5 5 6.5-5"/></g></svg></a>
       </div>
     </div>
   </div>
