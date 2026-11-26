@@ -1,0 +1,74 @@
+/* EXPORT ZONE — page-specific content blocks (local guides, tables, compass maps).
+   Self-contained: works on pages with or without service-pages.css. */
+.ez-sec{--ez-bg:#1d1e22;--ez-card:#25262b;--ez-line:#3a3c42;--ez-text:#f4f4f5;--ez-mut:#a7a9af;--ez-acc:#e3131d;--ez-acc-soft:rgba(227,19,29,.12);
+  padding:64px 0;color:var(--ez-text);font-family:var(--ja,"Hiragino Sans","Yu Gothic","Meiryo",sans-serif)}
+.ez-sec.ez-alt{background:var(--ez-bg)}
+.ez-wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.ez-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;font-weight:700;color:var(--ez-acc);text-transform:uppercase;margin-bottom:10px}
+.ez-eyebrow::before{content:"";width:26px;height:2px;background:var(--ez-acc)}
+.ez-h2{font-size:clamp(22px,3.2vw,30px);line-height:1.35;margin:0 0 16px;font-weight:800}
+.ez-sec p{color:var(--ez-text);line-height:1.9;margin:0 0 14px;font-size:15.5px}
+.ez-sec p.ez-mut{color:var(--ez-mut);font-size:14px}
+.ez-sec a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.ez-two{display:grid;grid-template-columns:1.15fr 1fr;gap:36px;align-items:start;margin-top:8px}
+.ez-two.rev > :first-child{order:2}
+@media(max-width:860px){.ez-two{grid-template-columns:1fr;gap:24px}.ez-two.rev > :first-child{order:0}}
+
+/* fact list */
+.ez-facts{margin:0;border:1px solid var(--ez-line);border-radius:14px;overflow:hidden;background:var(--ez-card)}
+.ez-facts > div{display:grid;grid-template-columns:9.5em 1fr;border-top:1px solid var(--ez-line)}
+.ez-facts > div:first-child{border-top:0}
+.ez-facts dt{padding:13px 14px;font-weight:700;font-size:13.5px;color:var(--ez-mut);background:rgba(255,255,255,.02)}
+.ez-facts dd{margin:0;padding:13px 14px;font-size:14.5px;line-height:1.7}
+@media(max-width:520px){.ez-facts > div{grid-template-columns:1fr}.ez-facts dt{padding-bottom:2px;background:none}.ez-facts dd{padding-top:2px}}
+
+/* compass map */
+.ez-compass{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;aspect-ratio:1/1;max-width:420px;width:100%;margin:0 auto}
+.ez-compass > div{border:1px dashed var(--ez-line);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;font-size:13px;line-height:1.45;color:var(--ez-text);background:var(--ez-card)}
+.ez-compass > div small{display:block;color:var(--ez-mut);font-size:10.5px;letter-spacing:.1em;margin-bottom:3px}
+.ez-compass > .c{border:2px solid var(--ez-acc);background:var(--ez-acc-soft);font-weight:800;font-size:16px}
+.ez-compass > .empty{background:transparent;border-color:transparent}
+.ez-sec p.ez-compass-note{text-align:center;color:var(--ez-mut);font-size:12.5px;margin-top:10px}
+@media(max-width:520px){.ez-compass{aspect-ratio:auto;grid-auto-rows:minmax(92px,auto)}.ez-compass > div{font-size:12.5px;padding:6px}.ez-compass > .c{font-size:15px}}
+
+/* chips */
+.ez-chips{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.ez-chips li{border:1px solid var(--ez-line);background:var(--ez-card);border-radius:999px;padding:6px 13px;font-size:13.5px}
+
+/* callout */
+.ez-callout{border-left:4px solid var(--ez-acc);background:var(--ez-card);border-radius:0 12px 12px 0;padding:16px 18px;margin:18px 0 0}
+.ez-callout strong{display:block;margin-bottom:6px;font-size:15px}
+.ez-callout p{margin:0;font-size:14.5px;color:var(--ez-mut)}
+
+/* table */
+.ez-table-wrap{overflow-x:auto;border:1px solid var(--ez-line);border-radius:14px;margin-top:8px}
+.ez-table{width:100%;border-collapse:collapse;min-width:560px;background:var(--ez-card)}
+.ez-table th,.ez-table td{padding:13px 14px;border-top:1px solid var(--ez-line);text-align:left;vertical-align:top;font-size:14px;line-height:1.7}
+.ez-table thead th{border-top:0;background:#2c2d33;font-size:13px;letter-spacing:.04em}
+.ez-table tbody th{color:var(--ez-text);white-space:nowrap;font-weight:700}
+.ez-table td{color:#dcdde0}
+.ez-table .ok{color:#7ee2a8;font-weight:700}
+.ez-table .ng{color:#ff8b90;font-weight:700}
+
+/* steps / timeline */
+.ez-steps{list-style:none;margin:8px 0 0;padding:0;counter-reset:ez}
+.ez-steps li{position:relative;padding:0 0 22px 52px;counter-increment:ez}
+.ez-steps li::before{content:counter(ez,decimal-leading-zero);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;background:var(--ez-acc);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.ez-steps li::after{content:"";position:absolute;left:17px;top:40px;bottom:4px;width:2px;background:var(--ez-line)}
+.ez-steps li:last-child::after{display:none}
+.ez-steps b{display:block;font-size:15.5px;margin:6px 0 4px}
+.ez-steps span{display:block;color:var(--ez-mut);font-size:14px;line-height:1.75}
+
+/* photo guide grid */
+.ez-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+@media(max-width:760px){.ez-grid{grid-template-columns:repeat(2,1fr)}}
+.ez-grid > div{border:1px solid var(--ez-line);background:var(--ez-card);border-radius:14px;padding:16px}
+.ez-grid > div i{font-style:normal;display:inline-block;font-weight:800;color:var(--ez-acc);font-size:13px;margin-bottom:6px}
+.ez-grid > div b{display:block;font-size:15px;margin-bottom:4px}
+.ez-grid > div span{color:var(--ez-mut);font-size:13.5px;line-height:1.7}
+
+/* small faq for pages without one */
+.ez-faq details{border:1px solid var(--ez-line);background:var(--ez-card);border-radius:12px;padding:13px 16px;margin-bottom:10px}
+.ez-faq summary{cursor:pointer;font-weight:700}
+.ez-faq details p{color:var(--ez-mut);font-size:14.5px;margin:8px 0 0}
+.ez-facts + p,.ez-grid + p,.ez-table-wrap + p,.ez-two + p{margin-top:14px}
