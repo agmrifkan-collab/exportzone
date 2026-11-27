@@ -1075,6 +1075,14 @@ a.fact:hover{border-color:#77797f}
 .pick a.vt .go{background:#c9971f}
 .pick .vt-tag{display:inline-block;font-style:normal;font-weight:900;font-size:12px;letter-spacing:.08em;color:#1d1e21;background:linear-gradient(180deg,#f6d77a,#d9a43a);border-radius:999px;padding:3px 10px;margin-bottom:5px}
 .pick a.vt b{color:#ffe7a6}
+@property --vtA{syntax:"<angle>";initial-value:0deg;inherits:false}
+.pick a.vt::before,.pick a.vt::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:conic-gradient(from var(--vtA),transparent 0deg,transparent 250deg,rgba(124,58,237,.55) 285deg,#8b5cf6 320deg,#c4b5fd 340deg,#fff 352deg,transparent 360deg);
+  padding:2px;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:vtRun 3.2s linear infinite}
+.pick a.vt::after{padding:7px;filter:blur(7px);opacity:.75}
+@keyframes vtRun{to{--vtA:360deg}}
+@media (prefers-reduced-motion:reduce){.pick a.vt::before,.pick a.vt::after{animation:none}}
 </style>
 </head>
 <body>
