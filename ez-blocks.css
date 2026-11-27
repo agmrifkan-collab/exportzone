@@ -72,3 +72,4 @@
 .ez-faq summary{cursor:pointer;font-weight:700}
 .ez-faq details p{color:var(--ez-mut);font-size:14.5px;margin:8px 0 0}
 .ez-facts + p,.ez-grid + p,.ez-table-wrap + p,.ez-two + p{margin-top:14px}
+.ez-chips + .ez-facts{margin-top:16px}.ez-callout + p{margin-top:18px}
