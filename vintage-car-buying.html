@@ -210,6 +210,14 @@ footer a{text-decoration:underline}
   },
   {
    "@type": "Question",
+   "name": "持ち主（名義人）が亡くなっている旧車でも売れますか？",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "はい、買取できます。ご家族・相続人の方からご相談ください。相続に必要な書類（戸籍謄本・遺産分割協議書など）は当社がわかりやすくご案内し、名義変更・抹消登録などの手続きは無料で代行します。手続きが完了したら、書類のコピーをお渡しします。"
+   }
+  },
+  {
+   "@type": "Question",
    "name": "廃車や名義変更の手続きはどうなりますか？",
    "acceptedAnswer": {
     "@type": "Answer",
@@ -235,6 +243,45 @@ footer a{text-decoration:underline}
   <div class="chips"><i>不動車・長期保管車OK</i><i>全車種対応</i><i>全国引取り無料</i><i>書類手続き無料代行</i></div>
  </div>
 </div>
+<style>
+.inh{position:relative;margin:26px auto 4px;width:calc(100% - 24px);max-width:880px;box-sizing:border-box;padding:3px;border-radius:20px;overflow:hidden;isolation:isolate}
+.inh::before{content:"";position:absolute;inset:-60%;z-index:-2;background:conic-gradient(from 0deg,transparent 0 58%,rgba(217,164,58,.45) 74%,#f6d77a 86%,#fff3c4 90%,transparent 100%);animation:inhSpin 8s linear infinite}
+.inh-in{position:relative;border-radius:17px;padding:24px 20px 22px;background:linear-gradient(160deg,#2a2112 0%,#1f2024 55%,#18191c 100%);text-align:center;overflow:hidden}
+.inh-in::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.10),transparent);transform:skewX(-18deg);animation:inhShine 9s ease-in-out 2s infinite}
+.inh-tag{display:inline-block;font-weight:900;font-size:13px;letter-spacing:.1em;color:#1d1e21;background:linear-gradient(180deg,#f6d77a,#d9a43a);border-radius:999px;padding:4px 14px}
+.inh .kojin{margin:14px auto 0;max-width:560px;font-size:14px;color:#d8d2c4;line-height:1.8}
+.inh h3{margin:10px 0 6px;font-size:clamp(22px,5.6vw,34px);font-weight:900;line-height:1.35;color:#fff;letter-spacing:.02em}
+.inh h3 em{font-style:normal;color:#ffd666;text-shadow:0 0 18px rgba(255,200,80,.45)}
+.inh .lead2{font-size:clamp(15px,3.8vw,18px);font-weight:800;color:#ffe7a6;margin:0 0 16px;line-height:1.6}
+.inh ul{list-style:none;margin:0 auto;padding:0;display:grid;gap:10px;max-width:640px;text-align:left}
+.inh li{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,214,102,.28);border-radius:12px;padding:12px 14px;font-size:15px;font-weight:700;line-height:1.6;opacity:0;transform:translateY(12px);animation:inhUp .6s ease forwards}
+.inh li:nth-child(1){animation-delay:.2s}.inh li:nth-child(2){animation-delay:.45s}.inh li:nth-child(3){animation-delay:.7s}.inh li:nth-child(4){animation-delay:.95s}
+.inh li b{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#e3131d;color:#fff;font-size:14px}
+.inh li strong{color:#ffd666}
+.inh .ctas2{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.inh .ctas2 a{font-weight:900;text-decoration:none;border-radius:12px;padding:12px 18px;font-size:15px}
+.inh .ctas2 .l{background:#06c755;color:#fff}.inh .ctas2 .t{background:#fff;color:#1d1e21}
+@keyframes inhSpin{to{transform:rotate(360deg)}}
+@keyframes inhShine{0%{left:-60%}55%,100%{left:130%}}
+@keyframes inhPulse{0%,100%{box-shadow:0 0 0 0 rgba(246,215,122,.6)}50%{box-shadow:0 0 0 8px rgba(246,215,122,0)}}
+@keyframes inhUp{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.inh::before,.inh-in::after,.inh-tag{animation:none}.inh li{animation:none;opacity:1;transform:none}}
+</style>
+<section class="inh" id="souzoku" aria-labelledby="inh-h">
+ <div class="inh-in">
+  <span class="inh-tag">相続・名義人不在の車もOK</span>
+  <p class="kojin">故人が大切にされてきた一台を、ご家族に代わって次のオーナーへおつなぎします。</p>
+  <h3 id="inh-h">持ち主（名義人）が<br><em>亡くなられた旧車</em>も<br>買取できます</h3>
+  <p class="lead2">名義人がいなくても大丈夫。書類の準備から手続きまで、当社がスムーズに進めます。</p>
+  <ul>
+   <li><b>1</b><span>ご家族・相続人の方からのご相談で<strong>買取OK</strong>です。</span></li>
+   <li><b>2</b><span>必要な書類（戸籍謄本・遺産分割協議書など）は、<strong>当社がわかりやすくご案内</strong>し、準備をお手伝いします。</span></li>
+   <li><b>3</b><span>名義変更・抹消登録などの手続きは<strong>当社が無料で代行</strong>します。</span></li>
+   <li><b>4</b><span>手続きが完了したら、<strong>書類のコピーをお渡し</strong>します。安心して保管していただけます。</span></li>
+  </ul>
+  <div class="ctas2"><a class="l" href="https://line.me/ti/p/VcqKQ0PYkN" target="_blank" rel="noopener">LINEで相談する</a><a class="t" href="tel:0120888405">☎ 0120-888-405</a></div>
+ </div>
+</section>
 <div class="sec">
  <h3>当社が取り扱った旧車・輸入車の一部</h3>
  <div class="grid"><div class="card" style="padding:0;overflow:hidden"><img src="./img/porsche-964-sm.webp" alt="取扱車両 PORSCHE（輸入車・旧車）" width="640" height="480" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover"><div style="padding:12px 16px 14px"><b>PORSCHE</b><p>輸入車・旧車</p></div></div><div class="card" style="padding:0;overflow:hidden"><img src="./img/porsche-928-sm.webp" alt="取扱車両 PORSCHE（輸入車・不動車）" width="640" height="480" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover"><div style="padding:12px 16px 14px"><b>PORSCHE</b><p>輸入車・不動車</p></div></div><div class="card" style="padding:0;overflow:hidden"><img src="./img/nissan-s30z-sm.webp" alt="取扱車両 国産旧車（旧車）" width="640" height="480" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover"><div style="padding:12px 16px 14px"><b>国産旧車</b><p>旧車</p></div></div><div class="card" style="padding:0;overflow:hidden"><img src="./img/gtr-r32-purple-sm.webp" alt="取扱車両 国産旧車（旧車・長期保管車）" width="640" height="480" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover"><div style="padding:12px 16px 14px"><b>国産旧車</b><p>旧車・長期保管車</p></div></div></div>
@@ -332,6 +379,7 @@ d.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')show(i-1);if(e.k
  <details><summary>出張査定はできますか？</summary><p>はい。まずは写真と車検証でご案内し、必要に応じて日本全国どこでも出張査定・引取りに伺います。引取り費用は無料です。</p></details>
  <details><summary>いくらで買い取ってもらえますか？</summary><p>車種・年式・仕様・状態によって大きく変わるため、写真と車検証などを確認してからご案内します。電話やLINEでのご相談・査定は無料です。</p></details>
  <details><summary>遠方の車でも引取りに来てもらえますか？</summary><p>はい。北海道から沖縄・離島まで、日本全国どこでも引取り無料で伺います。動かない車や車検切れの車も、積載車で引取ります。</p></details>
+ <details><summary>持ち主（名義人）が亡くなっている旧車でも売れますか？</summary><p>はい、買取できます。ご家族・相続人の方からご相談ください。相続に必要な書類（戸籍謄本・遺産分割協議書など）は当社がわかりやすくご案内し、名義変更・抹消登録などの手続きは無料で代行します。手続きが完了したら、書類のコピーをお渡しします。</p></details>
  <details><summary>廃車や名義変更の手続きはどうなりますか？</summary><p>抹消登録などの書類手続きは、当社が無料で代行します。必要な書類は、車検証の写真を送っていただいた後にご案内します。</p></details>
 </div>
 </main>
