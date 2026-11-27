@@ -1084,6 +1084,26 @@ a.fact:hover{border-color:#77797f}
 @keyframes vtRun{to{--vtA:360deg}}
 @media (prefers-reduced-motion:reduce){.pick a.vt::before,.pick a.vt::after{animation:none}}
 </style>
+<style>
+/* desktop: straight feature row instead of curved dial */
+@media (min-width:1000px){
+ .hero{height:auto!important;padding-bottom:46px!important}
+ .hero .ring,.hero .seg,.hero .dome{display:none!important}
+ .hero-txt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px;max-width:940px;margin:18px auto 0!important}
+ .hero-txt .hero-lead,.hero-txt .hero-sub{grid-column:1/-1}
+ .hero-txt .flood-link{display:flex;align-items:center;justify-content:center;margin:4px 0 0;padding:11px 18px;border-radius:12px;font-size:14px;background:rgba(227,19,29,.14);border:1px solid rgba(255,90,96,.55);transition:background .2s,transform .2s}
+ .hero-txt .flood-link::after{content:"›";margin-left:8px;font-size:18px;line-height:1;color:#ff8a8f}
+ .hero-txt .flood-link:hover{background:rgba(227,19,29,.3);transform:translateY(-2px)}
+ .hero .dial{position:relative!important;inset:auto!important;display:grid;grid-template-columns:repeat(5,1fr);gap:14px;width:min(1160px,calc(100% - 48px));margin:34px auto 0;padding:0;list-style:none}
+ .hero .pt{position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;margin:0!important;transform:none!important;
+   padding:20px 12px 18px;background:linear-gradient(180deg,#26272c,#1a1b1f);border:1px solid #3a3c41;border-top:2px solid var(--red,#e3131d);border-radius:14px;text-align:center}
+ .hero .pt .n{position:static!important;display:block;font-size:15px;color:var(--red-hi,#ff4a4a);text-shadow:none;letter-spacing:.1em;margin-bottom:8px}
+ .hero .pt .n::after{display:none!important}
+ .hero .pt .c{position:static!important}
+ .hero .pt .c .icon{display:block;font-size:30px;margin:0 auto 8px}
+ .hero .pt .c b{font-size:16.5px}
+}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ezIg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FEDA75"/><stop offset=".3" stop-color="#FA7E1E"/><stop offset=".55" stop-color="#D62976"/><stop offset=".8" stop-color="#962FBF"/><stop offset="1" stop-color="#4F5BD5"/></linearGradient></defs></svg>
